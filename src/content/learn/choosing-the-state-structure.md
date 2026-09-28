@@ -1,53 +1,53 @@
 ---
-title: Choosing the State Structure
+title: Chọn cấu trúc state
 ---
 
 <Intro>
 
-Structuring state well can make a difference between a component that is pleasant to modify and debug, and one that is a constant source of bugs. Here are some tips you should consider when structuring state.
+Việc cấu trúc state tốt có thể tạo ra sự khác biệt giữa một component dễ sửa đổi và debug với một component liên tục gây ra lỗi. Dưới đây là một số mẹo bạn nên cân nhắc khi cấu trúc state.
 
 </Intro>
 
 <YouWillLearn>
 
-* When to use a single vs multiple state variables
-* What to avoid when organizing state
-* How to fix common issues with the state structure
+* Khi nào nên sử dụng một hay nhiều state variable
+* Những điều cần tránh khi tổ chức state
+* Cách khắc phục các vấn đề thường gặp với cấu trúc state
 
 </YouWillLearn>
 
-## Principles for structuring state {/*principles-for-structuring-state*/}
+## Các nguyên tắc cấu trúc state {/*principles-for-structuring-state*/}
 
-When you write a component that holds some state, you'll have to make choices about how many state variables to use and what the shape of their data should be. While it's possible to write correct programs even with a suboptimal state structure, there are a few principles that can guide you to make better choices:
+Khi viết một component chứa một số state, bạn sẽ phải lựa chọn số lượng state variable cần sử dụng và hình dạng dữ liệu của chúng. Mặc dù bạn vẫn có thể viết các chương trình đúng ngay cả khi cấu trúc state chưa tối ưu, có một số nguyên tắc có thể giúp bạn đưa ra những lựa chọn tốt hơn:
 
-1. **Group related state.** If you always update two or more state variables at the same time, consider merging them into a single state variable.
-2. **Avoid contradictions in state.** When the state is structured in a way that several pieces of state may contradict and "disagree" with each other, you leave room for mistakes. Try to avoid this.
-3. **Avoid redundant state.** If you can calculate some information from the component's props or its existing state variables during rendering, you should not put that information into that component's state.
-4. **Avoid duplication in state.** When the same data is duplicated between multiple state variables, or within nested objects, it is difficult to keep them in sync. Reduce duplication when you can.
-5. **Avoid deeply nested state.** Deeply hierarchical state is not very convenient to update. When possible, prefer to structure state in a flat way.
+1. **Nhóm các state có liên quan.** Nếu bạn luôn cập nhật hai hoặc nhiều state variable cùng lúc, hãy cân nhắc hợp nhất chúng thành một state variable duy nhất.
+2. **Tránh các mâu thuẫn trong state.** Khi state được cấu trúc theo cách khiến nhiều phần state có thể mâu thuẫn và “không nhất quán” với nhau, bạn sẽ tạo cơ hội phát sinh lỗi. Hãy cố gắng tránh điều này.
+3. **Tránh state dư thừa.** Nếu bạn có thể tính toán một thông tin nào đó từ props của component hoặc các state variable hiện có trong quá trình render, bạn không nên đưa thông tin đó vào state của component.
+4. **Tránh trùng lặp trong state.** Khi cùng một dữ liệu bị trùng lặp giữa nhiều state variable hoặc bên trong các object lồng nhau, việc giữ chúng đồng bộ sẽ trở nên khó khăn. Hãy giảm sự trùng lặp khi có thể.
+5. **Tránh state lồng nhau quá sâu.** State có cấu trúc phân cấp sâu không thuận tiện để cập nhật. Khi có thể, hãy ưu tiên cấu trúc state theo cách phẳng.
 
-The goal behind these principles is to *make state easy to update without introducing mistakes*. Removing redundant and duplicate data from state helps ensure that all its pieces stay in sync. This is similar to how a database engineer might want to ["normalize" the database structure](https://docs.microsoft.com/en-us/office/troubleshoot/access/database-normalization-description) to reduce the chance of bugs. To paraphrase Albert Einstein, **"Make your state as simple as it can be--but no simpler."**
+Mục tiêu của các nguyên tắc này là *giúp cập nhật state dễ dàng mà không gây ra lỗi*. Việc loại bỏ dữ liệu dư thừa và trùng lặp khỏi state giúp đảm bảo mọi phần của state luôn đồng bộ. Điều này tương tự như cách một kỹ sư cơ sở dữ liệu có thể muốn [“chuẩn hóa” cấu trúc cơ sở dữ liệu](https://docs.microsoft.com/en-us/office/troubleshoot/access/database-normalization-description) để giảm khả năng xảy ra lỗi. Diễn giải lại lời của Albert Einstein, **“Hãy làm cho state đơn giản nhất có thể--nhưng không đơn giản hơn.”**
 
-Now let's see how these principles apply in action.
+Bây giờ hãy xem các nguyên tắc này được áp dụng như thế nào trong thực tế.
 
-## Group related state {/*group-related-state*/}
+## Nhóm các state có liên quan {/*group-related-state*/}
 
-You might sometimes be unsure between using a single or multiple state variables.
+Đôi khi bạn có thể không chắc nên sử dụng một hay nhiều state variable.
 
-Should you do this?
+Bạn có nên làm như sau không?
 
 ```js
 const [x, setX] = useState(0);
 const [y, setY] = useState(0);
 ```
 
-Or this?
+Hay như sau?
 
 ```js
 const [position, setPosition] = useState({ x: 0, y: 0 });
 ```
 
-Technically, you can use either of these approaches. But **if some two state variables always change together, it might be a good idea to unify them into a single state variable.** Then you won't forget to always keep them in sync, like in this example where moving the cursor updates both coordinates of the red dot:
+Về mặt kỹ thuật, bạn có thể sử dụng một trong hai cách tiếp cận này. Nhưng **nếu hai state variable nào đó luôn thay đổi cùng nhau, bạn nên hợp nhất chúng thành một state variable duy nhất.** Khi đó, bạn sẽ không quên giữ chúng đồng bộ, giống như trong ví dụ này, khi di chuyển con trỏ sẽ cập nhật cả hai tọa độ của chấm đỏ:
 
 <Sandpack>
 
@@ -93,17 +93,17 @@ body { margin: 0; padding: 0; height: 250px; }
 
 </Sandpack>
 
-Another case where you'll group data into an object or an array is when you don't know how many pieces of state you'll need. For example, it's helpful when you have a form where the user can add custom fields.
+Một trường hợp khác mà bạn sẽ nhóm dữ liệu vào một object hoặc array là khi bạn không biết mình sẽ cần bao nhiêu phần state. Ví dụ, điều này hữu ích khi bạn có một form cho phép người dùng thêm các field tùy chỉnh.
 
 <Pitfall>
 
-If your state variable is an object, remember that [you can't update only one field in it](/learn/updating-objects-in-state) without explicitly copying the other fields. For example, you can't do `setPosition({ x: 100 })` in the above example because it would not have the `y` property at all! Instead, if you wanted to set `x` alone, you would either do `setPosition({ ...position, x: 100 })`, or split them into two state variables and do `setX(100)`.
+Nếu state variable của bạn là một object, hãy nhớ rằng [bạn không thể chỉ cập nhật một field trong đó](/learn/updating-objects-in-state) mà không sao chép rõ ràng các field còn lại. Ví dụ, bạn không thể thực hiện `setPosition({ x: 100 })` trong ví dụ trên vì nó hoàn toàn không có property `y`! Thay vào đó, nếu bạn chỉ muốn đặt `x`, bạn có thể thực hiện `setPosition({ ...position, x: 100 })`, hoặc tách chúng thành hai state variable và thực hiện `setX(100)`.
 
 </Pitfall>
 
-## Avoid contradictions in state {/*avoid-contradictions-in-state*/}
+## Tránh các mâu thuẫn trong state {/*avoid-contradictions-in-state*/}
 
-Here is a hotel feedback form with `isSending` and `isSent` state variables:
+Đây là một form phản hồi khách sạn với các state variable `isSending` và `isSent`:
 
 <Sandpack>
 
@@ -157,9 +157,9 @@ function sendMessage(text) {
 
 </Sandpack>
 
-While this code works, it leaves the door open for "impossible" states. For example, if you forget to call `setIsSent` and `setIsSending` together, you may end up in a situation where both `isSending` and `isSent` are `true` at the same time. The more complex your component is, the harder it is to understand what happened.
+Mặc dù đoạn code này hoạt động, nó vẫn để ngỏ khả năng xuất hiện các state “không thể xảy ra”. Ví dụ, nếu bạn quên gọi `setIsSent` và `setIsSending` cùng nhau, bạn có thể rơi vào tình huống cả `isSending` và `isSent` đều là `true` cùng một lúc. Component càng phức tạp thì càng khó hiểu chuyện gì đã xảy ra.
 
-**Since `isSending` and `isSent` should never be `true` at the same time, it is better to replace them with one `status` state variable that may take one of *three* valid states:** `'typing'` (initial), `'sending'`, and `'sent'`:
+**Vì `isSending` và `isSent` không bao giờ được `true` cùng một lúc, tốt hơn hết là thay thế chúng bằng một state variable `status` duy nhất có thể nhận một trong *ba* state hợp lệ:** `'typing'` (ban đầu), `'sending'` và `'sent'`:
 
 <Sandpack>
 
@@ -214,20 +214,20 @@ function sendMessage(text) {
 
 </Sandpack>
 
-You can still declare some constants for readability:
+Bạn vẫn có thể khai báo một số constant để code dễ đọc hơn:
 
 ```js
 const isSending = status === 'sending';
 const isSent = status === 'sent';
 ```
 
-But they're not state variables, so you don't need to worry about them getting out of sync with each other.
+Nhưng chúng không phải là state variable, vì vậy bạn không cần lo lắng về việc chúng mất đồng bộ với nhau.
 
-## Avoid redundant state {/*avoid-redundant-state*/}
+## Tránh state dư thừa {/*avoid-redundant-state*/}
 
-If you can calculate some information from the component's props or its existing state variables during rendering, you **should not** put that information into that component's state.
+Nếu bạn có thể tính toán một thông tin nào đó từ props của component hoặc các state variable hiện có trong quá trình render, **bạn không nên đưa thông tin đó vào state của component.**
 
-For example, take this form. It works, but can you find any redundant state in it?
+Ví dụ, hãy xem form này. Form hoạt động, nhưng bạn có thể tìm thấy state dư thừa nào trong đó không?
 
 <Sandpack>
 
@@ -280,9 +280,9 @@ label { display: block; margin-bottom: 5px; }
 
 </Sandpack>
 
-This form has three state variables: `firstName`, `lastName`, and `fullName`. However, `fullName` is redundant. **You can always calculate `fullName` from `firstName` and `lastName` during render, so remove it from state.**
+Form này có ba state variable: `firstName`, `lastName` và `fullName`. Tuy nhiên, `fullName` là dư thừa. **Bạn luôn có thể tính toán `fullName` từ `firstName` và `lastName` trong quá trình render, vì vậy hãy loại bỏ nó khỏi state.**
 
-This is how you can do it:
+Bạn có thể thực hiện như sau:
 
 <Sandpack>
 
@@ -334,37 +334,37 @@ label { display: block; margin-bottom: 5px; }
 
 </Sandpack>
 
-Here, `fullName` is *not* a state variable. Instead, it's calculated during render:
+Ở đây, `fullName` *không* phải là một state variable. Thay vào đó, nó được tính toán trong quá trình render:
 
 ```js
 const fullName = firstName + ' ' + lastName;
 ```
 
-As a result, the change handlers don't need to do anything special to update it. When you call `setFirstName` or `setLastName`, you trigger a re-render, and then the next `fullName` will be calculated from the fresh data.
+Do đó, các change handler không cần làm gì đặc biệt để cập nhật nó. Khi bạn gọi `setFirstName` hoặc `setLastName`, bạn kích hoạt một lần re-render, sau đó `fullName` tiếp theo sẽ được tính toán từ dữ liệu mới nhất.
 
 <DeepDive>
 
-#### Don't mirror props in state {/*don-t-mirror-props-in-state*/}
+#### Không mirror props vào state {/*don-t-mirror-props-in-state*/}
 
-A common example of redundant state is code like this:
+Một ví dụ phổ biến về state dư thừa là code như sau:
 
 ```js
 function Message({ messageColor }) {
   const [color, setColor] = useState(messageColor);
 ```
 
-Here, a `color` state variable is initialized to the `messageColor` prop. The problem is that **if the parent component passes a different value of `messageColor` later (for example, `'red'` instead of `'blue'`), the `color` *state variable* would not be updated!** The state is only initialized during the first render.
+Ở đây, một state variable `color` được khởi tạo bằng prop `messageColor`. Vấn đề là **nếu component cha truyền một giá trị `messageColor` khác vào lúc sau (ví dụ, `'red'` thay vì `'blue'`), *state variable* `color` sẽ không được cập nhật!** State chỉ được khởi tạo trong lần render đầu tiên.
 
-This is why "mirroring" some prop in a state variable can lead to confusion. Instead, use the `messageColor` prop directly in your code. If you want to give it a shorter name, use a constant:
+Đây là lý do việc “mirror” một prop nào đó vào state variable có thể gây nhầm lẫn. Thay vào đó, hãy sử dụng trực tiếp prop `messageColor` trong code của bạn. Nếu muốn đặt cho nó một tên ngắn hơn, hãy sử dụng một constant:
 
 ```js
 function Message({ messageColor }) {
   const color = messageColor;
 ```
 
-This way it won't get out of sync with the prop passed from the parent component.
+Bằng cách này, nó sẽ không bị mất đồng bộ với prop được truyền từ component cha.
 
-"Mirroring" props into state only makes sense when you *want* to ignore all updates for a specific prop. By convention, start the prop name with `initial` or `default` to clarify that its new values are ignored:
+Việc “mirror” props vào state chỉ có ý nghĩa khi bạn *muốn bỏ qua tất cả các lần cập nhật đối với một prop cụ thể*. Theo quy ước, hãy bắt đầu tên prop bằng `initial` hoặc `default` để làm rõ rằng các giá trị mới của nó sẽ bị bỏ qua:
 
 ```js
 function Message({ initialColor }) {
@@ -375,9 +375,9 @@ function Message({ initialColor }) {
 
 </DeepDive>
 
-## Avoid duplication in state {/*avoid-duplication-in-state*/}
+## Tránh trùng lặp trong state {/*avoid-duplication-in-state*/}
 
-This menu list component lets you choose a single travel snack out of several:
+Component danh sách menu này cho phép bạn chọn một món ăn nhẹ cho chuyến đi từ một số lựa chọn:
 
 <Sandpack>
 
@@ -422,9 +422,9 @@ button { margin-top: 10px; }
 
 </Sandpack>
 
-Currently, it stores the selected item as an object in the `selectedItem` state variable. However, this is not great: **the contents of the `selectedItem` is the same object as one of the items inside the `items` list.** This means that the information about the item itself is duplicated in two places.
+Hiện tại, nó lưu item đã chọn dưới dạng một object trong state variable `selectedItem`. Tuy nhiên, đây không phải là cách tốt: **nội dung của `selectedItem` là cùng một object với một trong các item bên trong danh sách `items`.** Điều này có nghĩa là thông tin về chính item đó bị trùng lặp ở hai nơi.
 
-Why is this a problem? Let's make each item editable:
+Tại sao đây lại là vấn đề? Hãy cho phép chỉnh sửa từng item:
 
 <Sandpack>
 
@@ -487,9 +487,9 @@ button { margin-top: 10px; }
 
 </Sandpack>
 
-Notice how if you first click "Choose" on an item and *then* edit it, **the input updates but the label at the bottom does not reflect the edits.** This is because you have duplicated state, and you forgot to update `selectedItem`.
+Hãy chú ý rằng nếu trước tiên bạn nhấp vào “Choose” trên một item và *sau đó* chỉnh sửa item đó, **input sẽ được cập nhật nhưng label ở phía dưới không phản ánh các thay đổi.** Điều này xảy ra vì bạn có state bị trùng lặp và đã quên cập nhật `selectedItem`.
 
-Although you could update `selectedItem` too, an easier fix is to remove duplication. In this example, instead of a `selectedItem` object (which creates a duplication with objects inside `items`), you hold the `selectedId` in state, and *then* get the `selectedItem` by searching the `items` array for an item with that ID:
+Mặc dù bạn có thể cập nhật cả `selectedItem`, cách khắc phục dễ hơn là loại bỏ sự trùng lặp. Trong ví dụ này, thay vì lưu một object `selectedItem` (tạo ra sự trùng lặp với các object bên trong `items`), bạn lưu `selectedId` trong state, *sau đó* lấy `selectedItem` bằng cách tìm trong array `items` một item có ID đó:
 
 <Sandpack>
 
@@ -554,23 +554,23 @@ button { margin-top: 10px; }
 
 </Sandpack>
 
-The state used to be duplicated like this:
+Trước đây, state bị trùng lặp như sau:
 
 * `items = [{ id: 0, title: 'pretzels'}, ...]`
 * `selectedItem = {id: 0, title: 'pretzels'}`
 
-But after the change it's like this:
+Nhưng sau khi thay đổi, nó sẽ như sau:
 
 * `items = [{ id: 0, title: 'pretzels'}, ...]`
 * `selectedId = 0`
 
-The duplication is gone, and you only keep the essential state!
+Sự trùng lặp đã biến mất và bạn chỉ cần lưu state thiết yếu!
 
-Now if you edit the *selected* item, the message below will update immediately. This is because `setItems` triggers a re-render, and `items.find(...)` would find the item with the updated title. You didn't need to hold *the selected item* in state, because only the *selected ID* is essential. The rest could be calculated during render.
+Bây giờ, nếu bạn chỉnh sửa item *được chọn*, thông báo bên dưới sẽ được cập nhật ngay lập tức. Điều này là vì `setItems` kích hoạt một lần re-render, và `items.find(...)` sẽ tìm thấy item có title đã được cập nhật. Bạn không cần lưu *item được chọn* trong state, vì chỉ có *ID được chọn* là thiết yếu. Phần còn lại có thể được tính toán trong quá trình render.
 
-## Avoid deeply nested state {/*avoid-deeply-nested-state*/}
+## Tránh state lồng nhau quá sâu {/*avoid-deeply-nested-state*/}
 
-Imagine a travel plan consisting of planets, continents, and countries. You might be tempted to structure its state using nested objects and arrays, like in this example:
+Hãy tưởng tượng một kế hoạch du lịch bao gồm các hành tinh, châu lục và quốc gia. Bạn có thể muốn cấu trúc state của kế hoạch bằng các object và array lồng nhau, như trong ví dụ này:
 
 <Sandpack>
 
@@ -812,11 +812,11 @@ export const initialTravelPlan = {
 
 </Sandpack>
 
-Now let's say you want to add a button to delete a place you've already visited. How would you go about it? [Updating nested state](/learn/updating-objects-in-state#updating-a-nested-object) involves making copies of objects all the way up from the part that changed. Deleting a deeply nested place would involve copying its entire parent place chain. Such code can be very verbose.
+Bây giờ, giả sử bạn muốn thêm một nút để xóa một địa điểm mà bạn đã ghé thăm. Bạn sẽ thực hiện việc đó như thế nào? [Cập nhật state lồng nhau](/learn/updating-objects-in-state#updating-a-nested-object) bao gồm việc tạo bản sao của các object từ phần đã thay đổi lên toàn bộ các cấp bên trên. Việc xóa một địa điểm nằm sâu trong cấu trúc sẽ đòi hỏi bạn phải sao chép toàn bộ chuỗi địa điểm cha của nó. Code như vậy có thể rất dài dòng.
 
-**If the state is too nested to update easily, consider making it "flat".** Here is one way you can restructure this data. Instead of a tree-like structure where each `place` has an array of *its child places*, you can have each place hold an array of *its child place IDs*. Then store a mapping from each place ID to the corresponding place.
+**Nếu state quá lồng nhau và khó cập nhật, hãy cân nhắc làm cho nó "phẳng".** Dưới đây là một cách để cấu trúc lại dữ liệu này. Thay vì một cấu trúc dạng cây, trong đó mỗi `place` có một mảng *các địa điểm con của nó*, bạn có thể để mỗi địa điểm chứa một mảng *ID của các địa điểm con*. Sau đó, lưu một mapping từ mỗi ID địa điểm đến địa điểm tương ứng.
 
-This data restructuring might remind you of seeing a database table:
+Việc cấu trúc lại dữ liệu này có thể khiến bạn liên tưởng đến một bảng cơ sở dữ liệu:
 
 <Sandpack>
 
@@ -1118,14 +1118,14 @@ export const initialTravelPlan = {
 
 </Sandpack>
 
-**Now that the state is "flat" (also known as "normalized"), updating nested items becomes easier.**
+**Bây giờ state đã "phẳng" (còn gọi là "được chuẩn hóa"), việc cập nhật các item lồng nhau trở nên dễ dàng hơn.**
 
-In order to remove a place now, you only need to update two levels of state:
+Để xóa một địa điểm, giờ đây bạn chỉ cần cập nhật hai cấp state:
 
-- The updated version of its *parent* place should exclude the removed ID from its `childIds` array.
-- The updated version of the root "table" object should include the updated version of the parent place.
+- Phiên bản đã cập nhật của địa điểm *cha* cần loại bỏ ID đã xóa khỏi mảng `childIds` của nó.
+- Phiên bản đã cập nhật của object "bảng" gốc cần chứa phiên bản đã cập nhật của địa điểm cha.
 
-Here is an example of how you could go about it:
+Dưới đây là một ví dụ về cách bạn có thể thực hiện:
 
 <Sandpack>
 
@@ -1458,13 +1458,13 @@ button { margin: 10px; }
 
 </Sandpack>
 
-You can nest state as much as you like, but making it "flat" can solve numerous problems. It makes state easier to update, and it helps ensure you don't have duplication in different parts of a nested object.
+Bạn có thể lồng state sâu đến mức tùy ý, nhưng làm cho nó "phẳng" có thể giải quyết nhiều vấn đề. Cách này giúp state dễ cập nhật hơn và giúp đảm bảo bạn không bị trùng lặp dữ liệu ở các phần khác nhau của một object lồng nhau.
 
 <DeepDive>
 
-#### Improving memory usage {/*improving-memory-usage*/}
+#### Cải thiện việc sử dụng bộ nhớ {/*improving-memory-usage*/}
 
-Ideally, you would also remove the deleted items (and their children!) from the "table" object to improve memory usage. This version does that. It also [uses Immer](/learn/updating-objects-in-state#write-concise-update-logic-with-immer) to make the update logic more concise.
+Lý tưởng nhất là bạn cũng nên xóa các item đã xóa (và cả các item con của chúng!) khỏi object "bảng" để cải thiện việc sử dụng bộ nhớ. Phiên bản này thực hiện điều đó. Nó cũng [sử dụng Immer](/learn/updating-objects-in-state#write-concise-update-logic-with-immer) để làm cho logic cập nhật ngắn gọn hơn.
 
 <Sandpack>
 
@@ -1817,25 +1817,25 @@ button { margin: 10px; }
 
 </DeepDive>
 
-Sometimes, you can also reduce state nesting by moving some of the nested state into the child components. This works well for ephemeral UI state that doesn't need to be stored, like whether an item is hovered.
+Đôi khi, bạn cũng có thể giảm mức độ lồng nhau của state bằng cách chuyển một phần state lồng nhau vào các component con. Cách này phù hợp với ephemeral UI state, tức những UI state không cần lưu trữ, chẳng hạn như một item có đang được hover hay không.
 
 <Recap>
 
-* If two state variables always update together, consider merging them into one.
-* Choose your state variables carefully to avoid creating "impossible" states.
-* Structure your state in a way that reduces the chances that you'll make a mistake updating it.
-* Avoid redundant and duplicate state so that you don't need to keep it in sync.
-* Don't put props *into* state unless you specifically want to prevent updates.
-* For UI patterns like selection, keep ID or index in state instead of the object itself.
-* If updating deeply nested state is complicated, try flattening it.
+* Nếu hai state variable luôn được cập nhật cùng nhau, hãy cân nhắc gộp chúng thành một.
+* Hãy lựa chọn state variable cẩn thận để tránh tạo ra các state "không thể xảy ra".
+* Cấu trúc state theo cách giúp giảm khả năng bạn mắc lỗi khi cập nhật nó.
+* Tránh state dư thừa và trùng lặp để bạn không phải giữ cho chúng đồng bộ.
+* Đừng đưa props *vào* state trừ khi bạn thực sự muốn ngăn các cập nhật.
+* Với các UI pattern như selection, hãy lưu ID hoặc index trong state thay vì chính object đó.
+* Nếu việc cập nhật state lồng nhau sâu trở nên phức tạp, hãy thử làm phẳng nó.
 
 </Recap>
 
 <Challenges>
 
-#### Fix a component that's not updating {/*fix-a-component-thats-not-updating*/}
+#### Sửa một component không được cập nhật {/*fix-a-component-thats-not-updating*/}
 
-This `Clock` component receives two props: `color` and `time`. When you select a different color in the select box, the `Clock` component receives a different `color` prop from its parent component. However, for some reason, the displayed color doesn't update. Why? Fix the problem.
+Component `Clock` này nhận hai props: `color` và `time`. Khi bạn chọn một màu khác trong select box, component `Clock` nhận được một prop `color` khác từ component cha. Tuy nhiên, vì một lý do nào đó, màu được hiển thị không cập nhật. Tại sao? Hãy sửa vấn đề này.
 
 <Sandpack>
 
@@ -1890,7 +1890,7 @@ export default function App() {
 
 <Solution>
 
-The issue is that this component has `color` state initialized with the initial value of the `color` prop. But when the `color` prop changes, this does not affect the state variable! So they get out of sync. To fix this issue, remove the state variable altogether, and use the `color` prop directly.
+Vấn đề là component này có state `color` được khởi tạo bằng giá trị ban đầu của prop `color`. Nhưng khi prop `color` thay đổi, điều này không ảnh hưởng đến state variable! Vì vậy, chúng bị mất đồng bộ. Để sửa vấn đề, hãy xóa state variable hoàn toàn và sử dụng trực tiếp prop `color`.
 
 <Sandpack>
 
@@ -1942,7 +1942,7 @@ export default function App() {
 
 </Sandpack>
 
-Or, using the destructuring syntax:
+Hoặc sử dụng cú pháp destructuring:
 
 <Sandpack>
 
@@ -1996,13 +1996,13 @@ export default function App() {
 
 </Solution>
 
-#### Fix a broken packing list {/*fix-a-broken-packing-list*/}
+#### Sửa packing list bị lỗi {/*fix-a-broken-packing-list*/}
 
-This packing list has a footer that shows how many items are packed, and how many items there are overall. It seems to work at first, but it is buggy. For example, if you mark an item as packed and then delete it, the counter will not be updated correctly. Fix the counter so that it's always correct.
+Packing list này có một footer hiển thị số lượng item đã được đóng gói và tổng số item. Ban đầu, dường như nó hoạt động đúng, nhưng thực tế lại có lỗi. Ví dụ, nếu bạn đánh dấu một item là đã được đóng gói rồi xóa nó, bộ đếm sẽ không được cập nhật chính xác. Hãy sửa bộ đếm để nó luôn chính xác.
 
 <Hint>
 
-Is any state in this example redundant?
+Trong ví dụ này có state nào dư thừa không?
 
 </Hint>
 
@@ -2143,7 +2143,7 @@ ul, li { margin: 0; padding: 0; }
 
 <Solution>
 
-Although you could carefully change each event handler to update the `total` and `packed` counters correctly, the root problem is that these state variables exist at all. They are redundant because you can always calculate the number of items (packed or total) from the `items` array itself. Remove the redundant state to fix the bug:
+Mặc dù bạn có thể cẩn thận thay đổi từng event handler để cập nhật chính xác các bộ đếm `total` và `packed`, vấn đề cốt lõi là các state variable này vốn không nên tồn tại. Chúng dư thừa vì bạn luôn có thể tính số lượng item (đã đóng gói hoặc tổng số) từ chính mảng `items`. Hãy xóa state dư thừa để sửa lỗi:
 
 <Sandpack>
 
@@ -2276,15 +2276,15 @@ ul, li { margin: 0; padding: 0; }
 
 </Sandpack>
 
-Notice how the event handlers are only concerned with calling `setItems` after this change. The item counts are now calculated during the next render from `items`, so they are always up-to-date.
+Hãy chú ý rằng sau thay đổi này, các event handler chỉ cần gọi `setItems`. Số lượng item giờ đây được tính trong lần render tiếp theo từ `items`, vì vậy chúng luôn được cập nhật mới nhất.
 
 </Solution>
 
-#### Fix the disappearing selection {/*fix-the-disappearing-selection*/}
+#### Sửa selection biến mất {/*fix-the-disappearing-selection*/}
 
-There is a list of `letters` in state. When you hover or focus a particular letter, it gets highlighted. The currently highlighted letter is stored in the `highlightedLetter` state variable. You can "star" and "unstar" individual letters, which updates the `letters` array in state.
+Có một danh sách `letters` trong state. Khi bạn hover hoặc focus vào một chữ cái cụ thể, chữ cái đó sẽ được highlight. Chữ cái hiện đang được highlight được lưu trong state variable `highlightedLetter`. Bạn có thể "star" và "unstar" từng chữ cái, thao tác này sẽ cập nhật mảng `letters` trong state.
 
-This code works, but there is a minor UI glitch. When you press "Star" or "Unstar", the highlighting disappears for a moment. However, it reappears as soon as you move your pointer or switch to another letter with keyboard. Why is this happening? Fix it so that the highlighting doesn't disappear after the button click.
+Code này hoạt động, nhưng có một lỗi nhỏ trong UI. Khi bạn nhấn "Star" hoặc "Unstar", phần highlight biến mất trong giây lát. Tuy nhiên, nó xuất hiện lại ngay khi bạn di chuyển con trỏ hoặc chuyển sang chữ cái khác bằng bàn phím. Tại sao điều này xảy ra? Hãy sửa để phần highlight không biến mất sau khi nhấn nút.
 
 <Sandpack>
 
@@ -2391,9 +2391,9 @@ li { border-radius: 5px; }
 
 <Solution>
 
-The problem is that you're holding the letter object in `highlightedLetter`. But you're also holding the same information in the `letters` array. So your state has duplication! When you update the `letters` array after the button click, you create a new letter object which is different from `highlightedLetter`. This is why `highlightedLetter === letter` check becomes `false`, and the highlight disappears. It reappears the next time you call `setHighlightedLetter` when the pointer moves.
+Vấn đề là bạn đang lưu object chữ cái trong `highlightedLetter`. Nhưng bạn cũng đang lưu cùng thông tin đó trong mảng `letters`. Vì vậy, state của bạn bị trùng lặp! Khi bạn cập nhật mảng `letters` sau khi nhấn nút, bạn tạo một object chữ cái mới, khác với `highlightedLetter`. Đây là lý do phép kiểm tra `highlightedLetter === letter` trở thành `false`, khiến phần highlight biến mất. Nó xuất hiện lại vào lần tiếp theo bạn gọi `setHighlightedLetter` khi con trỏ di chuyển.
 
-To fix the issue, remove the duplication from state. Instead of storing *the letter itself* in two places, store the `highlightedId` instead. Then you can check `isHighlighted` for each letter with `letter.id === highlightedId`, which will work even if the `letter` object has changed since the last render.
+Để sửa vấn đề, hãy xóa phần trùng lặp khỏi state. Thay vì lưu *chính chữ cái đó* ở hai nơi, hãy lưu `highlightedId`. Sau đó, bạn có thể kiểm tra `isHighlighted` của từng chữ cái bằng `letter.id === highlightedId`, cách này vẫn hoạt động ngay cả khi object `letter` đã thay đổi kể từ lần render trước.
 
 <Sandpack>
 
@@ -2502,13 +2502,13 @@ li { border-radius: 5px; }
 
 #### Implement multiple selection {/*implement-multiple-selection*/}
 
-In this example, each `Letter` has an `isSelected` prop and an `onToggle` handler that marks it as selected. This works, but the state is stored as a `selectedId` (either `null` or an ID), so only one letter can get selected at any given time.
+Trong ví dụ này, mỗi `Letter` có một prop `isSelected` và một handler `onToggle` để đánh dấu nó là đã được chọn. Cách này hoạt động, nhưng state được lưu dưới dạng `selectedId` (hoặc `null` hoặc một ID), nên tại mỗi thời điểm chỉ có thể chọn một chữ cái.
 
-Change the state structure to support multiple selection. (How would you structure it? Think about this before writing the code.) Each checkbox should become independent from the others. Clicking a selected letter should uncheck it. Finally, the footer should show the correct number of the selected items.
+Hãy thay đổi cấu trúc state để hỗ trợ multiple selection. (Bạn sẽ cấu trúc nó như thế nào? Hãy suy nghĩ về điều này trước khi viết code.) Mỗi checkbox phải hoạt động độc lập với các checkbox khác. Khi nhấp vào một chữ cái đã được chọn, hãy bỏ chọn nó. Cuối cùng, footer phải hiển thị chính xác số lượng item đã chọn.
 
 <Hint>
 
-Instead of a single selected ID, you might want to hold an array or a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) of selected IDs in state.
+Thay vì một ID duy nhất của item được chọn, bạn có thể lưu một mảng hoặc một [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) các ID đã chọn trong state.
 
 </Hint>
 
@@ -2609,7 +2609,7 @@ label { width: 100%; padding: 5px; display: inline-block; }
 
 <Solution>
 
-Instead of a single `selectedId`, keep a `selectedIds` *array* in state. For example, if you select the first and the last letter, it would contain `[0, 2]`. When nothing is selected, it would be an empty `[]` array:
+Thay vì một `selectedId` duy nhất, hãy lưu một *mảng* `selectedIds` trong state. Ví dụ, nếu bạn chọn chữ cái đầu tiên và chữ cái cuối cùng, mảng này sẽ chứa `[0, 2]`. Khi không có gì được chọn, nó sẽ là một mảng `[]` rỗng:
 
 <Sandpack>
 
@@ -2715,9 +2715,9 @@ label { width: 100%; padding: 5px; display: inline-block; }
 
 </Sandpack>
 
-One minor downside of using an array is that for each item, you're calling `selectedIds.includes(letter.id)` to check whether it's selected. If the array is very large, this can become a performance problem because array search with [`includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) takes linear time, and you're doing this search for each individual item.
+Một nhược điểm nhỏ của việc sử dụng mảng là với mỗi item, bạn phải gọi `selectedIds.includes(letter.id)` để kiểm tra xem item đó có được chọn hay không. Nếu mảng rất lớn, điều này có thể trở thành vấn đề về hiệu năng vì việc tìm kiếm trong mảng bằng [`includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) mất thời gian tuyến tính, trong khi bạn thực hiện việc tìm kiếm này cho từng item riêng lẻ.
 
-To fix this, you can hold a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) in state instead, which provides a fast [`has()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/has) operation:
+Để khắc phục điều này, thay vào đó, bạn có thể lưu một [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) trong state, giúp thực hiện thao tác [`has()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/has) nhanh chóng:
 
 <Sandpack>
 
@@ -2820,9 +2820,9 @@ label { width: 100%; padding: 5px; display: inline-block; }
 
 </Sandpack>
 
-Now each item does a `selectedIds.has(letter.id)` check, which is very fast.
+Giờ đây, mỗi mục sẽ thực hiện kiểm tra `selectedIds.has(letter.id)`, vốn rất nhanh.
 
-Keep in mind that you [should not mutate objects in state](/learn/updating-objects-in-state), and that includes Sets, too. This is why the `handleToggle` function creates a *copy* of the Set first, and then updates that copy.
+Hãy nhớ rằng bạn [không nên thay đổi các object trong state](/learn/updating-objects-in-state), và điều này cũng áp dụng cho các Set. Đó là lý do hàm `handleToggle` trước tiên tạo một *bản sao* của Set, rồi cập nhật bản sao đó.
 
 </Solution>
 

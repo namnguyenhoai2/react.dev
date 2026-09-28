@@ -1,5 +1,5 @@
 ---
-id: home
+id: trang chủ
 title: React
 permalink: index.html
 ---

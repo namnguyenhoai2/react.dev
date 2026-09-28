@@ -26,6 +26,13 @@ interface SidebarRouteTreeProps {
   level?: number;
 }
 
+function normalizeRoutePath(path: string) {
+  if (path === '/index.html') {
+    return '/';
+  }
+  return path.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+}
+
 function CollapseWrapper({
   isExpanded,
   duration,
@@ -84,7 +91,7 @@ export function SidebarRouteTree({
   routeTree,
   level = 0,
 }: SidebarRouteTreeProps) {
-  const slug = useRouter().asPath.split(/[\?\#]/)[0];
+  const slug = normalizeRoutePath(useRouter().asPath.split(/[\?\#]/)[0]);
   const pendingRoute = usePendingRoute();
   const currentRoutes = routeTree.routes as RouteItem[];
   return (

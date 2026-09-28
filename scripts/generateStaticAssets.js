@@ -64,6 +64,46 @@ function generateLlmsTxt() {
   fs.writeFileSync(path.join(outputDir, 'llms.txt'), `${lines.join('\n')}\n`);
 }
 
+function staticDocumentHref(href) {
+  if (!href.startsWith('/')) return href;
+
+  const match = href.match(/^([^?#]*)([?#][\s\S]*)?$/);
+  if (!match) return href;
+
+  const [, pathname, suffix = ''] = match;
+  const relativePath = pathname.replace(/^\/+/, '').replace(/\/$/, '');
+  if (path.extname(relativePath)) return href;
+
+  const documentPath = path.join(outputDir, relativePath, 'index.html');
+  if (!fs.existsSync(documentPath)) return href;
+
+  const staticPath = relativePath
+    ? `/${relativePath}/index.html`
+    : '/index.html';
+  return `${staticPath}${suffix}`;
+}
+
+function addIndexHtmlToInternalLinks() {
+  for (const file of walk(outputDir)) {
+    if (!file.endsWith('.html')) continue;
+
+    const html = fs.readFileSync(file, 'utf8');
+    const updatedHtml = html.replace(
+      /\bhref=(["'])([^"']*)\1/g,
+      (fullMatch, quote, href) => {
+        const staticHref = staticDocumentHref(href);
+        return staticHref === href
+          ? fullMatch
+          : `href=${quote}${staticHref}${quote}`;
+      }
+    );
+
+    if (updatedHtml !== html) {
+      fs.writeFileSync(file, updatedHtml);
+    }
+  }
+}
+
 if (!fs.existsSync(outputDir)) {
   throw new Error(
     'Missing dist directory. Run `next build` before generating static assets.'
@@ -79,3 +119,4 @@ for (const file of walk(contentDir)) {
 }
 
 generateLlmsTxt();
+addIndexHtmlToInternalLinks();

@@ -1,25 +1,25 @@
 ---
-title: "State: A Component's Memory"
+title: "State: Bộ nhớ của một Component"
 ---
 
 <Intro>
 
-Components often need to change what's on the screen as a result of an interaction. Typing into the form should update the input field, clicking "next" on an image carousel should change which image is displayed, clicking "buy" should put a product in the shopping cart. Components need to "remember" things: the current input value, the current image, the shopping cart. In React, this kind of component-specific memory is called *state*.
+Các Component thường cần thay đổi nội dung trên màn hình do kết quả của một tương tác. Việc nhập dữ liệu vào form sẽ cập nhật trường input, việc nhấp vào "next" trên image carousel sẽ thay đổi hình ảnh đang được hiển thị, còn việc nhấp vào "buy" sẽ thêm một sản phẩm vào shopping cart. Các Component cần "ghi nhớ" một số thứ: giá trị input hiện tại, hình ảnh hiện tại, shopping cart. Trong React, loại bộ nhớ dành riêng cho Component này được gọi là *state*.
 
 </Intro>
 
 <YouWillLearn>
 
-* How to add a state variable with the [`useState`](/reference/react/useState) Hook
-* What pair of values the `useState` Hook returns
-* How to add more than one state variable
-* Why state is called local
+* Cách thêm một biến state bằng [`useState`](/reference/react/useState) Hook
+* Cặp giá trị mà `useState` Hook trả về
+* Cách thêm nhiều hơn một biến state
+* Tại sao state được gọi là local
 
 </YouWillLearn>
 
-## When a regular variable isn’t enough {/*when-a-regular-variable-isnt-enough*/}
+## Khi một biến thông thường là chưa đủ {/*when-a-regular-variable-isnt-enough*/}
 
-Here's a component that renders a sculpture image. Clicking the "Next" button should show the next sculpture by changing the `index` to `1`, then `2`, and so on. However, this **won't work** (you can try it!):
+Đây là một Component hiển thị hình ảnh của một tác phẩm điêu khắc. Việc nhấp vào nút "Next" sẽ hiển thị tác phẩm điêu khắc tiếp theo bằng cách thay đổi `index` thành `1`, rồi `2`, v.v. Tuy nhiên, cách này **sẽ không hoạt động** (bạn có thể thử!):
 
 <Sandpack>
 
@@ -151,46 +151,46 @@ button {
 
 </Sandpack>
 
-The `handleClick` event handler is updating a local variable, `index`. But two things prevent that change from being visible:
+Event handler `handleClick` đang cập nhật một biến local, `index`. Nhưng có hai điều khiến thay đổi đó không hiển thị:
 
-1. **Local variables don't persist between renders.** When React renders this component a second time, it renders it from scratch—it doesn't consider any changes to the local variables.
-2. **Changes to local variables won't trigger renders.** React doesn't realize it needs to render the component again with the new data.
+1. **Các biến local không được duy trì giữa các lần render.** Khi React render Component này lần thứ hai, React render lại Component từ đầu—nó không xem xét bất kỳ thay đổi nào đối với các biến local.
+2. **Thay đổi các biến local sẽ không kích hoạt render.** React không nhận ra rằng nó cần render lại Component với dữ liệu mới.
 
-To update a component with new data, two things need to happen:
+Để cập nhật một Component bằng dữ liệu mới, hai việc cần xảy ra:
 
-1. **Retain** the data between renders.
-2. **Trigger** React to render the component with new data (re-rendering).
+1. **Duy trì** dữ liệu giữa các lần render.
+2. **Kích hoạt** React render Component với dữ liệu mới (re-render).
 
-The [`useState`](/reference/react/useState) Hook provides those two things:
+Hook [`useState`](/reference/react/useState) cung cấp hai điều đó:
 
-1. A **state variable** to retain the data between renders.
-2. A **state setter function** to update the variable and trigger React to render the component again.
+1. Một **biến state** để duy trì dữ liệu giữa các lần render.
+2. Một **hàm setter của state** để cập nhật biến và kích hoạt React render lại Component.
 
-## Adding a state variable {/*adding-a-state-variable*/}
+## Thêm một biến state {/*adding-a-state-variable*/}
 
-To add a state variable, import `useState` from React at the top of the file:
+Để thêm một biến state, hãy import `useState` từ React ở đầu file:
 
 ```js
 import { useState } from 'react';
 ```
 
-Then, replace this line:
+Sau đó, thay dòng này:
 
 ```js
 let index = 0;
 ```
 
-with
+bằng
 
 ```js
 const [index, setIndex] = useState(0);
 ```
 
-`index` is a state variable and `setIndex` is the setter function.
+`index` là một biến state và `setIndex` là hàm setter.
 
-> The `[` and `]` syntax here is called [array destructuring](https://javascript.info/destructuring-assignment) and it lets you read values from an array. The array returned by `useState` always has exactly two items.
+> Cú pháp `[` và `]` ở đây được gọi là [array destructuring](https://javascript.info/destructuring-assignment) và cho phép bạn đọc các giá trị từ một array. Array do `useState` trả về luôn có chính xác hai phần tử.
 
-This is how they work together in `handleClick`:
+Đây là cách chúng phối hợp với nhau trong `handleClick`:
 
 ```js
 function handleClick() {
@@ -198,7 +198,7 @@ function handleClick() {
 }
 ```
 
-Now clicking the "Next" button switches the current sculpture:
+Bây giờ, việc nhấp vào nút "Next" sẽ chuyển sang tác phẩm điêu khắc hiện tại:
 
 <Sandpack>
 
@@ -331,57 +331,57 @@ button {
 
 </Sandpack>
 
-### Meet your first Hook {/*meet-your-first-hook*/}
+### Làm quen với Hook đầu tiên của bạn {/*meet-your-first-hook*/}
 
-In React, `useState`, as well as any other function starting with "`use`", is called a Hook.
+Trong React, `useState`, cũng như mọi hàm khác bắt đầu bằng "`use`", được gọi là một Hook.
 
-*Hooks* are special functions that are only available while React is [rendering](/learn/render-and-commit#step-1-trigger-a-render) (which we'll get into in more detail on the next page). They let you "hook into" different React features.
+*Hooks* là những hàm đặc biệt chỉ khả dụng khi React đang [rendering](/learn/render-and-commit#step-1-trigger-a-render) (chúng ta sẽ tìm hiểu chi tiết hơn ở trang tiếp theo). Chúng cho phép bạn "hook vào" các tính năng khác nhau của React.
 
-State is just one of those features, but you will meet the other Hooks later.
+State chỉ là một trong những tính năng đó, nhưng sau này bạn sẽ làm quen với các Hook khác.
 
 <Pitfall>
 
-**Hooks—functions starting with `use`—can only be called at the top level of your components or [your own Hooks.](/learn/reusing-logic-with-custom-hooks)** You can't call Hooks inside conditions, loops, or other nested functions. Hooks are functions, but it's helpful to think of them as unconditional declarations about your component's needs. You "use" React features at the top of your component similar to how you "import" modules at the top of your file.
+**Các Hook—những hàm bắt đầu bằng `use`—chỉ có thể được gọi ở cấp cao nhất của các Component hoặc [các Hook riêng của bạn.](/learn/reusing-logic-with-custom-hooks)** Bạn không thể gọi Hook bên trong các điều kiện, vòng lặp hoặc các hàm lồng nhau khác. Hook là các hàm, nhưng sẽ hữu ích hơn nếu bạn xem chúng như những khai báo không điều kiện về nhu cầu của Component. Bạn "sử dụng" các tính năng của React ở đầu Component, tương tự như cách bạn "import" các module ở đầu file.
 
 </Pitfall>
 
-### Anatomy of `useState` {/*anatomy-of-usestate*/}
+### Cấu tạo của `useState` {/*anatomy-of-usestate*/}
 
-When you call [`useState`](/reference/react/useState), you are telling React that you want this component to remember something:
+Khi gọi [`useState`](/reference/react/useState), bạn đang cho React biết rằng mình muốn Component này ghi nhớ một điều gì đó:
 
 ```js
 const [index, setIndex] = useState(0);
 ```
 
-In this case, you want React to remember `index`.
+Trong trường hợp này, bạn muốn React ghi nhớ `index`.
 
 <Note>
 
-The convention is to name this pair like `const [something, setSomething]`. You could name it anything you like, but conventions make things easier to understand across projects.
+Quy ước là đặt tên cho cặp này theo dạng `const [something, setSomething]`. Bạn có thể đặt tên tùy ý, nhưng các quy ước giúp mọi thứ dễ hiểu hơn giữa các project.
 
 </Note>
 
-The only argument to `useState` is the **initial value** of your state variable. In this example, the `index`'s initial value is set to `0` with `useState(0)`.
+Đối số duy nhất của `useState` là **giá trị khởi tạo** của biến state. Trong ví dụ này, giá trị khởi tạo của `index` được đặt thành `0` bằng `useState(0)`.
 
-Every time your component renders, `useState` gives you an array containing two values:
+Mỗi lần Component render, `useState` cung cấp cho bạn một array chứa hai giá trị:
 
-1. The **state variable** (`index`) with the value you stored.
-2. The **state setter function** (`setIndex`) which can update the state variable and trigger React to render the component again.
+1. **Biến state** (`index`) với giá trị bạn đã lưu.
+2. **Hàm setter của state** (`setIndex`) có thể cập nhật biến state và kích hoạt React render lại Component.
 
-Here's how that happens in action:
+Đây là cách điều đó diễn ra trên thực tế:
 
 ```js
 const [index, setIndex] = useState(0);
 ```
 
-1. **Your component renders the first time.** Because you passed `0` to `useState` as the initial value for `index`, it will return `[0, setIndex]`. React remembers `0` is the latest state value.
-2. **You update the state.** When a user clicks the button, it calls `setIndex(index + 1)`. `index` is `0`, so it's `setIndex(1)`. This tells React to remember `index` is `1` now and triggers another render.
-3. **Your component's second render.** React still sees `useState(0)`, but because React *remembers* that you set `index` to `1`, it returns `[1, setIndex]` instead.
-4. And so on!
+1. **Component của bạn render lần đầu.** Vì bạn truyền `0` cho `useState` làm giá trị khởi tạo của `index`, nó sẽ trả về `[0, setIndex]`. React ghi nhớ rằng `0` là giá trị state mới nhất.
+2. **Bạn cập nhật state.** Khi người dùng nhấp vào nút, thao tác đó gọi `setIndex(index + 1)`. `index` là `0`, nên nó là `setIndex(1)`. Điều này cho React biết hãy ghi nhớ rằng `index` hiện là `1` và kích hoạt một lần render khác.
+3. **Component của bạn render lần thứ hai.** React vẫn thấy `useState(0)`, nhưng vì React *ghi nhớ* rằng bạn đã đặt `index` thành `1`, nên thay vào đó nó trả về `[1, setIndex]`.
+4. Và cứ thế tiếp tục!
 
-## Giving a component multiple state variables {/*giving-a-component-multiple-state-variables*/}
+## Cung cấp cho một Component nhiều biến state {/*giving-a-component-multiple-state-variables*/}
 
-You can have as many state variables of as many types as you like in one component. This component has two state variables, a number `index` and a boolean `showMore` that's toggled when you click "Show details":
+Bạn có thể có bao nhiêu biến state tùy thích, với bao nhiêu kiểu dữ liệu tùy ý, trong một Component. Component này có hai biến state, một số `index` và một boolean `showMore` được bật/tắt khi bạn nhấp vào "Show details":
 
 <Sandpack>
 
@@ -520,19 +520,19 @@ button {
 
 </Sandpack>
 
-It is a good idea to have multiple state variables if their state is unrelated, like `index` and `showMore` in this example. But if you find that you often change two state variables together, it might be easier to combine them into one. For example, if you have a form with many fields, it's more convenient to have a single state variable that holds an object than state variable per field. Read [Choosing the State Structure](/learn/choosing-the-state-structure) for more tips.
+Bạn nên có nhiều biến state nếu state của chúng không liên quan với nhau, như `index` và `showMore` trong ví dụ này. Nhưng nếu bạn nhận thấy mình thường xuyên thay đổi hai biến state cùng nhau, có thể sẽ dễ hơn nếu gộp chúng thành một biến. Ví dụ, nếu bạn có một form với nhiều trường, sẽ thuận tiện hơn khi có một biến state duy nhất chứa một object thay vì một biến state cho mỗi trường. Hãy đọc [Choosing the State Structure](/learn/choosing-the-state-structure) để biết thêm mẹo.
 
 <DeepDive>
 
-#### How does React know which state to return? {/*how-does-react-know-which-state-to-return*/}
+#### React biết phải trả về state nào bằng cách nào? {/*how-does-react-know-which-state-to-return*/}
 
-You might have noticed that the `useState` call does not receive any information about *which* state variable it refers to. There is no "identifier" that is passed to `useState`, so how does it know which of the state variables to return? Does it rely on some magic like parsing your functions? The answer is no.
+Có thể bạn đã nhận thấy rằng lệnh gọi `useState` không nhận bất kỳ thông tin nào về việc nó tham chiếu đến biến state *nào*. Không có "identifier" nào được truyền cho `useState`, vậy làm sao nó biết phải trả về biến state nào? Có phải nó dựa vào một phép thuật nào đó như phân tích các hàm của bạn không? Câu trả lời là không.
 
-Instead, to enable their concise syntax, Hooks **rely on a stable call order on every render of the same component.** This works well in practice because if you follow the rule above ("only call Hooks at the top level"), Hooks will always be called in the same order. Additionally, a [linter plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) catches most mistakes.
+Thay vào đó, để cho phép sử dụng cú pháp ngắn gọn, các Hook **dựa vào thứ tự gọi ổn định trong mỗi lần render của cùng một Component.** Trên thực tế, cách này hoạt động tốt vì nếu bạn tuân theo quy tắc ở trên ("chỉ gọi Hook ở cấp cao nhất"), các Hook sẽ luôn được gọi theo cùng một thứ tự. Ngoài ra, một [linter plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) sẽ phát hiện hầu hết các lỗi.
 
-Internally, React holds an array of state pairs for every component. It also maintains the current pair index, which is set to `0` before rendering. Each time you call `useState`, React gives you the next state pair and increments the index. You can read more about this mechanism in [React Hooks: Not Magic, Just Arrays.](https://medium.com/@ryardley/react-hooks-not-magic-just-arrays-cd4f1857236e)
+Bên trong, React duy trì một array gồm các cặp state cho mỗi Component. React cũng duy trì chỉ mục của cặp hiện tại, được đặt thành `0` trước khi render. Mỗi lần bạn gọi `useState`, React cung cấp cho bạn cặp state tiếp theo và tăng chỉ mục lên. Bạn có thể đọc thêm về cơ chế này trong [React Hooks: Not Magic, Just Arrays.](https://medium.com/@ryardley/react-hooks-not-magic-just-arrays-cd4f1857236e)
 
-This example **doesn't use React** but it gives you an idea of how `useState` works internally:
+Ví dụ này **không sử dụng React** nhưng giúp bạn hình dung cách `useState` hoạt động bên trong:
 
 <Sandpack>
 
@@ -724,15 +724,15 @@ button { display: block; margin-bottom: 10px; }
 
 </Sandpack>
 
-You don't have to understand it to use React, but you might find this a helpful mental model.
+Bạn không cần hiểu điều này để sử dụng React, nhưng có thể bạn sẽ thấy đây là một mô hình tư duy hữu ích.
 
 </DeepDive>
 
-## State is isolated and private {/*state-is-isolated-and-private*/}
+## State được cô lập và riêng tư {/*state-is-isolated-and-private*/}
 
-State is local to a component instance on the screen. In other words, **if you render the same component twice, each copy will have completely isolated state!** Changing one of them will not affect the other.
+State là local đối với một instance của Component trên màn hình. Nói cách khác, **nếu bạn render cùng một Component hai lần, mỗi bản sao sẽ có state hoàn toàn độc lập!** Thay đổi một bản sao sẽ không ảnh hưởng đến bản sao còn lại.
 
-In this example, the `Gallery` component from earlier is rendered twice with no changes to its logic. Try clicking the buttons inside each of the galleries. Notice that their state is independent:
+Trong ví dụ này, Component `Gallery` ở phần trước được render hai lần mà không có thay đổi nào đối với logic của nó. Hãy thử nhấp vào các nút bên trong từng gallery. Lưu ý rằng state của chúng độc lập:
 
 <Sandpack>
 
@@ -891,21 +891,21 @@ button {
 
 </Sandpack>
 
-This is what makes state different from regular variables that you might declare at the top of your module. State is not tied to a particular function call or a place in the code, but it's "local" to the specific place on the screen. You rendered two `<Gallery />` components, so their state is stored separately.
+Đây là điều khiến state khác với các biến thông thường mà bạn có thể khai báo ở đầu module. State không gắn với một lần gọi hàm cụ thể hay một vị trí trong code, mà “cục bộ” với vị trí cụ thể trên màn hình. Bạn đã render hai component `<Gallery />`, nên state của chúng được lưu trữ riêng biệt.
 
-Also notice how the `Page` component doesn't "know" anything about the `Gallery` state or even whether it has any. Unlike props, **state is fully private to the component declaring it.** The parent component can't change it. This lets you add state to any component or remove it without impacting the rest of the components.
+Cũng hãy chú ý rằng component `Page` không “biết” gì về state `Gallery`, thậm chí không biết nó có state hay không. Không giống như props, **state hoàn toàn riêng tư đối với component khai báo nó.** Component cha không thể thay đổi state đó. Điều này cho phép bạn thêm state vào bất kỳ component nào hoặc xóa state đó mà không ảnh hưởng đến các component còn lại.
 
-What if you wanted both galleries to keep their states in sync? The right way to do it in React is to *remove* state from child components and add it to their closest shared parent. The next few pages will focus on organizing state of a single component, but we will return to this topic in [Sharing State Between Components.](/learn/sharing-state-between-components)
+Nếu bạn muốn cả hai gallery đồng bộ state với nhau thì sao? Cách đúng để làm điều đó trong React là *loại bỏ* state khỏi các component con và thêm state vào component cha chung gần nhất của chúng. Một vài trang tiếp theo sẽ tập trung vào việc tổ chức state của một component, nhưng chúng ta sẽ quay lại chủ đề này trong [Chia sẻ State giữa các Component.](/learn/sharing-state-between-components)
 
 <Recap>
 
-* Use a state variable when a component needs to "remember" some information between renders.
-* State variables are declared by calling the `useState` Hook.
-* Hooks are special functions that start with `use`. They let you "hook into" React features like state.
-* Hooks might remind you of imports: they need to be called unconditionally. Calling Hooks, including `useState`, is only valid at the top level of a component or another Hook.
-* The `useState` Hook returns a pair of values: the current state and the function to update it.
-* You can have more than one state variable. Internally, React matches them up by their order.
-* State is private to the component. If you render it in two places, each copy gets its own state.
+* Sử dụng một biến state khi component cần “ghi nhớ” một số thông tin giữa các lần render.
+* Các biến state được khai báo bằng cách gọi `useState` Hook.
+* Hook là những hàm đặc biệt bắt đầu bằng `use`. Chúng cho phép bạn “kết nối vào” các tính năng của React như state.
+* Hook có thể khiến bạn liên tưởng đến import: chúng cần được gọi một cách vô điều kiện. Việc gọi Hook, bao gồm cả `useState`, chỉ hợp lệ ở cấp cao nhất của một component hoặc một Hook khác.
+* `useState` Hook trả về một cặp giá trị: state hiện tại và hàm dùng để cập nhật state đó.
+* Bạn có thể có nhiều hơn một biến state. Bên trong, React ghép chúng dựa trên thứ tự.
+* State là riêng tư đối với component. Nếu bạn render component đó ở hai vị trí, mỗi bản sao sẽ có state riêng.
 
 </Recap>
 
@@ -913,11 +913,11 @@ What if you wanted both galleries to keep their states in sync? The right way to
 
 <Challenges>
 
-#### Complete the gallery {/*complete-the-gallery*/}
+#### Hoàn thiện gallery {/*complete-the-gallery*/}
 
-When you press "Next" on the last sculpture, the code crashes. Fix the logic to prevent the crash. You may do this by adding extra logic to event handler or by disabling the button when the action is not possible.
+Khi bạn nhấn “Next” ở tác phẩm điêu khắc cuối cùng, code sẽ bị crash. Hãy sửa logic để ngăn lỗi này. Bạn có thể thêm logic vào event handler hoặc vô hiệu hóa nút khi không thể thực hiện hành động.
 
-After fixing the crash, add a "Previous" button that shows the previous sculpture. It shouldn't crash on the first sculpture.
+Sau khi sửa lỗi crash, hãy thêm một nút “Previous” để hiển thị tác phẩm điêu khắc trước đó. Nút này không được gây crash khi đang ở tác phẩm điêu khắc đầu tiên.
 
 <Sandpack>
 
@@ -1059,7 +1059,7 @@ img { width: 120px; height: 120px; }
 
 <Solution>
 
-This adds a guarding condition inside both event handlers and disables the buttons when needed:
+Đoạn code này thêm một điều kiện bảo vệ bên trong cả hai event handler và vô hiệu hóa các nút khi cần:
 
 <Sandpack>
 
@@ -1219,13 +1219,13 @@ img { width: 120px; height: 120px; }
 
 </Sandpack>
 
-Notice how `hasPrev` and `hasNext` are used *both* for the returned JSX and inside the event handlers! This handy pattern works because event handler functions ["close over"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) any variables declared while rendering.
+Hãy chú ý cách `hasPrev` và `hasNext` được sử dụng *cả* cho JSX được trả về lẫn bên trong các event handler! Pattern tiện lợi này hoạt động vì các hàm event handler [“đóng”](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) mọi biến được khai báo trong quá trình render.
 
 </Solution>
 
-#### Fix stuck form inputs {/*fix-stuck-form-inputs*/}
+#### Sửa các input của form bị kẹt {/*fix-stuck-form-inputs*/}
 
-When you type into the input fields, nothing appears. It's like the input values are "stuck" with empty strings. The `value` of the first `<input>` is set to always match the `firstName` variable, and the `value` for the second `<input>` is set to always match the `lastName` variable. This is correct. Both inputs have `onChange` event handlers, which try to update the variables based on the latest user input (`e.target.value`). However, the variables don't seem to "remember" their values between re-renders. Fix this by using state variables instead.
+Khi bạn nhập vào các trường input, không có gì xuất hiện. Có vẻ như giá trị của các input bị “kẹt” ở các chuỗi rỗng. `value` của `<input>` đầu tiên được đặt để luôn khớp với biến `firstName`, còn `value` của `<input>` thứ hai được đặt để luôn khớp với biến `lastName`. Điều này là đúng. Cả hai input đều có event handler `onChange`, cố gắng cập nhật các biến dựa trên input mới nhất của người dùng (`e.target.value`). Tuy nhiên, các biến dường như không “ghi nhớ” giá trị của chúng giữa các lần render lại. Hãy sửa bằng cách sử dụng các biến state thay thế.
 
 <Sandpack>
 
@@ -1274,7 +1274,7 @@ h1 { margin-top: 10px; }
 
 <Solution>
 
-First, import `useState` from React. Then replace `firstName` and `lastName` with state variables declared by calling `useState`. Finally, replace every `firstName = ...` assignment with `setFirstName(...)`, and do the same for `lastName`. Don't forget to update `handleReset` too so that the reset button works.
+Trước tiên, import `useState` từ React. Sau đó thay thế `firstName` và `lastName` bằng các biến state được khai báo bằng cách gọi `useState`. Cuối cùng, thay mọi phép gán `firstName = ...` bằng `setFirstName(...)`, và làm tương tự với `lastName`. Đừng quên cập nhật cả `handleReset` để nút reset hoạt động.
 
 <Sandpack>
 
@@ -1325,13 +1325,13 @@ h1 { margin-top: 10px; }
 
 </Solution>
 
-#### Fix a crash {/*fix-a-crash*/}
+#### Sửa lỗi crash {/*fix-a-crash*/}
 
-Here is a small form that is supposed to let the user leave some feedback. When the feedback is submitted, it's supposed to display a thank-you message. However, it crashes with an error message saying "Rendered fewer hooks than expected". Can you spot the mistake and fix it?
+Đây là một form nhỏ được cho là cho phép người dùng để lại phản hồi. Khi phản hồi được gửi, form sẽ hiển thị một thông báo cảm ơn. Tuy nhiên, form bị crash với thông báo lỗi “Rendered fewer hooks than expected”. Bạn có phát hiện và sửa được lỗi không?
 
 <Hint>
 
-Are there any limitations on _where_ Hooks may be called? Does this component break any rules? Check if there are any comments disabling the linter checks--this is where the bugs often hide!
+Có giới hạn nào về _vị trí_ được phép gọi Hook không? Component này có vi phạm quy tắc nào không? Hãy kiểm tra xem có comment nào vô hiệu hóa các kiểm tra của linter không—đây thường là nơi các bug ẩn náu!
 
 </Hint>
 
@@ -1370,9 +1370,9 @@ export default function FeedbackForm() {
 
 <Solution>
 
-Hooks can only be called at the top level of the component function. Here, the first `isSent` definition follows this rule, but the `message` definition is nested in a condition.
+Hook chỉ có thể được gọi ở cấp cao nhất của hàm component. Ở đây, định nghĩa `isSent` đầu tiên tuân theo quy tắc này, nhưng định nghĩa `message` lại nằm bên trong một điều kiện.
 
-Move it out of the condition to fix the issue:
+Hãy đưa nó ra ngoài điều kiện để sửa vấn đề:
 
 <Sandpack>
 
@@ -1407,9 +1407,9 @@ export default function FeedbackForm() {
 
 </Sandpack>
 
-Remember, Hooks must be called unconditionally and always in the same order!
+Hãy nhớ rằng Hook phải được gọi một cách vô điều kiện và luôn theo cùng một thứ tự!
 
-You could also remove the unnecessary `else` branch to reduce the nesting. However, it's still important that all calls to Hooks happen *before* the first `return`.
+Bạn cũng có thể xóa nhánh `else` không cần thiết để giảm mức lồng nhau. Tuy nhiên, điều quan trọng là mọi lần gọi Hook đều phải xảy ra *trước* `return` đầu tiên.
 
 <Sandpack>
 
@@ -1444,19 +1444,19 @@ export default function FeedbackForm() {
 
 </Sandpack>
 
-Try moving the second `useState` call after the `if` condition and notice how this breaks it again.
+Hãy thử chuyển lời gọi `useState` thứ hai xuống sau điều kiện `if` và quan sát cách điều này lại làm code hỏng.
 
-If your linter is [configured for React](/learn/editor-setup#linting), you should see a lint error when you make a mistake like this. If you don't see an error when you try the faulty code locally, you need to set up linting for your project.
+Nếu linter của bạn được [cấu hình cho React](/learn/editor-setup#linting), bạn sẽ thấy lỗi lint khi mắc lỗi như vậy. Nếu không thấy lỗi khi thử code bị lỗi trên máy local, bạn cần thiết lập linting cho project của mình.
 
 </Solution>
 
-#### Remove unnecessary state {/*remove-unnecessary-state*/}
+#### Xóa state không cần thiết {/*remove-unnecessary-state*/}
 
-When the button is clicked, this example should ask for the user's name and then display an alert greeting them. You tried to use state to keep the name, but for some reason the first time it shows "Hello, !", and then "Hello, [name]!" with the previous input every time after.
+Khi nhấn nút, ví dụ này sẽ yêu cầu tên người dùng rồi hiển thị một alert chào họ. Bạn đã thử dùng state để lưu tên, nhưng vì lý do nào đó, lần đầu tiên nó hiển thị “Hello, !”, sau đó mỗi lần lại hiển thị “Hello, [name]!” cùng với input trước đó.
 
-To fix this code, remove the unnecessary state variable. (We will discuss about [why this didn't work](/learn/state-as-a-snapshot) later.)
+Để sửa code này, hãy xóa biến state không cần thiết. (Chúng ta sẽ thảo luận [về lý do cách này không hoạt động](/learn/state-as-a-snapshot) sau.)
 
-Can you explain why this state variable was unnecessary?
+Bạn có thể giải thích tại sao biến state này không cần thiết không?
 
 <Sandpack>
 
@@ -1483,7 +1483,7 @@ export default function FeedbackForm() {
 
 <Solution>
 
-Here is a fixed version that uses a regular `name` variable declared in the function that needs it:
+Đây là phiên bản đã sửa, sử dụng một biến `name` thông thường được khai báo trong hàm cần đến nó:
 
 <Sandpack>
 
@@ -1504,7 +1504,7 @@ export default function FeedbackForm() {
 
 </Sandpack>
 
-A state variable is only necessary to keep information between re-renders of a component. Within a single event handler, a regular variable will do fine. Don't introduce state variables when a regular variable works well.
+Một biến state chỉ cần thiết để lưu giữ thông tin giữa các lần render lại của component. Trong một event handler, một biến thông thường là đủ. Đừng đưa các biến state vào khi một biến thông thường đã hoạt động tốt.
 
 </Solution>
 

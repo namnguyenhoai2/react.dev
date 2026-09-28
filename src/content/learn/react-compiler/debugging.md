@@ -1,60 +1,60 @@
 ---
-title: Debugging and Troubleshooting
+title: Gỡ lỗi và khắc phục sự cố
 ---
 
 <Intro>
-This guide helps you identify and fix issues when using React Compiler. Learn how to debug compilation problems and resolve common issues.
+Hướng dẫn này giúp bạn xác định và khắc phục các sự cố khi sử dụng React Compiler. Tìm hiểu cách gỡ lỗi các vấn đề biên dịch và giải quyết những sự cố thường gặp.
 </Intro>
 
 <YouWillLearn>
 
-* The difference between compiler errors and runtime issues
-* Common patterns that break compilation
-* Step-by-step debugging workflow
+* Sự khác biệt giữa lỗi compiler và các vấn đề runtime
+* Những mẫu thường làm gián đoạn quá trình biên dịch
+* Quy trình gỡ lỗi từng bước
 
 </YouWillLearn>
 
-## Understanding Compiler Behavior {/*understanding-compiler-behavior*/}
+## Tìm hiểu hành vi của compiler {/*understanding-compiler-behavior*/}
 
-React Compiler is designed to handle code that follows the [Rules of React](/reference/rules). When it encounters code that might break these rules, it safely skips optimization rather than risk changing your app's behavior.
+React Compiler được thiết kế để xử lý code tuân theo [Rules of React](/reference/rules). Khi gặp code có thể vi phạm các quy tắc này, compiler sẽ bỏ qua việc tối ưu một cách an toàn thay vì mạo hiểm làm thay đổi hành vi của ứng dụng.
 
-### Compiler Errors vs Runtime Issues {/*compiler-errors-vs-runtime-issues*/}
+### Lỗi compiler và vấn đề runtime {/*compiler-errors-vs-runtime-issues*/}
 
-**Compiler errors** occur at build time and prevent your code from compiling. These are rare because the compiler is designed to skip problematic code rather than fail.
+**Lỗi compiler** xảy ra tại thời điểm build và ngăn code của bạn được biên dịch. Những lỗi này hiếm gặp vì compiler được thiết kế để bỏ qua code có vấn đề thay vì bị lỗi.
 
-**Runtime issues** occur when compiled code behaves differently than expected. Most of the time, if you encounter an issue with React Compiler, it's a runtime issue. This typically happens when your code violates the Rules of React in subtle ways that the compiler couldn't detect, and the compiler mistakenly compiled a component it should have skipped.
+**Vấn đề runtime** xảy ra khi code đã biên dịch hoạt động khác với dự kiến. Trong hầu hết trường hợp, nếu gặp sự cố với React Compiler, đó là vấn đề runtime. Điều này thường xảy ra khi code của bạn vi phạm Rules of React theo những cách tinh vi mà compiler không thể phát hiện, khiến compiler vô tình biên dịch một component mà lẽ ra nó phải bỏ qua.
 
-When debugging runtime issues, focus your efforts on finding Rules of React violations in the affected components that were not detected by the ESLint rule. The compiler relies on your code following these rules, and when they're broken in ways it can't detect, that's when runtime problems occur.
+Khi gỡ lỗi các vấn đề runtime, hãy tập trung tìm những vi phạm Rules of React trong các component bị ảnh hưởng mà ESLint rule chưa phát hiện được. Compiler dựa vào việc code của bạn tuân theo các quy tắc này; khi chúng bị vi phạm theo những cách mà compiler không thể phát hiện, các vấn đề runtime sẽ xảy ra.
 
 
-## Common Breaking Patterns {/*common-breaking-patterns*/}
+## Các mẫu thường gây lỗi {/*common-breaking-patterns*/}
 
-One of the main ways React Compiler can break your app is if your code was written to rely on memoization for correctness. This means your app depends on specific values being memoized to work properly. Since the compiler may memoize differently than your manual approach, this can lead to unexpected behavior like effects over-firing, infinite loops, or missing updates.
+Một trong những cách chính khiến React Compiler có thể làm hỏng ứng dụng của bạn là khi code được viết dựa vào memoization để đảm bảo tính đúng đắn. Điều này có nghĩa là ứng dụng của bạn phụ thuộc vào việc các giá trị cụ thể được memoize để hoạt động chính xác. Vì compiler có thể memoize theo cách khác với cách bạn thực hiện thủ công, điều này có thể dẫn đến hành vi không mong muốn như effects chạy quá nhiều lần, vòng lặp vô hạn hoặc bỏ lỡ các lần cập nhật.
 
-Common scenarios where this occurs:
+Các tình huống thường xảy ra điều này:
 
-- **Effects that rely on referential equality** - When effects depend on objects or arrays maintaining the same reference across renders
-- **Dependency arrays that need stable references** - When unstable dependencies cause effects to fire too often or create infinite loops
-- **Conditional logic based on reference checks** - When code uses referential equality checks for caching or optimization
+- **Effects phụ thuộc vào referential equality** - Khi effects phụ thuộc vào việc các object hoặc array duy trì cùng một reference qua các lần render
+- **Dependency array cần các reference ổn định** - Khi các dependency không ổn định khiến effects chạy quá thường xuyên hoặc tạo ra vòng lặp vô hạn
+- **Logic có điều kiện dựa trên việc kiểm tra reference** - Khi code sử dụng referential equality để caching hoặc tối ưu
 
-## Debugging Workflow {/*debugging-workflow*/}
+## Quy trình gỡ lỗi {/*debugging-workflow*/}
 
-Follow these steps when you encounter issues:
+Hãy thực hiện các bước sau khi gặp sự cố:
 
-### Compiler Build Errors {/*compiler-build-errors*/}
+### Lỗi build của compiler {/*compiler-build-errors*/}
 
-If you encounter a compiler error that unexpectedly breaks your build, this is likely a bug in the compiler. Report it to the [react/react](https://github.com/react/react/issues) repository with:
-- The error message
-- The code that caused the error
-- Your React and compiler versions
+Nếu gặp lỗi compiler khiến build bị gián đoạn ngoài dự kiến, nhiều khả năng đây là bug trong compiler. Hãy báo cáo lỗi đó trong repository [react/react](https://github.com/react/react/issues) cùng với:
+- Thông báo lỗi
+- Code gây ra lỗi
+- Phiên bản React và compiler của bạn
 
-### Runtime Issues {/*runtime-issues*/}
+### Vấn đề runtime {/*runtime-issues*/}
 
-For runtime behavior issues:
+Đối với các vấn đề về hành vi runtime:
 
-### 1. Temporarily Disable Compilation {/*temporarily-disable-compilation*/}
+### 1. Tạm thời tắt compilation {/*temporarily-disable-compilation*/}
 
-Use `"use no memo"` to isolate whether an issue is compiler-related:
+Sử dụng `"use no memo"` để xác định xem sự cố có liên quan đến compiler hay không:
 
 ```js
 function ProblematicComponent() {
@@ -63,31 +63,31 @@ function ProblematicComponent() {
 }
 ```
 
-If the issue disappears, it's likely related to a Rules of React violation.
+Nếu sự cố biến mất, nhiều khả năng nguyên nhân liên quan đến việc vi phạm Rules of React.
 
-You can also try removing manual memoization (useMemo, useCallback, memo) from the problematic component to verify that your app works correctly without any memoization. If the bug still occurs when all memoization is removed, you have a Rules of React violation that needs to be fixed.
+Bạn cũng có thể thử xóa memoization thủ công (useMemo, useCallback, memo) khỏi component có vấn đề để xác minh rằng ứng dụng hoạt động chính xác khi không có memoization. Nếu bug vẫn xảy ra khi đã xóa toàn bộ memoization, bạn đang gặp một vi phạm Rules of React cần được khắc phục.
 
-### 2. Fix Issues Step by Step {/*fix-issues-step-by-step*/}
+### 2. Khắc phục sự cố từng bước {/*fix-issues-step-by-step*/}
 
-1. Identify the root cause (often memoization-for-correctness)
-2. Test after each fix
-3. Remove `"use no memo"` once fixed
-4. Verify the component shows the ✨ badge in React DevTools
+1. Xác định nguyên nhân gốc (thường là memoization để đảm bảo tính đúng đắn)
+2. Kiểm thử sau mỗi lần khắc phục
+3. Xóa `"use no memo"` sau khi đã khắc phục
+4. Xác minh component hiển thị badge ✨ trong React DevTools
 
-## Reporting Compiler Bugs {/*reporting-compiler-bugs*/}
+## Báo cáo bug của compiler {/*reporting-compiler-bugs*/}
 
-If you believe you've found a compiler bug:
+Nếu cho rằng mình đã phát hiện bug trong compiler:
 
-1. **Verify it's not a Rules of React violation** - Check with ESLint
-2. **Create a minimal reproduction** - Isolate the issue in a small example
-3. **Test without the compiler** - Confirm the issue only occurs with compilation
-4. **File an [issue](https://github.com/react/react/issues/new?template=compiler_bug_report.yml)**:
-   - React and compiler versions
-   - Minimal reproduction code
-   - Expected vs actual behavior
-   - Any error messages
+1. **Xác minh rằng đó không phải là vi phạm Rules of React** - Kiểm tra bằng ESLint
+2. **Tạo reproduction tối giản** - Cô lập sự cố trong một ví dụ nhỏ
+3. **Kiểm thử khi không có compiler** - Xác nhận rằng sự cố chỉ xảy ra khi có compilation
+4. **Tạo một [issue](https://github.com/react/react/issues/new?template=compiler_bug_report.yml)**:
+   - Phiên bản React và compiler
+   - Code reproduction tối giản
+   - Hành vi dự kiến so với hành vi thực tế
+   - Mọi thông báo lỗi
 
-## Next Steps {/*next-steps*/}
+## Bước tiếp theo {/*next-steps*/}
 
-- Review the [Rules of React](/reference/rules) to prevent issues
-- Check the [incremental adoption guide](/learn/react-compiler/incremental-adoption) for gradual rollout strategies
+- Xem lại [Rules of React](/reference/rules) để ngăn ngừa sự cố
+- Xem [hướng dẫn áp dụng incremental](/learn/react-compiler/incremental-adoption) để biết các chiến lược triển khai từng bước

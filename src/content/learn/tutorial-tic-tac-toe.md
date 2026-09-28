@@ -1,31 +1,31 @@
 ---
-title: 'Tutorial: Tic-Tac-Toe'
+title: 'Hướng dẫn: Tic-Tac-Toe'
 ---
 
 <Intro>
 
-You will build a small tic-tac-toe game during this tutorial. This tutorial does not assume any existing React knowledge. The techniques you'll learn in the tutorial are fundamental to building any React app, and fully understanding it will give you a deep understanding of React.
+Trong hướng dẫn này, bạn sẽ xây dựng một trò chơi tic-tac-toe nhỏ. Hướng dẫn này không yêu cầu bạn đã có kiến thức về React. Các kỹ thuật bạn sẽ học trong hướng dẫn là nền tảng để xây dựng bất kỳ ứng dụng React nào, và việc hiểu đầy đủ các kỹ thuật này sẽ giúp bạn hiểu sâu về React.
 
 </Intro>
 
 <Note>
 
-This tutorial is designed for people who prefer to **learn by doing** and want to quickly try making something tangible. If you prefer learning each concept step by step, start with [Describing the UI.](/learn/describing-the-ui)
+Hướng dẫn này dành cho những người thích **học bằng cách thực hành** và muốn nhanh chóng thử tạo ra một sản phẩm cụ thể. Nếu bạn muốn học từng khái niệm theo từng bước, hãy bắt đầu với [Mô tả UI.](/learn/describing-the-ui)
 
 </Note>
 
-The tutorial is divided into several sections:
+Hướng dẫn được chia thành một số phần:
 
-- [Setup for the tutorial](#setup-for-the-tutorial) will give you **a starting point** to follow the tutorial.
-- [Overview](#overview) will teach you **the fundamentals** of React: components, props, and state.
-- [Completing the game](#completing-the-game) will teach you **the most common techniques** in React development.
-- [Adding time travel](#adding-time-travel) will give you **a deeper insight** into the unique strengths of React.
+- [Thiết lập cho hướng dẫn](#setup-for-the-tutorial) sẽ cung cấp cho bạn **điểm bắt đầu** để làm theo hướng dẫn.
+- [Tổng quan](#overview) sẽ dạy bạn **những kiến thức nền tảng** về React: components, props và state.
+- [Hoàn thiện trò chơi](#completing-the-game) sẽ dạy bạn **những kỹ thuật phổ biến nhất** trong phát triển React.
+- [Thêm tính năng du hành thời gian](#adding-time-travel) sẽ giúp bạn **hiểu sâu hơn** về những điểm mạnh độc đáo của React.
 
-### What are you building? {/*what-are-you-building*/}
+### Bạn sẽ xây dựng gì? {/*what-are-you-building*/}
 
-In this tutorial, you'll build an interactive tic-tac-toe game with React.
+Trong hướng dẫn này, bạn sẽ xây dựng một trò chơi tic-tac-toe tương tác bằng React.
 
-You can see what it will look like when you're finished here:
+Bạn có thể xem giao diện của trò chơi sau khi hoàn thành tại đây:
 
 <Sandpack>
 
@@ -194,15 +194,15 @@ body {
 
 </Sandpack>
 
-If the code doesn't make sense to you yet, or if you are unfamiliar with the code's syntax, don't worry! The goal of this tutorial is to help you understand React and its syntax.
+Nếu bạn vẫn chưa hiểu code hoặc chưa quen với cú pháp của code, đừng lo lắng! Mục tiêu của hướng dẫn này là giúp bạn hiểu React và cú pháp của nó.
 
-We recommend that you check out the tic-tac-toe game above before continuing with the tutorial. One of the features that you'll notice is that there is a numbered list to the right of the game's board. This list gives you a history of all of the moves that have occurred in the game, and it is updated as the game progresses.
+Chúng tôi khuyên bạn nên trải nghiệm trò chơi tic-tac-toe ở trên trước khi tiếp tục với hướng dẫn. Một trong những tính năng bạn sẽ nhận thấy là có một danh sách được đánh số ở bên phải bàn cờ. Danh sách này ghi lại lịch sử tất cả các nước đi đã diễn ra trong trò chơi và được cập nhật khi trò chơi tiến triển.
 
-Once you've played around with the finished tic-tac-toe game, keep scrolling. You'll start with a simpler template in this tutorial. Our next step is to set you up so that you can start building the game.
+Sau khi đã thử chơi trò chơi tic-tac-toe hoàn chỉnh, hãy tiếp tục cuộn xuống. Trong hướng dẫn này, bạn sẽ bắt đầu với một template đơn giản hơn. Bước tiếp theo là thiết lập để bạn có thể bắt đầu xây dựng trò chơi.
 
-## Setup for the tutorial {/*setup-for-the-tutorial*/}
+## Thiết lập cho hướng dẫn {/*setup-for-the-tutorial*/}
 
-In the live code editor below, click **Fork** in the top-right corner to open the editor in a new tab using the website CodeSandbox. CodeSandbox lets you write code in your browser and preview how your users will see the app you've created. The new tab should display an empty square and the starter code for this tutorial.
+Trong trình soạn thảo code trực tiếp bên dưới, hãy nhấp vào **Fork** ở góc trên bên phải để mở trình soạn thảo trong một tab mới bằng website CodeSandbox. CodeSandbox cho phép bạn viết code trong trình duyệt và xem trước ứng dụng bạn tạo sẽ hiển thị như thế nào với người dùng. Tab mới sẽ hiển thị một hình vuông trống và code khởi đầu cho hướng dẫn này.
 
 <Sandpack>
 
@@ -261,33 +261,33 @@ body {
 
 <Note>
 
-You can also follow this tutorial using your local development environment. To do this, you need to:
+Bạn cũng có thể làm theo hướng dẫn này bằng môi trường phát triển cục bộ của mình. Để thực hiện việc này, bạn cần:
 
-1. Install [Node.js](https://nodejs.org/en/)
-1. In the CodeSandbox tab you opened earlier, press the top-left corner button to open the menu, and then choose **Download Sandbox** in that menu to download an archive of the files locally
-1. Unzip the archive, then open a terminal and `cd` to the directory you unzipped
-1. Install the dependencies with `npm install`
-1. Run `npm start` to start a local server and follow the prompts to view the code running in a browser
+1. Cài đặt [Node.js](https://nodejs.org/en/)
+1. Trong tab CodeSandbox đã mở trước đó, nhấn nút ở góc trên bên trái để mở menu, sau đó chọn **Download Sandbox** trong menu đó để tải một archive chứa các file về máy
+1. Giải nén archive, sau đó mở terminal và `cd` đến thư mục bạn đã giải nén
+1. Cài đặt các dependencies bằng `npm install`
+1. Chạy `npm start` để khởi động local server và làm theo các hướng dẫn để xem code đang chạy trong trình duyệt
 
-If you get stuck, don't let this stop you! Follow along online instead and try a local setup again later.
+Nếu gặp khó khăn, đừng để điều đó ngăn cản bạn! Hãy tiếp tục làm theo hướng dẫn trực tuyến và thử thiết lập môi trường cục bộ vào lúc khác.
 
 </Note>
 
-## Overview {/*overview*/}
+## Tổng quan {/*overview*/}
 
-Now that you're set up, let's get an overview of React!
+Bây giờ bạn đã thiết lập xong, hãy cùng tìm hiểu tổng quan về React!
 
-### Inspecting the starter code {/*inspecting-the-starter-code*/}
+### Kiểm tra code khởi đầu {/*inspecting-the-starter-code*/}
 
-In CodeSandbox you'll see three main sections:
+Trong CodeSandbox, bạn sẽ thấy ba khu vực chính:
 
-![CodeSandbox with starter code](../images/tutorial/react-starter-code-codesandbox.png)
+![CodeSandbox với code khởi đầu](../images/tutorial/react-starter-code-codesandbox.png)
 
-1. The _Files_ section with a list of files like `App.js`, `index.js`, `styles.css` in `src` folder and a folder called `public`
-1. The _code editor_ where you'll see the source code of your selected file
-1. The _browser_ section where you'll see how the code you've written will be displayed
+1. Khu vực _Files_ với danh sách các file như `App.js`, `index.js`, `styles.css` trong thư mục `src` và một thư mục có tên `public`
+1. _code editor_, nơi bạn sẽ thấy source code của file đã chọn
+1. Khu vực _browser_, nơi bạn sẽ thấy code đã viết được hiển thị như thế nào
 
-The `App.js` file should be selected in the _Files_ section. The contents of that file in the _code editor_ should be:
+File `App.js` sẽ được chọn trong khu vực _Files_. Nội dung của file đó trong _code editor_ sẽ là:
 
 ```jsx
 export default function Square() {
@@ -295,15 +295,15 @@ export default function Square() {
 }
 ```
 
-The _browser_ section should be displaying a square with an X in it like this:
+Khu vực _browser_ sẽ hiển thị một hình vuông có chữ X bên trong như sau:
 
-![x-filled square](../images/tutorial/x-filled-square.png)
+![hình vuông chứa x](../images/tutorial/x-filled-square.png)
 
-Now let's have a look at the files in the starter code.
+Bây giờ hãy cùng xem các file trong code khởi đầu.
 
 #### `App.js` {/*appjs*/}
 
-The code in `App.js` creates a _component_. In React, a component is a piece of reusable code that represents a part of a user interface. Components are used to render, manage, and update the UI elements in your application. Let's look at the component line by line to see what's going on:
+Code trong `App.js` tạo ra một _component_. Trong React, component là một đoạn code có thể tái sử dụng, đại diện cho một phần của user interface. Components được dùng để render, quản lý và cập nhật các phần tử UI trong ứng dụng của bạn. Hãy xem component này từng dòng để hiểu điều gì đang xảy ra:
 
 ```js {1}
 export default function Square() {
@@ -311,7 +311,7 @@ export default function Square() {
 }
 ```
 
-The first line defines a function called `Square`. The `export` JavaScript keyword makes this function accessible outside of this file. The `default` keyword tells other files using your code that it's the main function in your file.
+Dòng đầu tiên định nghĩa một function có tên `Square`. Từ khóa JavaScript `export` giúp function này có thể được truy cập bên ngoài file này. Từ khóa `default` cho các file khác sử dụng code của bạn biết rằng đây là function chính trong file.
 
 ```js {2}
 export default function Square() {
@@ -319,15 +319,15 @@ export default function Square() {
 }
 ```
 
-The second line returns a button. The `return` JavaScript keyword means whatever comes after is returned as a value to the caller of the function. `<button>` is a *JSX element*. A JSX element is a combination of JavaScript code and HTML tags that describes what you'd like to display. `className="square"` is a button property or *prop* that tells CSS how to style the button. `X` is the text displayed inside of the button and `</button>` closes the JSX element to indicate that any following content shouldn't be placed inside the button.
+Dòng thứ hai trả về một button. Từ khóa JavaScript `return` có nghĩa là mọi thứ theo sau nó sẽ được trả về dưới dạng giá trị cho bên gọi function. `<button>` là một *JSX element*. JSX element là sự kết hợp giữa code JavaScript và các thẻ HTML, mô tả nội dung bạn muốn hiển thị. `className="square"` là một thuộc tính của button, hay còn gọi là *prop*, cho CSS biết cách tạo kiểu cho button. `X` là nội dung được hiển thị bên trong button, còn `</button>` đóng JSX element để cho biết mọi nội dung tiếp theo không được đặt bên trong button.
 
 #### `styles.css` {/*stylescss*/}
 
-Click on the file labeled `styles.css` in the _Files_ section of CodeSandbox. This file defines the styles for your React app. The first two _CSS selectors_ (`*` and `body`) define the style of large parts of your app while the `.square` selector defines the style of any component where the `className` property is set to `square`. In your code, that would match the button from your Square component in the `App.js` file.
+Nhấp vào file có nhãn `styles.css` trong khu vực _Files_ của CodeSandbox. File này định nghĩa các style cho ứng dụng React của bạn. Hai _CSS selector_ đầu tiên (`*` và `body`) định nghĩa style cho các phần lớn trong ứng dụng, trong khi selector `.square` định nghĩa style cho bất kỳ component nào có thuộc tính `className` được đặt thành `square`. Trong code của bạn, điều đó sẽ khớp với button từ component Square trong file `App.js`.
 
 #### `index.js` {/*indexjs*/}
 
-Click on the file labeled `index.js` in the _Files_ section of CodeSandbox. You won't be editing this file during the tutorial but it is the bridge between the component you created in the `App.js` file and the web browser.
+Nhấp vào file có nhãn `index.js` trong khu vực _Files_ của CodeSandbox. Bạn sẽ không chỉnh sửa file này trong suốt hướng dẫn, nhưng nó là cầu nối giữa component bạn đã tạo trong file `App.js` và web browser.
 
 ```jsx
 import { StrictMode } from 'react';
@@ -337,20 +337,20 @@ import './styles.css';
 import App from './App';
 ```
 
-Lines 1-5 bring all the necessary pieces together:
+Các dòng 1-5 kết hợp tất cả những phần cần thiết:
 
 * React
-* React's library to talk to web browsers (React DOM)
-* the styles for your components
-* the component you created in `App.js`.
+* thư viện của React dùng để giao tiếp với web browser (React DOM)
+* các style cho components của bạn
+* component bạn đã tạo trong `App.js`.
 
-The remainder of the file brings all the pieces together and injects the final product into `index.html` in the `public` folder.
+Phần còn lại của file kết hợp tất cả các phần và inject sản phẩm hoàn chỉnh vào `index.html` trong thư mục `public`.
 
-### Building the board {/*building-the-board*/}
+### Xây dựng bàn cờ {/*building-the-board*/}
 
-Let's get back to `App.js`. This is where you'll spend the rest of the tutorial.
+Hãy quay lại `App.js`. Đây là nơi bạn sẽ dành phần còn lại của hướng dẫn.
 
-Currently the board is only a single square, but you need nine! If you just try and copy paste your square to make two squares like this:
+Hiện tại bàn cờ chỉ có một hình vuông, nhưng bạn cần chín hình vuông! Nếu chỉ sao chép và dán hình vuông để tạo thành hai hình vuông như sau:
 
 ```js {2}
 export default function Square() {
@@ -358,15 +358,15 @@ export default function Square() {
 }
 ```
 
-You'll get this error:
+Bạn sẽ nhận được lỗi này:
 
 <ConsoleBlock level="error">
 
-/src/App.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX Fragment `<>...</>`?
+/src/App.js: Các JSX element liền kề phải được đặt trong một thẻ bao quanh. Bạn có muốn dùng JSX Fragment `<>...</>` không?
 
 </ConsoleBlock>
 
-React components need to return a single JSX element and not multiple adjacent JSX elements like two buttons. To fix this you can use *Fragments* (`<>` and `</>`) to wrap multiple adjacent JSX elements like this:
+Các React component phải trả về một JSX element duy nhất thay vì nhiều JSX element liền kề, chẳng hạn như hai button. Để khắc phục điều này, bạn có thể dùng *Fragments* (`<>` và `</>`) để bao quanh nhiều JSX element liền kề như sau:
 
 ```js {3-6}
 export default function Square() {
@@ -379,17 +379,17 @@ export default function Square() {
 }
 ```
 
-Now you should see:
+Bây giờ bạn sẽ thấy:
 
-![two x-filled squares](../images/tutorial/two-x-filled-squares.png)
+![hai hình vuông chứa x](../images/tutorial/two-x-filled-squares.png)
 
-Great! Now you just need to copy-paste a few times to add nine squares and...
+Tuyệt! Bây giờ bạn chỉ cần sao chép và dán thêm vài lần để tạo chín hình vuông và...
 
-![nine x-filled squares in a line](../images/tutorial/nine-x-filled-squares.png)
+![chín hình vuông chứa x trên một hàng](../images/tutorial/nine-x-filled-squares.png)
 
-Oh no! The squares are all in a single line, not in a grid like you need for our board. To fix this you'll need to group your squares into rows with `div`s and add some CSS classes. While you're at it, you'll give each square a number to make sure you know where each square is displayed.
+Ôi không! Các hình vuông đều nằm trên một hàng duy nhất thay vì nằm trong một grid như bàn cờ bạn cần. Để khắc phục, bạn sẽ cần nhóm các hình vuông thành từng hàng bằng các thẻ `div`s và thêm một số CSS class. Nhân tiện, bạn cũng sẽ đánh số từng hình vuông để đảm bảo biết mỗi hình vuông được hiển thị ở đâu.
 
-In the `App.js` file, update the `Square` component to look like this:
+Trong file `App.js`, hãy cập nhật component `Square` để có dạng như sau:
 
 ```js {3-19}
 export default function Square() {
@@ -415,11 +415,11 @@ export default function Square() {
 }
 ```
 
-The CSS defined in `styles.css` styles the divs with the `className` of `board-row`. Now that you've grouped your components into rows with the styled `div`s you have your tic-tac-toe board:
+CSS được định nghĩa trong `styles.css` tạo style cho các div có `className` là `board-row`. Bây giờ bạn đã nhóm các component thành từng hàng bằng các `div`s có style, bạn đã có bàn cờ tic-tac-toe:
 
-![tic-tac-toe board filled with numbers 1 through 9](../images/tutorial/number-filled-board.png)
+![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](../images/tutorial/number-filled-board.png)
 
-But you now have a problem. Your component named `Square`, really isn't a square anymore. Let's fix that by changing the name to `Board`:
+Nhưng bây giờ bạn gặp một vấn đề. Component có tên `Square` thực sự không còn là một square nữa. Hãy sửa điều đó bằng cách đổi tên thành `Board`:
 
 ```js {1}
 export default function Board() {
@@ -427,7 +427,7 @@ export default function Board() {
 }
 ```
 
-At this point your code should look something like this:
+Lúc này, code của bạn sẽ trông gần giống như sau:
 
 <Sandpack>
 
@@ -504,15 +504,15 @@ body {
 
 <Note>
 
-Psssst... That's a lot to type! It's okay to copy and paste code from this page. However, if you're up for a little challenge, we recommend only copying code that you've manually typed at least once yourself.
+Psssst... Có rất nhiều thứ phải gõ! Bạn có thể yên tâm sao chép và dán code từ trang này. Tuy nhiên, nếu bạn muốn thử một chút thách thức, chúng tôi khuyên bạn chỉ sao chép những đoạn code mà bạn đã tự tay gõ ít nhất một lần.
 
 </Note>
 
-### Passing data through props {/*passing-data-through-props*/}
+### Truyền dữ liệu qua props {/*passing-data-through-props*/}
 
-Next, you'll want to change the value of a square from empty to "X" when the user clicks on the square. With how you've built the board so far you would need to copy-paste the code that updates the square nine times (once for each square you have)! Instead of copy-pasting, React's component architecture allows you to create a reusable component to avoid messy, duplicated code.
+Tiếp theo, bạn sẽ muốn thay đổi giá trị của một ô từ rỗng thành "X" khi người dùng nhấp vào ô đó. Với cách xây dựng bàn cờ hiện tại, bạn sẽ phải sao chép-dán đoạn code cập nhật ô chín lần (mỗi lần cho một ô)! Thay vì sao chép-dán, kiến trúc component của React cho phép bạn tạo một component có thể tái sử dụng để tránh code lộn xộn và trùng lặp.
 
-First, you are going to copy the line defining your first square (`<button className="square">1</button>`) from your `Board` component into a new `Square` component:
+Trước tiên, bạn sẽ sao chép dòng định nghĩa ô đầu tiên của mình (`<button className="square">1</button>`) từ component `Board` vào một component `Square` mới:
 
 ```js {1-3}
 function Square() {
@@ -524,7 +524,7 @@ export default function Board() {
 }
 ```
 
-Then you'll update the Board component to render that `Square` component using JSX syntax:
+Sau đó, bạn sẽ cập nhật component Board để render component `Square` đó bằng cú pháp JSX:
 
 ```js {5-19}
 // ...
@@ -551,15 +551,15 @@ export default function Board() {
 }
 ```
 
-Note how unlike the browser `div`s, your own components `Board` and `Square` must start with a capital letter.
+Lưu ý rằng không giống như các `div` của trình duyệt, các component của riêng bạn là `Board` và `Square` phải bắt đầu bằng chữ cái viết hoa.
 
-Let's take a look:
+Hãy cùng xem:
 
-![one-filled board](../images/tutorial/board-filled-with-ones.png)
+![bàn cờ có một ô đã được điền](../images/tutorial/board-filled-with-ones.png)
 
-Oh no! You lost the numbered squares you had before. Now each square says "1". To fix this, you will use *props* to pass the value each square should have from the parent component (`Board`) to its child (`Square`).
+Ôi không! Bạn đã làm mất các ô được đánh số trước đó. Bây giờ mỗi ô đều hiển thị "1". Để sửa điều này, bạn sẽ dùng *props* để truyền giá trị mà mỗi ô nên có từ component cha (`Board`) đến component con (`Square`).
 
-Update the `Square` component to read the `value` prop that you'll pass from the `Board`:
+Cập nhật component `Square` để đọc prop `value` mà bạn sẽ truyền từ `Board`:
 
 ```js {1}
 function Square({ value }) {
@@ -567,9 +567,9 @@ function Square({ value }) {
 }
 ```
 
-`function Square({ value })` indicates the Square component can be passed a prop called `value`.
+`function Square({ value })` cho biết component Square có thể nhận một prop có tên là `value`.
 
-Now you want to display that `value` instead of `1` inside every square. Try doing it like this:
+Bây giờ bạn muốn hiển thị `value` đó thay vì `1` bên trong mỗi ô. Hãy thử làm như sau:
 
 ```js {2}
 function Square({ value }) {
@@ -577,11 +577,11 @@ function Square({ value }) {
 }
 ```
 
-Oops, this is not what you wanted:
+Ồ, đây không phải điều bạn muốn:
 
-![value-filled board](../images/tutorial/board-filled-with-value.png)
+![bàn cờ đã điền giá trị](../images/tutorial/board-filled-with-value.png)
 
-You wanted to render the JavaScript variable called `value` from your component, not the word "value". To "escape into JavaScript" from JSX, you need curly braces. Add curly braces around `value` in JSX like so:
+Bạn muốn render biến JavaScript có tên `value` từ component của mình, chứ không phải từ "value". Để "thoát vào JavaScript" từ JSX, bạn cần dùng dấu ngoặc nhọn. Thêm dấu ngoặc nhọn xung quanh `value` trong JSX như sau:
 
 ```js {2}
 function Square({ value }) {
@@ -589,11 +589,11 @@ function Square({ value }) {
 }
 ```
 
-For now, you should see an empty board:
+Hiện tại, bạn sẽ thấy một bàn cờ trống:
 
-![empty board](../images/tutorial/empty-board.png)
+![bàn cờ trống](../images/tutorial/empty-board.png)
 
-This is because the `Board` component hasn't passed the `value` prop to each `Square` component it renders yet. To fix it you'll add the `value` prop to each `Square` component rendered by the `Board` component:
+Điều này là do component `Board` vẫn chưa truyền prop `value` cho từng component `Square` mà nó render. Để sửa điều này, bạn sẽ thêm prop `value` vào từng component `Square` được render bởi component `Board`:
 
 ```js {5-7,10-12,15-17}
 export default function Board() {
@@ -619,11 +619,11 @@ export default function Board() {
 }
 ```
 
-Now you should see a grid of numbers again:
+Bây giờ bạn sẽ lại thấy một lưới các số:
 
-![tic-tac-toe board filled with numbers 1 through 9](../images/tutorial/number-filled-board.png)
+![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](../images/tutorial/number-filled-board.png)
 
-Your updated code should look like this:
+Code đã cập nhật của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -702,9 +702,9 @@ body {
 
 </Sandpack>
 
-### Making an interactive component {/*making-an-interactive-component*/}
+### Tạo một component tương tác {/*making-an-interactive-component*/}
 
-Let's fill the `Square` component with an `X` when you click it. Declare a function called `handleClick` inside of the `Square`. Then, add `onClick` to the props of the button JSX element returned from the `Square`:
+Hãy thêm một `X` vào component `Square` khi bạn nhấp vào nó. Khai báo một hàm có tên `handleClick` bên trong `Square`. Sau đó, thêm `onClick` vào props của phần tử button JSX được trả về từ `Square`:
 
 ```js {2-4,9}
 function Square({ value }) {
@@ -723,19 +723,19 @@ function Square({ value }) {
 }
 ```
 
-If you click on a square now, you should see a log saying `"clicked!"` in the _Console_ tab at the bottom of the _Browser_ section in CodeSandbox. Clicking the square more than once will log `"clicked!"` again. Repeated console logs with the same message will not create more lines in the console. Instead, you will see an incrementing counter next to your first `"clicked!"` log.
+Nếu bây giờ bạn nhấp vào một ô, bạn sẽ thấy một log có nội dung `"clicked!"` trong tab _Console_ ở cuối phần _Browser_ trong CodeSandbox. Nhấp vào ô nhiều lần sẽ ghi lại `"clicked!"` lần nữa. Các log trong console lặp lại với cùng một thông báo sẽ không tạo thêm dòng mới trong console. Thay vào đó, bạn sẽ thấy một bộ đếm tăng dần bên cạnh log `"clicked!"` đầu tiên.
 
 <Note>
 
-If you are following this tutorial using your local development environment, you need to open your browser's Console. For example, if you use the Chrome browser, you can view the Console with the keyboard shortcut **Shift + Ctrl + J** (on Windows/Linux) or **Option + ⌘ + J** (on macOS).
+Nếu bạn đang làm theo hướng dẫn này bằng môi trường development cục bộ, bạn cần mở Console của trình duyệt. Ví dụ, nếu dùng trình duyệt Chrome, bạn có thể mở Console bằng phím tắt **Shift + Ctrl + J** (trên Windows/Linux) hoặc **Option + ⌘ + J** (trên macOS).
 
 </Note>
 
-As a next step, you want the Square component to "remember" that it got clicked, and fill it with an "X" mark. To "remember" things, components use *state*.
+Bước tiếp theo, bạn muốn component Square "ghi nhớ" rằng nó đã được nhấp vào và điền vào đó một dấu "X". Để "ghi nhớ" thông tin, các component sử dụng *state*.
 
-React provides a special function called `useState` that you can call from your component to let it "remember" things. Let's store the current value of the `Square` in state, and change it when the `Square` is clicked.
+React cung cấp một hàm đặc biệt có tên `useState` mà bạn có thể gọi từ component để cho phép nó "ghi nhớ" thông tin. Hãy lưu giá trị hiện tại của `Square` vào state và thay đổi giá trị đó khi `Square` được nhấp vào.
 
-Import `useState` at the top of the file. Remove the `value` prop from the `Square` component. Instead, add a new line at the start of the `Square` that calls `useState`. Have it return a state variable called `value`:
+Import `useState` ở đầu file. Xóa prop `value` khỏi component `Square`. Thay vào đó, thêm một dòng mới ở đầu `Square` để gọi `useState`. Cho hàm này trả về một state variable có tên `value`:
 
 ```js {1,3,4}
 import { useState } from 'react';
@@ -747,9 +747,9 @@ function Square() {
     //...
 ```
 
-`value` stores the value and `setValue` is a function that can be used to change the value. The `null` passed to `useState` is used as the initial value for this state variable, so `value` here starts off equal to `null`.
+`value` lưu giá trị và `setValue` là một hàm có thể dùng để thay đổi giá trị đó. `null` được truyền vào `useState` được dùng làm giá trị khởi tạo cho state variable này, vì vậy `value` ở đây ban đầu sẽ bằng `null`.
 
-Since the `Square` component no longer accepts props anymore, you'll remove the `value` prop from all nine of the Square components created by the Board component:
+Vì component `Square` không còn nhận props nữa, bạn sẽ xóa prop `value` khỏi cả chín component Square được component Board tạo ra:
 
 ```js {6-8,11-13,16-18}
 // ...
@@ -776,7 +776,7 @@ export default function Board() {
 }
 ```
 
-Now you'll change `Square` to display an "X" when clicked. Replace the `console.log("clicked!");` event handler with `setValue('X');`. Now your `Square` component looks like this:
+Bây giờ bạn sẽ thay đổi `Square` để hiển thị "X" khi được nhấp vào. Thay event handler `console.log("clicked!");` bằng `setValue('X');`. Lúc này component `Square` của bạn sẽ trông như sau:
 
 ```js {5}
 function Square() {
@@ -797,13 +797,13 @@ function Square() {
 }
 ```
 
-By calling this `set` function from an `onClick` handler, you're telling React to re-render that `Square` whenever its `<button>` is clicked. After the update, the `Square`'s `value` will be `'X'`, so you'll see the "X" on the game board. Click on any Square, and "X" should show up:
+Bằng cách gọi hàm `set` này từ một event handler `onClick`, bạn đang yêu cầu React render lại `Square` đó mỗi khi `<button>` của nó được nhấp vào. Sau khi cập nhật, `Square` của `value` sẽ là `'X'`, vì vậy bạn sẽ thấy "X" trên bàn cờ. Nhấp vào bất kỳ Square nào, và "X" sẽ xuất hiện:
 
-![adding xes to board](../images/tutorial/tictac-adding-x-s.gif)
+![thêm các dấu x vào bàn cờ](../images/tutorial/tictac-adding-x-s.gif)
 
-Each Square has its own state: the `value` stored in each Square is completely independent of the others. When you call a `set` function in a component, React automatically updates the child components inside too.
+Mỗi Square có state riêng: `value` được lưu trong mỗi Square hoàn toàn độc lập với các Square khác. Khi bạn gọi hàm `set` trong một component, React cũng tự động cập nhật các component con bên trong component đó.
 
-After you've made the above changes, your code will look like this:
+Sau khi thực hiện các thay đổi trên, code của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -899,36 +899,36 @@ body {
 
 ### React Developer Tools {/*react-developer-tools*/}
 
-React Developer Tools let you check the props and the state of your React components. It is available as a [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/), and [Edge](https://microsoftedge.microsoft.com/addons/detail/react-developer-tools/gpphkfbcpidddadnkolkpfckpihlkkil) browser extension.
+React Developer Tools cho phép bạn kiểm tra props và state của các component React. Công cụ này có sẵn dưới dạng tiện ích mở rộng cho trình duyệt [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/), và [Edge](https://microsoftedge.microsoft.com/addons/detail/react-developer-tools/gpphkfbcpidddadnkolkpfckpihlkkil).
 
-After you install it, a new *Components* tab will appear in your browser Developer Tools for sites using React. If you're following along in CodeSandbox, you'd need to first open your sandbox preview in a new tab:
+Sau khi cài đặt, một tab *Components* mới sẽ xuất hiện trong Developer Tools của trình duyệt đối với các trang web sử dụng React. Nếu bạn đang làm theo hướng dẫn trong CodeSandbox, trước tiên bạn cần mở bản xem trước sandbox trong một tab mới:
 
-![opening in new tab](../images/tutorial/sandbox-new-tab.png)
+![mở trong tab mới](../images/tutorial/sandbox-new-tab.png)
 
-Then, on the preview page, open your browser's DevTools and find the *Components* tab:
+Sau đó, trên trang xem trước, hãy mở DevTools của trình duyệt và tìm tab *Components*:
 
-![components tab](../images/tutorial/components-tab.png)
+![tab components](../images/tutorial/components-tab.png)
 
-To inspect a particular component on the screen, use the button in the top left corner of the Components tab:
+Để kiểm tra một component cụ thể trên màn hình, hãy dùng nút ở góc trên bên trái của tab Components:
 
-![inspecting with devtools](../images/tutorial/devtools-inspect.gif)
+![kiểm tra bằng devtools](../images/tutorial/devtools-inspect.gif)
 
 
-## Completing the game {/*completing-the-game*/}
+## Hoàn thiện trò chơi {/*completing-the-game*/}
 
-By this point, you have all the basic building blocks for your tic-tac-toe game. To have a complete game, you now need to alternate placing "X"s and "O"s on the board, and you need a way to determine a winner.
+Đến thời điểm này, bạn đã có tất cả các khối xây dựng cơ bản cho trò chơi tic-tac-toe. Để hoàn thiện trò chơi, bây giờ bạn cần lần lượt đặt các dấu "X" và "O" lên bàn cờ, đồng thời cần có cách xác định người chiến thắng.
 
-### Lifting state up {/*lifting-state-up*/}
+### Đưa state lên component cha {/*lifting-state-up*/}
 
-Currently, each `Square` component maintains a part of the game's state. To check for a winner in a tic-tac-toe game, the `Board` would need to somehow know the state of each of the 9 `Square` components.
+Hiện tại, mỗi component `Square` duy trì một phần state của trò chơi. Để kiểm tra người chiến thắng trong trò chơi tic-tac-toe, `Board` sẽ cần biết bằng cách nào đó state của từng trong số 9 component `Square`.
 
-How would you approach that? At first, you might guess that the `Board` needs to "ask" each `Square` for that `Square`'s state. Although this approach is technically possible in React, we discourage it because the code becomes difficult to understand, susceptible to bugs, and hard to refactor. Instead, the best approach is to store the game's state in the parent `Board` component instead of in each `Square`. The `Board` component can tell each `Square` what to display by passing a prop, like you did when you passed a number to each Square.
+Bạn sẽ tiếp cận việc này như thế nào? Ban đầu, bạn có thể đoán rằng `Board` cần "hỏi" từng `Square` về state của `Square` đó. Mặc dù cách tiếp cận này về mặt kỹ thuật là có thể thực hiện trong React, chúng tôi không khuyến khích vì code sẽ trở nên khó hiểu, dễ phát sinh bug và khó refactor. Thay vào đó, cách tốt nhất là lưu state của trò chơi trong component `Board` cha thay vì trong từng `Square`. Component `Board` có thể cho từng `Square` biết cần hiển thị gì bằng cách truyền một prop, giống như khi bạn truyền một số cho mỗi Square.
 
-**To collect data from multiple children, or to have two child components communicate with each other, declare the shared state in their parent component instead. The parent component can pass that state back down to the children via props. This keeps the child components in sync with each other and with their parent.**
+**Để thu thập dữ liệu từ nhiều component con hoặc để hai component con giao tiếp với nhau, thay vào đó hãy khai báo state dùng chung trong component cha của chúng. Component cha có thể truyền state đó trở lại các component con thông qua props. Điều này giữ cho các component con đồng bộ với nhau và với component cha của chúng.**
 
-Lifting state into a parent component is common when React components are refactored.
+Đưa state lên một component cha là việc thường gặp khi các component React được refactor.
 
-Let's take this opportunity to try it out. Edit the `Board` component so that it declares a state variable named `squares` that defaults to an array of 9 nulls corresponding to the 9 squares:
+Hãy tận dụng cơ hội này để thử. Chỉnh sửa component `Board` để khai báo một biến state có tên `squares`, mặc định là một mảng gồm 9 giá trị null tương ứng với 9 ô:
 
 ```js {3}
 // ...
@@ -940,13 +940,13 @@ export default function Board() {
 }
 ```
 
-`Array(9).fill(null)` creates an array with nine elements and sets each of them to `null`. The `useState()` call around it declares a `squares` state variable that's initially set to that array. Each entry in the array corresponds to the value of a square. When you fill the board in later, the `squares` array will look like this:
+`Array(9).fill(null)` tạo một mảng gồm chín phần tử và đặt mỗi phần tử thành `null`. Lời gọi `useState()` bao quanh nó khai báo một biến state `squares`, ban đầu được đặt thành mảng đó. Mỗi phần tử trong mảng tương ứng với giá trị của một ô. Sau này, khi bạn điền bàn cờ, mảng `squares` sẽ trông như sau:
 
 ```jsx
 ['O', null, 'X', 'X', 'X', 'O', 'O', null, null]
 ```
 
-Now your `Board` component needs to pass the `value` prop down to each `Square` that it renders:
+Bây giờ component `Board` cần truyền prop `value` xuống từng component `Square` mà nó render:
 
 ```js {6-8,11-13,16-18}
 export default function Board() {
@@ -973,7 +973,7 @@ export default function Board() {
 }
 ```
 
-Next, you'll edit the `Square` component to receive the `value` prop from the Board component. This will require removing the Square component's own stateful tracking of `value` and the button's `onClick` prop:
+Tiếp theo, bạn sẽ chỉnh sửa component `Square` để nhận prop `value` từ component Board. Việc này yêu cầu loại bỏ cơ chế theo dõi state riêng của component Square đối với `value` và prop `onClick` của button:
 
 ```js {1,2}
 function Square({value}) {
@@ -981,11 +981,11 @@ function Square({value}) {
 }
 ```
 
-At this point you should see an empty tic-tac-toe board:
+Lúc này, bạn sẽ thấy một bàn cờ tic-tac-toe trống:
 
 ![empty board](../images/tutorial/empty-board.png)
 
-And your code should look like this:
+Và code của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -1067,11 +1067,11 @@ body {
 
 </Sandpack>
 
-Each Square will now receive a `value` prop that will either be `'X'`, `'O'`, or `null` for empty squares.
+Mỗi Square giờ sẽ nhận một prop `value`, có thể là `'X'`, `'O'`, hoặc `null` đối với các ô trống.
 
-Next, you need to change what happens when a `Square` is clicked. The `Board` component now maintains which squares are filled. You'll need to create a way for the `Square` to update the `Board`'s state. Since state is private to a component that defines it, you cannot update the `Board`'s state directly from `Square`.
+Tiếp theo, bạn cần thay đổi điều xảy ra khi một `Square` được nhấp. Component `Board` hiện duy trì thông tin về các ô đã được điền. Bạn cần tạo cách để `Square` cập nhật state của `Board`. Vì state là private đối với component định nghĩa nó, bạn không thể cập nhật trực tiếp state của `Board` từ `Square`.
 
-Instead, you'll pass down a function from the `Board` component to the `Square` component, and you'll have `Square` call that function when a square is clicked. You'll start with the function that the `Square` component will call when it is clicked. You'll call that function `onSquareClick`:
+Thay vào đó, bạn sẽ truyền một function từ component `Board` xuống component `Square`, rồi yêu cầu `Square` gọi function đó khi một ô được nhấp. Trước tiên, bạn sẽ bắt đầu với function mà component `Square` sẽ gọi khi nó được nhấp. Bạn sẽ gọi function đó là `onSquareClick`:
 
 ```js {3}
 function Square({ value }) {
@@ -1083,7 +1083,7 @@ function Square({ value }) {
 }
 ```
 
-Next, you'll add the `onSquareClick` function to the `Square` component's props:
+Tiếp theo, bạn sẽ thêm function `onSquareClick` vào props của component `Square`:
 
 ```js {1}
 function Square({ value, onSquareClick }) {
@@ -1095,7 +1095,7 @@ function Square({ value, onSquareClick }) {
 }
 ```
 
-Now you'll connect the `onSquareClick` prop to a function in the `Board` component that you'll name `handleClick`. To connect `onSquareClick` to `handleClick` you'll pass a function to the `onSquareClick` prop of the first `Square` component:
+Bây giờ, bạn sẽ kết nối prop `onSquareClick` với một function trong component `Board` mà bạn sẽ đặt tên là `handleClick`. Để kết nối `onSquareClick` với `handleClick`, bạn sẽ truyền một function vào prop `onSquareClick` của component `Square` đầu tiên:
 
 ```js {7}
 export default function Board() {
@@ -1110,7 +1110,7 @@ export default function Board() {
 }
 ```
 
-Lastly, you will define the `handleClick` function inside the Board component to update the `squares` array holding your board's state:
+Cuối cùng, bạn sẽ định nghĩa function `handleClick` bên trong component Board để cập nhật mảng `squares` chứa state của bàn cờ:
 
 ```js {4-8}
 export default function Board() {
@@ -1128,17 +1128,17 @@ export default function Board() {
 }
 ```
 
-The `handleClick` function creates a copy of the `squares` array (`nextSquares`) with the JavaScript `slice()` Array method. Then, `handleClick` updates the `nextSquares` array to add `X` to the first (`[0]` index) square.
+Function `handleClick` tạo một bản sao của mảng `squares` (`nextSquares`) bằng method Array `slice()` của JavaScript. Sau đó, `handleClick` cập nhật mảng `nextSquares` để thêm `X` vào ô đầu tiên (index `[0]`).
 
-Calling the `setSquares` function lets React know the state of the component has changed. This will trigger a re-render of the components that use the `squares` state (`Board`) as well as its child components (the `Square` components that make up the board).
+Việc gọi function `setSquares` cho React biết rằng state của component đã thay đổi. Điều này sẽ kích hoạt việc re-render các component sử dụng state `squares` (`Board`), cũng như các component con của nó (các component `Square` tạo nên bàn cờ).
 
 <Note>
 
-JavaScript supports [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) which means an inner function (e.g. `handleClick`) has access to variables and functions defined in an outer function (e.g. `Board`). The `handleClick` function can read the `squares` state and call the `setSquares` method because they are both defined inside of the `Board` function.
+JavaScript hỗ trợ [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures), nghĩa là một function bên trong (ví dụ: `handleClick`) có quyền truy cập vào các biến và function được định nghĩa trong một function bên ngoài (ví dụ: `Board`). Function `handleClick` có thể đọc state `squares` và gọi method `setSquares` vì cả hai đều được định nghĩa bên trong function `Board`.
 
 </Note>
 
-Now you can add X's to the board...  but only to the upper left square. Your `handleClick` function is hardcoded to update the index for the upper left square (`0`). Let's update `handleClick` to be able to update any square. Add an argument `i` to the `handleClick` function that takes the index of the square to update:
+Bây giờ bạn có thể thêm các X vào bàn cờ... nhưng chỉ vào ô phía trên bên trái. Function `handleClick` của bạn đang được hardcode để cập nhật index của ô phía trên bên trái (`0`). Hãy cập nhật `handleClick` để có thể cập nhật bất kỳ ô nào. Thêm một tham số `i` vào function `handleClick`, tham số này nhận index của ô cần cập nhật:
 
 ```js {4,6}
 export default function Board() {
@@ -1156,27 +1156,27 @@ export default function Board() {
 }
 ```
 
-Next, you will need to pass that `i` to `handleClick`. You could try to set the `onSquareClick` prop of square to be `handleClick(0)` directly in the JSX like this, but it won't work:
+Tiếp theo, bạn cần truyền `i` đó vào `handleClick`. Bạn có thể thử đặt trực tiếp prop `onSquareClick` của square thành `handleClick(0)` trong JSX như sau, nhưng cách này sẽ không hoạt động:
 
 ```jsx
 <Square value={squares[0]} onSquareClick={handleClick(0)} />
 ```
 
-Here is why this doesn't work. The `handleClick(0)` call will be a part of rendering the board component. Because `handleClick(0)` alters the state of the board component by calling `setSquares`, your entire board component will be re-rendered again. But this runs `handleClick(0)` again, leading to an infinite loop:
+Đây là lý do cách này không hoạt động. Lời gọi `handleClick(0)` sẽ là một phần trong quá trình render component board. Vì `handleClick(0)` thay đổi state của component board bằng cách gọi `setSquares`, toàn bộ component board sẽ lại được re-render. Nhưng điều này lại chạy `handleClick(0)` lần nữa, dẫn đến một vòng lặp vô hạn:
 
 <ConsoleBlock level="error">
 
-Too many re-renders. React limits the number of renders to prevent an infinite loop.
+Quá nhiều lần re-render. React giới hạn số lần render để ngăn vòng lặp vô hạn.
 
 </ConsoleBlock>
 
-Why didn't this problem happen earlier?
+Tại sao vấn đề này không xảy ra trước đó?
 
-When you were passing `onSquareClick={handleClick}`, you were passing the `handleClick` function down as a prop. You were not calling it! But now you are *calling* that function right away--notice the parentheses in `handleClick(0)`--and that's why it runs too early. You don't *want* to call `handleClick` until the user clicks!
+Khi truyền `onSquareClick={handleClick}`, bạn đã truyền function `handleClick` xuống dưới dạng prop. Bạn không gọi function đó! Nhưng bây giờ bạn đang *gọi* function đó ngay lập tức--hãy chú ý dấu ngoặc đơn trong `handleClick(0)`--và đó là lý do nó chạy quá sớm. Bạn không muốn gọi `handleClick` cho đến khi người dùng nhấp!
 
-You could fix this by creating a function like `handleFirstSquareClick` that calls `handleClick(0)`, a function like `handleSecondSquareClick` that calls `handleClick(1)`, and so on. You would pass (rather than call) these functions down as props like `onSquareClick={handleFirstSquareClick}`. This would solve the infinite loop.
+Bạn có thể khắc phục việc này bằng cách tạo một function như `handleFirstSquareClick` gọi `handleClick(0)`, một function như `handleSecondSquareClick` gọi `handleClick(1)`, v.v. Bạn sẽ truyền (thay vì gọi) các function này xuống dưới dạng props như `onSquareClick={handleFirstSquareClick}`. Cách này sẽ giải quyết vòng lặp vô hạn.
 
-However, defining nine different functions and giving each of them a name is too verbose. Instead, let's do this:
+Tuy nhiên, việc định nghĩa chín function khác nhau và đặt tên cho từng function là quá dài dòng. Thay vào đó, hãy làm như sau:
 
 ```js {6}
 export default function Board() {
@@ -1190,9 +1190,9 @@ export default function Board() {
 }
 ```
 
-Notice the new `() =>` syntax. Here, `() => handleClick(0)` is an *arrow function,* which is a shorter way to define functions. When the square is clicked, the code after the `=>` "arrow" will run, calling `handleClick(0)`.
+Hãy chú ý đến cú pháp `() =>` mới. Ở đây, `() => handleClick(0)` là một *arrow function*, một cách ngắn gọn hơn để định nghĩa function. Khi ô được nhấp, code sau `=>` "mũi tên" sẽ chạy và gọi `handleClick(0)`.
 
-Now you need to update the other eight squares to call `handleClick` from the arrow functions you pass. Make sure that the argument for each call of the `handleClick` corresponds to the index of the correct square:
+Bây giờ bạn cần cập nhật tám ô còn lại để gọi `handleClick` từ các arrow function mà bạn truyền vào. Hãy đảm bảo rằng đối số trong mỗi lần gọi `handleClick` tương ứng với index của ô chính xác:
 
 ```js {6-8,11-13,16-18}
 export default function Board() {
@@ -1219,13 +1219,13 @@ export default function Board() {
 };
 ```
 
-Now you can again add X's to any square on the board by clicking on them:
+Bây giờ bạn lại có thể thêm X vào bất kỳ ô nào trên bàn cờ bằng cách nhấp vào chúng:
 
 ![filling the board with X](../images/tutorial/tictac-adding-x-s.gif)
 
-But this time all the state management is handled by the `Board` component!
+Nhưng lần này, toàn bộ việc quản lý state được xử lý bởi component `Board`!
 
-This is what your code should look like:
+Code của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -1318,27 +1318,27 @@ body {
 
 </Sandpack>
 
-Now that your state handling is in the `Board` component, the parent `Board` component passes props to the child `Square` components so that they can be displayed correctly. When clicking on a `Square`, the child `Square` component now asks the parent `Board` component to update the state of the board. When the `Board`'s state changes, both the `Board` component and every child `Square` re-renders automatically. Keeping the state of all squares in the `Board` component will allow it to determine the winner in the future.
+Bây giờ việc xử lý state nằm trong component `Board`, component `Board` cha truyền props cho các component `Square` con để chúng có thể được hiển thị chính xác. Khi nhấp vào một `Square`, component `Square` con giờ sẽ yêu cầu component `Board` cha cập nhật state của bàn cờ. Khi state của `Board` thay đổi, cả component `Board` và mọi component `Square` con đều tự động re-render. Việc giữ state của tất cả các ô trong component `Board` sẽ cho phép component này xác định người chiến thắng trong tương lai.
 
-Let's recap what happens when a user clicks the top left square on your board to add an `X` to it:
+Hãy cùng tóm tắt điều xảy ra khi người dùng nhấp vào ô phía trên bên trái trên bàn cờ để thêm một `X` vào đó:
 
-1. Clicking on the upper left square runs the function that the `button` received as its `onClick` prop from the `Square`. The `Square` component received that function as its `onSquareClick` prop from the `Board`. The `Board` component defined that function directly in the JSX. It calls `handleClick` with an argument of `0`.
-1. `handleClick` uses the argument (`0`) to update the first element of the `squares` array from `null` to `X`.
-1. The `squares` state of the `Board` component was updated, so the `Board` and all of its children re-render. This causes the `value` prop of the `Square` component with index `0` to change from `null` to `X`.
+1. Việc nhấp vào ô phía trên bên trái chạy function mà `button` nhận được dưới dạng prop `onClick` từ `Square`. Component `Square` nhận function đó dưới dạng prop `onSquareClick` từ `Board`. Component `Board` định nghĩa function đó trực tiếp trong JSX. Function gọi `handleClick` với đối số là `0`.
+1. `handleClick` sử dụng đối số (`0`) để cập nhật phần tử đầu tiên của mảng `squares` từ `null` thành `X`.
+1. State `squares` của component `Board` đã được cập nhật, vì vậy `Board` và tất cả component con của nó được re-render. Điều này khiến prop `value` của component `Square` có index `0` thay đổi từ `null` thành `X`.
 
-In the end the user sees that the upper left square has changed from empty to having an `X` after clicking it.
+Cuối cùng, người dùng sẽ thấy ô phía trên bên trái đã thay đổi từ trống thành có một `X` sau khi nhấp vào đó.
 
 <Note>
 
-The DOM `<button>` element's `onClick` attribute has a special meaning to React because it is a built-in component. For custom components like Square, the naming is up to you. You could give any name to the `Square`'s `onSquareClick` prop or `Board`'s `handleClick` function, and the code would work the same. In React, it's conventional to use `onSomething` names for props which represent events and `handleSomething` for the function definitions which handle those events.
+Phần tử DOM `<button>` có thuộc tính `onClick` mang ý nghĩa đặc biệt đối với React vì đây là một built-in component. Đối với các custom component như Square, cách đặt tên là tùy thuộc vào bạn. Bạn có thể đặt bất kỳ tên nào cho prop `onSquareClick` của `Square` hoặc function `handleClick` của `Board`, và code vẫn hoạt động như nhau. Trong React, quy ước là sử dụng tên `onSomething` cho các prop biểu diễn event và `handleSomething` cho các định nghĩa function xử lý những event đó.
 
 </Note>
 
-### Why immutability is important {/*why-immutability-is-important*/}
+### Tại sao tính bất biến lại quan trọng {/*why-immutability-is-important*/}
 
-Note how in `handleClick`, you call `.slice()` to create a copy of the `squares` array instead of modifying the existing array. To explain why, we need to discuss immutability and why immutability is important to learn.
+Lưu ý rằng trong `handleClick`, bạn gọi `.slice()` để tạo một bản sao của mảng `squares` thay vì sửa đổi mảng hiện có. Để giải thích lý do, chúng ta cần thảo luận về tính bất biến (immutability) và lý do bạn cần tìm hiểu tính bất biến.
 
-There are generally two approaches to changing data. The first approach is to _mutate_ the data by directly changing the data's values. The second approach is to replace the data with a new copy which has the desired changes. Here is what it would look like if you mutated the `squares` array:
+Nhìn chung, có hai cách tiếp cận để thay đổi dữ liệu. Cách thứ nhất là _mutate_ dữ liệu bằng cách trực tiếp thay đổi các giá trị của dữ liệu. Cách thứ hai là thay thế dữ liệu bằng một bản sao mới chứa những thay đổi mong muốn. Đây là hình dạng của mảng `squares` nếu bạn mutate nó:
 
 ```jsx
 const squares = [null, null, null, null, null, null, null, null, null];
@@ -1346,7 +1346,7 @@ squares[0] = 'X';
 // Now `squares` is ["X", null, null, null, null, null, null, null, null];
 ```
 
-And here is what it would look like if you changed data without mutating the `squares` array:
+Còn đây là hình dạng khi bạn thay đổi dữ liệu mà không mutate mảng `squares`:
 
 ```jsx
 const squares = [null, null, null, null, null, null, null, null, null];
@@ -1354,17 +1354,17 @@ const nextSquares = ['X', null, null, null, null, null, null, null, null];
 // Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
 ```
 
-The result is the same but by not mutating (changing the underlying data) directly, you gain several benefits.
+Kết quả là như nhau, nhưng bằng cách không trực tiếp mutate (thay đổi dữ liệu bên dưới), bạn nhận được một số lợi ích.
 
-Immutability makes complex features much easier to implement. Later in this tutorial, you will implement a "time travel" feature that lets you review the game's history and "jump back" to past moves. This functionality isn't specific to games--an ability to undo and redo certain actions is a common requirement for apps. Avoiding direct data mutation lets you keep previous versions of the data intact, and reuse them later.
+Tính bất biến giúp việc triển khai các tính năng phức tạp dễ dàng hơn nhiều. Ở phần sau của tutorial này, bạn sẽ triển khai một tính năng "du hành thời gian" cho phép xem lại lịch sử của trò chơi và "quay lại" các nước đi trước đó. Chức năng này không chỉ dành riêng cho trò chơi--khả năng undo và redo một số hành động là yêu cầu phổ biến đối với các app. Việc tránh mutate dữ liệu trực tiếp cho phép bạn giữ nguyên các phiên bản trước đó của dữ liệu và tái sử dụng chúng sau này.
 
-There is also another benefit of immutability. By default, all child components re-render automatically when the state of a parent component changes. This includes even the child components that weren't affected by the change. Although re-rendering is not by itself noticeable to the user (you shouldn't actively try to avoid it!), you might want to skip re-rendering a part of the tree that clearly wasn't affected by it for performance reasons. Immutability makes it very cheap for components to compare whether their data has changed or not. You can learn more about how React chooses when to re-render a component in [the `memo` API reference](/reference/react/memo).
+Tính bất biến còn có một lợi ích khác. Theo mặc định, tất cả child component sẽ tự động re-render khi state của parent component thay đổi. Điều này bao gồm cả những child component không bị ảnh hưởng bởi thay đổi đó. Mặc dù bản thân việc re-render không gây ảnh hưởng đáng kể mà người dùng có thể nhận thấy (bạn không nên chủ động cố tránh việc này!), vì lý do hiệu năng, bạn có thể muốn bỏ qua việc re-render một phần của tree rõ ràng không bị ảnh hưởng. Tính bất biến giúp component so sánh xem dữ liệu của chúng có thay đổi hay không với chi phí rất thấp. Bạn có thể tìm hiểu thêm về cách React quyết định thời điểm re-render một component trong [tài liệu tham khảo API `memo`API reference](/reference/react/memo).
 
-### Taking turns {/*taking-turns*/}
+### Luân phiên lượt chơi {/*taking-turns*/}
 
-It's now time to fix a major defect in this tic-tac-toe game: the "O"s cannot be marked on the board.
+Bây giờ là lúc sửa một lỗi lớn trong trò tic-tac-toe này: các chữ "O" không thể được đánh dấu trên bàn cờ.
 
-You'll set the first move to be "X" by default. Let's keep track of this by adding another piece of state to the Board component:
+Bạn sẽ đặt nước đi đầu tiên mặc định là "X". Hãy theo dõi điều này bằng cách thêm một state khác vào component Board:
 
 ```js {2}
 function Board() {
@@ -1375,7 +1375,7 @@ function Board() {
 }
 ```
 
-Each time a player moves, `xIsNext` (a boolean) will be flipped to determine which player goes next and the game's state will be saved. You'll update the `Board`'s `handleClick` function to flip the value of `xIsNext`:
+Mỗi khi một người chơi thực hiện nước đi, `xIsNext` (một boolean) sẽ được đảo ngược để xác định người chơi tiếp theo và state của trò chơi sẽ được lưu lại. Bạn sẽ cập nhật hàm `handleClick` của `Board` để đảo giá trị của `xIsNext`:
 
 ```js {7,8,9,10,11,13}
 export default function Board() {
@@ -1399,15 +1399,15 @@ export default function Board() {
 }
 ```
 
-Now, as you click on different squares, they will alternate between `X` and `O`, as they should!
+Bây giờ, khi bạn nhấp vào các ô khác nhau, chúng sẽ luân phiên giữa `X` và `O`, đúng như mong đợi!
 
-But wait, there's a problem. Try clicking on the same square multiple times:
+Nhưng khoan, có một vấn đề. Hãy thử nhấp nhiều lần vào cùng một ô:
 
-![O overwriting an X](../images/tutorial/o-replaces-x.gif)
+![O ghi đè lên X](../images/tutorial/o-replaces-x.gif)
 
-The `X` is overwritten by an `O`! While this would add a very interesting twist to the game, we're going to stick to the original rules for now.
+`X` bị một `O` ghi đè! Mặc dù điều này sẽ tạo thêm một tình tiết rất thú vị cho trò chơi, hiện tại chúng ta sẽ tuân theo luật ban đầu.
 
-When you mark a square with an `X` or an `O` you aren't first checking to see if the square already has an `X` or `O` value. You can fix this by *returning early*. You'll check to see if the square already has an `X` or an `O`. If the square is already filled, you will `return` in the `handleClick` function early--before it tries to update the board state.
+Khi bạn đánh dấu một ô bằng `X` hoặc `O`, trước tiên bạn không kiểm tra xem ô đó đã có giá trị `X` hoặc `O` hay chưa. Bạn có thể sửa lỗi này bằng cách *return sớm*. Bạn sẽ kiểm tra xem ô đó đã có `X` hoặc `O` hay chưa. Nếu ô đã được điền, bạn sẽ `return` trong hàm `handleClick` sớm--trước khi hàm này cố cập nhật state của bàn cờ.
 
 ```js {2,3,4}
 function handleClick(i) {
@@ -1419,7 +1419,7 @@ function handleClick(i) {
 }
 ```
 
-Now you can only add `X`'s or `O`'s to empty squares! Here is what your code should look like at this point:
+Bây giờ bạn chỉ có thể thêm `X` hoặc `O` vào các ô trống! Đây là hình dạng code của bạn ở thời điểm này:
 
 <Sandpack>
 
@@ -1521,9 +1521,9 @@ body {
 
 </Sandpack>
 
-### Declaring a winner {/*declaring-a-winner*/}
+### Tuyên bố người thắng {/*declaring-a-winner*/}
 
-Now that the players can take turns, you'll want to show when the game is won and there are no more turns to make. To do this you'll add a helper function called `calculateWinner` that takes an array of 9 squares, checks for a winner and returns `'X'`, `'O'`, or `null` as appropriate. Don't worry too much about the `calculateWinner` function; it's not specific to React:
+Giờ đây khi người chơi có thể luân phiên thực hiện nước đi, bạn sẽ muốn hiển thị khi trò chơi kết thúc với một người thắng và không còn lượt nào để thực hiện. Để làm điều đó, bạn sẽ thêm một helper function có tên `calculateWinner`, nhận vào một mảng gồm 9 ô, kiểm tra người thắng và trả về `'X'`, `'O'` hoặc `null` tùy trường hợp. Đừng quá bận tâm về function `calculateWinner`; nó không dành riêng cho React:
 
 ```js src/App.js
 export default function Board() {
@@ -1553,11 +1553,11 @@ function calculateWinner(squares) {
 
 <Note>
 
-It does not matter whether you define `calculateWinner` before or after the `Board`. Let's put it at the end so that you don't have to scroll past it every time you edit your components.
+Việc bạn định nghĩa `calculateWinner` trước hay sau `Board` không quan trọng. Hãy đặt nó ở cuối để bạn không phải cuộn qua nó mỗi lần chỉnh sửa các component.
 
 </Note>
 
-You will call `calculateWinner(squares)` in the `Board` component's `handleClick` function to check if a player has won. You can perform this check at the same time you check if a user has clicked a square that already has an `X` or an `O`. We'd like to return early in both cases:
+Bạn sẽ gọi `calculateWinner(squares)` trong function `handleClick` của component `Board` để kiểm tra xem người chơi đã thắng hay chưa. Bạn có thể thực hiện việc kiểm tra này đồng thời với việc kiểm tra xem người dùng có nhấp vào một ô đã có giá trị `X` hoặc `O` hay không. Chúng ta muốn return sớm trong cả hai trường hợp:
 
 ```js {2}
 function handleClick(i) {
@@ -1569,7 +1569,7 @@ function handleClick(i) {
 }
 ```
 
-To let the players know when the game is over, you can display text such as "Winner: X" or "Winner: O". To do that you'll add a `status` section to the `Board` component. The status will display the winner if the game is over and if the game is ongoing you'll display which player's turn is next:
+Để cho người chơi biết khi trò chơi kết thúc, bạn có thể hiển thị văn bản như "Winner: X" hoặc "Winner: O". Để làm điều đó, bạn sẽ thêm một section `status` vào component `Board`. Status sẽ hiển thị người thắng nếu trò chơi đã kết thúc; nếu trò chơi vẫn đang diễn ra, bạn sẽ hiển thị lượt tiếp theo thuộc về người chơi nào:
 
 ```js {3-9,13}
 export default function Board() {
@@ -1591,7 +1591,7 @@ export default function Board() {
 }
 ```
 
-Congratulations! You now have a working tic-tac-toe game. And you've just learned the basics of React too. So _you_ are the real winner here. Here is what the code should look like:
+Chúc mừng! Bây giờ bạn đã có một trò tic-tac-toe hoạt động. Và bạn cũng vừa học được những kiến thức cơ bản về React. Vì vậy, _bạn_ mới là người chiến thắng thực sự ở đây. Đây là hình dạng code của bạn:
 
 <Sandpack>
 
@@ -1722,17 +1722,17 @@ body {
 
 </Sandpack>
 
-## Adding time travel {/*adding-time-travel*/}
+## Thêm tính năng du hành thời gian {/*adding-time-travel*/}
 
-As a final exercise, let's make it possible to "go back in time" to the previous moves in the game.
+Ở bài tập cuối cùng, hãy làm cho trò chơi có thể "quay ngược thời gian" về các nước đi trước đó.
 
-### Storing a history of moves {/*storing-a-history-of-moves*/}
+### Lưu lịch sử các nước đi {/*storing-a-history-of-moves*/}
 
-If you mutated the `squares` array, implementing time travel would be very difficult.
+Nếu bạn mutate mảng `squares`, việc triển khai tính năng du hành thời gian sẽ rất khó khăn.
 
-However, you used `slice()` to create a new copy of the `squares` array after every move, and treated it as immutable. This will allow you to store every past version of the `squares` array, and navigate between the turns that have already happened.
+Tuy nhiên, bạn đã sử dụng `slice()` để tạo một bản sao mới của mảng `squares` sau mỗi nước đi và coi nó là bất biến. Điều này cho phép bạn lưu trữ mọi phiên bản trước đây của mảng `squares` và di chuyển giữa những lượt đã diễn ra.
 
-You'll store the past `squares` arrays in another array called `history`, which you'll store as a new state variable. The `history` array represents all board states, from the first to the last move, and has a shape like this:
+Bạn sẽ lưu các mảng `squares` trước đó trong một mảng khác có tên `history`, mảng này sẽ được lưu dưới dạng một state variable mới. Mảng `history` đại diện cho tất cả state của bàn cờ, từ nước đi đầu tiên đến nước đi cuối cùng, và có dạng như sau:
 
 ```jsx
 [
@@ -1746,13 +1746,13 @@ You'll store the past `squares` arrays in another array called `history`, which 
 ]
 ```
 
-### Lifting state up, again {/*lifting-state-up-again*/}
+### Nâng state lên một lần nữa {/*lifting-state-up-again*/}
 
-You will now write a new top-level component called `Game` to display a list of past moves. That's where you will place the `history` state that contains the entire game history.
+Bây giờ bạn sẽ viết một top-level component mới có tên `Game` để hiển thị danh sách các nước đi trước đó. Đây là nơi bạn sẽ đặt state `history`, chứa toàn bộ lịch sử của trò chơi.
 
-Placing the `history` state into the `Game` component will let you remove the `squares` state from its child `Board` component. Just like you "lifted state up" from the `Square` component into the `Board` component, you will now lift it up from the `Board` into the top-level `Game` component. This gives the `Game` component full control over the `Board`'s data and lets it instruct the `Board` to render previous turns from the `history`.
+Đặt state `history` vào component `Game` sẽ cho phép bạn xóa state `squares` khỏi child component `Board` của nó. Tương tự như khi bạn "nâng state lên" từ component `Square` vào component `Board`, giờ đây bạn sẽ nâng state đó từ `Board` lên component top-level `Game`. Điều này giúp component `Game` toàn quyền kiểm soát dữ liệu của `Board` và cho phép nó chỉ dẫn `Board` render các lượt trước đó từ `history`.
 
-First, add a `Game` component with `export default`. Have it render the `Board` component and some markup:
+Trước tiên, hãy thêm một component `Game` với `export default`. Hãy để component này render component `Board` và một số markup:
 
 ```js {1,5-16}
 function Board() {
@@ -1773,9 +1773,9 @@ export default function Game() {
 }
 ```
 
-Note that you are removing the `export default` keywords before the `function Board() {` declaration and adding them before the `function Game() {` declaration. This tells your `index.js` file to use the `Game` component as the top-level component instead of your `Board` component. The additional `div`s returned by the `Game` component are making room for the game information you'll add to the board later.
+Lưu ý rằng bạn đang xóa các keyword `export default` trước khai báo `function Board() {` và thêm chúng trước khai báo `function Game() {`. Điều này cho biết file `index.js` của bạn sử dụng component `Game` làm component top-level thay vì component `Board`. Các `div` bổ sung được component `Game` trả về đang tạo chỗ cho thông tin trò chơi mà bạn sẽ thêm vào board sau này.
 
-Add some state to the `Game` component to track which player is next and the history of moves:
+Thêm state vào component `Game` để theo dõi người chơi tiếp theo và lịch sử các nước đi:
 
 ```js {2-3}
 export default function Game() {
@@ -1784,9 +1784,9 @@ export default function Game() {
   // ...
 ```
 
-Notice how `[Array(9).fill(null)]` is an array with a single item, which itself is an array of 9 `null`s.
+Lưu ý rằng `[Array(9).fill(null)]` là một mảng có một phần tử duy nhất, bản thân phần tử đó lại là một mảng gồm 9 `null`.
 
-To render the squares for the current move, you'll want to read the last squares array from the `history`. You don't need `useState` for this--you already have enough information to calculate it during rendering:
+Để render các ô của lượt hiện tại, bạn sẽ muốn đọc mảng squares cuối cùng từ `history`. Bạn không cần `useState` cho việc này--bạn đã có đủ thông tin để tính toán nó trong quá trình rendering:
 
 ```js {4}
 export default function Game() {
@@ -1796,7 +1796,7 @@ export default function Game() {
   // ...
 ```
 
-Next, create a `handlePlay` function inside the `Game` component that will be called by the `Board` component to update the game. Pass `xIsNext`, `currentSquares` and `handlePlay` as props to the `Board` component:
+Tiếp theo, hãy tạo một function `handlePlay` bên trong component `Game`. Function này sẽ được component `Board` gọi để cập nhật trò chơi. Truyền `xIsNext`, `currentSquares` và `handlePlay` làm props cho component `Board`:
 
 ```js {6-8,13}
 export default function Game() {
@@ -1817,7 +1817,7 @@ export default function Game() {
 }
 ```
 
-Let's make the `Board` component fully controlled by the props it receives. Change the `Board` component to take three props: `xIsNext`, `squares`, and a new `onPlay` function that `Board` can call with the updated squares array when a player makes a move. Next, remove the first two lines of the `Board` function that call `useState`:
+Hãy để component `Board` được điều khiển hoàn toàn bởi các props mà nó nhận. Thay đổi component `Board` để nhận ba props: `xIsNext`, `squares` và một function `onPlay` mới mà `Board` có thể gọi với mảng squares đã cập nhật khi người chơi thực hiện một nước đi. Tiếp theo, xóa hai dòng đầu tiên của function `Board`, là những dòng gọi `useState`:
 
 ```js {1}
 function Board({ xIsNext, squares, onPlay }) {
@@ -1828,7 +1828,7 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 ```
 
-Now replace the `setSquares` and `setXIsNext` calls in `handleClick` in the `Board` component with a single call to your new `onPlay` function so the `Game` component can update the `Board` when the user clicks a square:
+Bây giờ hãy thay thế các lệnh gọi `setSquares` và `setXIsNext` trong `handleClick` ở component `Board` bằng một lệnh gọi duy nhất đến function `onPlay` mới, để component `Game` có thể cập nhật `Board` khi người dùng nhấp vào một ô:
 
 ```js {12}
 function Board({ xIsNext, squares, onPlay }) {
@@ -1848,11 +1848,11 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 ```
 
-The `Board` component is fully controlled by the props passed to it by the `Game` component. You need to implement the `handlePlay` function in the `Game` component to get the game working again.
+Component `Board` được điều khiển hoàn toàn bởi các props được truyền vào nó từ component `Game`. Bạn cần triển khai hàm `handlePlay` trong component `Game` để trò chơi hoạt động trở lại.
 
-What should `handlePlay` do when called? Remember that Board used to call `setSquares` with an updated array; now it passes the updated `squares` array to `onPlay`.
+`handlePlay` nên làm gì khi được gọi? Hãy nhớ rằng trước đây Board gọi `setSquares` với một array đã được cập nhật; giờ đây nó truyền array `squares` đã cập nhật cho `onPlay`.
 
-The `handlePlay` function needs to update `Game`'s state to trigger a re-render, but you don't have a `setSquares` function that you can call any more--you're now using the `history` state variable to store this information. You'll want to update `history` by appending the updated `squares` array as a new history entry. You also want to toggle `xIsNext`, just as Board used to do:
+Hàm `handlePlay` cần cập nhật state của `Game` để kích hoạt việc re-render, nhưng bạn không còn có hàm `setSquares` để gọi nữa--giờ đây bạn đang sử dụng biến state `history` để lưu thông tin này. Bạn sẽ muốn cập nhật `history` bằng cách thêm array `squares` đã cập nhật làm một mục mới trong history. Bạn cũng muốn chuyển đổi `xIsNext`, giống như Board đã từng làm:
 
 ```js {4-5}
 export default function Game() {
@@ -1865,11 +1865,11 @@ export default function Game() {
 }
 ```
 
-Here, `[...history, nextSquares]` creates a new array that contains all the items in `history`, followed by `nextSquares`. (You can read the `...history` [*spread syntax*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) as "enumerate all the items in `history`".)
+Ở đây, `[...history, nextSquares]` tạo một array mới chứa tất cả các item trong `history`, tiếp theo là `nextSquares`. (Bạn có thể đọc `...history` [*spread syntax*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) là “liệt kê tất cả các item trong `history`”.)
 
-For example, if `history` is `[[null,null,null], ["X",null,null]]` and `nextSquares` is `["X",null,"O"]`, then the new `[...history, nextSquares]` array will be `[[null,null,null], ["X",null,null], ["X",null,"O"]]`.
+Ví dụ, nếu `history` là `[[null,null,null], ["X",null,null]]` và `nextSquares` là `["X",null,"O"]`, thì array `[...history, nextSquares]` mới sẽ là `[[null,null,null], ["X",null,null], ["X",null,"O"]]`.
 
-At this point, you've moved the state to live in the `Game` component, and the UI should be fully working, just as it was before the refactor. Here is what the code should look like at this point:
+Đến đây, bạn đã chuyển state để nó nằm trong component `Game`, và UI sẽ hoạt động đầy đủ, giống như trước khi refactor. Đây là giao diện của code ở thời điểm này:
 
 <Sandpack>
 
@@ -2018,19 +2018,19 @@ body {
 
 </Sandpack>
 
-### Showing the past moves {/*showing-the-past-moves*/}
+### Hiển thị các nước đi trước đó {/*showing-the-past-moves*/}
 
-Since you are recording the tic-tac-toe game's history, you can now display a list of past moves to the player.
+Vì bạn đang ghi lại history của trò tic-tac-toe, giờ đây bạn có thể hiển thị danh sách các nước đi trước đó cho người chơi.
 
-React elements like `<button>` are regular JavaScript objects; you can pass them around in your application. To render multiple items in React, you can use an array of React elements.
+Các React element như `<button>` thực chất là những JavaScript object thông thường; bạn có thể truyền chúng qua lại trong application của mình. Để render nhiều item trong React, bạn có thể sử dụng một array các React element.
 
-You already have an array of `history` moves in state, so now you need to transform it to an array of React elements. In JavaScript, to transform one array into another, you can use the [array `map` method:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+Bạn đã có một array gồm các nước đi `history` trong state, vì vậy bây giờ bạn cần chuyển nó thành một array các React element. Trong JavaScript, để chuyển một array thành một array khác, bạn có thể sử dụng [array `map` method:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
 ```jsx
 [1, 2, 3].map((x) => x * 2) // [2, 4, 6]
 ```
 
-You'll use `map` to transform your `history` of moves into React elements representing buttons on the screen, and display a list of buttons to "jump" to past moves. Let's `map` over the `history` in the Game component:
+Bạn sẽ sử dụng `map` để chuyển `history` các nước đi thành các React element đại diện cho các button trên màn hình, đồng thời hiển thị một danh sách các button để “nhảy” đến những nước đi trước đó. Hãy `map` qua `history` trong component Game:
 
 ```js {11-13,15-27,35}
 export default function Game() {
@@ -2074,13 +2074,13 @@ export default function Game() {
 }
 ```
 
-You can see what your code should look like below. Note that you should see an error in the developer tools console that says:
+Bạn có thể xem code sẽ trông như thế nào bên dưới. Lưu ý rằng bạn sẽ thấy một lỗi trong console của developer tools với nội dung:
 
 <ConsoleBlock level="warning">
 Warning: Each child in an array or iterator should have a unique "key" prop. Check the render method of &#96;Game&#96;.
 </ConsoleBlock>
 
-You'll fix this error in the next section.
+Bạn sẽ sửa lỗi này trong phần tiếp theo.
 
 <Sandpack>
 
@@ -2248,24 +2248,24 @@ body {
 
 </Sandpack>
 
-As you iterate through the `history` array inside the function you passed to `map`, the `squares` argument goes through each element of `history`, and the `move` argument goes through each array index: `0`, `1`, `2`, …. (In most cases, you'd need the actual array elements, but to render a list of moves you will only need indexes.)
+Khi lặp qua array `history` bên trong function mà bạn truyền cho `map`, argument `squares` sẽ lần lượt đi qua từng element của `history`, còn argument `move` sẽ lần lượt đi qua từng index của array: `0`, `1`, `2`, …. (Trong hầu hết trường hợp, bạn sẽ cần các array element thực tế, nhưng để render danh sách các nước đi, bạn chỉ cần các index.)
 
-For each move in the tic-tac-toe game's history, you create a list item `<li>` which contains a button `<button>`. The button has an `onClick` handler which calls a function called `jumpTo` (that you haven't implemented yet).
+Với mỗi nước đi trong history của trò tic-tac-toe, bạn tạo một list item `<li>` chứa một button `<button>`. Button này có một handler `onClick`, gọi một function có tên `jumpTo` (mà bạn vẫn chưa triển khai).
 
-For now, you should see a list of the moves that occurred in the game and an error in the developer tools console. Let's discuss what the "key" error means.
+Hiện tại, bạn sẽ thấy danh sách các nước đi đã diễn ra trong trò chơi và một lỗi trong console của developer tools. Hãy cùng tìm hiểu lỗi “key” có nghĩa là gì.
 
-### Picking a key {/*picking-a-key*/}
+### Chọn một key {/*picking-a-key*/}
 
-When you render a list, React stores some information about each rendered list item. When you update a list, React needs to determine what has changed. You could have added, removed, re-arranged, or updated the list's items.
+Khi bạn render một danh sách, React lưu một số thông tin về từng list item đã được render. Khi bạn cập nhật một danh sách, React cần xác định điều gì đã thay đổi. Bạn có thể đã thêm, xóa, sắp xếp lại hoặc cập nhật các item trong danh sách.
 
-Imagine transitioning from
+Hãy hình dung việc chuyển từ
 
 ```html
 <li>Alexa: 7 tasks left</li>
 <li>Ben: 5 tasks left</li>
 ```
 
-to
+sang
 
 ```html
 <li>Ben: 9 tasks left</li>
@@ -2273,7 +2273,7 @@ to
 <li>Alexa: 5 tasks left</li>
 ```
 
-In addition to the updated counts, a human reading this would probably say that you swapped Alexa and Ben's ordering and inserted Claudia between Alexa and Ben. However, React is a computer program and does not know what you intended, so you need to specify a _key_ property for each list item to differentiate each list item from its siblings. If your data was from a database, Alexa, Ben, and Claudia's database IDs could be used as keys.
+Ngoài các số lượng đã được cập nhật, người đọc là con người có lẽ sẽ nói rằng bạn đã đổi thứ tự của Alexa và Ben, đồng thời chèn Claudia vào giữa Alexa và Ben. Tuy nhiên, React là một chương trình máy tính và không biết bạn định làm gì, vì vậy bạn cần chỉ định thuộc tính _key_ cho mỗi list item để phân biệt từng list item với các sibling của nó. Nếu dữ liệu của bạn đến từ database, các database ID của Alexa, Ben và Claudia có thể được dùng làm key.
 
 ```js {1}
 <li key={user.id}>
@@ -2281,23 +2281,23 @@ In addition to the updated counts, a human reading this would probably say that 
 </li>
 ```
 
-When a list is re-rendered, React takes each list item's key and searches the previous list's items for a matching key. If the current list has a key that didn't exist before, React creates a component. If the current list is missing a key that existed in the previous list, React destroys the previous component. If two keys match, the corresponding component is moved.
+Khi một danh sách được re-render, React lấy key của từng list item và tìm trong các item của danh sách trước đó một key trùng khớp. Nếu danh sách hiện tại có một key trước đây chưa tồn tại, React sẽ tạo một component. Nếu danh sách hiện tại thiếu một key từng tồn tại trong danh sách trước đó, React sẽ hủy component trước đó. Nếu hai key trùng khớp, component tương ứng sẽ được di chuyển.
 
-Keys tell React about the identity of each component, which allows React to maintain state between re-renders. If a component's key changes, the component will be destroyed and re-created with a new state.
+Key cho React biết identity của mỗi component, nhờ đó React có thể duy trì state giữa các lần re-render. Nếu key của một component thay đổi, component đó sẽ bị hủy và được tạo lại với state mới.
 
-`key` is a special and reserved property in React. When an element is created, React extracts the `key` property and stores the key directly on the returned element. Even though `key` may look like it is passed as props, React automatically uses `key` to decide which components to update. There's no way for a component to ask what `key` its parent specified.
+`key` là một property đặc biệt và được dành riêng trong React. Khi một element được tạo, React lấy property `key` và lưu key trực tiếp trên element được trả về. Mặc dù `key` có vẻ như được truyền dưới dạng props, React tự động sử dụng `key` để quyết định component nào cần được cập nhật. Không có cách nào để một component hỏi parent của nó đã chỉ định `key` nào.
 
-**It's strongly recommended that you assign proper keys whenever you build dynamic lists.** If you don't have an appropriate key, you may want to consider restructuring your data so that you do.
+**Bạn nên luôn gán key phù hợp mỗi khi tạo các danh sách động.** Nếu không có key phù hợp, bạn có thể cân nhắc tái cấu trúc dữ liệu của mình.
 
-If no key is specified, React will report an error and use the array index as a key by default. Using the array index as a key is problematic when trying to re-order a list's items or inserting/removing list items. Explicitly passing `key={i}` silences the error but has the same problems as array indices and is not recommended in most cases.
+Nếu không chỉ định key, React sẽ báo lỗi và mặc định sử dụng array index làm key. Việc sử dụng array index làm key có vấn đề khi cố gắng sắp xếp lại các item trong danh sách hoặc chèn/xóa item. Truyền rõ ràng `key={i}` sẽ loại bỏ lỗi nhưng vẫn gặp các vấn đề tương tự như khi dùng array index, và không được khuyến nghị trong hầu hết trường hợp.
 
-Keys do not need to be globally unique; they only need to be unique between components and their siblings.
+Key không cần phải là duy nhất trên toàn cục; chúng chỉ cần duy nhất giữa các component và các sibling của chúng.
 
-### Implementing time travel {/*implementing-time-travel*/}
+### Triển khai time travel {/*implementing-time-travel*/}
 
-In the tic-tac-toe game's history, each past move has a unique ID associated with it: it's the sequential number of the move. Moves will never be re-ordered, deleted, or inserted in the middle, so it's safe to use the move index as a key.
+Trong history của trò tic-tac-toe, mỗi nước đi trước đó có một ID duy nhất đi kèm: đó là số thứ tự của nước đi. Các nước đi sẽ không bao giờ được sắp xếp lại, xóa hoặc chèn vào giữa, vì vậy sử dụng index của nước đi làm key là an toàn.
 
-In the `Game` function, you can add the key as `<li key={move}>`, and if you reload the rendered game, React's "key" error should disappear:
+Trong function `Game`, bạn có thể thêm key bằng `<li key={move}>`, và nếu reload trò chơi đã render, lỗi “key” của React sẽ biến mất:
 
 ```js {4}
 const moves = history.map((squares, move) => {
@@ -2477,7 +2477,7 @@ body {
 
 </Sandpack>
 
-Before you can implement `jumpTo`, you need the `Game` component to keep track of which step the user is currently viewing. To do this, define a new state variable called `currentMove`, defaulting to `0`:
+Trước khi có thể triển khai `jumpTo`, bạn cần component `Game` theo dõi bước mà người dùng hiện đang xem. Để làm điều này, hãy định nghĩa một biến state mới có tên `currentMove`, với giá trị mặc định là `0`:
 
 ```js {4}
 export default function Game() {
@@ -2489,7 +2489,7 @@ export default function Game() {
 }
 ```
 
-Next, update the `jumpTo` function inside `Game` to update that `currentMove`. You'll also set `xIsNext` to `true` if the number that you're changing `currentMove` to is even.
+Tiếp theo, hãy cập nhật function `jumpTo` bên trong `Game` để cập nhật `currentMove`. Bạn cũng sẽ đặt `xIsNext` thành `true` nếu số mà bạn đang thay đổi `currentMove` thành là số chẵn.
 
 ```js {4-5}
 export default function Game() {
@@ -2502,10 +2502,10 @@ export default function Game() {
 }
 ```
 
-You will now make two changes to the `Game`'s `handlePlay` function which is called when you click on a square.
+Bây giờ bạn sẽ thực hiện hai thay đổi đối với function `handlePlay` của `Game`, function này được gọi khi bạn click vào một ô vuông.
 
-- If you "go back in time" and then make a new move from that point, you only want to keep the history up to that point. Instead of adding `nextSquares` after all items (`...` spread syntax) in `history`, you'll add it after all items in `history.slice(0, currentMove + 1)` so that you're only keeping that portion of the old history.
-- Each time a move is made, you need to update `currentMove` to point to the latest history entry.
+- Nếu bạn “quay ngược thời gian” rồi thực hiện một nước đi mới từ thời điểm đó, bạn chỉ muốn giữ lại history cho đến thời điểm đó. Thay vì thêm `nextSquares` sau tất cả các item (`...` spread syntax) trong `history`, bạn sẽ thêm nó sau tất cả các item trong `history.slice(0, currentMove + 1)` để chỉ giữ lại phần tương ứng của history cũ.
+- Mỗi khi một nước đi được thực hiện, bạn cần cập nhật `currentMove` để trỏ đến mục mới nhất trong history.
 
 ```js {2-4}
 function handlePlay(nextSquares) {
@@ -2516,7 +2516,7 @@ function handlePlay(nextSquares) {
 }
 ```
 
-Finally, you will modify the `Game` component to render the currently selected move, instead of always rendering the final move:
+Cuối cùng, bạn sẽ chỉnh sửa component `Game` để render nước đi hiện đang được chọn, thay vì luôn render nước đi cuối cùng:
 
 ```js {5}
 export default function Game() {
@@ -2529,7 +2529,7 @@ export default function Game() {
 }
 ```
 
-If you click on any step in the game's history, the tic-tac-toe board should immediately update to show what the board looked like after that step occurred.
+Nếu bạn click vào bất kỳ bước nào trong history của trò chơi, bàn cờ tic-tac-toe sẽ ngay lập tức cập nhật để hiển thị trạng thái của bàn cờ sau khi bước đó diễn ra.
 
 <Sandpack>
 
@@ -2700,11 +2700,11 @@ body {
 
 </Sandpack>
 
-### Final cleanup {/*final-cleanup*/}
+### Dọn dẹp lần cuối {/*final-cleanup*/}
 
-If you look at the code very closely, you may notice that `xIsNext === true` when `currentMove` is even and `xIsNext === false` when `currentMove` is odd. In other words, if you know the value of `currentMove`, then you can always figure out what `xIsNext` should be.
+Nếu xem xét code thật kỹ, bạn có thể nhận thấy rằng `xIsNext === true` khi `currentMove` là số chẵn và `xIsNext === false` khi `currentMove` là số lẻ. Nói cách khác, nếu biết giá trị của `currentMove`, bạn luôn có thể xác định `xIsNext` nên là gì.
 
-There's no reason for you to store both of these in state. In fact, always try to avoid redundant state. Simplifying what you store in state reduces bugs and makes your code easier to understand. Change `Game` so that it doesn't store `xIsNext` as a separate state variable and instead figures it out based on the `currentMove`:
+Không có lý do gì để lưu cả hai giá trị này trong state. Trên thực tế, hãy luôn cố gắng tránh state dư thừa. Đơn giản hóa những gì bạn lưu trong state sẽ giảm lỗi và giúp code dễ hiểu hơn. Hãy thay đổi `Game` để nó không lưu `xIsNext` dưới dạng một biến state riêng biệt, mà thay vào đó tính giá trị này dựa trên `currentMove`:
 
 ```js {4,11,15}
 export default function Game() {
@@ -2726,20 +2726,20 @@ export default function Game() {
 }
 ```
 
-You no longer need the `xIsNext` state declaration or the calls to `setXIsNext`. Now, there's no chance for `xIsNext` to get out of sync with `currentMove`, even if you make a mistake while coding the components.
+Bạn không còn cần khai báo state `xIsNext` hoặc các lệnh gọi đến `setXIsNext`. Giờ đây, sẽ không còn khả năng `xIsNext` bị không đồng bộ với `currentMove`, ngay cả khi bạn mắc lỗi trong quá trình viết các component.
 
-### Wrapping up {/*wrapping-up*/}
+### Hoàn thiện {/*wrapping-up*/}
 
-Congratulations! You've created a tic-tac-toe game that:
+Chúc mừng! Bạn đã tạo một trò chơi tic-tac-toe có thể:
 
-- Lets you play tic-tac-toe,
-- Indicates when a player has won the game,
-- Stores a game's history as a game progresses,
-- Allows players to review a game's history and see previous versions of a game's board.
+- Cho phép bạn chơi tic-tac-toe,
+- Cho biết khi nào một người chơi đã thắng,
+- Lưu lại lịch sử của ván cờ trong quá trình chơi,
+- Cho phép người chơi xem lại lịch sử của ván cờ và xem các phiên bản trước đó của bàn cờ.
 
-Nice work! We hope you now feel like you have a decent grasp of how React works.
+Làm tốt lắm! Chúng tôi hy vọng giờ đây bạn đã nắm khá rõ cách React hoạt động.
 
-Check out the final result here:
+Xem kết quả cuối cùng tại đây:
 
 <Sandpack>
 
@@ -2908,12 +2908,12 @@ body {
 
 </Sandpack>
 
-If you have extra time or want to practice your new React skills, here are some ideas for improvements that you could make to the tic-tac-toe game, listed in order of increasing difficulty:
+Nếu còn thời gian hoặc muốn thực hành các kỹ năng React mới, dưới đây là một số ý tưởng cải tiến mà bạn có thể thực hiện cho trò chơi tic-tac-toe, được sắp xếp theo thứ tự độ khó tăng dần:
 
-1. For the current move only, show "You are at move #..." instead of a button.
-1. Rewrite `Board` to use two loops to make the squares instead of hardcoding them.
-1. Add a toggle button that lets you sort the moves in either ascending or descending order.
-1. When someone wins, highlight the three squares that caused the win (and when no one wins, display a message about the result being a draw).
-1. Display the location for each move in the format (row, col) in the move history list.
+1. Chỉ đối với nước đi hiện tại, hãy hiển thị “Bạn đang ở nước đi #...” thay cho một button.
+1. Viết lại `Board` để sử dụng hai vòng lặp tạo các ô vuông thay vì hardcode chúng.
+1. Thêm một button chuyển đổi cho phép bạn sắp xếp các nước đi theo thứ tự tăng dần hoặc giảm dần.
+1. Khi có người thắng, hãy làm nổi bật ba ô vuông tạo nên chiến thắng đó (và khi không có ai thắng, hãy hiển thị thông báo cho biết kết quả là hòa).
+1. Hiển thị vị trí của mỗi nước đi theo định dạng (row, col) trong danh sách lịch sử nước đi.
 
-Throughout this tutorial, you've touched on React concepts including elements, components, props, and state. Now that you've seen how these concepts work when building a game, check out [Thinking in React](/learn/thinking-in-react) to see how the same React concepts work when building an app's UI.
+Trong suốt tutorial này, bạn đã tìm hiểu các khái niệm của React, bao gồm elements, components, props và state. Giờ đây, khi đã thấy cách các khái niệm này hoạt động trong quá trình xây dựng một trò chơi, hãy xem [Thinking in React](/learn/thinking-in-react) để tìm hiểu cách những khái niệm React tương tự hoạt động khi xây dựng UI của một ứng dụng.

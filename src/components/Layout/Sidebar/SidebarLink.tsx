@@ -17,7 +17,6 @@ import cn from 'classnames';
 import {IconNavArrow} from 'components/Icon/IconNavArrow';
 import {IconCanary} from 'components/Icon/IconCanary';
 import {IconExperimental} from 'components/Icon/IconExperimental';
-import Link from 'next/link';
 
 interface SidebarLinkProps {
   href: string;
@@ -29,6 +28,12 @@ interface SidebarLinkProps {
   isExpanded?: boolean;
   hideArrow?: boolean;
   isPending: boolean;
+}
+
+function staticHref(href: string) {
+  if (!href.startsWith('/')) return href;
+  const path = href.replace(/\/$/, '');
+  return path ? `${path}/index.html` : '/index.html';
 }
 
 export function SidebarLink({
@@ -58,12 +63,11 @@ export function SidebarLink({
     target = '_blank';
   }
   return (
-    <Link
-      href={href}
+    <a
+      href={staticHref(href)}
       ref={ref}
       title={title}
       target={target}
-      passHref
       aria-current={selected ? 'page' : undefined}
       className={cn(
         'p-2 pe-2 w-full rounded-none lg:rounded-e-2xl text-start hover:bg-gray-5 dark:hover:bg-gray-80 relative flex items-center justify-between',
@@ -119,6 +123,6 @@ export function SidebarLink({
           <IconNavArrow displayDirection={isExpanded ? 'down' : 'end'} />
         </span>
       )}
-    </Link>
+    </a>
   );
 }

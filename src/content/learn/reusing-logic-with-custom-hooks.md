@@ -1,30 +1,30 @@
 ---
-title: 'Reusing Logic with Custom Hooks'
+title: 'Tái sử dụng logic với Custom Hook'
 ---
 
 <Intro>
 
-React comes with several built-in Hooks like `useState`, `useContext`, and `useEffect`. Sometimes, you'll wish that there was a Hook for some more specific purpose: for example, to fetch data, to keep track of whether the user is online, or to connect to a chat room. You might not find these Hooks in React, but you can create your own Hooks for your application's needs.
+React đi kèm với một số Hook tích hợp sẵn như `useState`, `useContext` và `useEffect`. Đôi khi, bạn sẽ mong có một Hook cho một mục đích cụ thể hơn: chẳng hạn như lấy dữ liệu, theo dõi xem người dùng có đang online hay không, hoặc kết nối với một phòng chat. Bạn có thể không tìm thấy những Hook này trong React, nhưng bạn có thể tự tạo Hook cho nhu cầu của ứng dụng.
 
 </Intro>
 
 <YouWillLearn>
 
-- What custom Hooks are, and how to write your own
-- How to reuse logic between components
-- How to name and structure your custom Hooks
-- When and why to extract custom Hooks
+- Custom Hook là gì và cách tự viết Custom Hook
+- Cách tái sử dụng logic giữa các component
+- Cách đặt tên và cấu trúc Custom Hook
+- Khi nào và tại sao nên tách logic thành Custom Hook
 
 </YouWillLearn>
 
-## Custom Hooks: Sharing logic between components {/*custom-hooks-sharing-logic-between-components*/}
+## Custom Hook: Chia sẻ logic giữa các component {/*custom-hooks-sharing-logic-between-components*/}
 
-Imagine you're developing an app that heavily relies on the network (as most apps do). You want to warn the user if their network connection has accidentally gone off while they were using your app. How would you go about it? It seems like you'll need two things in your component:
+Hãy tưởng tượng bạn đang phát triển một ứng dụng phụ thuộc nhiều vào mạng (như hầu hết các ứng dụng). Bạn muốn cảnh báo người dùng nếu kết nối mạng của họ vô tình bị ngắt trong lúc họ đang sử dụng ứng dụng. Bạn sẽ thực hiện việc này như thế nào? Có vẻ như bạn sẽ cần hai thứ trong component:
 
-1. A piece of state that tracks whether the network is online.
-2. An Effect that subscribes to the global [`online`](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) and [`offline`](https://developer.mozilla.org/en-US/docs/Web/API/Window/offline_event) events, and updates that state.
+1. Một state theo dõi xem mạng có đang online hay không.
+2. Một Effect đăng ký các sự kiện [`online`](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) và [`offline`](https://developer.mozilla.org/en-US/docs/Web/API/Window/offline_event) toàn cục, rồi cập nhật state đó.
 
-This will keep your component [synchronized](/learn/synchronizing-with-effects) with the network status. You might start with something like this:
+Điều này sẽ giữ cho component của bạn [đồng bộ](/learn/synchronizing-with-effects) với trạng thái mạng. Bạn có thể bắt đầu bằng đoạn mã như sau:
 
 <Sandpack>
 
@@ -54,11 +54,11 @@ export default function StatusBar() {
 
 </Sandpack>
 
-Try turning your network on and off, and notice how this `StatusBar` updates in response to your actions.
+Hãy thử bật và tắt mạng, rồi quan sát cách `StatusBar` này cập nhật theo thao tác của bạn.
 
-Now imagine you *also* want to use the same logic in a different component. You want to implement a Save button that will become disabled and show "Reconnecting..." instead of "Save" while the network is off.
+Bây giờ hãy tưởng tượng bạn *cũng* muốn sử dụng cùng logic đó trong một component khác. Bạn muốn triển khai một nút Save, nút này sẽ bị vô hiệu hóa và hiển thị "Reconnecting..." thay cho "Save" khi mạng bị ngắt.
 
-To start, you can copy and paste the `isOnline` state and the Effect into `SaveButton`:
+Để bắt đầu, bạn có thể sao chép và dán state `isOnline` cùng Effect vào `SaveButton`:
 
 <Sandpack>
 
@@ -96,13 +96,13 @@ export default function SaveButton() {
 
 </Sandpack>
 
-Verify that, if you turn off the network, the button will change its appearance.
+Hãy xác minh rằng khi bạn tắt mạng, nút sẽ thay đổi giao diện.
 
-These two components work fine, but the duplication in logic between them is unfortunate. It seems like even though they have different *visual appearance,* you want to reuse the logic between them.
+Hai component này hoạt động tốt, nhưng việc lặp lại logic giữa chúng thật đáng tiếc. Có vẻ như dù chúng có *giao diện khác nhau,* bạn vẫn muốn tái sử dụng logic giữa chúng.
 
-### Extracting your own custom Hook from a component {/*extracting-your-own-custom-hook-from-a-component*/}
+### Tách Custom Hook của riêng bạn từ một component {/*extracting-your-own-custom-hook-from-a-component*/}
 
-Imagine for a moment that, similar to [`useState`](/reference/react/useState) and [`useEffect`](/reference/react/useEffect), there was a built-in `useOnlineStatus` Hook. Then both of these components could be simplified and you could remove the duplication between them:
+Hãy tạm tưởng tượng rằng, tương tự như [`useState`](/reference/react/useState) và [`useEffect`](/reference/react/useEffect), có một Hook `useOnlineStatus` tích hợp sẵn. Khi đó, cả hai component này có thể được đơn giản hóa và bạn có thể loại bỏ phần logic lặp lại giữa chúng:
 
 ```js {2,7}
 function StatusBar() {
@@ -125,7 +125,7 @@ function SaveButton() {
 }
 ```
 
-Although there is no such built-in Hook, you can write it yourself. Declare a function called `useOnlineStatus` and move all the duplicated code into it from the components you wrote earlier:
+Mặc dù không có Hook tích hợp sẵn như vậy, bạn có thể tự viết nó. Khai báo một hàm có tên `useOnlineStatus` và chuyển toàn bộ mã bị lặp từ các component bạn đã viết trước đó vào hàm này:
 
 ```js {2-16}
 function useOnlineStatus() {
@@ -148,7 +148,7 @@ function useOnlineStatus() {
 }
 ```
 
-At the end of the function, return `isOnline`. This lets your components read that value:
+Ở cuối hàm, trả về `isOnline`. Điều này cho phép các component đọc giá trị đó:
 
 <Sandpack>
 
@@ -209,36 +209,36 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-Verify that switching the network on and off updates both components.
+Hãy xác minh rằng việc bật và tắt mạng sẽ cập nhật cả hai component.
 
-Now your components don't have as much repetitive logic. **More importantly, the code inside them describes *what they want to do* (use the online status!) rather than *how to do it* (by subscribing to the browser events).**
+Giờ đây, các component của bạn không còn nhiều logic lặp lại như trước. **Quan trọng hơn, mã bên trong chúng mô tả *điều chúng muốn làm* (sử dụng trạng thái online!) thay vì *cách thực hiện* (bằng cách đăng ký các sự kiện của trình duyệt).**
 
-When you extract logic into custom Hooks, you can hide the gnarly details of how you deal with some external system or a browser API. The code of your components expresses your intent, not the implementation.
+Khi tách logic thành Custom Hook, bạn có thể che giấu những chi tiết rắc rối về cách xử lý một hệ thống bên ngoài hoặc API của trình duyệt. Mã trong các component thể hiện ý định của bạn, không phải cách triển khai.
 
-### Hook names always start with `use` {/*hook-names-always-start-with-use*/}
+### Tên Hook luôn bắt đầu bằng `use` {/*hook-names-always-start-with-use*/}
 
-React applications are built from components. Components are built from Hooks, whether built-in or custom. You'll likely often use custom Hooks created by others, but occasionally you might write one yourself!
+Ứng dụng React được xây dựng từ các component. Các component được xây dựng từ Hook, dù là Hook tích hợp sẵn hay Custom Hook. Có thể bạn sẽ thường xuyên sử dụng Custom Hook do người khác tạo, nhưng đôi khi bạn cũng có thể tự viết một Hook!
 
-You must follow these naming conventions:
+Bạn phải tuân theo các quy ước đặt tên sau:
 
-1. **React component names must start with a capital letter,** like `StatusBar` and `SaveButton`. React components also need to return something that React knows how to display, like a piece of JSX.
-2. **Hook names must start with `use` followed by a capital letter,** like [`useState`](/reference/react/useState) (built-in) or `useOnlineStatus` (custom, like earlier on the page). Hooks may return arbitrary values.
+1. **Tên component React phải bắt đầu bằng một chữ cái viết hoa,** chẳng hạn như `StatusBar` và `SaveButton`. Component React cũng cần trả về thứ mà React biết cách hiển thị, chẳng hạn như một đoạn JSX.
+2. **Tên Hook phải bắt đầu bằng `use` theo sau là một chữ cái viết hoa,** chẳng hạn như [`useState`](/reference/react/useState) (tích hợp sẵn) hoặc `useOnlineStatus` (tùy chỉnh, như ở phần trước). Hook có thể trả về các giá trị bất kỳ.
 
-This convention guarantees that you can always look at a component and know where its state, Effects, and other React features might "hide". For example, if you see a `getColor()` function call inside your component, you can be sure that it can't possibly contain React state inside because its name doesn't start with `use`. However, a function call like `useOnlineStatus()` will most likely contain calls to other Hooks inside!
+Quy ước này đảm bảo rằng bạn luôn có thể nhìn vào một component và biết state, Effect cùng các tính năng React khác có thể đang "ẩn" ở đâu. Ví dụ, nếu thấy một lệnh gọi hàm `getColor()` bên trong component, bạn có thể chắc chắn rằng nó không thể chứa state React, vì tên của nó không bắt đầu bằng `use`. Tuy nhiên, một lệnh gọi hàm như `useOnlineStatus()` rất có thể sẽ chứa các lệnh gọi đến những Hook khác bên trong!
 
 <Note>
 
-If your linter is [configured for React,](/learn/editor-setup#linting) it will enforce this naming convention. Scroll up to the sandbox above and rename `useOnlineStatus` to `getOnlineStatus`. Notice that the linter won't allow you to call `useState` or `useEffect` inside of it anymore. Only Hooks and components can call other Hooks!
+Nếu linter của bạn được [cấu hình cho React,](/learn/editor-setup#linting) nó sẽ thực thi quy ước đặt tên này. Cuộn lên sandbox ở trên và đổi tên `useOnlineStatus` thành `getOnlineStatus`. Hãy chú ý rằng linter sẽ không còn cho phép bạn gọi `useState` hoặc `useEffect` bên trong nó nữa. Chỉ Hook và component mới có thể gọi các Hook khác!
 
 </Note>
 
 <DeepDive>
 
-#### Should all functions called during rendering start with the use prefix? {/*should-all-functions-called-during-rendering-start-with-the-use-prefix*/}
+#### Có phải mọi hàm được gọi trong quá trình render đều phải bắt đầu bằng tiền tố use không? {/*should-all-functions-called-during-rendering-start-with-the-use-prefix*/}
 
-No. Functions that don't *call* Hooks don't need to *be* Hooks.
+Không. Những hàm không *gọi* Hook thì không cần *là* Hook.
 
-If your function doesn't call any Hooks, avoid the `use` prefix. Instead, write it as a regular function *without* the `use` prefix. For example, `useSorted` below doesn't call Hooks, so call it `getSorted` instead:
+Nếu hàm của bạn không gọi Hook nào, hãy tránh tiền tố `use`. Thay vào đó, hãy viết nó như một hàm thông thường *không có* tiền tố `use`. Ví dụ, `useSorted` bên dưới không gọi Hook nào, vì vậy hãy gọi nó là `getSorted`:
 
 ```js
 // 🔴 Avoid: A Hook that doesn't use Hooks
@@ -252,7 +252,7 @@ function getSorted(items) {
 }
 ```
 
-This ensures that your code can call this regular function anywhere, including conditions:
+Điều này đảm bảo mã của bạn có thể gọi hàm thông thường này ở bất kỳ đâu, kể cả trong các điều kiện:
 
 ```js
 function List({ items, shouldSort }) {
@@ -265,7 +265,7 @@ function List({ items, shouldSort }) {
 }
 ```
 
-You should give `use` prefix to a function (and thus make it a Hook) if it uses at least one Hook inside of it:
+Bạn nên thêm tiền tố `use` cho một hàm (và do đó biến nó thành một Hook) nếu bên trong nó sử dụng ít nhất một Hook:
 
 ```js
 // ✅ Good: A Hook that uses other Hooks
@@ -274,7 +274,7 @@ function useAuth() {
 }
 ```
 
-Technically, this isn't enforced by React. In principle, you could make a Hook that doesn't call other Hooks. This is often confusing and limiting so it's best to avoid that pattern. However, there may be rare cases where it is helpful. For example, maybe your function doesn't use any Hooks right now, but you plan to add some Hook calls to it in the future. Then it makes sense to name it with the `use` prefix:
+Về mặt kỹ thuật, React không bắt buộc điều này. Về nguyên tắc, bạn có thể tạo một Hook không gọi các Hook khác. Cách này thường gây khó hiểu và hạn chế, vì vậy tốt nhất nên tránh. Tuy nhiên, có thể có những trường hợp hiếm hoi mà nó hữu ích. Ví dụ, có thể hiện tại hàm của bạn chưa sử dụng Hook nào, nhưng bạn dự định thêm một số lệnh gọi Hook vào đó trong tương lai. Khi đó, việc đặt tên cho nó bằng tiền tố `use` là hợp lý:
 
 ```js {3-4}
 // ✅ Good: A Hook that will likely use some other Hooks later
@@ -285,13 +285,13 @@ function useAuth() {
 }
 ```
 
-Then components won't be able to call it conditionally. This will become important when you actually add Hook calls inside. If you don't plan to use Hooks inside it (now or later), don't make it a Hook.
+Khi đó, các component sẽ không thể gọi nó một cách có điều kiện. Điều này sẽ trở nên quan trọng khi bạn thực sự thêm các lệnh gọi Hook vào bên trong. Nếu bạn không dự định sử dụng Hook bên trong nó (hiện tại hoặc sau này), đừng biến nó thành một Hook.
 
 </DeepDive>
 
-### Custom Hooks let you share stateful logic, not state itself {/*custom-hooks-let-you-share-stateful-logic-not-state-itself*/}
+### Custom Hook giúp bạn chia sẻ logic có state, không phải bản thân state {/*custom-hooks-let-you-share-stateful-logic-not-state-itself*/}
 
-In the earlier example, when you turned the network on and off, both components updated together. However, it's wrong to think that a single `isOnline` state variable is shared between them. Look at this code:
+Trong ví dụ trước, khi bạn bật và tắt mạng, cả hai component đều cập nhật cùng nhau. Tuy nhiên, sẽ sai nếu nghĩ rằng một biến state `isOnline` duy nhất được chia sẻ giữa chúng. Hãy xem đoạn mã này:
 
 ```js {2,7}
 function StatusBar() {
@@ -305,7 +305,7 @@ function SaveButton() {
 }
 ```
 
-It works the same way as before you extracted the duplication:
+Nó hoạt động giống hệt như trước khi bạn tách phần mã lặp lại:
 
 ```js {2-5,10-13}
 function StatusBar() {
@@ -325,9 +325,9 @@ function SaveButton() {
 }
 ```
 
-These are two completely independent state variables and Effects! They happened to have the same value at the same time because you synchronized them with the same external value (whether the network is on).
+Đây là hai biến state và Effect hoàn toàn độc lập! Chúng tình cờ có cùng giá trị tại cùng một thời điểm vì bạn đã đồng bộ chúng với cùng một giá trị bên ngoài (mạng có đang bật hay không).
 
-To better illustrate this, we'll need a different example. Consider this `Form` component:
+Để minh họa rõ hơn, chúng ta cần một ví dụ khác. Hãy xem component `Form` này:
 
 <Sandpack>
 
@@ -369,13 +369,13 @@ input { margin-left: 10px; }
 
 </Sandpack>
 
-There's some repetitive logic for each form field:
+Có một số logic lặp lại cho mỗi trường biểu mẫu:
 
-1. There's a piece of state (`firstName` and `lastName`).
-1. There's a change handler (`handleFirstNameChange` and `handleLastNameChange`).
-1. There's a piece of JSX that specifies the `value` and `onChange` attributes for that input.
+1. Có một state (`firstName` và `lastName`).
+1. Có một change handler (`handleFirstNameChange` và `handleLastNameChange`).
+1. Có một đoạn JSX chỉ định các thuộc tính `value` và `onChange` cho input đó.
 
-You can extract the repetitive logic into this `useFormInput` custom Hook:
+Bạn có thể tách logic lặp lại thành Custom Hook `useFormInput` này:
 
 <Sandpack>
 
@@ -428,9 +428,9 @@ input { margin-left: 10px; }
 
 </Sandpack>
 
-Notice that it only declares *one* state variable called `value`.
+Hãy chú ý rằng nó chỉ khai báo *một* biến state có tên `value`.
 
-However, the `Form` component calls `useFormInput` *two times:*
+Tuy nhiên, component `Form` gọi `useFormInput` *hai lần:*
 
 ```js
 function Form() {
@@ -439,17 +439,17 @@ function Form() {
   // ...
 ```
 
-This is why it works like declaring two separate state variables!
+Đây là lý do nó hoạt động giống như việc khai báo hai biến state riêng biệt!
 
-**Custom Hooks let you share *stateful logic* but not *state itself.* Each call to a Hook is completely independent from every other call to the same Hook.** This is why the two sandboxes above are completely equivalent. If you'd like, scroll back up and compare them. The behavior before and after extracting a custom Hook is identical.
+**Custom Hook cho phép bạn chia sẻ *logic có state* nhưng không chia sẻ *bản thân state.* Mỗi lần gọi một Hook hoàn toàn độc lập với mọi lần gọi khác đến cùng Hook đó.** Đây là lý do hai sandbox ở trên hoàn toàn tương đương. Nếu muốn, hãy cuộn lên và so sánh chúng. Hành vi trước và sau khi tách thành Custom Hook là giống hệt nhau.
 
-When you need to share the state itself between multiple components, [lift it up and pass it down](/learn/sharing-state-between-components) instead.
+Khi cần chia sẻ chính state giữa nhiều component, [đưa state lên component cha và truyền xuống](/learn/sharing-state-between-components) thay vào đó.
 
-## Passing reactive values between Hooks {/*passing-reactive-values-between-hooks*/}
+## Truyền các giá trị reactive giữa các Hook {/*passing-reactive-values-between-hooks*/}
 
-The code inside your custom Hooks will re-run during every re-render of your component. This is why, like components, custom Hooks [need to be pure.](/learn/keeping-components-pure) Think of custom Hooks' code as part of your component's body!
+Mã bên trong các custom Hook của bạn sẽ chạy lại trong mỗi lần component được re-render. Đây là lý do vì sao, cũng giống như component, custom Hook [cần phải thuần khiết.](/learn/keeping-components-pure) Hãy coi mã của custom Hook là một phần trong phần thân của component!
 
-Because custom Hooks re-render together with your component, they always receive the latest props and state. To see what this means, consider this chat room example. Change the server URL or the chat room:
+Vì custom Hook được re-render cùng với component, chúng luôn nhận được props và state mới nhất. Để thấy điều này có nghĩa là gì, hãy xem xét ví dụ về phòng chat sau. Hãy thay đổi URL của server hoặc phòng chat:
 
 <Sandpack>
 
@@ -599,9 +599,9 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-When you change `serverUrl` or `roomId`, the Effect ["reacts" to your changes](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) and re-synchronizes. You can tell by the console messages that the chat re-connects every time that you change your Effect's dependencies.
+Khi bạn thay đổi `serverUrl` hoặc `roomId`, Effect ["phản ứng" với các thay đổi của bạn](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) và đồng bộ hóa lại. Bạn có thể nhận thấy qua các thông báo trong console rằng chat kết nối lại mỗi khi bạn thay đổi các dependency của Effect.
 
-Now move the Effect's code into a custom Hook:
+Bây giờ hãy chuyển mã của Effect vào một custom Hook:
 
 ```js {2-13}
 export function useChatRoom({ serverUrl, roomId }) {
@@ -620,7 +620,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 }
 ```
 
-This lets your `ChatRoom` component call your custom Hook without worrying about how it works inside:
+Điều này cho phép component `ChatRoom` gọi custom Hook của bạn mà không cần quan tâm đến cách nó hoạt động bên trong:
 
 ```js {4-7}
 export default function ChatRoom({ roomId }) {
@@ -643,9 +643,9 @@ export default function ChatRoom({ roomId }) {
 }
 ```
 
-This looks much simpler! (But it does the same thing.)
+Trông đơn giản hơn nhiều! (Nhưng nó thực hiện đúng việc như trước.)
 
-Notice that the logic *still responds* to prop and state changes. Try editing the server URL or the selected room:
+Hãy chú ý rằng logic *vẫn phản hồi* với các thay đổi của prop và state. Hãy thử chỉnh sửa URL của server hoặc phòng được chọn:
 
 <Sandpack>
 
@@ -807,7 +807,7 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-Notice how you're taking the return value of one Hook:
+Hãy chú ý cách bạn lấy giá trị trả về của một Hook:
 
 ```js {2}
 export default function ChatRoom({ roomId }) {
@@ -820,7 +820,7 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-and passing it as an input to another Hook:
+và truyền nó làm đầu vào cho một Hook khác:
 
 ```js {6}
 export default function ChatRoom({ roomId }) {
@@ -833,11 +833,11 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-Every time your `ChatRoom` component re-renders, it passes the latest `roomId` and `serverUrl` to your Hook. This is why your Effect re-connects to the chat whenever their values are different after a re-render. (If you ever worked with audio or video processing software, chaining Hooks like this might remind you of chaining visual or audio effects. It's as if the output of `useState` "feeds into" the input of the `useChatRoom`.)
+Mỗi khi component `ChatRoom` của bạn re-render, nó sẽ truyền `roomId` và `serverUrl` mới nhất vào Hook của bạn. Đây là lý do Effect của bạn kết nối lại với chat bất cứ khi nào các giá trị của chúng khác đi sau một lần re-render. (Nếu bạn từng làm việc với phần mềm xử lý audio hoặc video, việc xâu chuỗi các Hook như thế này có thể khiến bạn liên tưởng đến việc xâu chuỗi các hiệu ứng hình ảnh hoặc audio. Cứ như thể đầu ra của `useState` được "truyền vào" đầu vào của `useChatRoom`.)
 
-### Passing event handlers to custom Hooks {/*passing-event-handlers-to-custom-hooks*/}
+### Truyền event handler cho custom Hook {/*passing-event-handlers-to-custom-hooks*/}
 
-As you start using `useChatRoom` in more components, you might want to let components customize its behavior. For example, currently, the logic for what to do when a message arrives is hardcoded inside the Hook:
+Khi bắt đầu sử dụng `useChatRoom` trong nhiều component hơn, bạn có thể muốn cho phép các component tùy chỉnh hành vi của nó. Ví dụ: hiện tại, logic xử lý khi một message đến đang được hardcode bên trong Hook:
 
 ```js {9-11}
 export function useChatRoom({ serverUrl, roomId }) {
@@ -856,7 +856,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 }
 ```
 
-Let's say you want to move this logic back to your component:
+Giả sử bạn muốn chuyển logic này trở lại component:
 
 ```js {7-9}
 export default function ChatRoom({ roomId }) {
@@ -872,7 +872,7 @@ export default function ChatRoom({ roomId }) {
   // ...
 ```
 
-To make this work, change your custom Hook to take `onReceiveMessage` as one of its named options:
+Để việc này hoạt động, hãy thay đổi custom Hook để nhận `onReceiveMessage` như một trong các named option của nó:
 
 ```js {1,10,13}
 export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
@@ -891,9 +891,9 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
 }
 ```
 
-This will work, but there's one more improvement you can do when your custom Hook accepts event handlers.
+Cách này sẽ hoạt động, nhưng bạn có thể cải thiện thêm một điểm khi custom Hook nhận event handler.
 
-Adding a dependency on `onReceiveMessage` is not ideal because it will cause the chat to re-connect every time the component re-renders. [Wrap this event handler into an Effect Event to remove it from the dependencies:](/learn/removing-effect-dependencies#wrapping-an-event-handler-from-the-props)
+Việc thêm dependency vào `onReceiveMessage` không phải là lý tưởng vì nó sẽ khiến chat kết nối lại mỗi khi component re-render. [Hãy bọc event handler này trong một Effect Event để loại bỏ nó khỏi các dependency:](/learn/removing-effect-dependencies#wrapping-an-event-handler-from-the-props)
 
 ```js {1,4,5,15,18}
 import { useEffect, useEffectEvent } from 'react';
@@ -917,7 +917,7 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
 }
 ```
 
-Now the chat won't re-connect every time that the `ChatRoom` component re-renders. Here is a fully working demo of passing an event handler to a custom Hook that you can play with:
+Bây giờ chat sẽ không kết nối lại mỗi khi component `ChatRoom` re-render. Dưới đây là một demo hoàn chỉnh, hoạt động được, về việc truyền event handler cho một custom Hook để bạn có thể tự thử:
 
 <Sandpack>
 
@@ -1085,15 +1085,15 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-Notice how you no longer need to know *how* `useChatRoom` works in order to use it. You could add it to any other component, pass any other options, and it would work the same way. That's the power of custom Hooks.
+Hãy chú ý rằng bạn không còn cần biết `useChatRoom` hoạt động *như thế nào* để sử dụng nó. Bạn có thể thêm nó vào bất kỳ component nào khác, truyền vào bất kỳ option nào khác, và nó vẫn hoạt động theo cùng một cách. Đó chính là sức mạnh của custom Hook.
 
-## When to use custom Hooks {/*when-to-use-custom-hooks*/}
+## Khi nào nên sử dụng custom Hook {/*when-to-use-custom-hooks*/}
 
-You don't need to extract a custom Hook for every little duplicated bit of code. Some duplication is fine. For example, extracting a `useFormInput` Hook to wrap a single `useState` call like earlier is probably unnecessary.
+Bạn không cần tách một custom Hook cho mọi đoạn mã nhỏ bị lặp lại. Một số phần trùng lặp là hoàn toàn ổn. Ví dụ, việc tách một Hook `useFormInput` để bọc một lời gọi `useState` duy nhất như trước đây có lẽ là không cần thiết.
 
-However, whenever you write an Effect, consider whether it would be clearer to also wrap it in a custom Hook. [You shouldn't need Effects very often,](/learn/you-might-not-need-an-effect) so if you're writing one, it means that you need to "step outside React" to synchronize with some external system or to do something that React doesn't have a built-in API for. Wrapping it into a custom Hook lets you precisely communicate your intent and how the data flows through it.
+Tuy nhiên, bất cứ khi nào viết một Effect, hãy cân nhắc xem việc bọc nó trong một custom Hook có làm code rõ ràng hơn không. [Bạn không nên cần đến Effect quá thường xuyên,](/learn/you-might-not-need-an-effect) vì vậy nếu bạn đang viết một Effect, điều đó có nghĩa là bạn cần "bước ra ngoài React" để đồng bộ với một hệ thống bên ngoài nào đó hoặc thực hiện việc mà React không có API tích hợp sẵn. Bọc nó trong một custom Hook giúp bạn truyền đạt chính xác mục đích của mình và cách dữ liệu đi qua nó.
 
-For example, consider a `ShippingForm` component that displays two dropdowns: one shows the list of cities, and another shows the list of areas in the selected city. You might start with some code that looks like this:
+Ví dụ, hãy xem xét một component `ShippingForm` hiển thị hai dropdown: một dropdown hiển thị danh sách thành phố, dropdown còn lại hiển thị danh sách khu vực trong thành phố được chọn. Bạn có thể bắt đầu với đoạn code trông như sau:
 
 ```js {3-16,20-35}
 function ShippingForm({ country }) {
@@ -1135,7 +1135,7 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-Although this code is quite repetitive, [it's correct to keep these Effects separate from each other.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) They synchronize two different things, so you shouldn't merge them into one Effect. Instead, you can simplify the `ShippingForm` component above by extracting the common logic between them into your own `useData` Hook:
+Mặc dù đoạn code này khá lặp lại, [việc giữ các Effect này tách biệt với nhau là đúng.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) Chúng đồng bộ hai thứ khác nhau, vì vậy bạn không nên gộp chúng vào một Effect. Thay vào đó, bạn có thể đơn giản hóa component `ShippingForm` ở trên bằng cách tách logic chung giữa chúng thành custom Hook `useData` của riêng mình:
 
 ```js {2-18}
 function useData(url) {
@@ -1159,7 +1159,7 @@ function useData(url) {
 }
 ```
 
-Now you can replace both Effects in the `ShippingForm` components with calls to `useData`:
+Bây giờ bạn có thể thay thế cả hai Effect trong các component `ShippingForm` bằng những lời gọi đến `useData`:
 
 ```js {2,4}
 function ShippingForm({ country }) {
@@ -1169,33 +1169,33 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-Extracting a custom Hook makes the data flow explicit. You feed the `url` in and you get the `data` out. By "hiding" your Effect inside `useData`, you also prevent someone working on the `ShippingForm` component from adding [unnecessary dependencies](/learn/removing-effect-dependencies) to it. With time, most of your app's Effects will be in custom Hooks.
+Việc tách một custom Hook khiến luồng dữ liệu trở nên rõ ràng. Bạn truyền `url` vào và nhận `data` ra. Bằng cách "ẩn" Effect bên trong `useData`, bạn cũng ngăn người làm việc trên component `ShippingForm` thêm các [dependency không cần thiết](/learn/removing-effect-dependencies) vào đó. Theo thời gian, phần lớn Effect trong app của bạn sẽ nằm trong các custom Hook.
 
 <DeepDive>
 
-#### Keep your custom Hooks focused on concrete high-level use cases {/*keep-your-custom-hooks-focused-on-concrete-high-level-use-cases*/}
+#### Tập trung custom Hook vào các use case cấp cao, cụ thể {/*keep-your-custom-hooks-focused-on-concrete-high-level-use-cases*/}
 
-Start by choosing your custom Hook's name. If you struggle to pick a clear name, it might mean that your Effect is too coupled to the rest of your component's logic, and is not yet ready to be extracted.
+Hãy bắt đầu bằng việc chọn tên cho custom Hook. Nếu bạn gặp khó khăn khi chọn một cái tên rõ ràng, điều đó có thể có nghĩa là Effect của bạn đang liên kết quá chặt với phần logic còn lại của component và chưa sẵn sàng để tách ra.
 
-Ideally, your custom Hook's name should be clear enough that even a person who doesn't write code often could have a good guess about what your custom Hook does, what it takes, and what it returns:
+Lý tưởng nhất là tên custom Hook phải đủ rõ ràng để ngay cả người không thường xuyên viết code cũng có thể đoán được custom Hook của bạn làm gì, nhận gì và trả về gì:
 
 * ✅ `useData(url)`
 * ✅ `useImpressionLog(eventName, extraData)`
 * ✅ `useChatRoom(options)`
 
-When you synchronize with an external system, your custom Hook name may be more technical and use jargon specific to that system. It's good as long as it would be clear to a person familiar with that system:
+Khi đồng bộ với một hệ thống bên ngoài, tên custom Hook của bạn có thể mang tính kỹ thuật hơn và sử dụng các thuật ngữ chuyên ngành riêng của hệ thống đó. Điều này hoàn toàn ổn miễn là người quen thuộc với hệ thống đó có thể hiểu rõ:
 
 * ✅ `useMediaQuery(query)`
 * ✅ `useSocket(url)`
 * ✅ `useIntersectionObserver(ref, options)`
 
-**Keep custom Hooks focused on concrete high-level use cases.** Avoid creating and using custom "lifecycle" Hooks that act as alternatives and convenience wrappers for the `useEffect` API itself:
+**Hãy tập trung custom Hook vào các use case cấp cao, cụ thể.** Tránh tạo và sử dụng các custom "lifecycle" Hook hoạt động như những API thay thế và wrapper tiện lợi cho chính API `useEffect`:
 
 * 🔴 `useMount(fn)`
 * 🔴 `useEffectOnce(fn)`
 * 🔴 `useUpdateEffect(fn)`
 
-For example, this `useMount` Hook tries to ensure some code only runs "on mount":
+Ví dụ, Hook `useMount` này cố gắng đảm bảo rằng một đoạn code chỉ chạy "khi mount":
 
 ```js {4-5,14-15}
 function ChatRoom({ roomId }) {
@@ -1219,9 +1219,9 @@ function useMount(fn) {
 }
 ```
 
-**Custom "lifecycle" Hooks like `useMount` don't fit well into the React paradigm.** For example, this code example has a mistake (it doesn't "react" to `roomId` or `serverUrl` changes), but the linter won't warn you about it because the linter only checks direct `useEffect` calls. It won't know about your Hook.
+**Các custom "lifecycle" Hook như `useMount` không phù hợp với mô hình React.** Ví dụ, đoạn code này có một lỗi (nó không "phản ứng" với các thay đổi của `roomId` hoặc `serverUrl`), nhưng linter sẽ không cảnh báo bạn vì linter chỉ kiểm tra các lời gọi `useEffect` trực tiếp. Nó không biết về Hook của bạn.
 
-If you're writing an Effect, start by using the React API directly:
+Nếu bạn đang viết một Effect, hãy bắt đầu bằng cách sử dụng trực tiếp API của React:
 
 ```js
 function ChatRoom({ roomId }) {
@@ -1243,7 +1243,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-Then, you can (but don't have to) extract custom Hooks for different high-level use cases:
+Sau đó, bạn có thể (nhưng không bắt buộc) tách các custom Hook cho những use case cấp cao khác nhau:
 
 ```js
 function ChatRoom({ roomId }) {
@@ -1256,15 +1256,15 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-**A good custom Hook makes the calling code more declarative by constraining what it does.** For example, `useChatRoom(options)` can only connect to the chat room, while `useImpressionLog(eventName, extraData)` can only send an impression log to the analytics. If your custom Hook API doesn't constrain the use cases and is very abstract, in the long run it's likely to introduce more problems than it solves.
+**Một custom Hook tốt giúp code gọi nó mang tính khai báo hơn bằng cách giới hạn những gì nó có thể thực hiện.** Ví dụ, `useChatRoom(options)` chỉ có thể kết nối với phòng chat, còn `useImpressionLog(eventName, extraData)` chỉ có thể gửi log impression đến analytics. Nếu API của custom Hook không giới hạn các use case và quá trừu tượng, về lâu dài, nhiều khả năng nó sẽ tạo ra nhiều vấn đề hơn là giải quyết được.
 
 </DeepDive>
 
-### Custom Hooks help you migrate to better patterns {/*custom-hooks-help-you-migrate-to-better-patterns*/}
+### Custom Hook giúp bạn chuyển sang các pattern tốt hơn {/*custom-hooks-help-you-migrate-to-better-patterns*/}
 
-Effects are an ["escape hatch"](/learn/escape-hatches): you use them when you need to "step outside React" and when there is no better built-in solution for your use case. With time, the React team's goal is to reduce the number of the Effects in your app to the minimum by providing more specific solutions to more specific problems. Wrapping your Effects in custom Hooks makes it easier to upgrade your code when these solutions become available.
+Effect là một ["lối thoát"](/learn/escape-hatches): bạn sử dụng chúng khi cần "bước ra ngoài React" và khi không có giải pháp tích hợp nào tốt hơn cho use case của mình. Theo thời gian, mục tiêu của đội ngũ React là giảm số lượng Effect trong app của bạn xuống mức tối thiểu bằng cách cung cấp các giải pháp cụ thể hơn cho những vấn đề cụ thể hơn. Việc bọc Effect trong các custom Hook giúp bạn dễ dàng nâng cấp code khi những giải pháp này trở nên khả dụng.
 
-Let's return to this example:
+Hãy quay lại ví dụ này:
 
 <Sandpack>
 
@@ -1325,9 +1325,9 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-In the above example, `useOnlineStatus` is implemented with a pair of [`useState`](/reference/react/useState) and [`useEffect`.](/reference/react/useEffect) However, this isn't the best possible solution. There is a number of edge cases it doesn't consider. For example, it assumes that when the component mounts, `isOnline` is already `true`, but this may be wrong if the network already went offline. You can use the browser [`navigator.onLine`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine) API to check for that, but using it directly would not work on the server for generating the initial HTML. In short, this code could be improved.
+Trong ví dụ trên, `useOnlineStatus` được triển khai bằng một cặp [`useState`](/reference/react/useState) và [`useEffect`.](/reference/react/useEffect) Tuy nhiên, đây không phải là giải pháp tốt nhất có thể. Có một số trường hợp đặc biệt mà nó chưa xem xét. Ví dụ, nó giả định rằng khi component được mount, `isOnline` đã là `true`, nhưng điều này có thể không đúng nếu mạng đã bị ngắt kết nối trước đó. Bạn có thể sử dụng API [`navigator.onLine`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine) của trình duyệt để kiểm tra điều đó, nhưng sử dụng trực tiếp API này sẽ không hoạt động trên server khi tạo HTML ban đầu. Tóm lại, đoạn code này có thể được cải thiện.
 
-React includes a dedicated API called [`useSyncExternalStore`](/reference/react/useSyncExternalStore) which takes care of all of these problems for you. Here is your `useOnlineStatus` Hook, rewritten to take advantage of this new API:
+React cung cấp một API chuyên dụng có tên là [`useSyncExternalStore`](/reference/react/useSyncExternalStore), API này xử lý tất cả các vấn đề trên cho bạn. Sau đây là `useOnlineStatus` Hook của bạn, được viết lại để tận dụng API mới này:
 
 <Sandpack>
 
@@ -1387,7 +1387,7 @@ export function useOnlineStatus() {
 
 </Sandpack>
 
-Notice how **you didn't need to change any of the components** to make this migration:
+Lưu ý rằng **bạn không cần thay đổi bất kỳ component nào** để thực hiện quá trình chuyển đổi này:
 
 ```js {2,7}
 function StatusBar() {
@@ -1401,19 +1401,19 @@ function SaveButton() {
 }
 ```
 
-This is another reason for why wrapping Effects in custom Hooks is often beneficial:
+Đây là một lý do khác khiến việc bọc các Effect trong custom Hook thường có lợi:
 
-1. You make the data flow to and from your Effects very explicit.
-2. You let your components focus on the intent rather than on the exact implementation of your Effects.
-3. When React adds new features, you can remove those Effects without changing any of your components.
+1. Bạn làm cho luồng dữ liệu đi vào và đi ra khỏi các Effect trở nên thật rõ ràng.
+2. Bạn giúp các component tập trung vào ý định thay vì cách triển khai chính xác của các Effect.
+3. Khi React thêm các tính năng mới, bạn có thể loại bỏ các Effect đó mà không cần thay đổi bất kỳ component nào.
 
-Similar to a [design system,](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969) you might find it helpful to start extracting common idioms from your app's components into custom Hooks. This will keep your components' code focused on the intent, and let you avoid writing raw Effects very often. Many excellent custom Hooks are maintained by the React community.
+Tương tự như [design system,](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969), bạn có thể thấy hữu ích khi bắt đầu tách các idiom phổ biến từ các component trong ứng dụng thành các custom Hook. Điều này sẽ giúp code của các component tập trung vào ý định, đồng thời giúp bạn tránh thường xuyên phải viết các Effect thô. Cộng đồng React đang duy trì nhiều custom Hook xuất sắc.
 
 <DeepDive>
 
-#### Will React provide any built-in solution for data fetching? {/*will-react-provide-any-built-in-solution-for-data-fetching*/}
+#### React có cung cấp giải pháp tích hợp sẵn nào cho việc fetch dữ liệu không? {/*will-react-provide-any-built-in-solution-for-data-fetching*/}
 
-Today, with the [`use`](/reference/react/use#streaming-data-from-server-to-client) API, data can be read in render by passing a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to `use`:
+Hiện nay, với API [`use`](/reference/react/use#streaming-data-from-server-to-client), dữ liệu có thể được đọc trong quá trình render bằng cách truyền một [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) vào `use`:
 
 ```js {1,4,11}
 import { use, Suspense } from "react";
@@ -1432,7 +1432,7 @@ export function MessageContainer({ messagePromise }) {
 }
 ```
 
-We're still working out the details, but we expect that in the future, you'll write data fetching like this:
+Chúng tôi vẫn đang hoàn thiện các chi tiết, nhưng dự kiến trong tương lai, bạn sẽ viết logic fetch dữ liệu như sau:
 
 ```js {1,4,6}
 import { use } from 'react';
@@ -1444,13 +1444,13 @@ function ShippingForm({ country }) {
   // ...
 ```
 
-If you use custom Hooks like `useData` above in your app, it will require fewer changes to migrate to the eventually recommended approach than if you write raw Effects in every component manually. However, the old approach will still work fine, so if you feel happy writing raw Effects, you can continue to do that.
+Nếu bạn sử dụng các custom Hook như `useData` ở trên trong ứng dụng, bạn sẽ cần ít thay đổi hơn để chuyển sang cách tiếp cận được khuyến nghị sau này so với việc tự viết các Effect thô trong từng component. Tuy nhiên, cách tiếp cận cũ vẫn sẽ hoạt động tốt, vì vậy nếu bạn thấy thoải mái khi viết các Effect thô, bạn có thể tiếp tục làm như vậy.
 
 </DeepDive>
 
-### There is more than one way to do it {/*there-is-more-than-one-way-to-do-it*/}
+### Có nhiều hơn một cách để thực hiện {/*there-is-more-than-one-way-to-do-it*/}
 
-Let's say you want to implement a fade-in animation *from scratch* using the browser [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) API. You might start with an Effect that sets up an animation loop. During each frame of the animation, you could change the opacity of the DOM node you [hold in a ref](/learn/manipulating-the-dom-with-refs) until it reaches `1`. Your code might start like this:
+Giả sử bạn muốn tự triển khai một animation fade-in *từ đầu* bằng API [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) của trình duyệt. Bạn có thể bắt đầu với một Effect thiết lập vòng lặp animation. Trong mỗi frame của animation, bạn có thể thay đổi độ mờ của node DOM mà bạn [hold in a ref](/learn/manipulating-the-dom-with-refs) cho đến khi đạt `1`. Code của bạn có thể bắt đầu như sau:
 
 <Sandpack>
 
@@ -1533,7 +1533,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-To make the component more readable, you might extract the logic into a `useFadeIn` custom Hook:
+Để component dễ đọc hơn, bạn có thể tách logic này vào một `useFadeIn` custom Hook:
 
 <Sandpack>
 
@@ -1624,7 +1624,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-You could keep the `useFadeIn` code as is, but you could also refactor it more. For example, you could extract the logic for setting up the animation loop out of `useFadeIn` into a custom `useAnimationLoop` Hook:
+Bạn có thể giữ nguyên code `useFadeIn`, nhưng cũng có thể refactor thêm. Ví dụ, bạn có thể tách logic thiết lập vòng lặp animation ra khỏi `useFadeIn` và đưa vào một custom `useAnimationLoop` Hook:
 
 <Sandpack>
 
@@ -1712,7 +1712,7 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-However, you didn't *have to* do that. As with regular functions, ultimately you decide where to draw the boundaries between different parts of your code. You could also take a very different approach. Instead of keeping the logic in the Effect, you could move most of the imperative logic inside a JavaScript [class:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+Tuy nhiên, bạn *không bắt buộc* phải làm vậy. Cũng như với các hàm thông thường, cuối cùng bạn là người quyết định ranh giới giữa các phần khác nhau trong code của mình. Bạn cũng có thể chọn một cách tiếp cận rất khác. Thay vì giữ logic trong Effect, bạn có thể chuyển phần lớn logic mang tính imperative vào một [class:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
 
 <Sandpack>
 
@@ -1810,9 +1810,9 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-Effects let you connect React to external systems. The more coordination between Effects is needed (for example, to chain multiple animations), the more it makes sense to extract that logic out of Effects and Hooks *completely* like in the sandbox above. Then, the code you extracted *becomes* the "external system". This lets your Effects stay simple because they only need to send messages to the system you've moved outside React.
+Effect cho phép bạn kết nối React với các hệ thống bên ngoài. Càng cần nhiều sự phối hợp giữa các Effect (ví dụ: để nối chuỗi nhiều animation), việc tách hoàn toàn logic đó khỏi các Effect và Hook, như trong sandbox ở trên, càng trở nên hợp lý. Khi đó, code bạn đã tách *trở thành* “hệ thống bên ngoài”. Điều này giúp các Effect của bạn vẫn đơn giản, vì chúng chỉ cần gửi message đến hệ thống mà bạn đã chuyển ra ngoài React.
 
-The examples above assume that the fade-in logic needs to be written in JavaScript. However, this particular fade-in animation is both simpler and much more efficient to implement with a plain [CSS Animation:](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
+Các ví dụ trên giả định rằng logic fade-in cần được viết bằng JavaScript. Tuy nhiên, animation fade-in cụ thể này vừa đơn giản hơn vừa hiệu quả hơn nhiều nếu được triển khai bằng một [CSS Animation thuần túy:](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
 
 <Sandpack>
 
@@ -1867,27 +1867,27 @@ html, body { min-height: 300px; }
 
 </Sandpack>
 
-Sometimes, you don't even need a Hook!
+Đôi khi, bạn thậm chí không cần một Hook!
 
 <Recap>
 
-- Custom Hooks let you share logic between components.
-- Custom Hooks must be named starting with `use` followed by a capital letter.
-- Custom Hooks only share stateful logic, not state itself.
-- You can pass reactive values from one Hook to another, and they stay up-to-date.
-- All Hooks re-run every time your component re-renders.
-- The code of your custom Hooks should be pure, like your component's code.
-- Wrap event handlers received by custom Hooks into Effect Events.
-- Don't create custom Hooks like `useMount`. Keep their purpose specific.
-- It's up to you how and where to choose the boundaries of your code.
+- Custom Hook cho phép bạn chia sẻ logic giữa các component.
+- Custom Hook phải được đặt tên bắt đầu bằng `use` theo sau là một chữ cái viết hoa.
+- Custom Hook chỉ chia sẻ logic có state, không chia sẻ chính state đó.
+- Bạn có thể truyền các giá trị reactive từ Hook này sang Hook khác, và chúng sẽ luôn được cập nhật.
+- Tất cả Hook đều chạy lại mỗi khi component của bạn re-render.
+- Code của custom Hook phải pure, giống như code của component.
+- Bọc các event handler nhận được bởi custom Hook trong Effect Event.
+- Không tạo các custom Hook như `useMount`. Hãy giữ mục đích của chúng cụ thể.
+- Bạn có toàn quyền quyết định cách thức và vị trí xác định ranh giới cho code của mình.
 
 </Recap>
 
 <Challenges>
 
-#### Extract a `useCounter` Hook {/*extract-a-usecounter-hook*/}
+#### Tách một `useCounter` Hook {/*extract-a-usecounter-hook*/}
 
-This component uses a state variable and an Effect to display a number that increments every second. Extract this logic into a custom Hook called `useCounter`. Your goal is to make the `Counter` component implementation look exactly like this:
+Component này sử dụng một biến state và một Effect để hiển thị một số tăng lên mỗi giây. Hãy tách logic này thành một custom Hook có tên là `useCounter`. Mục tiêu của bạn là làm cho phần triển khai component `Counter` trông chính xác như sau:
 
 ```js
 export default function Counter() {
@@ -1896,7 +1896,7 @@ export default function Counter() {
 }
 ```
 
-You'll need to write your custom Hook in `useCounter.js` and import it into the `App.js` file.
+Bạn cần viết custom Hook trong `useCounter.js` và import nó vào file `App.js`.
 
 <Sandpack>
 
@@ -1923,7 +1923,7 @@ export default function Counter() {
 
 <Solution>
 
-Your code should look like this:
+Code của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -1953,13 +1953,13 @@ export function useCounter() {
 
 </Sandpack>
 
-Notice that `App.js` doesn't need to import `useState` or `useEffect` anymore.
+Lưu ý rằng `App.js` không còn cần import `useState` hoặc `useEffect` nữa.
 
 </Solution>
 
-#### Make the counter delay configurable {/*make-the-counter-delay-configurable*/}
+#### Cho phép cấu hình delay của counter {/*make-the-counter-delay-configurable*/}
 
-In this example, there is a `delay` state variable controlled by a slider, but its value is not used. Pass the `delay` value to your custom `useCounter` Hook, and change the `useCounter` Hook to use the passed `delay` instead of hardcoding `1000` ms.
+Trong ví dụ này, có một biến state `delay` được điều khiển bằng một thanh trượt, nhưng giá trị của nó không được sử dụng. Hãy truyền giá trị `delay` vào `useCounter` custom Hook của bạn, rồi thay đổi `useCounter` Hook để sử dụng `delay` được truyền vào thay vì hardcode `1000` ms.
 
 <Sandpack>
 
@@ -2009,7 +2009,7 @@ export function useCounter() {
 
 <Solution>
 
-Pass the `delay` to your Hook with `useCounter(delay)`. Then, inside the Hook, use `delay` instead of the hardcoded `1000` value. You'll need to add `delay` to your Effect's dependencies. This ensures that a change in `delay` will reset the interval.
+Truyền `delay` vào Hook bằng `useCounter(delay)`. Sau đó, bên trong Hook, sử dụng `delay` thay cho giá trị `1000` được hardcode. Bạn cần thêm `delay` vào dependencies của Effect. Điều này đảm bảo rằng khi `delay` thay đổi, interval sẽ được reset.
 
 <Sandpack>
 
@@ -2059,9 +2059,9 @@ export function useCounter(delay) {
 
 </Solution>
 
-#### Extract `useInterval` out of `useCounter` {/*extract-useinterval-out-of-usecounter*/}
+#### Tách `useInterval` ra khỏi `useCounter` {/*extract-useinterval-out-of-usecounter*/}
 
-Currently, your `useCounter` Hook does two things. It sets up an interval, and it also increments a state variable on every interval tick. Split out the logic that sets up the interval into a separate Hook called `useInterval`. It should take two arguments: the `onTick` callback, and the `delay`. After this change, your `useCounter` implementation should look like this:
+Hiện tại, `useCounter` Hook của bạn thực hiện hai việc. Nó thiết lập một interval, đồng thời tăng một biến state sau mỗi lần interval tick. Hãy tách logic thiết lập interval thành một Hook riêng có tên là `useInterval`. Hook này nhận hai đối số: callback `onTick` và `delay`. Sau thay đổi này, phần triển khai `useCounter` của bạn sẽ trông như sau:
 
 ```js
 export function useCounter(delay) {
@@ -2073,7 +2073,7 @@ export function useCounter(delay) {
 }
 ```
 
-Write `useInterval` in the `useInterval.js` file and import it into the `useCounter.js` file.
+Viết `useInterval` trong file `useInterval.js` và import nó vào file `useCounter.js`.
 
 <Sandpack>
 
@@ -2109,7 +2109,7 @@ export function useCounter(delay) {
 
 <Solution>
 
-The logic inside `useInterval` should set up and clear the interval. It doesn't need to do anything else.
+Logic bên trong `useInterval` phải thiết lập và xóa interval. Nó không cần làm gì khác.
 
 <Sandpack>
 
@@ -2148,17 +2148,17 @@ export function useInterval(onTick, delay) {
 
 </Sandpack>
 
-Note that there is a bit of a problem with this solution, which you'll solve in the next challenge.
+Lưu ý rằng giải pháp này có một vấn đề nhỏ, bạn sẽ giải quyết vấn đề đó trong thử thách tiếp theo.
 
 </Solution>
 
-#### Fix a resetting interval {/*fix-a-resetting-interval*/}
+#### Sửa interval bị reset {/*fix-a-resetting-interval*/}
 
-In this example, there are *two* separate intervals.
+Trong ví dụ này, có *hai* interval riêng biệt.
 
-The `App` component calls `useCounter`, which calls `useInterval` to update the counter every second. But the `App` component *also* calls `useInterval` to randomly update the page background color every two seconds.
+Component `App` gọi `useCounter`, và hàm này gọi `useInterval` để cập nhật bộ đếm mỗi giây. Nhưng component `App` *cũng* gọi `useInterval` để cập nhật ngẫu nhiên màu nền của trang mỗi hai giây.
 
-For some reason, the callback that updates the page background never runs. Add some logs inside `useInterval`:
+Vì một lý do nào đó, callback cập nhật nền trang không bao giờ chạy. Hãy thêm một số log vào bên trong `useInterval`:
 
 ```js {2,5}
   useEffect(() => {
@@ -2171,13 +2171,13 @@ For some reason, the callback that updates the page background never runs. Add s
   }, [onTick, delay]);
 ```
 
-Do the logs match what you expect to happen? If some of your Effects seem to re-synchronize unnecessarily, can you guess which dependency is causing that to happen? Is there some way to [remove that dependency](/learn/removing-effect-dependencies) from your Effect?
+Các log có khớp với điều bạn mong đợi không? Nếu một số Effect của bạn dường như đồng bộ hóa lại không cần thiết, bạn có đoán được dependency nào đang gây ra điều đó không? Có cách nào để [xóa dependency đó](/learn/removing-effect-dependencies) khỏi Effect không?
 
-After you fix the issue, you should expect the page background to update every two seconds.
+Sau khi sửa lỗi, bạn sẽ thấy nền trang được cập nhật sau mỗi hai giây.
 
 <Hint>
 
-It looks like your `useInterval` Hook accepts an event listener as an argument. Can you think of some way to wrap that event listener so that it doesn't need to be a dependency of your Effect?
+Có vẻ như Hook `useInterval` nhận một event listener làm đối số. Bạn có nghĩ ra cách nào để bọc event listener đó lại, để nó không cần phải là dependency của Effect không?
 
 </Hint>
 
@@ -2230,11 +2230,11 @@ export function useInterval(onTick, delay) {
 
 <Solution>
 
-Inside `useInterval`, wrap the tick callback into an Effect Event, as you did [earlier on this page.](/learn/reusing-logic-with-custom-hooks#passing-event-handlers-to-custom-hooks)
+Bên trong `useInterval`, hãy bọc callback tick vào một Effect Event, giống như bạn đã làm [ở phần trước trên trang này.](/learn/reusing-logic-with-custom-hooks#passing-event-handlers-to-custom-hooks)
 
-This will allow you to omit `onTick` from dependencies of your Effect. The Effect won't re-synchronize on every re-render of the component, so the page background color change interval won't get reset every second before it has a chance to fire.
+Điều này cho phép bạn bỏ qua `onTick` khỏi các dependency của Effect. Effect sẽ không đồng bộ hóa lại sau mỗi lần component re-render, vì vậy interval thay đổi màu nền trang sẽ không bị reset mỗi giây trước khi có cơ hội chạy.
 
-With this change, both intervals work as expected and don't interfere with each other:
+Với thay đổi này, cả hai interval đều hoạt động như mong đợi và không ảnh hưởng lẫn nhau:
 
 <Sandpack>
 
@@ -2285,21 +2285,21 @@ export function useInterval(callback, delay) {
 
 </Solution>
 
-#### Implement a staggering movement {/*implement-a-staggering-movement*/}
+#### Triển khai chuyển động so le {/*implement-a-staggering-movement*/}
 
-In this example, the `usePointerPosition()` Hook tracks the current pointer position. Try moving your cursor or your finger over the preview area and see the red dot follow your movement. Its position is saved in the `pos1` variable.
+Trong ví dụ này, Hook `usePointerPosition()` theo dõi vị trí con trỏ hiện tại. Hãy thử di chuyển con trỏ hoặc ngón tay trên khu vực xem trước và quan sát chấm đỏ di chuyển theo. Vị trí của nó được lưu trong biến `pos1`.
 
-In fact, there are five (!) different red dots being rendered. You don't see them because currently they all appear at the same position. This is what you need to fix. What you want to implement instead is a "staggered" movement: each dot should "follow" the previous dot's path. For example, if you quickly move your cursor, the first dot should follow it immediately, the second dot should follow the first dot with a small delay, the third dot should follow the second dot, and so on.
+Thực tế, có năm (!) chấm đỏ khác nhau đang được render. Bạn không nhìn thấy chúng vì hiện tại tất cả đều xuất hiện ở cùng một vị trí. Đây là điều bạn cần sửa. Thay vào đó, bạn cần triển khai chuyển động “so le”: mỗi chấm sẽ “đi theo” quỹ đạo của chấm trước đó. Ví dụ, nếu bạn di chuyển nhanh con trỏ, chấm đầu tiên sẽ đi theo ngay lập tức, chấm thứ hai sẽ đi theo chấm đầu tiên với một khoảng trễ nhỏ, chấm thứ ba sẽ đi theo chấm thứ hai, v.v.
 
-You need to implement the `useDelayedValue` custom Hook. Its current implementation returns the `value` provided to it. Instead, you want to return the value back from `delay` milliseconds ago. You might need some state and an Effect to do this.
+Bạn cần triển khai custom Hook `useDelayedValue`. Hiện tại, implementation của nó trả về `value` được truyền vào. Thay vào đó, bạn muốn trả về giá trị từ `delay` mili giây trước. Bạn có thể cần một state và một Effect để thực hiện việc này.
 
-After you implement `useDelayedValue`, you should see the dots move following one another.
+Sau khi triển khai `useDelayedValue`, bạn sẽ thấy các chấm di chuyển nối tiếp nhau.
 
 <Hint>
 
-You'll need to store the `delayedValue` as a state variable inside your custom Hook. When the `value` changes, you'll want to run an Effect. This Effect should update `delayedValue` after the `delay`. You might find it helpful to call `setTimeout`.
+Bạn cần lưu `delayedValue` dưới dạng một state variable bên trong custom Hook. Khi `value` thay đổi, bạn sẽ muốn chạy một Effect. Effect này phải cập nhật `delayedValue` sau `delay`. Bạn có thể thấy hữu ích khi gọi `setTimeout`.
 
-Does this Effect need cleanup? Why or why not?
+Effect này có cần cleanup không? Tại sao có hoặc tại sao không?
 
 </Hint>
 
@@ -2372,7 +2372,7 @@ body { min-height: 300px; }
 
 <Solution>
 
-Here is a working version. You keep the `delayedValue` as a state variable. When `value` updates, your Effect schedules a timeout to update the `delayedValue`. This is why the `delayedValue` always "lags behind" the actual `value`.
+Đây là một phiên bản hoạt động. Bạn giữ `delayedValue` dưới dạng một state variable. Khi `value` được cập nhật, Effect của bạn lên lịch một timeout để cập nhật `delayedValue`. Đây là lý do `delayedValue` luôn “chậm hơn” `value` thực tế.
 
 <Sandpack>
 
@@ -2449,7 +2449,7 @@ body { min-height: 300px; }
 
 </Sandpack>
 
-Note that this Effect *does not* need cleanup. If you called `clearTimeout` in the cleanup function, then each time the `value` changes, it would reset the already scheduled timeout. To keep the movement continuous, you want all the timeouts to fire.
+Lưu ý rằng Effect này *không* cần cleanup. Nếu bạn gọi `clearTimeout` trong hàm cleanup, thì mỗi khi `value` thay đổi, nó sẽ reset timeout đã được lên lịch. Để chuyển động diễn ra liên tục, bạn muốn tất cả timeout đều chạy.
 
 </Solution>
 

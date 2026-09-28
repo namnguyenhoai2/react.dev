@@ -1,57 +1,57 @@
 ---
-title: Updating Objects in State
+title: Cập nhật object trong state
 ---
 
 <Intro>
 
-State can hold any kind of JavaScript value, including objects. But you shouldn't change objects that you hold in the React state directly. Instead, when you want to update an object, you need to create a new one (or make a copy of an existing one), and then set the state to use that copy.
+State có thể chứa bất kỳ kiểu giá trị JavaScript nào, bao gồm cả object. Tuy nhiên, bạn không nên trực tiếp thay đổi các object được lưu trong React state. Thay vào đó, khi muốn cập nhật một object, bạn cần tạo một object mới (hoặc tạo bản sao của object hiện có), rồi đặt state sử dụng bản sao đó.
 
 </Intro>
 
 <YouWillLearn>
 
-- How to correctly update an object in React state
-- How to update a nested object without mutating it
-- What immutability is, and how not to break it
-- How to make object copying less repetitive with Immer
+- Cách cập nhật đúng một object trong React state
+- Cách cập nhật object lồng nhau mà không mutate object đó
+- Immutability là gì và cách không phá vỡ nó
+- Cách giảm việc sao chép object lặp đi lặp lại bằng Immer
 
 </YouWillLearn>
 
-## What's a mutation? {/*whats-a-mutation*/}
+## Mutation là gì? {/*whats-a-mutation*/}
 
-You can store any kind of JavaScript value in state.
+Bạn có thể lưu bất kỳ kiểu giá trị JavaScript nào trong state.
 
 ```js
 const [x, setX] = useState(0);
 ```
 
-So far you've been working with numbers, strings, and booleans. These kinds of JavaScript values are "immutable", meaning unchangeable or "read-only". You can trigger a re-render to _replace_ a value:
+Cho đến giờ, bạn đã làm việc với number, string và boolean. Những kiểu giá trị JavaScript này là “immutable”, nghĩa là không thể thay đổi hoặc “chỉ đọc”. Bạn có thể kích hoạt một lần re-render để _thay thế_ một giá trị:
 
 ```js
 setX(5);
 ```
 
-The `x` state changed from `0` to `5`, but the _number `0` itself_ did not change. It's not possible to make any changes to the built-in primitive values like numbers, strings, and booleans in JavaScript.
+State `x` đã thay đổi từ `0` thành `5`, nhưng _chính `0` kiểu number_ không thay đổi. Trong JavaScript, bạn không thể thay đổi các giá trị primitive dựng sẵn như number, string và boolean.
 
-Now consider an object in state:
+Bây giờ hãy xem xét một object trong state:
 
 ```js
 const [position, setPosition] = useState({ x: 0, y: 0 });
 ```
 
-Technically, it is possible to change the contents of _the object itself_. **This is called a mutation:**
+Về mặt kỹ thuật, bạn có thể thay đổi nội dung của _chính object đó_. **Điều này được gọi là mutation:**
 
 ```js
 position.x = 5;
 ```
 
-However, although objects in React state are technically mutable, you should treat them **as if** they were immutable--like numbers, booleans, and strings. Instead of mutating them, you should always replace them.
+Tuy nhiên, mặc dù các object trong React state về mặt kỹ thuật có thể bị mutate, bạn vẫn nên xử lý chúng **như thể** chúng immutable—giống như number, boolean và string. Thay vì mutate chúng, bạn luôn nên thay thế chúng.
 
-## Treat state as read-only {/*treat-state-as-read-only*/}
+## Xem state là chỉ đọc {/*treat-state-as-read-only*/}
 
-In other words, you should **treat any JavaScript object that you put into state as read-only.**
+Nói cách khác, bạn nên **xem mọi object JavaScript được đưa vào state là chỉ đọc.**
 
-This example holds an object in state to represent the current pointer position. The red dot is supposed to move when you touch or move the cursor over the preview area. But the dot stays in the initial position:
+Ví dụ này lưu một object trong state để biểu diễn vị trí con trỏ hiện tại. Chấm đỏ được cho là sẽ di chuyển khi bạn chạm hoặc di chuyển con trỏ qua vùng xem trước. Nhưng chấm đỏ vẫn ở vị trí ban đầu:
 
 <Sandpack>
 
@@ -95,7 +95,7 @@ body { margin: 0; padding: 0; height: 250px; }
 
 </Sandpack>
 
-The problem is with this bit of code.
+Vấn đề nằm ở đoạn code này.
 
 ```js
 onPointerMove={e => {
@@ -104,9 +104,9 @@ onPointerMove={e => {
 }}
 ```
 
-This code modifies the object assigned to `position` from [the previous render.](/learn/state-as-a-snapshot#rendering-takes-a-snapshot-in-time) But without using the state setting function, React has no idea that object has changed. So React does not do anything in response. It's like trying to change the order after you've already eaten the meal. While mutating state can work in some cases, we don't recommend it. You should treat the state value you have access to in a render as read-only.
+Đoạn code này sửa đổi object được gán cho `position` từ [lần render trước.](/learn/state-as-a-snapshot#rendering-takes-a-snapshot-in-time) Nhưng vì không sử dụng state setting function, React không biết object đó đã thay đổi. Vì vậy, React không làm gì để phản hồi. Điều này giống như cố gắng thay đổi món ăn sau khi bạn đã ăn xong. Mặc dù mutate state có thể hoạt động trong một số trường hợp, chúng tôi không khuyến nghị cách này. Bạn nên xem giá trị state mà mình truy cập được trong một lần render là chỉ đọc.
 
-To actually [trigger a re-render](/learn/state-as-a-snapshot#setting-state-triggers-renders) in this case, **create a *new* object and pass it to the state setting function:**
+Để thực sự [kích hoạt một lần re-render](/learn/state-as-a-snapshot#setting-state-triggers-renders) trong trường hợp này, **hãy tạo một object *mới* và truyền nó cho state setting function:**
 
 ```js
 onPointerMove={e => {
@@ -117,12 +117,12 @@ onPointerMove={e => {
 }}
 ```
 
-With `setPosition`, you're telling React:
+Với `setPosition`, bạn đang nói với React:
 
-* Replace `position` with this new object
-* And render this component again
+* Thay thế `position` bằng object mới này
+* Và render component này một lần nữa
 
-Notice how the red dot now follows your pointer when you touch or hover over the preview area:
+Hãy chú ý rằng chấm đỏ giờ đây đi theo con trỏ khi bạn chạm hoặc di chuyển con trỏ qua vùng xem trước:
 
 <Sandpack>
 
@@ -170,16 +170,16 @@ body { margin: 0; padding: 0; height: 250px; }
 
 <DeepDive>
 
-#### Local mutation is fine {/*local-mutation-is-fine*/}
+#### Mutation cục bộ thì không sao {/*local-mutation-is-fine*/}
 
-Code like this is a problem because it modifies an *existing* object in state:
+Code như thế này có vấn đề vì nó sửa đổi một object *hiện có* trong state:
 
 ```js
 position.x = e.clientX;
 position.y = e.clientY;
 ```
 
-But code like this is **absolutely fine** because you're mutating a fresh object you have *just created*:
+Nhưng code như thế này thì **hoàn toàn ổn** vì bạn đang mutate một object mới được *tạo ngay trước đó*:
 
 ```js
 const nextPosition = {};
@@ -188,7 +188,7 @@ nextPosition.y = e.clientY;
 setPosition(nextPosition);
 ```
 
-In fact, it is completely equivalent to writing this:
+Thực ra, cách này hoàn toàn tương đương với việc viết:
 
 ```js
 setPosition({
@@ -197,15 +197,15 @@ setPosition({
 });
 ```
 
-Mutation is only a problem when you change *existing* objects that are already in state. Mutating an object you've just created is okay because *no other code references it yet.* Changing it isn't going to accidentally impact something that depends on it. This is called a "local mutation". You can even do local mutation [while rendering.](/learn/keeping-components-pure#local-mutation-your-components-little-secret) Very convenient and completely okay!
+Mutation chỉ là vấn đề khi bạn thay đổi các object *hiện có* vốn đã nằm trong state. Mutate một object mà bạn vừa tạo là hoàn toàn ổn vì *chưa có code nào khác tham chiếu đến nó.* Việc thay đổi object đó sẽ không vô tình ảnh hưởng đến thứ gì phụ thuộc vào nó. Đây được gọi là “mutation cục bộ”. Bạn thậm chí có thể thực hiện mutation cục bộ [trong khi render.](/learn/keeping-components-pure#local-mutation-your-components-little-secret) Rất tiện lợi và hoàn toàn ổn!
 
 </DeepDive>
 
-## Copying objects with the spread syntax {/*copying-objects-with-the-spread-syntax*/}
+## Sao chép object bằng cú pháp spread {/*copying-objects-with-the-spread-syntax*/}
 
-In the previous example, the `position` object is always created fresh from the current cursor position. But often, you will want to include *existing* data as a part of the new object you're creating. For example, you may want to update *only one* field in a form, but keep the previous values for all other fields.
+Trong ví dụ trước, object `position` luôn được tạo mới từ vị trí con trỏ hiện tại. Nhưng thường thì bạn sẽ muốn đưa *dữ liệu hiện có* vào object mới mà mình đang tạo. Ví dụ, bạn có thể muốn chỉ cập nhật *một* field trong form nhưng vẫn giữ nguyên các giá trị trước đó của mọi field khác.
 
-These input fields don't work because the `onChange` handlers mutate the state:
+Các input field này không hoạt động vì các handler `onChange` mutate state:
 
 <Sandpack>
 
@@ -271,13 +271,13 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 </Sandpack>
 
-For example, this line mutates the state from a past render:
+Ví dụ, dòng này mutate state từ một lần render trước:
 
 ```js
 person.firstName = e.target.value;
 ```
 
-The reliable way to get the behavior you're looking for is to create a new object and pass it to `setPerson`. But here, you want to also **copy the existing data into it** because only one of the fields has changed:
+Cách đáng tin cậy để có được hành vi bạn muốn là tạo một object mới và truyền nó cho `setPerson`. Nhưng ở đây, bạn cũng muốn **sao chép dữ liệu hiện có vào đó** vì chỉ một field đã thay đổi:
 
 ```js
 setPerson({
@@ -287,7 +287,7 @@ setPerson({
 });
 ```
 
-You can use the `...` [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_object_literals) syntax so that you don't need to copy every property separately.
+Bạn có thể sử dụng cú pháp `...` [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_object_literals) để không phải sao chép từng property riêng lẻ.
 
 ```js
 setPerson({
@@ -296,9 +296,9 @@ setPerson({
 });
 ```
 
-Now the form works!
+Bây giờ form đã hoạt động!
 
-Notice how you didn't declare a separate state variable for each input field. For large forms, keeping all data grouped in an object is very convenient--as long as you update it correctly!
+Hãy chú ý rằng bạn không khai báo một state variable riêng cho từng input field. Với các form lớn, việc nhóm toàn bộ dữ liệu trong một object rất tiện lợi—miễn là bạn cập nhật nó đúng cách!
 
 <Sandpack>
 
@@ -373,13 +373,13 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 </Sandpack>
 
-Note that the `...` spread syntax is "shallow"--it only copies things one level deep. This makes it fast, but it also means that if you want to update a nested property, you'll have to use it more than once.
+Lưu ý rằng cú pháp spread của `...` là “shallow”—nó chỉ sao chép các giá trị sâu một level. Điều này giúp nó nhanh, nhưng cũng có nghĩa là nếu muốn cập nhật một property lồng nhau, bạn sẽ phải sử dụng nó nhiều hơn một lần.
 
 <DeepDive>
 
-#### Using a single event handler for multiple fields {/*using-a-single-event-handler-for-multiple-fields*/}
+#### Sử dụng một event handler cho nhiều field {/*using-a-single-event-handler-for-multiple-fields*/}
 
-You can also use the `[` and `]` braces inside your object definition to specify a property with a dynamic name. Here is the same example, but with a single event handler instead of three different ones:
+Bạn cũng có thể sử dụng dấu ngoặc `[` và `]` bên trong định nghĩa object để chỉ định một property có tên động. Đây là cùng ví dụ đó, nhưng sử dụng một event handler duy nhất thay vì ba handler khác nhau:
 
 <Sandpack>
 
@@ -443,13 +443,13 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 </Sandpack>
 
-Here, `e.target.name` refers to the `name` property given to the `<input>` DOM element.
+Ở đây, `e.target.name` tham chiếu đến property `name` được gán cho phần tử DOM `<input>`.
 
 </DeepDive>
 
-## Updating a nested object {/*updating-a-nested-object*/}
+## Cập nhật object lồng nhau {/*updating-a-nested-object*/}
 
-Consider a nested object structure like this:
+Hãy xem xét một cấu trúc object lồng nhau như sau:
 
 ```js
 const [person, setPerson] = useState({
@@ -462,13 +462,13 @@ const [person, setPerson] = useState({
 });
 ```
 
-If you wanted to update `person.artwork.city`, it's clear how to do it with mutation:
+Nếu muốn cập nhật `person.artwork.city`, rõ ràng bạn có thể làm điều đó bằng mutation:
 
 ```js
 person.artwork.city = 'New Delhi';
 ```
 
-But in React, you treat state as immutable! In order to change `city`, you would first need to produce the new `artwork` object (pre-populated with data from the previous one), and then produce the new `person` object which points at the new `artwork`:
+Nhưng trong React, bạn xử lý state như immutable! Để thay đổi `city`, trước tiên bạn cần tạo object `artwork` mới (được điền sẵn dữ liệu từ object trước đó), sau đó tạo object `person` mới trỏ đến `artwork` mới:
 
 ```js
 const nextArtwork = { ...person.artwork, city: 'New Delhi' };
@@ -476,7 +476,7 @@ const nextPerson = { ...person, artwork: nextArtwork };
 setPerson(nextPerson);
 ```
 
-Or, written as a single function call:
+Hoặc viết thành một function call duy nhất:
 
 ```js
 setPerson({
@@ -488,7 +488,7 @@ setPerson({
 });
 ```
 
-This gets a bit wordy, but it works fine for many cases:
+Cách này hơi dài dòng, nhưng hoạt động tốt trong nhiều trường hợp:
 
 <Sandpack>
 
@@ -598,9 +598,9 @@ img { width: 200px; height: 200px; }
 
 <DeepDive>
 
-#### Objects are not really nested {/*objects-are-not-really-nested*/}
+#### Object thực sự không lồng nhau {/*objects-are-not-really-nested*/}
 
-An object like this appears "nested" in code:
+Một object như thế này trông có vẻ “lồng nhau” trong code:
 
 ```js
 let obj = {
@@ -613,7 +613,7 @@ let obj = {
 };
 ```
 
-However, "nesting" is an inaccurate way to think about how objects behave. When the code executes, there is no such thing as a "nested" object. You are really looking at two different objects:
+Tuy nhiên, “lồng nhau” không phải là cách chính xác để hình dung cách object hoạt động. Khi code được thực thi, không có thứ gì gọi là object “lồng nhau”. Thực tế, bạn đang nhìn vào hai object khác nhau:
 
 ```js
 let obj1 = {
@@ -628,7 +628,7 @@ let obj2 = {
 };
 ```
 
-The `obj1` object is not "inside" `obj2`. For example, `obj3` could "point" at `obj1` too:
+Object `obj1` không “nằm bên trong” `obj2`. Ví dụ, `obj3` cũng có thể “trỏ” đến `obj1`:
 
 ```js
 let obj1 = {
@@ -648,13 +648,13 @@ let obj3 = {
 };
 ```
 
-If you were to mutate `obj3.artwork.city`, it would affect both `obj2.artwork.city` and `obj1.city`. This is because `obj3.artwork`, `obj2.artwork`, and `obj1` are the same object. This is difficult to see when you think of objects as "nested". Instead, they are separate objects "pointing" at each other with properties.
+Nếu mutate `obj3.artwork.city`, điều đó sẽ ảnh hưởng đến cả `obj2.artwork.city` và `obj1.city`. Đó là vì `obj3.artwork`, `obj2.artwork`, và `obj1` là cùng một object. Điều này khó nhận ra khi bạn nghĩ về các object như những thứ “lồng nhau”. Thay vào đó, chúng là các object riêng biệt “trỏ” đến nhau thông qua các property.
 
 </DeepDive>
 
-### Write concise update logic with Immer {/*write-concise-update-logic-with-immer*/}
+### Viết logic cập nhật ngắn gọn với Immer {/*write-concise-update-logic-with-immer*/}
 
-If your state is deeply nested, you might want to consider [flattening it.](/learn/choosing-the-state-structure#avoid-deeply-nested-state) But, if you don't want to change your state structure, you might prefer a shortcut to nested spreads. [Immer](https://github.com/immerjs/use-immer) is a popular library that lets you write using the convenient but mutating syntax and takes care of producing the copies for you. With Immer, the code you write looks like you are "breaking the rules" and mutating an object:
+Nếu state của bạn lồng nhau nhiều cấp, bạn có thể cân nhắc [làm phẳng nó.](/learn/choosing-the-state-structure#avoid-deeply-nested-state) Nhưng nếu không muốn thay đổi cấu trúc state, bạn có thể thích một shortcut thay cho các spread lồng nhau. [Immer](https://github.com/immerjs/use-immer) là một thư viện phổ biến cho phép bạn viết code bằng cú pháp tiện lợi nhưng có mutation, đồng thời tự xử lý việc tạo các bản sao cho bạn. Với Immer, code bạn viết trông như thể đang “phá vỡ quy tắc” và mutate một object:
 
 ```js
 updatePerson(draft => {
@@ -662,22 +662,22 @@ updatePerson(draft => {
 });
 ```
 
-But unlike a regular mutation, it doesn't overwrite the past state!
+Nhưng không giống mutation thông thường, cách này không ghi đè state trước đó!
 
 <DeepDive>
 
-#### How does Immer work? {/*how-does-immer-work*/}
+#### Immer hoạt động như thế nào? {/*how-does-immer-work*/}
 
-The `draft` provided by Immer is a special type of object, called a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), that "records" what you do with it. This is why you can mutate it freely as much as you like! Under the hood, Immer figures out which parts of the `draft` have been changed, and produces a completely new object that contains your edits.
+`draft` do Immer cung cấp là một kiểu object đặc biệt, được gọi là [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), có tác dụng “ghi lại” những gì bạn làm với nó. Đây là lý do bạn có thể tự do mutate nó tùy thích! Bên dưới, Immer xác định những phần nào của `draft` đã thay đổi và tạo ra một object hoàn toàn mới chứa các chỉnh sửa của bạn.
 
 </DeepDive>
 
-To try Immer:
+Để dùng thử Immer:
 
-1. Run `npm install use-immer` to add Immer as a dependency
-2. Then replace `import { useState } from 'react'` with `import { useImmer } from 'use-immer'`
+1. Chạy `npm install use-immer` để thêm Immer làm dependency
+2. Sau đó thay `import { useState } from 'react'` bằng `import { useImmer } from 'use-immer'`
 
-Here is the above example converted to Immer:
+Dưới đây là ví dụ trên sau khi chuyển đổi sang Immer:
 
 <Sandpack>
 
@@ -790,33 +790,33 @@ img { width: 200px; height: 200px; }
 
 </Sandpack>
 
-Notice how much more concise the event handlers have become. You can mix and match `useState` and `useImmer` in a single component as much as you like. Immer is a great way to keep the update handlers concise, especially if there's nesting in your state, and copying objects leads to repetitive code.
+Hãy chú ý xem các event handler đã trở nên ngắn gọn hơn nhiều như thế nào. Bạn có thể tùy ý kết hợp `useState` và `useImmer` trong cùng một component. Immer là một cách tuyệt vời để giữ cho các update handler ngắn gọn, đặc biệt khi state của bạn có cấu trúc lồng nhau và việc sao chép các object dẫn đến code lặp lại.
 
 <DeepDive>
 
-#### Why is mutating state not recommended in React? {/*why-is-mutating-state-not-recommended-in-react*/}
+#### Tại sao không khuyến nghị mutate state trong React? {/*why-is-mutating-state-not-recommended-in-react*/}
 
-There are a few reasons:
+Có một vài lý do:
 
-* **Debugging:** If you use `console.log` and don't mutate state, your past logs won't get clobbered by the more recent state changes. So you can clearly see how state has changed between renders.
-* **Optimizations:** Common React [optimization strategies](/reference/react/memo) rely on skipping work if previous props or state are the same as the next ones. If you never mutate state, it is very fast to check whether there were any changes. If `prevObj === obj`, you can be sure that nothing could have changed inside of it.
-* **New Features:** The new React features we're building rely on state being [treated like a snapshot.](/learn/state-as-a-snapshot) If you're mutating past versions of state, that may prevent you from using the new features.
-* **Requirement Changes:** Some application features, like implementing Undo/Redo, showing a history of changes, or letting the user reset a form to earlier values, are easier to do when nothing is mutated. This is because you can keep past copies of state in memory, and reuse them when appropriate. If you start with a mutative approach, features like this can be difficult to add later on.
-* **Simpler Implementation:** Because React does not rely on mutation, it does not need to do anything special with your objects. It does not need to hijack their properties, always wrap them into Proxies, or do other work at initialization as many "reactive" solutions do. This is also why React lets you put any object into state--no matter how large--without additional performance or correctness pitfalls.
+* **Debugging:** Nếu bạn sử dụng `console.log` và không mutate state, các log trước đây sẽ không bị ghi đè bởi những thay đổi state mới hơn. Nhờ đó, bạn có thể thấy rõ state đã thay đổi như thế nào giữa các lần render.
+* **Optimizations:** Các [optimization strategies](/reference/react/memo) phổ biến của React dựa trên việc bỏ qua công việc nếu props hoặc state trước đó giống với props hoặc state tiếp theo. Nếu bạn không bao giờ mutate state, việc kiểm tra xem có thay đổi nào hay không sẽ rất nhanh. Nếu `prevObj === obj`, bạn có thể chắc chắn rằng không có gì bên trong nó có thể đã thay đổi.
+* **New Features:** Các tính năng React mới mà chúng tôi đang xây dựng dựa vào việc state được [treated like a snapshot.](/learn/state-as-a-snapshot) Nếu bạn mutate các phiên bản state trước đó, điều đó có thể khiến bạn không sử dụng được những tính năng mới.
+* **Requirement Changes:** Một số tính năng của ứng dụng, chẳng hạn như triển khai Undo/Redo, hiển thị lịch sử thay đổi hoặc cho phép người dùng khôi phục form về các giá trị trước đó, sẽ dễ thực hiện hơn khi không có gì bị mutate. Điều này là vì bạn có thể giữ các bản sao state trước đó trong bộ nhớ và tái sử dụng chúng khi thích hợp. Nếu bắt đầu bằng cách tiếp cận có mutation, những tính năng như vậy có thể khó bổ sung về sau.
+* **Simpler Implementation:** Vì React không dựa vào mutation, nên không cần làm gì đặc biệt với các object của bạn. React không cần chiếm quyền kiểm soát các property của chúng, luôn bọc chúng trong Proxies hoặc thực hiện các công việc khác khi khởi tạo như nhiều giải pháp "reactive" vẫn làm. Đây cũng là lý do React cho phép bạn đặt bất kỳ object nào vào state--dù lớn đến đâu--mà không phát sinh thêm các vấn đề về hiệu năng hoặc tính đúng đắn.
 
-In practice, you can often "get away" with mutating state in React, but we strongly advise you not to do that so that you can use new React features developed with this approach in mind. Future contributors and perhaps even your future self will thank you!
+Trong thực tế, bạn thường có thể "vẫn dùng được" việc mutate state trong React, nhưng chúng tôi đặc biệt khuyên bạn không nên làm vậy để có thể sử dụng các tính năng React mới được phát triển dựa trên cách tiếp cận này. Những người đóng góp trong tương lai và có lẽ cả chính bạn trong tương lai sẽ cảm ơn bạn!
 
 </DeepDive>
 
 <Recap>
 
-* Treat all state in React as immutable.
-* When you store objects in state, mutating them will not trigger renders and will change the state in previous render "snapshots".
-* Instead of mutating an object, create a *new* version of it, and trigger a re-render by setting state to it.
-* You can use the `{...obj, something: 'newValue'}` object spread syntax to create copies of objects.
-* Spread syntax is shallow: it only copies one level deep.
-* To update a nested object, you need to create copies all the way up from the place you're updating.
-* To reduce repetitive copying code, use Immer.
+* Hãy xem mọi state trong React là immutable.
+* Khi lưu object trong state, việc mutate chúng sẽ không kích hoạt các lần render và sẽ thay đổi state trong các "snapshot" của những lần render trước.
+* Thay vì mutate một object, hãy tạo một phiên bản *mới* của nó và kích hoạt re-render bằng cách set state thành phiên bản đó.
+* Bạn có thể sử dụng `{...obj, something: 'newValue'}` object spread syntax để tạo các bản sao của object.
+* Spread syntax là shallow: nó chỉ sao chép một cấp.
+* Để cập nhật một object lồng nhau, bạn cần tạo các bản sao cho đến tận cấp trên cùng từ vị trí đang được cập nhật.
+* Để giảm lượng code sao chép lặp lại, hãy sử dụng Immer.
 
 </Recap>
 
@@ -824,11 +824,11 @@ In practice, you can often "get away" with mutating state in React, but we stron
 
 <Challenges>
 
-#### Fix incorrect state updates {/*fix-incorrect-state-updates*/}
+#### Sửa các state update không chính xác {/*fix-incorrect-state-updates*/}
 
-This form has a few bugs. Click the button that increases the score a few times. Notice that it does not increase. Then edit the first name, and notice that the score has suddenly "caught up" with your changes. Finally, edit the last name, and notice that the score has disappeared completely.
+Form này có một vài bug. Hãy nhấp vào button tăng score vài lần. Hãy chú ý rằng score không tăng. Sau đó chỉnh sửa tên, và chú ý rằng score đột nhiên "bắt kịp" các thay đổi của bạn. Cuối cùng, chỉnh sửa họ, và chú ý rằng score đã biến mất hoàn toàn.
 
-Your task is to fix all of these bugs. As you fix them, explain why each of them happens.
+Nhiệm vụ của bạn là sửa tất cả các bug này. Khi sửa, hãy giải thích tại sao từng bug xảy ra.
 
 <Sandpack>
 
@@ -896,7 +896,7 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 <Solution>
 
-Here is a version with both bugs fixed:
+Đây là phiên bản đã sửa cả hai bug:
 
 <Sandpack>
 
@@ -966,23 +966,23 @@ input { margin-left: 5px; margin-bottom: 5px; }
 
 </Sandpack>
 
-The problem with `handlePlusClick` was that it mutated the `player` object. As a result, React did not know that there's a reason to re-render, and did not update the score on the screen. This is why, when you edited the first name, the state got updated, triggering a re-render which _also_ updated the score on the screen.
+Vấn đề với `handlePlusClick` là nó đã mutate object `player`. Do đó, React không biết rằng có lý do để re-render và không cập nhật score trên màn hình. Đây là lý do khi bạn chỉnh sửa tên, state được cập nhật, kích hoạt re-render và _đồng thời_ cập nhật score trên màn hình.
 
-The problem with `handleLastNameChange` was that it did not copy the existing `...player` fields into the new object. This is why the score got lost after you edited the last name.
+Vấn đề với `handleLastNameChange` là nó không sao chép các field `...player` hiện có vào object mới. Đây là lý do score bị mất sau khi bạn chỉnh sửa họ.
 
 </Solution>
 
-#### Find and fix the mutation {/*find-and-fix-the-mutation*/}
+#### Tìm và sửa mutation {/*find-and-fix-the-mutation*/}
 
-There is a draggable box on a static background. You can change the box's color using the select input.
+Có một box có thể kéo được trên nền tĩnh. Bạn có thể thay đổi màu của box bằng select input.
 
-But there is a bug. If you move the box first, and then change its color, the background (which isn't supposed to move!) will "jump" to the box position. But this should not happen: the `Background`'s `position` prop is set to `initialPosition`, which is `{ x: 0, y: 0 }`. Why is the background moving after the color change?
+Nhưng có một bug. Nếu bạn di chuyển box trước, rồi thay đổi màu của nó, background (vốn không được phép di chuyển!) sẽ "nhảy" đến vị trí của box. Nhưng điều này không nên xảy ra: prop `position` của `Background` được đặt thành `initialPosition`, vốn là `{ x: 0, y: 0 }`. Tại sao background lại di chuyển sau khi đổi màu?
 
-Find the bug and fix it.
+Hãy tìm bug và sửa nó.
 
 <Hint>
 
-If something unexpected changes, there is a mutation. Find the mutation in `App.js` and fix it.
+Nếu có điều gì đó thay đổi ngoài dự kiến, thì đã có mutation. Hãy tìm mutation trong `App.js` và sửa nó.
 
 </Hint>
 
@@ -1132,9 +1132,9 @@ select { margin-bottom: 10px; }
 
 <Solution>
 
-The problem was in the mutation inside `handleMove`. It mutated `shape.position`, but that's the same object that `initialPosition` points at. This is why both the shape and the background move. (It's a mutation, so the change doesn't reflect on the screen until an unrelated update--the color change--triggers a re-render.)
+Vấn đề nằm ở mutation bên trong `handleMove`. Nó đã mutate `shape.position`, nhưng đó cũng chính là object mà `initialPosition` trỏ tới. Đây là lý do cả shape và background đều di chuyển. (Đó là một mutation, nên thay đổi không phản ánh trên màn hình cho đến khi một update không liên quan--việc đổi màu--kích hoạt re-render.)
 
-The fix is to remove the mutation from `handleMove`, and use the spread syntax to copy the shape. Note that `+=` is a mutation, so you need to rewrite it to use a regular `+` operation.
+Cách sửa là loại bỏ mutation khỏi `handleMove` và sử dụng spread syntax để sao chép shape. Lưu ý rằng `+=` là một mutation, vì vậy bạn cần viết lại nó bằng một thao tác `+` thông thường.
 
 <Sandpack>
 
@@ -1287,9 +1287,9 @@ select { margin-bottom: 10px; }
 
 </Solution>
 
-#### Update an object with Immer {/*update-an-object-with-immer*/}
+#### Cập nhật một object bằng Immer {/*update-an-object-with-immer*/}
 
-This is the same buggy example as in the previous challenge. This time, fix the mutation by using Immer. For your convenience, `useImmer` is already imported, so you need to change the `shape` state variable to use it.
+Đây là ví dụ có bug giống challenge trước. Lần này, hãy sửa mutation bằng cách sử dụng Immer. Để thuận tiện cho bạn, `useImmer` đã được import sẵn, vì vậy bạn cần thay đổi state variable `shape` để sử dụng nó.
 
 <Sandpack>
 
@@ -1456,7 +1456,7 @@ select { margin-bottom: 10px; }
 
 <Solution>
 
-This is the solution rewritten with Immer. Notice how the event handlers are written in a mutating fashion, but the bug does not occur. This is because under the hood, Immer never mutates the existing objects.
+Đây là lời giải được viết lại bằng Immer. Hãy chú ý rằng các event handler được viết theo cách có mutation, nhưng bug không xảy ra. Đó là vì bên dưới, Immer không bao giờ mutate các object hiện có.
 
 <Sandpack>
 

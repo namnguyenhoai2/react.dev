@@ -45,6 +45,13 @@ interface PageProps {
   languages?: Languages | null;
 }
 
+function normalizeRoutePath(path: string) {
+  if (path === '/index.html') {
+    return '/';
+  }
+  return path.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+}
+
 export function Page({
   children,
   toc,
@@ -54,7 +61,7 @@ export function Page({
   languages = null,
 }: PageProps) {
   const {asPath} = useRouter();
-  const cleanedPath = asPath.split(/[\?\#]/)[0];
+  const cleanedPath = normalizeRoutePath(asPath.split(/[\?\#]/)[0]);
   const {route, nextRoute, prevRoute, breadcrumbs, order} = getRouteMeta(
     cleanedPath,
     routeTree

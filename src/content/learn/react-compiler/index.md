@@ -2,32 +2,31 @@
 title: React Compiler
 ---
 
-## Introduction {/*introduction*/}
+## Giới thiệu {/*introduction*/}
 
-Learn [what React Compiler does](/learn/react-compiler/introduction) and how it automatically optimizes your React application by handling memoization for you, eliminating the need for manual `useMemo`, `useCallback`, and `React.memo`.
+Tìm hiểu [React Compiler thực hiện gì](/learn/react-compiler/introduction) và cách công cụ này tự động tối ưu hóa ứng dụng React của bạn bằng cách đảm nhiệm memoization, loại bỏ nhu cầu sử dụng thủ công `useMemo`, `useCallback`, và `React.memo`.
 
-## Installation {/*installation*/}
+## Cài đặt {/*installation*/}
 
-Get started with [installing React Compiler](/learn/react-compiler/installation) and learn how to configure it with your build tools.
+Bắt đầu bằng cách [cài đặt React Compiler](/learn/react-compiler/installation) và tìm hiểu cách cấu hình công cụ này với các công cụ build của bạn.
 
 
-## Incremental Adoption {/*incremental-adoption*/}
+## Áp dụng từng bước {/*incremental-adoption*/}
 
-Learn [strategies for gradually adopting React Compiler](/learn/react-compiler/incremental-adoption) in your existing codebase if you're not ready to enable it everywhere yet.
+Tìm hiểu [các chiến lược để áp dụng React Compiler dần dần](/learn/react-compiler/incremental-adoption) trong codebase hiện có nếu bạn chưa sẵn sàng bật công cụ này ở mọi nơi.
 
-## Debugging and Troubleshooting {/*debugging-and-troubleshooting*/}
+## Gỡ lỗi và khắc phục sự cố {/*debugging-and-troubleshooting*/}
 
-When things don't work as expected, use our [debugging guide](/learn/react-compiler/debugging) to understand the difference between compiler errors and runtime issues, identify common breaking patterns, and follow a systematic debugging workflow.
+Khi mọi thứ không hoạt động như mong đợi, hãy sử dụng [hướng dẫn gỡ lỗi](/learn/react-compiler/debugging) của chúng tôi để hiểu sự khác biệt giữa lỗi compiler và các vấn đề runtime, xác định những pattern thường gây lỗi, cũng như thực hiện quy trình gỡ lỗi có hệ thống.
 
-## Configuration and Reference {/*configuration-and-reference*/}
+## Cấu hình và tài liệu tham khảo {/*configuration-and-reference*/}
 
-For detailed configuration options and API reference:
+Để xem các tùy chọn cấu hình chi tiết và tài liệu tham khảo API:
 
-- [Configuration Options](/reference/react-compiler/configuration) - All compiler configuration options including React version compatibility
-- [Directives](/reference/react-compiler/directives) - Function-level compilation control
-- [Compiling Libraries](/reference/react-compiler/compiling-libraries) - Shipping pre-compiled libraries
+- [Tùy chọn cấu hình](/reference/react-compiler/configuration) - Tất cả tùy chọn cấu hình của compiler, bao gồm khả năng tương thích với phiên bản React
+- [Directives](/reference/react-compiler/directives) - Kiểm soát việc biên dịch ở cấp hàm
+- [Biên dịch thư viện](/reference/react-compiler/compiling-libraries) - Phân phối các thư viện đã được biên dịch trước
 
-## Additional resources {/*additional-resources*/}
+## Tài nguyên bổ sung {/*additional-resources*/}
 
-In addition to these docs, we recommend checking the [React Compiler Working Group](https://github.com/reactwg/react-compiler) for additional information and discussion about the compiler.
-
+Ngoài tài liệu này, chúng tôi khuyên bạn nên xem [Nhóm làm việc React Compiler](https://github.com/reactwg/react-compiler) để biết thêm thông tin và tham gia thảo luận về compiler.

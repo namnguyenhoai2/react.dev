@@ -1,24 +1,24 @@
 ---
-title: Writing Markup with JSX
+title: Viết Markup bằng JSX
 ---
 
 <Intro>
 
-*JSX* is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file. Although there are other ways to write components, most React developers prefer the conciseness of JSX, and most codebases use it.
+*JSX* là một phần mở rộng cú pháp của JavaScript, cho phép bạn viết markup giống HTML bên trong một tệp JavaScript. Mặc dù có những cách khác để viết component, hầu hết nhà phát triển React đều thích sự súc tích của JSX, và phần lớn codebase đều sử dụng nó.
 
 </Intro>
 
 <YouWillLearn>
 
-* Why React mixes markup with rendering logic
-* How JSX is different from HTML
-* How to display information with JSX
+* Vì sao React kết hợp markup với logic rendering
+* JSX khác HTML như thế nào
+* Cách hiển thị thông tin bằng JSX
 
 </YouWillLearn>
 
-## JSX: Putting markup into JavaScript {/*jsx-putting-markup-into-javascript*/}
+## JSX: Đưa markup vào JavaScript {/*jsx-putting-markup-into-javascript*/}
 
-The Web has been built on HTML, CSS, and JavaScript. For many years, web developers kept content in HTML, design in CSS, and logic in JavaScript—often in separate files! Content was marked up inside HTML while the page's logic lived separately in JavaScript:
+Web được xây dựng dựa trên HTML, CSS và JavaScript. Trong nhiều năm, các nhà phát triển web giữ content trong HTML, phần thiết kế trong CSS và logic trong JavaScript—thường là ở các tệp riêng biệt! Content được đánh dấu trong HTML, còn logic của trang nằm riêng trong JavaScript:
 
 <DiagramGroup>
 
@@ -36,7 +36,7 @@ JavaScript
 
 </DiagramGroup>
 
-But as the Web became more interactive, logic increasingly determined content. JavaScript was in charge of the HTML! This is why **in React, rendering logic and markup live together in the same place—components.**
+Nhưng khi Web trở nên tương tác hơn, logic ngày càng quyết định content. JavaScript chịu trách nhiệm điều khiển HTML! Đây là lý do **trong React, logic rendering và markup nằm cùng một nơi—các component.**
 
 <DiagramGroup>
 
@@ -54,19 +54,19 @@ But as the Web became more interactive, logic increasingly determined content. J
 
 </DiagramGroup>
 
-Keeping a button's rendering logic and markup together ensures that they stay in sync with each other on every edit. Conversely, details that are unrelated, such as the button's markup and a sidebar's markup, are isolated from each other, making it safer to change either of them on their own.
+Việc giữ logic rendering và markup của một button cùng nhau đảm bảo chúng luôn đồng bộ trong mỗi lần chỉnh sửa. Ngược lại, những chi tiết không liên quan, chẳng hạn như markup của button và markup của sidebar, được tách biệt với nhau, nhờ đó việc thay đổi từng phần độc lập sẽ an toàn hơn.
 
-Each React component is a JavaScript function that may contain some markup that React renders into the browser. React components use a syntax extension called JSX to represent that markup. JSX looks a lot like HTML, but it is a bit stricter and can display dynamic information. The best way to understand this is to convert some HTML markup to JSX markup.
+Mỗi React component là một hàm JavaScript có thể chứa một phần markup để React render vào trình duyệt. React component sử dụng một phần mở rộng cú pháp có tên JSX để biểu diễn markup đó. JSX trông rất giống HTML, nhưng nghiêm ngặt hơn một chút và có thể hiển thị thông tin động. Cách tốt nhất để hiểu điều này là chuyển một phần markup HTML sang markup JSX.
 
 <Note>
 
-JSX and React are two separate things. They're often used together, but you *can* [use them independently](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#whats-a-jsx-transform) of each other. JSX is a syntax extension, while React is a JavaScript library.
+JSX và React là hai thứ riêng biệt. Chúng thường được sử dụng cùng nhau, nhưng bạn *có thể* [sử dụng chúng độc lập](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#whats-a-jsx-transform) với nhau. JSX là một phần mở rộng cú pháp, còn React là một thư viện JavaScript.
 
 </Note>
 
-## Converting HTML to JSX {/*converting-html-to-jsx*/}
+## Chuyển HTML sang JSX {/*converting-html-to-jsx*/}
 
-Suppose that you have some (perfectly valid) HTML:
+Giả sử bạn có một đoạn HTML (hoàn toàn hợp lệ):
 
 ```html
 <h1>Hedy Lamarr's Todos</h1>
@@ -82,7 +82,7 @@ Suppose that you have some (perfectly valid) HTML:
 </ul>
 ```
 
-And you want to put it into your component:
+Và bạn muốn đưa nó vào component của mình:
 
 ```js
 export default function TodoList() {
@@ -92,7 +92,7 @@ export default function TodoList() {
 }
 ```
 
-If you copy and paste it as is, it will not work:
+Nếu bạn sao chép và dán nguyên trạng, đoạn mã sẽ không hoạt động:
 
 
 <Sandpack>
@@ -122,21 +122,21 @@ img { height: 90px }
 
 </Sandpack>
 
-This is because JSX is stricter and has a few more rules than HTML! If you read the error messages above, they'll guide you to fix the markup, or you can follow the guide below.
+Đó là vì JSX nghiêm ngặt hơn và có thêm một số quy tắc so với HTML! Nếu đọc các thông báo lỗi ở trên, bạn sẽ được hướng dẫn cách sửa markup, hoặc có thể làm theo hướng dẫn bên dưới.
 
 <Note>
 
-Most of the time, React's on-screen error messages will help you find where the problem is. Give them a read if you get stuck!
+Trong hầu hết trường hợp, các thông báo lỗi trên màn hình của React sẽ giúp bạn tìm ra vị trí có vấn đề. Nếu gặp khó khăn, hãy đọc kỹ các thông báo đó!
 
 </Note>
 
-## The Rules of JSX {/*the-rules-of-jsx*/}
+## Các quy tắc của JSX {/*the-rules-of-jsx*/}
 
-### 1. Return a single root element {/*1-return-a-single-root-element*/}
+### 1. Trả về một phần tử gốc duy nhất {/*1-return-a-single-root-element*/}
 
-To return multiple elements from a component, **wrap them with a single parent tag.**
+Để trả về nhiều phần tử từ một component, **hãy bọc chúng bằng một thẻ cha duy nhất.**
 
-For example, you can use a `<div>`:
+Ví dụ, bạn có thể sử dụng một `<div>`:
 
 ```js {1,11}
 <div>
@@ -153,7 +153,7 @@ For example, you can use a `<div>`:
 ```
 
 
-If you don't want to add an extra `<div>` to your markup, you can write `<>` and `</>` instead:
+Nếu không muốn thêm một `<div>` vào markup, bạn có thể viết `<>` và `</>` thay thế:
 
 ```js {1,11}
 <>
@@ -169,21 +169,21 @@ If you don't want to add an extra `<div>` to your markup, you can write `<>` and
 </>
 ```
 
-This empty tag is called a *[Fragment.](/reference/react/Fragment)* Fragments let you group things without leaving any trace in the browser HTML tree.
+Thẻ rỗng này được gọi là *[Fragment.](/reference/react/Fragment)* Fragment cho phép bạn nhóm các thành phần mà không để lại dấu vết nào trong cây HTML của trình duyệt.
 
 <DeepDive>
 
-#### Why do multiple JSX tags need to be wrapped? {/*why-do-multiple-jsx-tags-need-to-be-wrapped*/}
+#### Vì sao nhiều thẻ JSX cần được bọc? {/*why-do-multiple-jsx-tags-need-to-be-wrapped*/}
 
-JSX looks like HTML, but under the hood it is transformed into plain JavaScript objects. You can't return two objects from a function without wrapping them into an array. This explains why you also can't return two JSX tags without wrapping them into another tag or a Fragment.
+JSX trông giống HTML, nhưng bên dưới nó được chuyển đổi thành các object JavaScript thuần. Bạn không thể trả về hai object từ một hàm nếu không bọc chúng trong một array. Điều này giải thích vì sao bạn cũng không thể trả về hai thẻ JSX nếu không bọc chúng trong một thẻ khác hoặc một Fragment.
 
 </DeepDive>
 
-### 2. Close all the tags {/*2-close-all-the-tags*/}
+### 2. Đóng tất cả các thẻ {/*2-close-all-the-tags*/}
 
-JSX requires tags to be explicitly closed: self-closing tags like `<img>` must become `<img />`, and wrapping tags like `<li>oranges` must be written as `<li>oranges</li>`.
+JSX yêu cầu các thẻ phải được đóng một cách tường minh: các thẻ tự đóng như `<img>` phải trở thành `<img />`, còn các thẻ bọc như `<li>oranges` phải được viết thành `<li>oranges</li>`.
 
-This is how Hedy Lamarr's image and list items look closed:
+Đây là cách ảnh và các mục danh sách của Hedy Lamarr trông như sau khi được đóng:
 
 ```js {2-6,8-10}
 <>
@@ -200,11 +200,11 @@ This is how Hedy Lamarr's image and list items look closed:
 </>
 ```
 
-### 3. camelCase <s>all</s> most of the things! {/*3-camelcase-salls-most-of-the-things*/}
+### 3. camelCase <s>tất cả</s> mọi thứ! {/*3-camelcase-salls-most-of-the-things*/}
 
-JSX turns into JavaScript and attributes written in JSX become keys of JavaScript objects. In your own components, you will often want to read those attributes into variables. But JavaScript has limitations on variable names. For example, their names can't contain dashes or be reserved words like `class`.
+JSX được chuyển thành JavaScript, và các attribute được viết trong JSX sẽ trở thành các key của object JavaScript. Trong component của riêng mình, bạn thường muốn đọc các attribute đó vào các biến. Tuy nhiên, JavaScript có những hạn chế đối với tên biến. Ví dụ, tên biến không được chứa dấu gạch ngang hoặc là các từ dành riêng như `class`.
 
-This is why, in React, many HTML and SVG attributes are written in camelCase. For example, instead of `stroke-width` you use `strokeWidth`. Since `class` is a reserved word, in React you write `className` instead, named after the [corresponding DOM property](https://developer.mozilla.org/en-US/docs/Web/API/Element/className):
+Đó là lý do trong React, nhiều attribute HTML và SVG được viết theo kiểu camelCase. Ví dụ, thay vì `stroke-width`, bạn sử dụng `strokeWidth`. Vì `class` là một từ dành riêng, trong React bạn viết `className` thay thế, được đặt tên theo [DOM property tương ứng](https://developer.mozilla.org/en-US/docs/Web/API/Element/className):
 
 ```js {4}
 <img
@@ -214,19 +214,19 @@ This is why, in React, many HTML and SVG attributes are written in camelCase. Fo
 />
 ```
 
-You can [find all these attributes in the list of DOM component props.](/reference/react-dom/components/common) If you get one wrong, don't worry—React will print a message with a possible correction to the [browser console.](https://developer.mozilla.org/docs/Tools/Browser_Console)
+Bạn có thể [tìm tất cả các attribute này trong danh sách DOM component props.](/reference/react-dom/components/common) Nếu viết sai một attribute, đừng lo—React sẽ in một thông báo kèm đề xuất sửa trong [browser console.](https://developer.mozilla.org/docs/Tools/Browser_Console)
 
 <Pitfall>
 
-For historical reasons, [`aria-*`](https://developer.mozilla.org/docs/Web/Accessibility/ARIA) and [`data-*`](https://developer.mozilla.org/docs/Learn/HTML/Howto/Use_data_attributes) attributes are written as in HTML with dashes.
+Vì lý do lịch sử, các attribute [`aria-*`](https://developer.mozilla.org/docs/Web/Accessibility/ARIA) và [`data-*`](https://developer.mozilla.org/docs/Learn/HTML/Howto/Use_data_attributes) được viết giống như trong HTML, với dấu gạch ngang.
 
 </Pitfall>
 
-### Pro-tip: Use a JSX Converter {/*pro-tip-use-a-jsx-converter*/}
+### Mẹo chuyên nghiệp: Sử dụng JSX Converter {/*pro-tip-use-a-jsx-converter*/}
 
-Converting all these attributes in existing markup can be tedious! We recommend using a [converter](https://transform.tools/html-to-jsx) to translate your existing HTML and SVG to JSX. Converters are very useful in practice, but it's still worth understanding what is going on so that you can comfortably write JSX on your own.
+Việc chuyển đổi tất cả các attribute này trong markup hiện có có thể khá tốn công! Chúng tôi khuyên bạn nên sử dụng một [converter](https://transform.tools/html-to-jsx) để chuyển HTML và SVG hiện có sang JSX. Converter rất hữu ích trong thực tế, nhưng bạn vẫn nên hiểu điều gì đang diễn ra để có thể tự tin viết JSX.
 
-Here is your final result:
+Đây là kết quả cuối cùng:
 
 <Sandpack>
 
@@ -258,11 +258,11 @@ img { height: 90px }
 
 <Recap>
 
-Now you know why JSX exists and how to use it in components:
+Bây giờ bạn đã biết vì sao JSX tồn tại và cách sử dụng nó trong component:
 
-* React components group rendering logic together with markup because they are related.
-* JSX is similar to HTML, with a few differences. You can use a [converter](https://transform.tools/html-to-jsx) if you need to.
-* Error messages will often point you in the right direction to fixing your markup.
+* React component nhóm logic rendering cùng với markup vì chúng có liên quan với nhau.
+* JSX tương tự HTML, nhưng có một vài điểm khác biệt. Bạn có thể sử dụng [converter](https://transform.tools/html-to-jsx) nếu cần.
+* Các thông báo lỗi thường chỉ cho bạn hướng xử lý đúng để sửa markup.
 
 </Recap>
 
@@ -270,9 +270,9 @@ Now you know why JSX exists and how to use it in components:
 
 <Challenges>
 
-#### Convert some HTML to JSX {/*convert-some-html-to-jsx*/}
+#### Chuyển một phần HTML sang JSX {/*convert-some-html-to-jsx*/}
 
-This HTML was pasted into a component, but it's not valid JSX. Fix it:
+Đoạn HTML này được dán vào một component, nhưng không phải là JSX hợp lệ. Hãy sửa nó:
 
 <Sandpack>
 
@@ -308,7 +308,7 @@ export default function Bio() {
 
 </Sandpack>
 
-Whether to do it by hand or using the converter is up to you!
+Bạn có thể tự sửa hoặc sử dụng converter, tùy bạn lựa chọn!
 
 <Solution>
 

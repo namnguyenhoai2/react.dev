@@ -1,27 +1,27 @@
 ---
-title: State as a Snapshot
+title: State dưới dạng ảnh chụp nhanh
 ---
 
 <Intro>
 
-State variables might look like regular JavaScript variables that you can read and write to. However, state behaves more like a snapshot. Setting it does not change the state variable you already have, but instead triggers a re-render.
+Các biến state có thể trông giống như những biến JavaScript thông thường mà bạn có thể đọc và ghi. Tuy nhiên, state hoạt động giống một ảnh chụp nhanh hơn. Việc thiết lập state không thay đổi biến state mà bạn đang có, mà thay vào đó sẽ kích hoạt một lần re-render.
 
 </Intro>
 
 <YouWillLearn>
 
-* How setting state triggers re-renders
-* When and how state updates
-* Why state does not update immediately after you set it
-* How event handlers access a "snapshot" of the state
+* Cách việc thiết lập state kích hoạt re-render
+* Khi nào và bằng cách nào state được cập nhật
+* Vì sao state không được cập nhật ngay sau khi bạn thiết lập
+* Cách các event handler truy cập một “ảnh chụp nhanh” của state
 
 </YouWillLearn>
 
-## Setting state triggers renders {/*setting-state-triggers-renders*/}
+## Việc thiết lập state kích hoạt render {/*setting-state-triggers-renders*/}
 
-You might think of your user interface as changing directly in response to the user event like a click. In React, it works a little differently from this mental model. On the previous page, you saw that [setting state requests a re-render](/learn/render-and-commit#step-1-trigger-a-render) from React. This means that for an interface to react to the event, you need to *update the state*.
+Bạn có thể nghĩ rằng giao diện người dùng thay đổi trực tiếp để phản hồi một sự kiện của người dùng, chẳng hạn như một lần nhấp. Trong React, mọi việc hơi khác với mô hình tư duy này. Ở trang trước, bạn đã thấy rằng [việc thiết lập state yêu cầu một lần re-render](/learn/render-and-commit#step-1-trigger-a-render) từ React. Điều này có nghĩa là để giao diện phản hồi sự kiện, bạn cần *cập nhật state*.
 
-In this example, when you press "send", `setIsSent(true)` tells React to re-render the UI:
+Trong ví dụ này, khi bạn nhấn "send", `setIsSent(true)` yêu cầu React re-render UI:
 
 <Sandpack>
 
@@ -61,25 +61,25 @@ label, textarea { margin-bottom: 10px; display: block; }
 
 </Sandpack>
 
-Here's what happens when you click the button:
+Đây là những gì xảy ra khi bạn nhấp vào nút:
 
-1. The `onSubmit` event handler executes.
-2. `setIsSent(true)` sets `isSent` to `true` and queues a new render.
-3. React re-renders the component according to the new `isSent` value.
+1. Event handler `onSubmit` được thực thi.
+2. `setIsSent(true)` thiết lập `isSent` thành `true` và xếp hàng một lần render mới.
+3. React re-render component dựa trên giá trị `isSent` mới.
 
-Let's take a closer look at the relationship between state and rendering.
+Hãy xem xét kỹ hơn mối quan hệ giữa state và rendering.
 
-## Rendering takes a snapshot in time {/*rendering-takes-a-snapshot-in-time*/}
+## Rendering tạo một ảnh chụp nhanh theo thời điểm {/*rendering-takes-a-snapshot-in-time*/}
 
-["Rendering"](/learn/render-and-commit#step-2-react-renders-your-components) means that React is calling your component, which is a function. The JSX you return from that function is like a snapshot of the UI in time. Its props, event handlers, and local variables were all calculated **using its state at the time of the render.**
+["Rendering"](/learn/render-and-commit#step-2-react-renders-your-components) có nghĩa là React đang gọi component của bạn, vốn là một function. JSX mà bạn trả về từ function đó giống như một ảnh chụp nhanh của UI tại một thời điểm. Props, event handler và biến cục bộ của nó đều được tính toán **dựa trên state tại thời điểm render.**
 
-Unlike a photograph or a movie frame, the UI "snapshot" you return is interactive. It includes logic like event handlers that specify what happens in response to inputs. React updates the screen to match this snapshot and connects the event handlers. As a result, pressing a button will trigger the click handler from your JSX.
+Không giống một bức ảnh hoặc một khung hình trong phim, “ảnh chụp nhanh” UI mà bạn trả về vẫn có tính tương tác. Nó bao gồm logic như các event handler, xác định điều gì xảy ra để phản hồi các input. React cập nhật màn hình để khớp với ảnh chụp nhanh này và kết nối các event handler. Vì vậy, nhấn một nút sẽ kích hoạt click handler từ JSX của bạn.
 
-When React re-renders a component:
+Khi React re-render một component:
 
-1. React calls your function again.
-2. Your function returns a new JSX snapshot.
-3. React then updates the screen to match the snapshot your function returned.
+1. React gọi lại function của bạn.
+2. Function của bạn trả về một ảnh chụp nhanh JSX mới.
+3. Sau đó, React cập nhật màn hình để khớp với ảnh chụp nhanh mà function của bạn đã trả về.
 
 <IllustrationBlock sequential>
     <Illustration caption="React executing the function" src="/images/docs/illustrations/i_render1.png" />
@@ -87,7 +87,7 @@ When React re-renders a component:
     <Illustration caption="Updating the DOM tree" src="/images/docs/illustrations/i_render3.png" />
 </IllustrationBlock>
 
-As a component's memory, state is not like a regular variable that disappears after your function returns. State actually "lives" in React itself--as if on a shelf!--outside of your function. When React calls your component, it gives you a snapshot of the state for that particular render. Your component returns a snapshot of the UI with a fresh set of props and event handlers in its JSX, all calculated **using the state values from that render!**
+Là bộ nhớ của component, state không giống một biến thông thường sẽ biến mất sau khi function của bạn trả về. State thực sự “sống” trong chính React—như thể nằm trên một chiếc kệ!—ở bên ngoài function của bạn. Khi React gọi component, nó cung cấp cho bạn một ảnh chụp nhanh của state cho lần render cụ thể đó. Component của bạn trả về một ảnh chụp nhanh UI với một tập props và event handler mới trong JSX, tất cả đều được tính toán **dựa trên các giá trị state từ lần render đó!**
 
 <IllustrationBlock sequential>
   <Illustration caption="You tell React to update the state" src="/images/docs/illustrations/i_state-snapshot1.png" />
@@ -95,9 +95,9 @@ As a component's memory, state is not like a regular variable that disappears af
   <Illustration caption="React passes a snapshot of the state value into the component" src="/images/docs/illustrations/i_state-snapshot3.png" />
 </IllustrationBlock>
 
-Here's a little experiment to show you how this works. In this example, you might expect that clicking the "+3" button would increment the counter three times because it calls `setNumber(number + 1)` three times.
+Sau đây là một thử nghiệm nhỏ để cho bạn thấy cách hoạt động này. Trong ví dụ này, bạn có thể mong đợi rằng việc nhấp vào nút "+3" sẽ tăng counter ba lần vì nó gọi `setNumber(number + 1)` ba lần.
 
-See what happens when you click the "+3" button:
+Hãy xem điều gì xảy ra khi bạn nhấp vào nút "+3":
 
 <Sandpack>
 
@@ -127,9 +127,9 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-Notice that `number` only increments once per click!
+Lưu ý rằng `number` chỉ tăng một lần sau mỗi lần nhấp!
 
-**Setting state only changes it for the *next* render.** During the first render, `number` was `0`. This is why, in *that render's* `onClick` handler, the value of `number` is still `0` even after `setNumber(number + 1)` was called:
+**Việc thiết lập state chỉ thay đổi state cho lần render *tiếp theo*.** Trong lần render đầu tiên, `number` là `0`. Đây là lý do trong handler `onClick` của *lần render đó*, giá trị của `number` vẫn là `0` ngay cả sau khi `setNumber(number + 1)` được gọi:
 
 ```js
 <button onClick={() => {
@@ -139,18 +139,18 @@ Notice that `number` only increments once per click!
 }}>+3</button>
 ```
 
-Here is what this button's click handler tells React to do:
+Đây là những gì click handler của nút yêu cầu React thực hiện:
 
-1. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
-2. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
-3. `setNumber(number + 1)`: `number` is `0` so `setNumber(0 + 1)`.
-    - React prepares to change `number` to `1` on the next render.
+1. `setNumber(number + 1)`: `number` là `0` nên `setNumber(0 + 1)`.
+    - React chuẩn bị thay đổi `number` thành `1` trong lần render tiếp theo.
+2. `setNumber(number + 1)`: `number` là `0` nên `setNumber(0 + 1)`.
+    - React chuẩn bị thay đổi `number` thành `1` trong lần render tiếp theo.
+3. `setNumber(number + 1)`: `number` là `0` nên `setNumber(0 + 1)`.
+    - React chuẩn bị thay đổi `number` thành `1` trong lần render tiếp theo.
 
-Even though you called `setNumber(number + 1)` three times, in *this render's* event handler `number` is always `0`, so you set the state to `1` three times. This is why, after your event handler finishes, React re-renders the component with `number` equal to `1` rather than `3`.
+Mặc dù bạn đã gọi `setNumber(number + 1)` ba lần, trong event handler của *lần render này*, `number` luôn là `0`, nên bạn thiết lập state thành `1` ba lần. Đây là lý do sau khi event handler kết thúc, React re-render component với `number` bằng `1` thay vì `3`.
 
-You can also visualize this by mentally substituting state variables with their values in your code. Since the `number` state variable is `0` for *this render*, its event handler looks like this:
+Bạn cũng có thể hình dung điều này bằng cách thay thế các biến state bằng giá trị của chúng trong code. Vì biến state `number` là `0` trong *lần render này*, event handler của nó sẽ trông như sau:
 
 ```js
 <button onClick={() => {
@@ -160,7 +160,7 @@ You can also visualize this by mentally substituting state variables with their 
 }}>+3</button>
 ```
 
-For the next render, `number` is `1`, so *that render's* click handler looks like this:
+Trong lần render tiếp theo, `number` là `1`, nên click handler của *lần render đó* sẽ trông như sau:
 
 ```js
 <button onClick={() => {
@@ -170,11 +170,11 @@ For the next render, `number` is `1`, so *that render's* click handler looks lik
 }}>+3</button>
 ```
 
-This is why clicking the button again will set the counter to `2`, then to `3` on the next click, and so on.
+Đây là lý do việc nhấp vào nút lần nữa sẽ thiết lập counter thành `2`, rồi thành `3` ở lần nhấp tiếp theo, v.v.
 
-## State over time {/*state-over-time*/}
+## State theo thời gian {/*state-over-time*/}
 
-Well, that was fun. Try to guess what clicking this button will alert:
+Thật thú vị. Hãy thử đoán xem việc nhấp vào nút này sẽ alert điều gì:
 
 <Sandpack>
 
@@ -203,14 +203,14 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-If you use the substitution method from before, you can guess that the alert shows "0":
+Nếu sử dụng phương pháp thay thế như trước, bạn có thể đoán rằng alert sẽ hiển thị "0":
 
 ```js
 setNumber(0 + 5);
 alert(0);
 ```
 
-But what if you put a timer on the alert, so it only fires _after_ the component re-rendered? Would it say "0" or "5"? Have a guess!
+Nhưng nếu bạn đặt timer cho alert để nó chỉ được kích hoạt _sau khi_ component đã re-render thì sao? Nó sẽ hiển thị "0" hay "5"? Hãy thử đoán!
 
 <Sandpack>
 
@@ -241,7 +241,7 @@ h1 { display: inline-block; margin: 10px; width: 30px; text-align: center; }
 
 </Sandpack>
 
-Surprised? If you use the substitution method, you can see the "snapshot" of the state passed to the alert.
+Bất ngờ phải không? Nếu sử dụng phương pháp thay thế, bạn có thể thấy “ảnh chụp nhanh” của state được truyền cho alert.
 
 ```js
 setNumber(0 + 5);
@@ -250,16 +250,16 @@ setTimeout(() => {
 }, 3000);
 ```
 
-The state stored in React may have changed by the time the alert runs, but it was scheduled using a snapshot of the state at the time the user interacted with it!
+State được lưu trong React có thể đã thay đổi vào thời điểm alert chạy, nhưng alert đã được lên lịch bằng một ảnh chụp nhanh của state tại thời điểm người dùng tương tác với nó!
 
-**A state variable's value never changes within a render,** even if its event handler's code is asynchronous. Inside *that render's* `onClick`, the value of `number` continues to be `0` even after `setNumber(number + 5)` was called. Its value was "fixed" when React "took the snapshot" of the UI by calling your component.
+**Giá trị của một biến state không bao giờ thay đổi trong một lần render,** ngay cả khi code trong event handler của nó là bất đồng bộ. Bên trong `onClick` của *lần render đó*, giá trị của `number` vẫn tiếp tục là `0` ngay cả sau khi `setNumber(number + 5)` được gọi. Giá trị của nó đã được “cố định” khi React “chụp ảnh nhanh” UI bằng cách gọi component của bạn.
 
-Here is an example of how that makes your event handlers less prone to timing mistakes. Below is a form that sends a message with a five-second delay. Imagine this scenario:
+Sau đây là một ví dụ cho thấy điều này giúp event handler của bạn ít dễ gặp lỗi về timing hơn như thế nào. Bên dưới là một form gửi message với độ trễ năm giây. Hãy hình dung tình huống sau:
 
-1. You press the "Send" button, sending "Hello" to Alice.
-2. Before the five-second delay ends, you change the value of the "To" field to "Bob".
+1. Bạn nhấn nút "Send", gửi "Hello" cho Alice.
+2. Trước khi kết thúc khoảng trễ năm giây, bạn thay đổi giá trị của trường "To" thành "Bob".
 
-What do you expect the `alert` to display? Would it display, "You said Hello to Alice"? Or would it display, "You said Hello to Bob"? Make a guess based on what you know, and then try it:
+Bạn mong đợi `alert` hiển thị điều gì? Nó sẽ hiển thị "You said Hello to Alice"? Hay sẽ hiển thị "You said Hello to Bob"? Hãy dự đoán dựa trên những gì bạn đã biết, rồi thử xem:
 
 <Sandpack>
 
@@ -305,19 +305,19 @@ label, textarea { margin-bottom: 10px; display: block; }
 
 </Sandpack>
 
-**React keeps the state values "fixed" within one render's event handlers.** You don't need to worry whether the state has changed while the code is running.
+**React giữ các giá trị state “cố định” trong event handler của một lần render.** Bạn không cần lo lắng về việc state có thay đổi trong khi code đang chạy hay không.
 
-But what if you wanted to read the latest state before a re-render? You'll want to use a [state updater function](/learn/queueing-a-series-of-state-updates), covered on the next page!
+Nhưng nếu bạn muốn đọc state mới nhất trước một lần re-render thì sao? Bạn sẽ muốn sử dụng một [state updater function](/learn/queueing-a-series-of-state-updates), nội dung này sẽ được trình bày ở trang tiếp theo!
 
 <Recap>
 
-* Setting state requests a new render.
-* React stores state outside of your component, as if on a shelf.
-* When you call `useState`, React gives you a snapshot of the state *for that render*.
-* Variables and event handlers don't "survive" re-renders. Every render has its own event handlers.
-* Every render (and functions inside it) will always "see" the snapshot of the state that React gave to *that* render.
-* You can mentally substitute state in event handlers, similarly to how you think about the rendered JSX.
-* Event handlers created in the past have the state values from the render in which they were created.
+* Việc thiết lập state yêu cầu một lần render mới.
+* React lưu state ở bên ngoài component của bạn, như thể state nằm trên một chiếc kệ.
+* Khi bạn gọi `useState`, React cung cấp cho bạn một ảnh chụp nhanh của state *cho lần render đó*.
+* Các biến và event handler không “sống sót” qua các lần re-render. Mỗi lần render có các event handler riêng.
+* Mỗi lần render (và các function bên trong nó) luôn “nhìn thấy” ảnh chụp nhanh của state mà React cung cấp cho *lần render đó*.
+* Bạn có thể hình dung việc thay thế state trong các event handler, tương tự như cách bạn hình dung JSX đã được render.
+* Các event handler được tạo trong quá khứ có các giá trị state của lần render mà chúng được tạo ra.
 
 </Recap>
 
@@ -325,9 +325,9 @@ But what if you wanted to read the latest state before a re-render? You'll want 
 
 <Challenges>
 
-#### Implement a traffic light {/*implement-a-traffic-light*/}
+#### Triển khai đèn giao thông {/*implement-a-traffic-light*/}
 
-Here is a crosswalk light component that toggles when the button is pressed:
+Sau đây là một component đèn dành cho vạch qua đường, chuyển đổi trạng thái khi nhấn nút:
 
 <Sandpack>
 
@@ -362,13 +362,13 @@ h1 { margin-top: 20px; }
 
 </Sandpack>
 
-Add an `alert` to the click handler. When the light is green and says "Walk", clicking the button should say "Stop is next". When the light is red and says "Stop", clicking the button should say "Walk is next".
+Thêm một `alert` vào click handler. Khi đèn màu xanh và hiển thị "Walk", việc nhấp vào nút sẽ hiển thị "Stop is next". Khi đèn màu đỏ và hiển thị "Stop", việc nhấp vào nút sẽ hiển thị "Walk is next".
 
-Does it make a difference whether you put the `alert` before or after the `setWalk` call?
+Việc đặt `alert` trước hay sau lệnh gọi `setWalk` có tạo ra khác biệt không?
 
 <Solution>
 
-Your `alert` should look like this:
+`alert` của bạn sẽ trông như sau:
 
 <Sandpack>
 
@@ -404,17 +404,17 @@ h1 { margin-top: 20px; }
 
 </Sandpack>
 
-Whether you put it before or after the `setWalk` call makes no difference. That render's value of `walk` is fixed. Calling `setWalk` will only change it for the *next* render, but will not affect the event handler from the previous render.
+Việc đặt nó trước hay sau lệnh gọi `setWalk` không tạo ra khác biệt. Giá trị `walk` của lần render đó là cố định. Việc gọi `setWalk` chỉ thay đổi giá trị này cho lần render *tiếp theo*, chứ không ảnh hưởng đến event handler của lần render trước.
 
-This line might seem counter-intuitive at first:
+Dòng này thoạt đầu có thể có vẻ ngược với trực giác:
 
 ```js
 alert(walk ? 'Stop is next' : 'Walk is next');
 ```
 
-But it makes sense if you read it as: "If the traffic light shows 'Walk now', the message should say 'Stop is next.'" The `walk` variable inside your event handler matches that render's value of `walk` and does not change.
+Nhưng điều này sẽ hợp lý nếu bạn đọc nó như sau: "Nếu đèn giao thông hiển thị 'Walk now', thông báo sẽ là 'Stop is next'." Biến `walk` bên trong event handler khớp với giá trị `walk` của lần render đó và không thay đổi.
 
-You can verify that this is correct by applying the substitution method. When `walk` is `true`, you get:
+Bạn có thể xác minh điều này là đúng bằng cách áp dụng phương pháp thế. Khi `walk` là `true`, bạn nhận được:
 
 ```js
 <button onClick={() => {
@@ -428,7 +428,7 @@ You can verify that this is correct by applying the substitution method. When `w
 </h1>
 ```
 
-So clicking "Change to Stop" queues a render with `walk` set to `false`, and alerts "Stop is next".
+Vì vậy, việc nhấp vào "Change to Stop" sẽ đưa vào hàng đợi một lần render với `walk` được đặt thành `false`, và hiển thị cảnh báo "Stop is next".
 
 </Solution>
 

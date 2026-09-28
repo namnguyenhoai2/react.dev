@@ -1,49 +1,49 @@
 ---
-title: Incremental Adoption
+title: Áp dụng từng bước
 ---
 
 <Intro>
-React Compiler can be adopted incrementally, allowing you to try it on specific parts of your codebase first. This guide shows you how to gradually roll out the compiler in existing projects.
+React Compiler có thể được áp dụng từng bước, cho phép bạn thử nghiệm trước trên các phần cụ thể trong codebase. Hướng dẫn này chỉ cho bạn cách triển khai compiler dần dần trong các project hiện có.
 </Intro>
 
 <YouWillLearn>
 
-* Why incremental adoption is recommended
-* Using Babel overrides for directory-based adoption
-* Using the "use memo" directive for opt-in compilation
-* Using the "use no memo" directive to exclude components
-* Runtime feature flags with gating
-* Monitoring your adoption progress
+* Vì sao nên áp dụng từng bước
+* Sử dụng Babel overrides để áp dụng theo thư mục
+* Sử dụng chỉ thị "use memo" để biên dịch khi opt-in
+* Sử dụng chỉ thị "use no memo" để loại trừ các component
+* Runtime feature flags với gating
+* Theo dõi tiến độ áp dụng
 
 </YouWillLearn>
 
-## Why Incremental Adoption? {/*why-incremental-adoption*/}
+## Vì sao nên áp dụng từng bước? {/*why-incremental-adoption*/}
 
-React Compiler is designed to optimize your entire codebase automatically, but you don't have to adopt it all at once. Incremental adoption gives you control over the rollout process, letting you test the compiler on small parts of your app before expanding to the rest.
+React Compiler được thiết kế để tự động tối ưu toàn bộ codebase, nhưng bạn không cần áp dụng tất cả cùng một lúc. Việc áp dụng từng bước giúp bạn kiểm soát quá trình triển khai, cho phép kiểm thử compiler trên những phần nhỏ của app trước khi mở rộng sang các phần còn lại.
 
-Starting small helps you build confidence in the compiler's optimizations. You can verify that your app behaves correctly with compiled code, measure performance improvements, and identify any edge cases specific to your codebase. This approach is especially valuable for production applications where stability is critical.
+Bắt đầu từ quy mô nhỏ giúp bạn xây dựng sự tin tưởng vào các tối ưu hóa của compiler. Bạn có thể xác minh rằng app hoạt động chính xác với code đã được biên dịch, đo lường các cải thiện về hiệu năng và xác định những trường hợp đặc biệt trong codebase của mình. Cách tiếp cận này đặc biệt có giá trị đối với các ứng dụng production, nơi tính ổn định rất quan trọng.
 
-Incremental adoption also makes it easier to address any Rules of React violations the compiler might find. Instead of fixing violations across your entire codebase at once, you can tackle them systematically as you expand compiler coverage. This keeps the migration manageable and reduces the risk of introducing bugs.
+Việc áp dụng từng bước cũng giúp xử lý dễ dàng hơn mọi vi phạm Rules of React mà compiler có thể phát hiện. Thay vì sửa các vi phạm trong toàn bộ codebase cùng một lúc, bạn có thể xử lý chúng một cách có hệ thống khi mở rộng phạm vi áp dụng compiler. Điều này giúp quá trình migration dễ quản lý hơn và giảm nguy cơ phát sinh bug.
 
-By controlling which parts of your code get compiled, you can also run A/B tests to measure the real-world impact of the compiler's optimizations. This data helps you make informed decisions about full adoption and demonstrates the value to your team.
+Bằng cách kiểm soát những phần nào trong code được biên dịch, bạn cũng có thể chạy các A/B test để đo lường tác động thực tế của các tối ưu hóa từ compiler. Dữ liệu này giúp bạn đưa ra quyết định sáng suốt về việc áp dụng toàn bộ và chứng minh giá trị của compiler với team.
 
-## Approaches to Incremental Adoption {/*approaches-to-incremental-adoption*/}
+## Các phương pháp áp dụng từng bước {/*approaches-to-incremental-adoption*/}
 
-There are three main approaches to adopt React Compiler incrementally:
+Có ba phương pháp chính để áp dụng React Compiler từng bước:
 
-1. **Babel overrides** - Apply the compiler to specific directories
-2. **Opt-in with "use memo"** - Only compile components that explicitly opt in
-3. **Runtime gating** - Control compilation with feature flags
+1. **Babel overrides** - Áp dụng compiler cho các thư mục cụ thể
+2. **Opt-in với "use memo"** - Chỉ biên dịch các component chủ động opt-in
+3. **Runtime gating** - Kiểm soát việc biên dịch bằng feature flags
 
-All approaches allow you to test the compiler on specific parts of your application before full rollout.
+Tất cả các phương pháp đều cho phép bạn kiểm thử compiler trên những phần cụ thể của ứng dụng trước khi triển khai toàn bộ.
 
-## Directory-Based Adoption with Babel Overrides {/*directory-based-adoption*/}
+## Áp dụng theo thư mục với Babel Overrides {/*directory-based-adoption*/}
 
-Babel's `overrides` option lets you apply different plugins to different parts of your codebase. This is ideal for gradually adopting React Compiler directory by directory.
+Tùy chọn `overrides` của Babel cho phép bạn áp dụng các plugin khác nhau cho từng phần trong codebase. Đây là lựa chọn lý tưởng để áp dụng React Compiler dần dần theo từng thư mục.
 
-### Basic Configuration {/*basic-configuration*/}
+### Cấu hình cơ bản {/*basic-configuration*/}
 
-Start by applying the compiler to a specific directory:
+Bắt đầu bằng cách áp dụng compiler cho một thư mục cụ thể:
 
 ```js
 // babel.config.js
@@ -62,9 +62,9 @@ module.exports = {
 };
 ```
 
-### Expanding Coverage {/*expanding-coverage*/}
+### Mở rộng phạm vi áp dụng {/*expanding-coverage*/}
 
-As you gain confidence, add more directories:
+Khi đã có thêm sự tin tưởng, hãy thêm nhiều thư mục hơn:
 
 ```js
 // babel.config.js
@@ -89,9 +89,9 @@ module.exports = {
 };
 ```
 
-### With Compiler Options {/*with-compiler-options*/}
+### Với các tùy chọn của compiler {/*with-compiler-options*/}
 
-You can also configure compiler options per override:
+Bạn cũng có thể cấu hình các tùy chọn của compiler cho từng override:
 
 ```js
 // babel.config.js
@@ -119,15 +119,15 @@ module.exports = {
 ```
 
 
-## Opt-in Mode with "use memo" {/*opt-in-mode-with-use-memo*/}
+## Chế độ opt-in với "use memo" {/*opt-in-mode-with-use-memo*/}
 
-For maximum control, you can use `compilationMode: 'annotation'` to only compile components and hooks that explicitly opt in with the `"use memo"` directive.
+Để kiểm soát tối đa, bạn có thể sử dụng `compilationMode: 'annotation'` để chỉ biên dịch các component và hook chủ động opt-in bằng chỉ thị `"use memo"`.
 
 <Note>
-This approach gives you fine-grained control over individual components and hooks. It's useful when you want to test the compiler on specific components without affecting entire directories.
+Phương pháp này cho phép bạn kiểm soát chi tiết từng component và hook. Phương pháp này hữu ích khi bạn muốn kiểm thử compiler trên các component cụ thể mà không ảnh hưởng đến toàn bộ thư mục.
 </Note>
 
-### Annotation Mode Configuration {/*annotation-mode-configuration*/}
+### Cấu hình chế độ annotation {/*annotation-mode-configuration*/}
 
 ```js
 // babel.config.js
@@ -140,9 +140,9 @@ module.exports = {
 };
 ```
 
-### Using the Directive {/*using-the-directive*/}
+### Sử dụng chỉ thị {/*using-the-directive*/}
 
-Add `"use memo"` at the beginning of functions you want to compile:
+Thêm `"use memo"` ở đầu các function mà bạn muốn biên dịch:
 
 ```js
 function TodoList({ todos }) {
@@ -166,22 +166,22 @@ function useSortedData(data) {
 }
 ```
 
-With `compilationMode: 'annotation'`, you must:
-- Add `"use memo"` to every component you want optimized
-- Add `"use memo"` to every custom hook
-- Remember to add it to new components
+Với `compilationMode: 'annotation'`, bạn phải:
+- Thêm `"use memo"` vào mọi component mà bạn muốn tối ưu
+- Thêm `"use memo"` vào mọi custom hook
+- Nhớ thêm chỉ thị này vào các component mới
 
-This gives you precise control over which components are compiled while you evaluate the compiler's impact.
+Điều này giúp bạn kiểm soát chính xác những component nào được biên dịch trong khi đánh giá tác động của compiler.
 
-## Runtime Feature Flags with Gating {/*runtime-feature-flags-with-gating*/}
+## Runtime Feature Flags với Gating {/*runtime-feature-flags-with-gating*/}
 
-The `gating` option enables you to control compilation at runtime using feature flags. This is useful for running A/B tests or gradually rolling out the compiler based on user segments.
+Tùy chọn `gating` cho phép bạn kiểm soát việc biên dịch tại runtime bằng feature flags. Tùy chọn này hữu ích khi chạy A/B test hoặc dần triển khai compiler dựa trên các nhóm người dùng.
 
-### How Gating Works {/*how-gating-works*/}
+### Gating hoạt động như thế nào {/*how-gating-works*/}
 
-The compiler wraps optimized code in a runtime check. If the gate returns `true`, the optimized version runs. Otherwise, the original code runs.
+Compiler bọc code đã tối ưu trong một runtime check. Nếu gate trả về `true`, phiên bản đã tối ưu sẽ chạy. Nếu không, code ban đầu sẽ chạy.
 
-### Gating Configuration {/*gating-configuration*/}
+### Cấu hình Gating {/*gating-configuration*/}
 
 ```js
 // babel.config.js
@@ -197,9 +197,9 @@ module.exports = {
 };
 ```
 
-### Implementing the Feature Flag {/*implementing-the-feature-flag*/}
+### Triển khai Feature Flag {/*implementing-the-feature-flag*/}
 
-Create a module that exports your gating function:
+Tạo một module export hàm gating của bạn:
 
 ```js
 // ReactCompilerFeatureFlags.js
@@ -209,17 +209,17 @@ export function isCompilerEnabled() {
 }
 ```
 
-## Troubleshooting Adoption {/*troubleshooting-adoption*/}
+## Khắc phục sự cố khi áp dụng {/*troubleshooting-adoption*/}
 
-If you encounter issues during adoption:
+Nếu gặp sự cố trong quá trình áp dụng:
 
-1. Use `"use no memo"` to temporarily exclude problematic components
-2. Check the [debugging guide](/learn/react-compiler/debugging) for common issues
-3. Fix Rules of React violations identified by the ESLint plugin
-4. Consider using `compilationMode: 'annotation'` for more gradual adoption
+1. Sử dụng `"use no memo"` để tạm thời loại trừ các component có vấn đề
+2. Xem [hướng dẫn debugging](/learn/react-compiler/debugging) để tìm các sự cố thường gặp
+3. Sửa các vi phạm Rules of React được ESLint plugin xác định
+4. Cân nhắc sử dụng `compilationMode: 'annotation'` để áp dụng dần dần hơn
 
-## Next Steps {/*next-steps*/}
+## Các bước tiếp theo {/*next-steps*/}
 
-- Read the [configuration guide](/reference/react-compiler/configuration) for more options
-- Learn about [debugging techniques](/learn/react-compiler/debugging)
-- Check the [API reference](/reference/react-compiler/configuration) for all compiler options
+- Đọc [hướng dẫn cấu hình](/reference/react-compiler/configuration) để tìm hiểu thêm các tùy chọn
+- Tìm hiểu về [kỹ thuật debugging](/learn/react-compiler/debugging)
+- Xem [tài liệu tham khảo API](/reference/react-compiler/configuration) để biết tất cả tùy chọn của compiler

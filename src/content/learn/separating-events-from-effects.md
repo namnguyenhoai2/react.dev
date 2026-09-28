@@ -1,37 +1,37 @@
 ---
-title: 'Separating Events from Effects'
+title: 'Tách Event khỏi Effect'
 ---
 
 <Intro>
 
-Event handlers only re-run when you perform the same interaction again. Unlike event handlers, Effects re-synchronize if some value they read, like a prop or a state variable, is different from what it was during the last render. Sometimes, you also want a mix of both behaviors: an Effect that re-runs in response to some values but not others. This page will teach you how to do that.
+Event handler chỉ chạy lại khi bạn thực hiện lại cùng một tương tác. Không giống event handler, Effect sẽ đồng bộ hóa lại nếu một giá trị mà nó đọc, chẳng hạn như prop hoặc biến state, khác với giá trị trong lần render trước. Đôi khi, bạn cũng muốn kết hợp cả hai hành vi: một Effect chạy lại để phản hồi một số giá trị nhưng không phản hồi các giá trị khác. Trang này sẽ hướng dẫn bạn cách thực hiện điều đó.
 
 </Intro>
 
 <YouWillLearn>
 
-- How to choose between an event handler and an Effect
-- Why Effects are reactive, and event handlers are not
-- What to do when you want a part of your Effect's code to not be reactive
-- What Effect Events are, and how to extract them from your Effects
-- How to read the latest props and state from Effects using Effect Events
+- Cách lựa chọn giữa event handler và Effect
+- Vì sao Effect có tính phản ứng, còn event handler thì không
+- Cần làm gì khi bạn muốn một phần code trong Effect không có tính phản ứng
+- Effect Event là gì và cách tách chúng khỏi Effect
+- Cách đọc prop và state mới nhất từ Effect bằng Effect Event
 
 </YouWillLearn>
 
-## Choosing between event handlers and Effects {/*choosing-between-event-handlers-and-effects*/}
+## Lựa chọn giữa event handler và Effect {/*choosing-between-event-handlers-and-effects*/}
 
-First, let's recap the difference between event handlers and Effects.
+Trước tiên, hãy cùng ôn lại sự khác nhau giữa event handler và Effect.
 
-Imagine you're implementing a chat room component. Your requirements look like this:
+Hãy tưởng tượng bạn đang triển khai một component phòng trò chuyện. Các yêu cầu của bạn như sau:
 
-1. Your component should automatically connect to the selected chat room.
-1. When you click the "Send" button, it should send a message to the chat.
+1. Component của bạn phải tự động kết nối với phòng trò chuyện đã chọn.
+1. Khi bạn nhấp vào nút "Send", component phải gửi một tin nhắn đến phòng trò chuyện.
 
-Let's say you've already implemented the code for them, but you're not sure where to put it. Should you use event handlers or Effects? Every time you need to answer this question, consider [*why* the code needs to run.](/learn/synchronizing-with-effects#what-are-effects-and-how-are-they-different-from-events)
+Giả sử bạn đã triển khai code cho các yêu cầu này nhưng chưa chắc nên đặt chúng ở đâu. Bạn nên sử dụng event handler hay Effect? Mỗi khi cần trả lời câu hỏi này, hãy cân nhắc [*vì sao* code cần chạy.](/learn/synchronizing-with-effects#what-are-effects-and-how-are-they-different-from-events)
 
-### Event handlers run in response to specific interactions {/*event-handlers-run-in-response-to-specific-interactions*/}
+### Event handler chạy để phản hồi các tương tác cụ thể {/*event-handlers-run-in-response-to-specific-interactions*/}
 
-From the user's perspective, sending a message should happen *because* the particular "Send" button was clicked. The user will get rather upset if you send their message at any other time or for any other reason. This is why sending a message should be an event handler. Event handlers let you handle specific interactions:
+Từ góc nhìn của người dùng, việc gửi tin nhắn phải xảy ra *vì* họ đã nhấp vào đúng nút "Send". Người dùng sẽ khá khó chịu nếu bạn gửi tin nhắn của họ vào bất kỳ thời điểm nào khác hoặc vì bất kỳ lý do nào khác. Vì vậy, việc gửi tin nhắn nên được xử lý bằng event handler. Event handler cho phép bạn xử lý các tương tác cụ thể:
 
 ```js {4-6}
 function ChatRoom({ roomId }) {
@@ -50,13 +50,13 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-With an event handler, you can be sure that `sendMessage(message)` will *only* run if the user presses the button.
+Với event handler, bạn có thể chắc chắn rằng `sendMessage(message)` sẽ *chỉ* chạy khi người dùng nhấn nút.
 
-### Effects run whenever synchronization is needed {/*effects-run-whenever-synchronization-is-needed*/}
+### Effect chạy bất cứ khi nào cần đồng bộ hóa {/*effects-run-whenever-synchronization-is-needed*/}
 
-Recall that you also need to keep the component connected to the chat room. Where does that code go?
+Hãy nhớ rằng bạn cũng cần duy trì kết nối của component với phòng trò chuyện. Code đó nên được đặt ở đâu?
 
-The *reason* to run this code is not some particular interaction. It doesn't matter why or how the user navigated to the chat room screen. Now that they're looking at it and could interact with it, the component needs to stay connected to the selected chat server. Even if the chat room component was the initial screen of your app, and the user has not performed any interactions at all, you would *still* need to connect. This is why it's an Effect:
+*lý do* chạy code này không phải là một tương tác cụ thể nào đó. Người dùng điều hướng đến màn hình phòng trò chuyện vì lý do gì hay bằng cách nào không quan trọng. Giờ đây, khi họ đang xem màn hình đó và có thể tương tác với nó, component cần duy trì kết nối với chat server đã chọn. Ngay cả khi phòng trò chuyện là màn hình ban đầu của app và người dùng chưa thực hiện bất kỳ tương tác nào, bạn *vẫn* cần kết nối. Đây là lý do nó là một Effect:
 
 ```js {3-9}
 function ChatRoom({ roomId }) {
@@ -72,7 +72,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-With this code, you can be sure that there is always an active connection to the currently selected chat server, *regardless* of the specific interactions performed by the user. Whether the user has only opened your app, selected a different room, or navigated to another screen and back, your Effect ensures that the component will *remain synchronized* with the currently selected room, and will [re-connect whenever it's necessary.](/learn/lifecycle-of-reactive-effects#why-synchronization-may-need-to-happen-more-than-once)
+Với code này, bạn có thể chắc chắn rằng luôn có một kết nối đang hoạt động đến chat server hiện được chọn, *bất kể* người dùng đã thực hiện những tương tác cụ thể nào. Dù người dùng chỉ mới mở app, chọn một phòng khác, hay điều hướng đến màn hình khác rồi quay lại, Effect của bạn vẫn đảm bảo component sẽ [kết nối lại bất cứ khi nào cần thiết.](/learn/lifecycle-of-reactive-effects#why-synchronization-may-need-to-happen-more-than-once)
 
 <Sandpack>
 
@@ -154,13 +154,13 @@ input, select { margin-right: 20px; }
 
 </Sandpack>
 
-## Reactive values and reactive logic {/*reactive-values-and-reactive-logic*/}
+## Giá trị có tính phản ứng và logic có tính phản ứng {/*reactive-values-and-reactive-logic*/}
 
-Intuitively, you could say that event handlers are always triggered "manually", for example by clicking a button. Effects, on the other hand, are "automatic": they run and re-run as often as it's needed to stay synchronized.
+Theo trực giác, bạn có thể nói rằng event handler luôn được kích hoạt "thủ công", chẳng hạn bằng cách nhấp vào một nút. Mặt khác, Effect là "tự động": chúng chạy và chạy lại thường xuyên đến mức cần thiết để duy trì đồng bộ.
 
-There is a more precise way to think about this.
+Có một cách chính xác hơn để suy nghĩ về điều này.
 
-Props, state, and variables declared inside your component's body are called <CodeStep step={2}>reactive values</CodeStep>. In this example, `serverUrl` is not a reactive value, but `roomId` and `message` are. They participate in the rendering data flow:
+Props, state và các biến được khai báo bên trong body của component được gọi là <CodeStep step={2}>giá trị có tính phản ứng</CodeStep>. Trong ví dụ này, `serverUrl` không phải là một giá trị có tính phản ứng, nhưng `roomId` và `message` thì có. Chúng tham gia vào data flow của quá trình render:
 
 ```js [[2, 3, "roomId"], [2, 4, "message"]]
 const serverUrl = 'https://localhost:1234';
@@ -172,16 +172,16 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-Reactive values like these can change due to a re-render. For example, the user may edit the `message` or choose a different `roomId` in a dropdown. Event handlers and Effects respond to changes differently:
+Các giá trị có tính phản ứng như vậy có thể thay đổi do một lần re-render. Ví dụ, người dùng có thể chỉnh sửa `message` hoặc chọn một `roomId` khác trong dropdown. Event handler và Effect phản hồi các thay đổi theo những cách khác nhau:
 
-- **Logic inside event handlers is *not reactive.*** It will not run again unless the user performs the same interaction (e.g. a click) again. Event handlers can read reactive values without "reacting" to their changes.
-- **Logic inside Effects is *reactive.*** If your Effect reads a reactive value, [you have to specify it as a dependency.](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) Then, if a re-render causes that value to change, React will re-run your Effect's logic with the new value.
+- **Logic bên trong event handler *không có tính phản ứng*.** Logic này sẽ không chạy lại trừ khi người dùng thực hiện lại cùng một tương tác (ví dụ: một lần nhấp). Event handler có thể đọc các giá trị có tính phản ứng mà không "phản ứng" với những thay đổi của chúng.
+- **Logic bên trong Effect *có tính phản ứng*.** Nếu Effect đọc một giá trị có tính phản ứng, [bạn phải chỉ định giá trị đó là một dependency.](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) Sau đó, nếu một lần re-render khiến giá trị đó thay đổi, React sẽ chạy lại logic của Effect với giá trị mới.
 
-Let's revisit the previous example to illustrate this difference.
+Hãy xem lại ví dụ trước để minh họa sự khác biệt này.
 
-### Logic inside event handlers is not reactive {/*logic-inside-event-handlers-is-not-reactive*/}
+### Logic bên trong event handler không có tính phản ứng {/*logic-inside-event-handlers-is-not-reactive*/}
 
-Take a look at this line of code. Should this logic be reactive or not?
+Hãy xem dòng code này. Logic này nên có tính phản ứng hay không?
 
 ```js [[2, 2, "message"]]
     // ...
@@ -189,7 +189,7 @@ Take a look at this line of code. Should this logic be reactive or not?
     // ...
 ```
 
-From the user's perspective, **a change to the `message` does _not_ mean that they want to send a message.** It only means that the user is typing. In other words, the logic that sends a message should not be reactive. It should not run again only because the <CodeStep step={2}>reactive value</CodeStep> has changed. That's why it belongs in the event handler:
+Từ góc nhìn của người dùng, **việc `message` thay đổi _không_ có nghĩa là họ muốn gửi tin nhắn.** Điều đó chỉ có nghĩa là người dùng đang nhập. Nói cách khác, logic gửi tin nhắn không nên có tính phản ứng. Logic này không nên chạy lại chỉ vì <CodeStep step={2}>giá trị có tính phản ứng</CodeStep> đã thay đổi. Vì vậy, nó thuộc về event handler:
 
 ```js {2}
   function handleSendClick() {
@@ -197,11 +197,11 @@ From the user's perspective, **a change to the `message` does _not_ mean that th
   }
 ```
 
-Event handlers aren't reactive, so `sendMessage(message)` will only run when the user clicks the Send button.
+Event handler không có tính phản ứng, vì vậy `sendMessage(message)` sẽ chỉ chạy khi người dùng nhấp vào nút Send.
 
-### Logic inside Effects is reactive {/*logic-inside-effects-is-reactive*/}
+### Logic bên trong Effect có tính phản ứng {/*logic-inside-effects-is-reactive*/}
 
-Now let's return to these lines:
+Bây giờ hãy quay lại các dòng này:
 
 ```js [[2, 2, "roomId"]]
     // ...
@@ -210,7 +210,7 @@ Now let's return to these lines:
     // ...
 ```
 
-From the user's perspective, **a change to the `roomId` *does* mean that they want to connect to a different room.** In other words, the logic for connecting to the room should be reactive. You *want* these lines of code to "keep up" with the <CodeStep step={2}>reactive value</CodeStep>, and to run again if that value is different. That's why it belongs in an Effect:
+Từ góc nhìn của người dùng, **việc `roomId` thay đổi *có* nghĩa là họ muốn kết nối đến một phòng khác.** Nói cách khác, logic kết nối đến phòng nên có tính phản ứng. Bạn *muốn* các dòng code này "bắt kịp" với <CodeStep step={2}>giá trị có tính phản ứng</CodeStep>, và chạy lại nếu giá trị đó khác đi. Vì vậy, nó thuộc về một Effect:
 
 ```js {2-3}
   useEffect(() => {
@@ -222,13 +222,13 @@ From the user's perspective, **a change to the `roomId` *does* mean that they wa
   }, [roomId]);
 ```
 
-Effects are reactive, so `createConnection(serverUrl, roomId)` and `connection.connect()` will run for every distinct value of `roomId`. Your Effect keeps the chat connection synchronized to the currently selected room.
+Effect có tính phản ứng, vì vậy `createConnection(serverUrl, roomId)` và `connection.connect()` sẽ chạy với mọi giá trị riêng biệt của `roomId`. Effect của bạn giữ cho kết nối trò chuyện được đồng bộ với phòng hiện đang được chọn.
 
-## Extracting non-reactive logic out of Effects {/*extracting-non-reactive-logic-out-of-effects*/}
+## Tách logic không có tính phản ứng khỏi Effect {/*extracting-non-reactive-logic-out-of-effects*/}
 
-Things get more tricky when you want to mix reactive logic with non-reactive logic.
+Mọi thứ trở nên phức tạp hơn khi bạn muốn kết hợp logic có tính phản ứng với logic không có tính phản ứng.
 
-For example, imagine that you want to show a notification when the user connects to the chat. You read the current theme (dark or light) from the props so that you can show the notification in the correct color:
+Ví dụ, hãy tưởng tượng bạn muốn hiển thị một thông báo khi người dùng kết nối với phòng trò chuyện. Bạn đọc theme hiện tại (tối hoặc sáng) từ props để có thể hiển thị thông báo với màu phù hợp:
 
 ```js {1,4-6}
 function ChatRoom({ roomId, theme }) {
@@ -241,7 +241,7 @@ function ChatRoom({ roomId, theme }) {
     // ...
 ```
 
-However, `theme` is a reactive value (it can change as a result of re-rendering), and [every reactive value read by an Effect must be declared as its dependency.](/learn/lifecycle-of-reactive-effects#react-verifies-that-you-specified-every-reactive-value-as-a-dependency) Now you have to specify `theme` as a dependency of your Effect:
+Tuy nhiên, `theme` là một giá trị có tính phản ứng (nó có thể thay đổi do re-render), và [mọi giá trị có tính phản ứng được Effect đọc đều phải được khai báo là dependency của nó.](/learn/lifecycle-of-reactive-effects#react-verifies-that-you-specified-every-reactive-value-as-a-dependency) Bây giờ bạn phải chỉ định `theme` là một dependency của Effect:
 
 ```js {5,11}
 function ChatRoom({ roomId, theme }) {
@@ -258,7 +258,7 @@ function ChatRoom({ roomId, theme }) {
   // ...
 ```
 
-Play with this example and see if you can spot the problem with this user experience:
+Hãy thử tương tác với ví dụ này và xem bạn có nhận ra vấn đề trong trải nghiệm người dùng này không:
 
 <Sandpack>
 
@@ -386,9 +386,9 @@ label { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-When the `roomId` changes, the chat re-connects as you would expect. But since `theme` is also a dependency, the chat *also* re-connects every time you switch between the dark and the light theme. That's not great!
+Khi `roomId` thay đổi, chat sẽ kết nối lại như bạn mong đợi. Nhưng vì `theme` cũng là một dependency, chat *cũng* sẽ kết nối lại mỗi khi bạn chuyển đổi giữa theme tối và theme sáng. Điều đó không tốt!
 
-In other words, you *don't* want this line to be reactive, even though it is inside an Effect (which is reactive):
+Nói cách khác, bạn *không* muốn dòng này có tính phản ứng, dù nó nằm bên trong một Effect (vốn có tính phản ứng):
 
 ```js
       // ...
@@ -396,11 +396,11 @@ In other words, you *don't* want this line to be reactive, even though it is ins
       // ...
 ```
 
-You need a way to separate this non-reactive logic from the reactive Effect around it.
+Bạn cần một cách để tách logic không có tính phản ứng này khỏi Effect có tính phản ứng bao quanh nó.
 
-### Declaring an Effect Event {/*declaring-an-effect-event*/}
+### Khai báo một Effect Event {/*declaring-an-effect-event*/}
 
-Use a special Hook called [`useEffectEvent`](/reference/react/useEffectEvent) to extract this non-reactive logic out of your Effect:
+Sử dụng một Hook đặc biệt có tên là [`useEffectEvent`](/reference/react/useEffectEvent) để tách logic không có tính phản ứng này khỏi Effect:
 
 ```js {1,4-6}
 import { useEffect, useEffectEvent } from 'react';
@@ -412,9 +412,9 @@ function ChatRoom({ roomId, theme }) {
   // ...
 ```
 
-Here, `onConnected` is called an *Effect Event.* It's a part of your Effect logic, but it behaves a lot more like an event handler. The logic inside it is not reactive, and it always "sees" the latest values of your props and state.
+Ở đây, `onConnected` được gọi là một *Effect Event.* Nó là một phần trong logic của Effect, nhưng hoạt động giống event handler hơn nhiều. Logic bên trong nó không có tính phản ứng và luôn "nhìn thấy" các giá trị mới nhất của props và state.
 
-Now you can call the `onConnected` Effect Event from inside your Effect:
+Bây giờ bạn có thể gọi `onConnected` Effect Event từ bên trong Effect:
 
 ```js {2-4,9,13}
 function ChatRoom({ roomId, theme }) {
@@ -433,9 +433,9 @@ function ChatRoom({ roomId, theme }) {
   // ...
 ```
 
-This solves the problem. Note that you had to *remove* `theme` from the list of your Effect's dependencies, because it's no longer used in the Effect. You also don't need to *add* `onConnected` to it, because **Effect Events are not reactive and must be omitted from dependencies.**
+Điều này giải quyết vấn đề. Lưu ý rằng bạn phải *xóa* `theme` khỏi danh sách dependency của Effect, vì nó không còn được sử dụng trong Effect nữa. Bạn cũng không cần *thêm* `onConnected` vào đó, vì **Effect Event không có tính phản ứng và phải được loại khỏi danh sách dependency.**
 
-Verify that the new behavior works as you would expect:
+Hãy xác minh rằng hành vi mới hoạt động như bạn mong đợi:
 
 <Sandpack>
 
@@ -568,13 +568,13 @@ label { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-You can think of Effect Events as being very similar to event handlers. The main difference is that event handlers run in response to user interactions, whereas Effect Events are triggered by you from Effects. Effect Events let you "break the chain" between the reactivity of Effects and code that should not be reactive.
+Bạn có thể hình dung Effect Event rất giống với event handler. Điểm khác biệt chính là event handler chạy để phản hồi các tương tác của người dùng, còn Effect Event được bạn kích hoạt từ bên trong Effect. Effect Event cho phép bạn "ngắt chuỗi" giữa tính phản ứng của Effect và code không nên có tính phản ứng.
 
-### Reading latest props and state with Effect Events {/*reading-latest-props-and-state-with-effect-events*/}
+### Đọc props và state mới nhất bằng Effect Event {/*reading-latest-props-and-state-with-effect-events*/}
 
-Effect Events let you fix many patterns where you might be tempted to suppress the dependency linter.
+Effect Event giúp bạn khắc phục nhiều pattern mà bạn có thể muốn bỏ qua dependency linter.
 
-For example, say you have an Effect to log the page visits:
+Ví dụ, giả sử bạn có một Effect để ghi log những lần truy cập trang:
 
 ```js
 function Page() {
@@ -585,7 +585,7 @@ function Page() {
 }
 ```
 
-Later, you add multiple routes to your site. Now your `Page` component receives a `url` prop with the current path. You want to pass the `url` as a part of your `logVisit` call, but the dependency linter complains:
+Sau đó, bạn thêm nhiều route vào site của mình. Lúc này, component `Page` nhận một prop `url` chứa path hiện tại. Bạn muốn truyền `url` như một phần của lời gọi `logVisit`, nhưng dependency linter phàn nàn:
 
 ```js {1,3}
 function Page({ url }) {
@@ -596,7 +596,7 @@ function Page({ url }) {
 }
 ```
 
-Think about what you want the code to do. You *want* to log a separate visit for different URLs since each URL represents a different page. In other words, this `logVisit` call *should* be reactive with respect to the `url`. This is why, in this case, it makes sense to follow the dependency linter, and add `url` as a dependency:
+Hãy nghĩ về điều bạn muốn đoạn code thực hiện. Bạn *muốn* ghi lại một lượt truy cập riêng cho các URL khác nhau, vì mỗi URL đại diện cho một trang khác nhau. Nói cách khác, lời gọi `logVisit` này *nên* reactive đối với `url`. Vì vậy, trong trường hợp này, việc làm theo dependency linter và thêm `url` làm dependency là hợp lý:
 
 ```js {4}
 function Page({ url }) {
@@ -607,7 +607,7 @@ function Page({ url }) {
 }
 ```
 
-Now let's say you want to include the number of items in the shopping cart together with every page visit:
+Bây giờ, giả sử bạn muốn đưa số lượng sản phẩm trong giỏ hàng vào cùng với mỗi lượt truy cập trang:
 
 ```js {2-3,6}
 function Page({ url }) {
@@ -621,9 +621,9 @@ function Page({ url }) {
 }
 ```
 
-You used `numberOfItems` inside the Effect, so the linter asks you to add it as a dependency. However, you *don't* want the `logVisit` call to be reactive with respect to `numberOfItems`. If the user puts something into the shopping cart, and the `numberOfItems` changes, this *does not mean* that the user visited the page again. In other words, *visiting the page* is, in some sense, an "event". It happens at a precise moment in time.
+Bạn đã sử dụng `numberOfItems` bên trong Effect, nên linter yêu cầu bạn thêm nó làm dependency. Tuy nhiên, bạn *không muốn* lời gọi `logVisit` reactive đối với `numberOfItems`. Nếu người dùng thêm thứ gì đó vào giỏ hàng và `numberOfItems` thay đổi, điều đó *không có nghĩa* là người dùng đã truy cập trang một lần nữa. Nói cách khác, *việc truy cập trang* theo một nghĩa nào đó là một “event”. Nó xảy ra tại một thời điểm cụ thể.
 
-Split the code in two parts:
+Hãy tách code thành hai phần:
 
 ```js {5-7,10}
 function Page({ url }) {
@@ -641,15 +641,15 @@ function Page({ url }) {
 }
 ```
 
-Here, `onVisit` is an Effect Event. The code inside it isn't reactive. This is why you can use `numberOfItems` (or any other reactive value!) without worrying that it will cause the surrounding code to re-execute on changes.
+Ở đây, `onVisit` là một Effect Event. Code bên trong nó không reactive. Vì vậy, bạn có thể sử dụng `numberOfItems` (hoặc bất kỳ giá trị reactive nào khác!) mà không phải lo rằng nó sẽ khiến code bao quanh chạy lại khi có thay đổi.
 
-On the other hand, the Effect itself remains reactive. Code inside the Effect uses the `url` prop, so the Effect will re-run after every re-render with a different `url`. This, in turn, will call the `onVisit` Effect Event.
+Mặt khác, bản thân Effect vẫn reactive. Code bên trong Effect sử dụng prop `url`, vì vậy Effect sẽ chạy lại sau mỗi lần re-render với `url` khác. Đổi lại, việc này sẽ gọi Effect Event `onVisit`.
 
-As a result, you will call `logVisit` for every change to the `url`, and always read the latest `numberOfItems`. However, if `numberOfItems` changes on its own, this will not cause any of the code to re-run.
+Kết quả là, bạn sẽ gọi `logVisit` cho mỗi thay đổi đối với `url`, đồng thời luôn đọc `numberOfItems` mới nhất. Tuy nhiên, nếu `numberOfItems` tự thay đổi, điều đó sẽ không khiến bất kỳ code nào chạy lại.
 
 <Note>
 
-You might be wondering if you could call `onVisit()` with no arguments, and read the `url` inside it:
+Có thể bạn đang tự hỏi liệu có thể gọi `onVisit()` mà không truyền đối số nào, rồi đọc `url` bên trong nó hay không:
 
 ```js {2,6}
   const onVisit = useEffectEvent(() => {
@@ -661,7 +661,7 @@ You might be wondering if you could call `onVisit()` with no arguments, and read
   }, [url]);
 ```
 
-This would work, but it's better to pass this `url` to the Effect Event explicitly. **By passing `url` as an argument to your Effect Event, you are saying that visiting a page with a different `url` constitutes a separate "event" from the user's perspective.** The `visitedUrl` is a *part* of the "event" that happened:
+Cách này sẽ hoạt động, nhưng tốt hơn là truyền `url` này một cách rõ ràng cho Effect Event. **Bằng cách truyền `url` làm đối số cho Effect Event, bạn đang nói rằng việc truy cập một trang có `url` khác sẽ tạo thành một “event” riêng biệt theo góc nhìn của người dùng.** `visitedUrl` là một *phần* của “event” đã xảy ra:
 
 ```js {1-2,6}
   const onVisit = useEffectEvent(visitedUrl => {
@@ -673,9 +673,9 @@ This would work, but it's better to pass this `url` to the Effect Event explicit
   }, [url]);
 ```
 
-Since your Effect Event explicitly "asks" for the `visitedUrl`, now you can't accidentally remove `url` from the Effect's dependencies. If you remove the `url` dependency (causing distinct page visits to be counted as one), the linter will warn you about it. You want `onVisit` to be reactive with regards to the `url`, so instead of reading the `url` inside (where it wouldn't be reactive), you pass it *from* your Effect.
+Vì Effect Event của bạn “yêu cầu” `visitedUrl` một cách rõ ràng, giờ đây bạn không thể vô tình xóa `url` khỏi dependencies của Effect. Nếu xóa dependency `url` (khiến các lượt truy cập trang riêng biệt bị tính là một), linter sẽ cảnh báo bạn. Bạn muốn `onVisit` reactive đối với `url`, nên thay vì đọc `url` bên trong (nơi nó sẽ không reactive), bạn truyền nó *từ* Effect.
 
-This becomes especially important if there is some asynchronous logic inside the Effect:
+Điều này đặc biệt quan trọng nếu bên trong Effect có logic bất đồng bộ:
 
 ```js {6,8}
   const onVisit = useEffectEvent(visitedUrl => {
@@ -689,15 +689,15 @@ This becomes especially important if there is some asynchronous logic inside the
   }, [url]);
 ```
 
-Here, `url` inside `onVisit` corresponds to the *latest* `url` (which could have already changed), but `visitedUrl` corresponds to the `url` that originally caused this Effect (and this `onVisit` call) to run.
+Ở đây, `url` bên trong `onVisit` tương ứng với `url` mới nhất (có thể đã thay đổi), còn `visitedUrl` tương ứng với `url` đã khởi tạo Effect này (và lời gọi `onVisit` này).
 
 </Note>
 
 <DeepDive>
 
-#### Is it okay to suppress the dependency linter instead? {/*is-it-okay-to-suppress-the-dependency-linter-instead*/}
+#### Có nên suppress dependency linter thay thế không? {/*is-it-okay-to-suppress-the-dependency-linter-instead*/}
 
-In the existing codebases, you may sometimes see the lint rule suppressed like this:
+Trong các codebase hiện có, đôi khi bạn có thể thấy lint rule bị suppress như sau:
 
 ```js {expectedErrors: {'react-compiler': [8]}} {7-9}
 function Page({ url }) {
@@ -713,13 +713,13 @@ function Page({ url }) {
 }
 ```
 
-We recommend **never suppressing the linter**.
+Chúng tôi khuyến nghị **không bao giờ suppress linter**.
 
-The first downside of suppressing the rule is that React will no longer warn you when your Effect needs to "react" to a new reactive dependency you've introduced to your code. In the earlier example, you added `url` to the dependencies *because* React reminded you to do it. You will no longer get such reminders for any future edits to that Effect if you disable the linter. This leads to bugs.
+Nhược điểm đầu tiên của việc suppress rule là React sẽ không còn cảnh báo bạn khi Effect cần “react” với một reactive dependency mới mà bạn đã thêm vào code. Trong ví dụ trước, bạn đã thêm `url` vào dependencies *vì* React nhắc bạn làm vậy. Nếu tắt linter, bạn sẽ không còn nhận được những lời nhắc như vậy cho bất kỳ chỉnh sửa nào trong tương lai đối với Effect đó. Điều này dẫn đến bug.
 
-Here is an example of a confusing bug caused by suppressing the linter. In this example, the `handleMove` function is supposed to read the current `canMove` state variable value in order to decide whether the dot should follow the cursor. However, `canMove` is always `true` inside `handleMove`.
+Dưới đây là một ví dụ về một bug khó hiểu do suppress linter gây ra. Trong ví dụ này, hàm `handleMove` được cho là sẽ đọc giá trị hiện tại của state variable `canMove` để quyết định liệu dấu chấm có đi theo con trỏ hay không. Tuy nhiên, `canMove` luôn là `true` bên trong `handleMove`.
 
-Can you see why?
+Bạn có thấy tại sao không?
 
 <Sandpack>
 
@@ -777,14 +777,13 @@ body {
 
 </Sandpack>
 
+Vấn đề của code này nằm ở việc suppress dependency linter. Nếu xóa phần suppress, bạn sẽ thấy Effect này nên phụ thuộc vào hàm `handleMove`. Điều này hợp lý: `handleMove` được khai báo bên trong phần thân component, nên nó là một reactive value. Mọi reactive value đều phải được chỉ định làm dependency, nếu không nó có thể trở nên stale theo thời gian!
 
-The problem with this code is in suppressing the dependency linter. If you remove the suppression, you'll see that this Effect should depend on the `handleMove` function. This makes sense: `handleMove` is declared inside the component body, which makes it a reactive value. Every reactive value must be specified as a dependency, or it can potentially get stale over time!
+Tác giả của code gốc đã “nói dối” React khi cho rằng Effect không phụ thuộc (`[]`) vào bất kỳ reactive value nào. Vì vậy, React không re-synchronize Effect sau khi `canMove` thay đổi (và `handleMove` cũng thay đổi theo). Do React không re-synchronize Effect, `handleMove` được gắn làm listener là hàm `handleMove` được tạo trong lần render đầu tiên. Trong lần render đầu tiên, `canMove` là `true`, đó là lý do `handleMove` từ lần render đầu tiên sẽ luôn nhìn thấy giá trị đó.
 
-The author of the original code has "lied" to React by saying that the Effect does not depend (`[]`) on any reactive values. This is why React did not re-synchronize the Effect after `canMove` has changed (and `handleMove` with it). Because React did not re-synchronize the Effect, the `handleMove` attached as a listener is the `handleMove` function created during the initial render. During the initial render, `canMove` was `true`, which is why `handleMove` from the initial render will forever see that value.
+**Nếu bạn không bao giờ suppress linter, bạn sẽ không bao giờ gặp vấn đề với các giá trị stale.**
 
-**If you never suppress the linter, you will never see problems with stale values.**
-
-With `useEffectEvent`, there is no need to "lie" to the linter, and the code works as you would expect:
+Với `useEffectEvent`, bạn không cần “nói dối” linter, và code hoạt động như mong đợi:
 
 <Sandpack>
 
@@ -842,20 +841,20 @@ body {
 
 </Sandpack>
 
-This doesn't mean that `useEffectEvent` is *always* the correct solution. You should only apply it to the lines of code that you don't want to be reactive. In the above sandbox, you didn't want the Effect's code to be reactive with regards to `canMove`. That's why it made sense to extract an Effect Event.
+Điều này không có nghĩa `useEffectEvent` *luôn* là giải pháp đúng. Bạn chỉ nên áp dụng nó cho những dòng code mà bạn không muốn reactive. Trong sandbox trên, bạn không muốn code của Effect reactive đối với `canMove`. Vì vậy, việc tách ra thành một Effect Event là hợp lý.
 
-Read [Removing Effect Dependencies](/learn/removing-effect-dependencies) for other correct alternatives to suppressing the linter.
+Đọc [Removing Effect Dependencies](/learn/removing-effect-dependencies) để xem các lựa chọn đúng khác thay cho việc suppress linter.
 
 </DeepDive>
 
-### Limitations of Effect Events {/*limitations-of-effect-events*/}
+### Các hạn chế của Effect Events {/*limitations-of-effect-events*/}
 
-Effect Events are very limited in how you can use them:
+Effect Events bị hạn chế rất nhiều về cách bạn có thể sử dụng chúng:
 
-* **Only call them from inside Effects.**
-* **Never pass them to other components or Hooks.**
+* **Chỉ gọi chúng từ bên trong Effects.**
+* **Không bao giờ truyền chúng cho component hoặc Hook khác.**
 
-For example, don't declare and pass an Effect Event like this:
+Ví dụ, đừng khai báo và truyền một Effect Event như sau:
 
 ```js {4-6,8}
 function Timer() {
@@ -882,7 +881,7 @@ function useTimer(callback, delay) {
 }
 ```
 
-Instead, always declare Effect Events directly next to the Effects that use them:
+Thay vào đó, luôn khai báo Effect Events ngay cạnh các Effects sử dụng chúng:
 
 ```js {10-12,16,21}
 function Timer() {
@@ -909,31 +908,31 @@ function useTimer(callback, delay) {
 }
 ```
 
-Effect Events are non-reactive "pieces" of your Effect code. They should be next to the Effect using them.
+Effect Events là những “mảnh” code không reactive trong Effect của bạn. Chúng nên nằm cạnh Effect đang sử dụng chúng.
 
 <Recap>
 
-- Event handlers run in response to specific interactions.
-- Effects run whenever synchronization is needed.
-- Logic inside event handlers is not reactive.
-- Logic inside Effects is reactive.
-- You can move non-reactive logic from Effects into Effect Events.
-- Only call Effect Events from inside Effects.
-- Don't pass Effect Events to other components or Hooks.
+- Event handlers chạy để phản hồi các tương tác cụ thể.
+- Effects chạy bất cứ khi nào cần synchronization.
+- Logic bên trong event handlers không reactive.
+- Logic bên trong Effects reactive.
+- Bạn có thể chuyển logic không reactive từ Effects vào Effect Events.
+- Chỉ gọi Effect Events từ bên trong Effects.
+- Không truyền Effect Events cho component hoặc Hook khác.
 
 </Recap>
 
 <Challenges>
 
-#### Fix a variable that doesn't update {/*fix-a-variable-that-doesnt-update*/}
+#### Sửa một biến không cập nhật {/*fix-a-variable-that-doesnt-update*/}
 
-This `Timer` component keeps a `count` state variable which increases every second. The value by which it's increasing is stored in the `increment` state variable. You can control the `increment` variable with the plus and minus buttons.
+Component `Timer` này duy trì một state variable `count`, biến này tăng lên mỗi giây. Giá trị dùng để tăng được lưu trong state variable `increment`. Bạn có thể điều khiển biến `increment` bằng các nút cộng và trừ.
 
-However, no matter how many times you click the plus button, the counter is still incremented by one every second. What's wrong with this code? Why is `increment` always equal to `1` inside the Effect's code? Find the mistake and fix it.
+Tuy nhiên, dù bạn nhấn nút cộng bao nhiêu lần, counter vẫn chỉ tăng một đơn vị mỗi giây. Code này có vấn đề gì? Tại sao `increment` luôn bằng `1` bên trong code của Effect? Hãy tìm lỗi và sửa nó.
 
 <Hint>
 
-To fix this code, it's enough to follow the rules.
+Để sửa code này, chỉ cần làm theo các quy tắc.
 
 </Hint>
 
@@ -986,9 +985,9 @@ button { margin: 10px; }
 
 <Solution>
 
-As usual, when you're looking for bugs in Effects, start by searching for linter suppressions.
+Như thường lệ, khi tìm bug trong Effects, hãy bắt đầu bằng cách tìm các linter suppression.
 
-If you remove the suppression comment, React will tell you that this Effect's code depends on `increment`, but you "lied" to React by claiming that this Effect does not depend on any reactive values (`[]`). Add `increment` to the dependency array:
+Nếu xóa comment suppression, React sẽ cho bạn biết code của Effect này phụ thuộc vào `increment`, nhưng bạn đã “nói dối” React khi tuyên bố rằng Effect này không phụ thuộc vào bất kỳ reactive value nào (`[]`). Hãy thêm `increment` vào dependency array:
 
 <Sandpack>
 
@@ -1036,19 +1035,19 @@ button { margin: 10px; }
 
 </Sandpack>
 
-Now, when `increment` changes, React will re-synchronize your Effect, which will restart the interval.
+Bây giờ, khi `increment` thay đổi, React sẽ re-synchronize Effect của bạn, nhờ đó khởi động lại interval.
 
 </Solution>
 
-#### Fix a freezing counter {/*fix-a-freezing-counter*/}
+#### Sửa counter bị đóng băng {/*fix-a-freezing-counter*/}
 
-This `Timer` component keeps a `count` state variable which increases every second. The value by which it's increasing is stored in the `increment` state variable, which you can control it with the plus and minus buttons. For example, try pressing the plus button nine times, and notice that the `count` now increases each second by ten rather than by one.
+Component `Timer` này duy trì một state variable `count`, biến này tăng lên mỗi giây. Giá trị dùng để tăng được lưu trong state variable `increment`, và bạn có thể điều khiển nó bằng các nút cộng và trừ. Ví dụ, hãy thử nhấn nút cộng chín lần và chú ý rằng `count` lúc này tăng mười đơn vị mỗi giây thay vì một đơn vị.
 
-There is a small issue with this user interface. You might notice that if you keep pressing the plus or minus buttons faster than once per second, the timer itself seems to pause. It only resumes after a second passes since the last time you've pressed either button. Find why this is happening, and fix the issue so that the timer ticks on *every* second without interruptions.
+Có một vấn đề nhỏ với giao diện người dùng này. Bạn có thể nhận thấy rằng nếu liên tục nhấn các nút cộng hoặc trừ nhanh hơn một lần mỗi giây, bản thân bộ hẹn giờ dường như sẽ tạm dừng. Nó chỉ tiếp tục chạy sau khi đã một giây trôi qua kể từ lần cuối bạn nhấn một trong hai nút. Hãy tìm nguyên nhân và khắc phục vấn đề để bộ hẹn giờ tích tắc vào *mỗi* giây mà không bị gián đoạn.
 
 <Hint>
 
-It seems like the Effect which sets up the timer "reacts" to the `increment` value. Does the line that uses the current `increment` value in order to call `setCount` really need to be reactive?
+Có vẻ như Effect dùng để thiết lập bộ hẹn giờ đang “phản ứng” với giá trị `increment`. Dòng sử dụng giá trị `increment` hiện tại để gọi `setCount` có thực sự cần phải reactive không?
 
 </Hint>
 
@@ -1101,9 +1100,9 @@ button { margin: 10px; }
 
 <Solution>
 
-The issue is that the code inside the Effect uses the `increment` state variable. Since it's a dependency of your Effect, every change to `increment` causes the Effect to re-synchronize, which causes the interval to clear. If you keep clearing the interval every time before it has a chance to fire, it will appear as if the timer has stalled.
+Vấn đề là code bên trong Effect sử dụng biến state `increment`. Vì đây là một dependency của Effect, mọi thay đổi đối với `increment` đều khiến Effect re-synchronize, từ đó làm xóa interval. Nếu bạn liên tục xóa interval trước khi nó có cơ hội chạy, bộ hẹn giờ sẽ có vẻ như bị đình trệ.
 
-To solve the issue, extract an `onTick` Effect Event from the Effect:
+Để giải quyết vấn đề, hãy trích xuất một Effect Event `onTick` từ Effect:
 
 <Sandpack>
 
@@ -1157,17 +1156,17 @@ button { margin: 10px; }
 
 </Sandpack>
 
-Since `onTick` is an Effect Event, the code inside it isn't reactive. The change to `increment` does not trigger any Effects.
+Vì `onTick` là một Effect Event, code bên trong nó không reactive. Việc thay đổi `increment` không kích hoạt bất kỳ Effect nào.
 
 </Solution>
 
-#### Fix a non-adjustable delay {/*fix-a-non-adjustable-delay*/}
+#### Khắc phục delay không thể điều chỉnh {/*fix-a-non-adjustable-delay*/}
 
-In this example, you can customize the interval delay. It's stored in a `delay` state variable which is updated by two buttons. However, even if you press the "plus 100 ms" button until the `delay` is 1000 milliseconds (that is, a second), you'll notice that the timer still increments very fast (every 100 ms). It's as if your changes to the `delay` are ignored. Find and fix the bug.
+Trong ví dụ này, bạn có thể tùy chỉnh delay của interval. Delay được lưu trong một biến state `delay`, được cập nhật bởi hai nút. Tuy nhiên, ngay cả khi bạn nhấn nút “plus 100 ms” cho đến khi `delay` là 1000 mili giây (tức là một giây), bạn sẽ nhận thấy bộ hẹn giờ vẫn tăng rất nhanh (mỗi 100 ms). Có vẻ như các thay đổi đối với `delay` bị bỏ qua. Hãy tìm và sửa lỗi.
 
 <Hint>
 
-Code inside Effect Events is not reactive. Are there cases in which you would _want_ the `setInterval` call to re-run?
+Code bên trong Effect Event không reactive. Có trường hợp nào bạn _muốn_ lệnh gọi `setInterval` chạy lại không?
 
 </Hint>
 
@@ -1240,7 +1239,7 @@ button { margin: 10px; }
 
 <Solution>
 
-The problem with the above example is that it extracted an Effect Event called `onMount` without considering what the code should actually be doing. You should only extract Effect Events for a specific reason: when you want to make a part of your code non-reactive. However, the `setInterval` call *should* be reactive with respect to the `delay` state variable. If the `delay` changes, you want to set up the interval from scratch! To fix this code, pull all the reactive code back inside the Effect:
+Vấn đề với ví dụ trên là nó đã trích xuất một Effect Event có tên `onMount` mà không cân nhắc xem code thực sự nên hoạt động như thế nào. Bạn chỉ nên trích xuất Effect Event vì một lý do cụ thể: khi muốn làm cho một phần code không reactive. Tuy nhiên, lệnh gọi `setInterval` *nên* reactive đối với biến state `delay`. Nếu `delay` thay đổi, bạn muốn thiết lập lại interval từ đầu! Để sửa code này, hãy đưa toàn bộ code reactive trở lại bên trong Effect:
 
 <Sandpack>
 
@@ -1304,21 +1303,21 @@ button { margin: 10px; }
 
 </Sandpack>
 
-In general, you should be suspicious of functions like `onMount` that focus on the *timing* rather than the *purpose* of a piece of code. It may feel "more descriptive" at first but it obscures your intent. As a rule of thumb, Effect Events should correspond to something that happens from the *user's* perspective. For example, `onMessage`, `onTick`, `onVisit`, or `onConnected` are good Effect Event names. Code inside them would likely not need to be reactive. On the other hand, `onMount`, `onUpdate`, `onUnmount`, or `onAfterRender` are so generic that it's easy to accidentally put code that *should* be reactive into them. This is why you should name your Effect Events after *what the user thinks has happened,* not when some code happened to run.
+Nhìn chung, bạn nên cảnh giác với những function như `onMount`, vốn tập trung vào *thời điểm* thay vì *mục đích* của một đoạn code. Ban đầu, chúng có thể tạo cảm giác “mô tả rõ hơn”, nhưng lại che khuất ý định của bạn. Theo nguyên tắc chung, Effect Event nên tương ứng với điều gì đó xảy ra từ góc nhìn của *người dùng*. Ví dụ, `onMessage`, `onTick`, `onVisit` hoặc `onConnected` là những tên Effect Event phù hợp. Code bên trong chúng có lẽ không cần phải reactive. Ngược lại, `onMount`, `onUpdate`, `onUnmount` hoặc `onAfterRender` quá chung chung, nên rất dễ vô tình đưa code *nên* reactive vào đó. Đây là lý do bạn nên đặt tên Effect Event theo *điều mà người dùng nghĩ là đã xảy ra*, chứ không phải theo thời điểm một đoạn code tình cờ được chạy.
 
 </Solution>
 
-#### Fix a delayed notification {/*fix-a-delayed-notification*/}
+#### Khắc phục thông báo bị trì hoãn {/*fix-a-delayed-notification*/}
 
-When you join a chat room, this component shows a notification. However, it doesn't show the notification immediately. Instead, the notification is artificially delayed by two seconds so that the user has a chance to look around the UI.
+Khi tham gia một phòng chat, component này sẽ hiển thị một thông báo. Tuy nhiên, thông báo không xuất hiện ngay lập tức. Thay vào đó, thông báo được trì hoãn nhân tạo hai giây để người dùng có thời gian xem qua UI.
 
-This almost works, but there is a bug. Try changing the dropdown from "general" to "travel" and then to "music" very quickly. If you do it fast enough, you will see two notifications (as expected!) but they will *both* say "Welcome to music".
+Cách này gần như hoạt động đúng, nhưng có một lỗi. Hãy thử nhanh chóng thay đổi dropdown từ “general” sang “travel”, rồi sang “music”. Nếu thao tác đủ nhanh, bạn sẽ thấy hai thông báo (như mong đợi!), nhưng *cả hai* đều ghi “Welcome to music”.
 
-Fix it so that when you switch from "general" to "travel" and then to "music" very quickly, you see two notifications, the first one being "Welcome to travel" and the second one being "Welcome to music". (For an additional challenge, assuming you've *already* made the notifications show the correct rooms, change the code so that only the latter notification is displayed.)
+Hãy sửa để khi bạn nhanh chóng chuyển từ “general” sang “travel”, rồi sang “music”, bạn sẽ thấy hai thông báo: thông báo thứ nhất là “Welcome to travel” và thông báo thứ hai là “Welcome to music”. (Để thử thách thêm, với giả định bạn đã làm cho các thông báo hiển thị đúng phòng, hãy thay đổi code để chỉ hiển thị thông báo sau cùng.)
 
 <Hint>
 
-Your Effect knows which room it connected to. Is there any information that you might want to pass to your Effect Event?
+Effect của bạn biết nó đã kết nối với phòng nào. Có thông tin nào mà bạn muốn truyền vào Effect Event không?
 
 </Hint>
 
@@ -1457,11 +1456,11 @@ label { display: block; margin-top: 10px; }
 
 <Solution>
 
-Inside your Effect Event, `roomId` is the value *at the time Effect Event was called.*
+Bên trong Effect Event, `roomId` là giá trị *tại thời điểm Effect Event được gọi*.
 
-Your Effect Event is called with a two second delay. If you're quickly switching from the travel to the music room, by the time the travel room's notification shows, `roomId` is already `"music"`. This is why both notifications say "Welcome to music".
+Effect Event của bạn được gọi sau khoảng thời gian trễ hai giây. Nếu bạn nhanh chóng chuyển từ phòng travel sang phòng music, thì đến lúc thông báo của phòng travel xuất hiện, `roomId` đã là `"music"`. Đây là lý do cả hai thông báo đều ghi “Welcome to music”.
 
-To fix the issue, instead of reading the *latest* `roomId` inside the Effect Event, make it a parameter of your Effect Event, like `connectedRoomId` below. Then pass `roomId` from your Effect by calling `onConnected(roomId)`:
+Để khắc phục vấn đề, thay vì đọc `roomId` *mới nhất* bên trong Effect Event, hãy biến nó thành một parameter của Effect Event, như `connectedRoomId` bên dưới. Sau đó, truyền `roomId` từ Effect bằng cách gọi `onConnected(roomId)`:
 
 <Sandpack>
 
@@ -1596,9 +1595,9 @@ label { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-The Effect that had `roomId` set to `"travel"` (so it connected to the `"travel"` room) will show the notification for `"travel"`. The Effect that had `roomId` set to `"music"` (so it connected to the `"music"` room) will show the notification for `"music"`. In other words, `connectedRoomId` comes from your Effect (which is reactive), while `theme` always uses the latest value.
+Effect có `roomId` được đặt thành `"travel"` (nên nó đã kết nối với phòng `"travel"`) sẽ hiển thị thông báo cho `"travel"`. Effect có `roomId` được đặt thành `"music"` (nên nó đã kết nối với phòng `"music"`) sẽ hiển thị thông báo cho `"music"`. Nói cách khác, `connectedRoomId` đến từ Effect của bạn (vốn là reactive), còn `theme` luôn sử dụng giá trị mới nhất.
 
-To solve the additional challenge, save the notification timeout ID and clear it in the cleanup function of your Effect:
+Để giải quyết thử thách thêm, hãy lưu ID của notification timeout và xóa nó trong hàm cleanup của Effect:
 
 <Sandpack>
 
@@ -1739,7 +1738,7 @@ label { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-This ensures that already scheduled (but not yet displayed) notifications get cancelled when you change rooms.
+Điều này đảm bảo các thông báo đã được lên lịch (nhưng chưa hiển thị) sẽ bị hủy khi bạn thay đổi phòng.
 
 </Solution>
 

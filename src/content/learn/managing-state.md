@@ -1,30 +1,30 @@
 ---
-title: Managing State
+title: Quản lý state
 ---
 
 <Intro>
 
-As your application grows, it helps to be more intentional about how your state is organized and how the data flows between your components. Redundant or duplicate state is a common source of bugs. In this chapter, you'll learn how to structure your state well, how to keep your state update logic maintainable, and how to share state between distant components.
+Khi ứng dụng phát triển, bạn nên chủ động hơn trong việc tổ chức state và cách dữ liệu luân chuyển giữa các component. State dư thừa hoặc trùng lặp là một nguồn gây lỗi phổ biến. Trong chương này, bạn sẽ học cách cấu trúc state hợp lý, cách duy trì logic cập nhật state dễ bảo trì và cách chia sẻ state giữa các component ở xa nhau.
 
 </Intro>
 
 <YouWillLearn isChapter={true}>
 
-* [How to think about UI changes as state changes](/learn/reacting-to-input-with-state)
-* [How to structure state well](/learn/choosing-the-state-structure)
-* [How to "lift state up" to share it between components](/learn/sharing-state-between-components)
-* [How to control whether the state gets preserved or reset](/learn/preserving-and-resetting-state)
-* [How to consolidate complex state logic in a function](/learn/extracting-state-logic-into-a-reducer)
-* [How to pass information without "prop drilling"](/learn/passing-data-deeply-with-context)
-* [How to scale state management as your app grows](/learn/scaling-up-with-reducer-and-context)
+* [Cách nhìn nhận thay đổi UI như những thay đổi state](/learn/reacting-to-input-with-state)
+* [Cách cấu trúc state hợp lý](/learn/choosing-the-state-structure)
+* [Cách "lift state up" để chia sẻ state giữa các component](/learn/sharing-state-between-components)
+* [Cách kiểm soát việc state được giữ lại hay reset](/learn/preserving-and-resetting-state)
+* [Cách gom logic state phức tạp vào một hàm](/learn/extracting-state-logic-into-a-reducer)
+* [Cách truyền thông tin mà không cần "prop drilling"](/learn/passing-data-deeply-with-context)
+* [Cách mở rộng việc quản lý state khi ứng dụng phát triển](/learn/scaling-up-with-reducer-and-context)
 
 </YouWillLearn>
 
-## Reacting to input with state {/*reacting-to-input-with-state*/}
+## Phản hồi input bằng state {/*reacting-to-input-with-state*/}
 
-With React, you won't modify the UI from code directly. For example, you won't write commands like "disable the button", "enable the button", "show the success message", etc. Instead, you will describe the UI you want to see for the different visual states of your component ("initial state", "typing state", "success state"), and then trigger the state changes in response to user input. This is similar to how designers think about UI.
+Với React, bạn sẽ không trực tiếp sửa đổi UI từ code. Ví dụ, bạn sẽ không viết các command như "vô hiệu hóa nút", "bật nút", "hiển thị thông báo thành công", v.v. Thay vào đó, bạn sẽ mô tả UI mà mình muốn thấy ở các trạng thái trực quan khác nhau của component ("initial state", "typing state", "success state"), rồi kích hoạt các thay đổi state để phản hồi input của người dùng. Cách này tương tự với cách các designer suy nghĩ về UI.
 
-Here is a quiz form built using React. Note how it uses the `status` state variable to determine whether to enable or disable the submit button, and whether to show the success message instead.
+Dưới đây là một form trắc nghiệm được xây dựng bằng React. Hãy chú ý cách form sử dụng biến state `status` để xác định có bật hay vô hiệu hóa nút submit, cũng như có hiển thị thông báo thành công hay không.
 
 <Sandpack>
 
@@ -108,15 +108,15 @@ function submitForm(answer) {
 
 <LearnMore path="/learn/reacting-to-input-with-state">
 
-Read **[Reacting to Input with State](/learn/reacting-to-input-with-state)** to learn how to approach interactions with a state-driven mindset.
+Đọc **[Phản hồi input bằng State](/learn/reacting-to-input-with-state)** để tìm hiểu cách tiếp cận các tương tác với tư duy dựa trên state.
 
 </LearnMore>
 
-## Choosing the state structure {/*choosing-the-state-structure*/}
+## Chọn cấu trúc state {/*choosing-the-state-structure*/}
 
-Structuring state well can make a difference between a component that is pleasant to modify and debug, and one that is a constant source of bugs. The most important principle is that state shouldn't contain redundant or duplicated information. If there's unnecessary state, it's easy to forget to update it, and introduce bugs!
+Cấu trúc state hợp lý có thể tạo ra sự khác biệt giữa một component dễ chỉnh sửa, debug và một component liên tục gây lỗi. Nguyên tắc quan trọng nhất là state không nên chứa thông tin dư thừa hoặc trùng lặp. Nếu có state không cần thiết, bạn rất dễ quên cập nhật nó và tạo ra lỗi!
 
-For example, this form has a **redundant** `fullName` state variable:
+Ví dụ, form này có một biến state `fullName` **dư thừa**:
 
 <Sandpack>
 
@@ -169,7 +169,7 @@ label { display: block; margin-bottom: 5px; }
 
 </Sandpack>
 
-You can remove it and simplify the code by calculating `fullName` while the component is rendering:
+Bạn có thể xóa nó và đơn giản hóa code bằng cách tính `fullName` trong lúc component đang render:
 
 <Sandpack>
 
@@ -221,19 +221,19 @@ label { display: block; margin-bottom: 5px; }
 
 </Sandpack>
 
-This might seem like a small change, but many bugs in React apps are fixed this way.
+Đây có vẻ chỉ là một thay đổi nhỏ, nhưng nhiều lỗi trong các ứng dụng React được khắc phục theo cách này.
 
 <LearnMore path="/learn/choosing-the-state-structure">
 
-Read **[Choosing the State Structure](/learn/choosing-the-state-structure)** to learn how to design the state shape to avoid bugs.
+Đọc **[Chọn cấu trúc State](/learn/choosing-the-state-structure)** để tìm hiểu cách thiết kế hình dạng state nhằm tránh lỗi.
 
 </LearnMore>
 
-## Sharing state between components {/*sharing-state-between-components*/}
+## Chia sẻ state giữa các component {/*sharing-state-between-components*/}
 
-Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. This is known as "lifting state up", and it's one of the most common things you will do writing React code.
+Đôi khi, bạn muốn state của hai component luôn thay đổi cùng nhau. Để làm điều đó, hãy xóa state khỏi cả hai component, chuyển nó lên component cha chung gần nhất, rồi truyền nó xuống cho chúng thông qua props. Đây được gọi là "lifting state up", và là một trong những việc phổ biến nhất khi viết code React.
 
-In this example, only one panel should be active at a time. To achieve this, instead of keeping the active state inside each individual panel, the parent component holds the state and specifies the props for its children.
+Trong ví dụ này, mỗi lần chỉ nên có một panel được active. Để đạt được điều đó, thay vì giữ state active bên trong từng panel, component cha sẽ giữ state và chỉ định các props cho các component con.
 
 <Sandpack>
 
@@ -296,15 +296,15 @@ h3, p { margin: 5px 0px; }
 
 <LearnMore path="/learn/sharing-state-between-components">
 
-Read **[Sharing State Between Components](/learn/sharing-state-between-components)** to learn how to lift state up and keep components in sync.
+Đọc **[Chia sẻ State giữa các Component](/learn/sharing-state-between-components)** để tìm hiểu cách lift state up và giữ cho các component đồng bộ.
 
 </LearnMore>
 
-## Preserving and resetting state {/*preserving-and-resetting-state*/}
+## Giữ lại và reset state {/*preserving-and-resetting-state*/}
 
-When you re-render a component, React needs to decide which parts of the tree to keep (and update), and which parts to discard or re-create from scratch. In most cases, React's automatic behavior works well enough. By default, React preserves the parts of the tree that "match up" with the previously rendered component tree.
+Khi re-render một component, React cần quyết định phần nào của cây sẽ được giữ lại (và cập nhật), phần nào sẽ bị loại bỏ hoặc được tạo lại từ đầu. Trong hầu hết trường hợp, hành vi tự động của React hoạt động đủ tốt. Theo mặc định, React giữ lại những phần của cây "khớp" với cây component đã được render trước đó.
 
-However, sometimes this is not what you want. In this chat app, typing a message and then switching the recipient does not reset the input. This can make the user accidentally send a message to the wrong person:
+Tuy nhiên, đôi khi đây không phải điều bạn muốn. Trong ứng dụng chat này, việc nhập tin nhắn rồi chuyển sang người nhận khác không reset input. Điều này có thể khiến người dùng vô tình gửi tin nhắn cho nhầm người:
 
 <Sandpack>
 
@@ -399,7 +399,7 @@ textarea {
 
 </Sandpack>
 
-React lets you override the default behavior, and *force* a component to reset its state by passing it a different `key`, like `<Chat key={email} />`. This tells React that if the recipient is different, it should be considered a *different* `Chat` component that needs to be re-created from scratch with the new data (and UI like inputs). Now switching between the recipients resets the input field--even though you render the same component.
+React cho phép bạn ghi đè hành vi mặc định và *buộc* một component reset state bằng cách truyền cho nó một `key` khác, chẳng hạn như `<Chat key={email} />`. Điều này cho React biết rằng nếu người nhận khác đi, component đó nên được xem là một component `Chat` *khác*, cần được tạo lại từ đầu với dữ liệu mới (và UI như các input). Giờ đây, khi chuyển đổi giữa những người nhận, trường input sẽ được reset--mặc dù bạn render cùng một component.
 
 <Sandpack>
 
@@ -496,13 +496,13 @@ textarea {
 
 <LearnMore path="/learn/preserving-and-resetting-state">
 
-Read **[Preserving and Resetting State](/learn/preserving-and-resetting-state)** to learn the lifetime of state and how to control it.
+Đọc **[Giữ lại và Reset State](/learn/preserving-and-resetting-state)** để tìm hiểu vòng đời của state và cách kiểm soát nó.
 
 </LearnMore>
 
-## Extracting state logic into a reducer {/*extracting-state-logic-into-a-reducer*/}
+## Tách logic state vào reducer {/*extracting-state-logic-into-a-reducer*/}
 
-Components with many state updates spread across many event handlers can get overwhelming. For these cases, you can consolidate all the state update logic outside your component in a single function, called "reducer". Your event handlers become concise because they only specify the user "actions". At the bottom of the file, the reducer function specifies how the state should update in response to each action!
+Các component có nhiều lần cập nhật state trải rộng trong nhiều event handler có thể trở nên quá khó quản lý. Trong những trường hợp này, bạn có thể gom toàn bộ logic cập nhật state bên ngoài component vào một hàm duy nhất, gọi là "reducer". Các event handler của bạn sẽ trở nên ngắn gọn vì chúng chỉ chỉ định các "action" của người dùng. Ở cuối file, hàm reducer sẽ chỉ định state cần được cập nhật như thế nào để phản hồi từng action!
 
 <Sandpack>
 
@@ -693,15 +693,15 @@ ul, li { margin: 0; padding: 0; }
 
 <LearnMore path="/learn/extracting-state-logic-into-a-reducer">
 
-Read **[Extracting State Logic into a Reducer](/learn/extracting-state-logic-into-a-reducer)** to learn how to consolidate logic in the reducer function.
+Đọc **[Tách Logic State vào Reducer](/learn/extracting-state-logic-into-a-reducer)** để tìm hiểu cách gom logic vào hàm reducer.
 
 </LearnMore>
 
-## Passing data deeply with context {/*passing-data-deeply-with-context*/}
+## Truyền dữ liệu qua nhiều cấp bằng context {/*passing-data-deeply-with-context*/}
 
-Usually, you will pass information from a parent component to a child component via props. But passing props can become inconvenient if you need to pass some prop through many components, or if many components need the same information. Context lets the parent component make some information available to any component in the tree below it—no matter how deep it is—without passing it explicitly through props.
+Thông thường, bạn sẽ truyền thông tin từ component cha đến component con thông qua props. Tuy nhiên, việc truyền props có thể trở nên bất tiện nếu bạn cần truyền một prop qua nhiều component, hoặc nếu nhiều component cần cùng một thông tin. Context cho phép component cha cung cấp một số thông tin cho bất kỳ component nào trong cây bên dưới nó—bất kể component đó nằm sâu đến đâu—mà không cần truyền thông tin đó một cách tường minh qua props.
 
-Here, the `Heading` component determines its heading level by "asking" the closest `Section` for its level. Each `Section` tracks its own level by asking the parent `Section` and adding one to it. Every `Section` provides information to all components below it without passing props--it does that through context.
+Ở đây, component `Heading` xác định cấp độ heading bằng cách "hỏi" `Section` gần nhất về cấp độ của nó. Mỗi `Section` theo dõi cấp độ của riêng mình bằng cách hỏi `Section` cha rồi cộng thêm một. Mỗi `Section` cung cấp thông tin cho tất cả component bên dưới mà không cần truyền props--nó thực hiện điều đó thông qua context.
 
 <Sandpack>
 
@@ -795,15 +795,15 @@ export const LevelContext = createContext(0);
 
 <LearnMore path="/learn/passing-data-deeply-with-context">
 
-Read **[Passing Data Deeply with Context](/learn/passing-data-deeply-with-context)** to learn about using context as an alternative to passing props.
+Đọc **[Truyền Dữ liệu qua Nhiều Cấp bằng Context](/learn/passing-data-deeply-with-context)** để tìm hiểu cách sử dụng context như một giải pháp thay thế cho việc truyền props.
 
 </LearnMore>
 
-## Scaling up with reducer and context {/*scaling-up-with-reducer-and-context*/}
+## Mở rộng với reducer và context {/*scaling-up-with-reducer-and-context*/}
 
-Reducers let you consolidate a component’s state update logic. Context lets you pass information deep down to other components. You can combine reducers and context together to manage state of a complex screen.
+Reducer cho phép bạn gom logic cập nhật state của một component. Context cho phép bạn truyền thông tin xuống sâu đến các component khác. Bạn có thể kết hợp reducer và context để quản lý state của một màn hình phức tạp.
 
-With this approach, a parent component with complex state manages it with a reducer. Other components anywhere deep in the tree can read its state via context. They can also dispatch actions to update that state.
+Với cách tiếp cận này, một component cha có state phức tạp sẽ quản lý state đó bằng reducer. Các component khác ở bất kỳ đâu trong cây đều có thể đọc state của nó thông qua context. Chúng cũng có thể dispatch các action để cập nhật state đó.
 
 <Sandpack>
 
@@ -1004,12 +1004,12 @@ ul, li { margin: 0; padding: 0; }
 
 <LearnMore path="/learn/scaling-up-with-reducer-and-context">
 
-Read **[Scaling Up with Reducer and Context](/learn/scaling-up-with-reducer-and-context)** to learn how state management scales in a growing app.
+Đọc **[Mở rộng với Reducer và Context](/learn/scaling-up-with-reducer-and-context)** để tìm hiểu cách quản lý state mở rộng khi ứng dụng phát triển.
 
 </LearnMore>
 
-## What's next? {/*whats-next*/}
+## Tiếp theo là gì? {/*whats-next*/}
 
-Head over to [Reacting to Input with State](/learn/reacting-to-input-with-state) to start reading this chapter page by page!
+Hãy truy cập [Phản hồi input bằng State](/learn/reacting-to-input-with-state) để bắt đầu đọc từng trang của chương này!
 
-Or, if you're already familiar with these topics, why not read about [Escape Hatches](/learn/escape-hatches)?
+Hoặc nếu bạn đã quen thuộc với các chủ đề này, tại sao không đọc về [Escape Hatches](/learn/escape-hatches)?

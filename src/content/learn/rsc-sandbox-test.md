@@ -1,8 +1,8 @@
 ---
-title: RSC Sandbox Test
+title: Bài kiểm thử RSC Sandbox
 ---
 
-## Basic Server Component {/*basic-server-component*/}
+## Server Component cơ bản {/*basic-server-component*/}
 
 <SandpackRSC>
 
@@ -14,7 +14,7 @@ export default function App() {
 
 </SandpackRSC>
 
-## Server + Client Components {/*server-client*/}
+## Server Component + Client Component {/*server-client*/}
 
 <SandpackRSC>
 
@@ -48,7 +48,7 @@ export default function Counter() {
 
 </SandpackRSC>
 
-## Async Server Component with Suspense {/*async-suspense*/}
+## Server Component bất đồng bộ với Suspense {/*async-suspense*/}
 
 <SandpackRSC>
 
@@ -88,9 +88,9 @@ export default async function Albums() {
 
 </SandpackRSC>
 
-## Streaming Proof {/*streaming-proof*/}
+## Kiểm chứng Streaming {/*streaming-proof*/}
 
-This demo proves streaming is incremental. The shell renders instantly with a `<Suspense>` fallback. After 2 seconds the async component streams in and replaces it — without re-rendering the outer content. The timestamps show the gap.
+Demo này chứng minh rằng streaming diễn ra theo từng phần. Shell được render ngay lập tức với một fallback `<Suspense>`. Sau 2 giây, component bất đồng bộ được stream vào và thay thế fallback — mà không render lại nội dung bên ngoài. Các dấu thời gian cho thấy khoảng chênh lệch này.
 
 <SandpackRSC>
 
@@ -145,9 +145,9 @@ export default function Timestamp() {
 
 </SandpackRSC>
 
-## Flight Data Types {/*flight-data-types*/}
+## Các kiểu dữ liệu Flight {/*flight-data-types*/}
 
-This demo passes Map, Set, Date, and BigInt from a server component through the Flight stream to a client component, proving the full Flight protocol type system works end-to-end.
+Demo này truyền Map, Set, Date và BigInt từ một server component qua Flight stream đến một client component, chứng minh rằng toàn bộ hệ thống kiểu của Flight protocol hoạt động xuyên suốt từ đầu đến cuối.
 
 <SandpackRSC>
 
@@ -206,9 +206,9 @@ export default function DataViewer({ map, set, date, big }) {
 
 </SandpackRSC>
 
-## Promise Streaming with use() {/*promise-streaming-use*/}
+## Streaming Promise với use() {/*promise-streaming-use*/}
 
-The server creates a promise (resolves in 2s) and passes it as a prop through a parent async component that suspends for 3s. When the parent reveals at ~3s, the promise is already resolved — so `use()` returns instantly with no inner fallback. The elapsed time should be ~3000ms (the parent's delay), not ~5000ms (which would mean the promise restarted on the client).
+Server tạo một promise (được resolve sau 2 giây) và truyền nó dưới dạng prop qua một parent async component bị suspend trong 3 giây. Khi parent hiển thị sau khoảng 3 giây, promise đã được resolve — vì vậy `use()` trả về ngay lập tức mà không có fallback bên trong. Thời gian trôi qua phải vào khoảng ~3000ms (độ trễ của parent), không phải ~5000ms (điều này có nghĩa là promise đã được khởi động lại ở client).
 
 <SandpackRSC>
 
@@ -284,9 +284,9 @@ export default function UserCard({ userPromise, serverTime }) {
 
 </SandpackRSC>
 
-## Flight Data Types in Server Actions {/*flight-data-types-actions*/}
+## Kiểu dữ liệu Flight trong Server Actions {/*flight-data-types-actions*/}
 
-This demo sends Map, Set, Date, and BigInt from a client component *to* a server action via `encodeReply`/`decodeReply`, then verifies the types survived the round trip.
+Demo này gửi Map, Set, Date và BigInt từ một client component *đến* một server action thông qua `encodeReply`/`decodeReply`, sau đó xác minh rằng các kiểu dữ liệu vẫn được giữ nguyên sau chuyến khứ hồi.
 
 <SandpackRSC>
 
@@ -388,9 +388,9 @@ export default function TestButton({ testTypes }) {
 
 </SandpackRSC>
 
-## Server Action Mutation + Re-render {/*action-mutation-rerender*/}
+## Mutation của Server Action + Render lại {/*action-mutation-rerender*/}
 
-The server action mutates server-side data and returns a confirmation string. The updated list is only visible because the framework automatically re-renders the entire server component tree after the action completes — the server component re-reads the data and streams the new UI to the client.
+Server action thay đổi dữ liệu ở phía server và trả về một chuỗi xác nhận. Danh sách đã cập nhật chỉ hiển thị được vì framework tự động render lại toàn bộ cây server component sau khi action hoàn tất — server component đọc lại dữ liệu và stream UI mới đến client.
 
 <SandpackRSC>
 
@@ -485,9 +485,9 @@ export default function AddTodo({ createTodo }) {
 
 </SandpackRSC>
 
-## Inline Server Actions {/*inline-server-actions*/}
+## Server Actions nội tuyến {/*inline-server-actions*/}
 
-Server actions defined inline inside a server component with `'use server'` on the function body. The action closes over module-level state and is passed as a prop — no separate `actions.js` file needed.
+Các server action được định nghĩa nội tuyến bên trong một server component với `'use server'` ở phần thân hàm. Action này đóng (close over) state cấp module và được truyền dưới dạng prop — không cần một file `actions.js` riêng.
 
 <SandpackRSC>
 

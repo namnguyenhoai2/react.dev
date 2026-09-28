@@ -1,52 +1,52 @@
 ---
-title: 'Manipulating the DOM with Refs'
+title: 'Thao tác với DOM bằng Refs'
 ---
 
 <Intro>
 
-React automatically updates the [DOM](https://developer.mozilla.org/docs/Web/API/Document_Object_Model/Introduction) to match your render output, so your components won't often need to manipulate it. However, sometimes you might need access to the DOM elements managed by React--for example, to focus a node, scroll to it, or measure its size and position. There is no built-in way to do those things in React, so you will need a *ref* to the DOM node.
+React tự động cập nhật [DOM](https://developer.mozilla.org/docs/Web/API/Document_Object_Model/Introduction) để khớp với kết quả render của bạn, vì vậy các component của bạn thường không cần thao tác với nó. Tuy nhiên, đôi khi bạn có thể cần truy cập vào các phần tử DOM do React quản lý--ví dụ: để focus một node, cuộn đến node đó hoặc đo kích thước và vị trí của nó. React không có cách tích hợp sẵn để thực hiện những việc này, vì vậy bạn sẽ cần một *ref* trỏ đến node DOM.
 
 </Intro>
 
 <YouWillLearn>
 
-- How to access a DOM node managed by React with the `ref` attribute
-- How the `ref` JSX attribute relates to the `useRef` Hook
-- How to access another component's DOM node
-- In which cases it's safe to modify the DOM managed by React
+- Cách truy cập node DOM do React quản lý bằng thuộc tính `ref`
+- Mối liên hệ giữa thuộc tính JSX `ref` và Hook `useRef`
+- Cách truy cập node DOM của một component khác
+- Những trường hợp nào an toàn để sửa đổi DOM do React quản lý
 
 </YouWillLearn>
 
-## Getting a ref to the node {/*getting-a-ref-to-the-node*/}
+## Lấy ref đến node {/*getting-a-ref-to-the-node*/}
 
-To access a DOM node managed by React, first, import the `useRef` Hook:
+Để truy cập một node DOM do React quản lý, trước tiên hãy import Hook `useRef`:
 
 ```js
 import { useRef } from 'react';
 ```
 
-Then, use it to declare a ref inside your component:
+Sau đó, sử dụng nó để khai báo một ref bên trong component:
 
 ```js
 const myRef = useRef(null);
 ```
 
-Finally, pass your ref as the `ref` attribute to the JSX tag for which you want to get the DOM node:
+Cuối cùng, truyền ref của bạn dưới dạng thuộc tính `ref` vào thẻ JSX mà bạn muốn lấy node DOM:
 
 ```js
 <div ref={myRef}>
 ```
 
-The `useRef` Hook returns an object with a single property called `current`. Initially, `myRef.current` will be `null`. When React creates a DOM node for this `<div>`, React will put a reference to this node into `myRef.current`. You can then access this DOM node from your [event handlers](/learn/responding-to-events) and use the built-in [browser APIs](https://developer.mozilla.org/docs/Web/API/Element) defined on it.
+Hook `useRef` trả về một object có một thuộc tính duy nhất tên là `current`. Ban đầu, `myRef.current` sẽ là `null`. Khi React tạo một node DOM cho `<div>` này, React sẽ đặt tham chiếu đến node đó vào `myRef.current`. Sau đó, bạn có thể truy cập node DOM này từ các [event handler](/learn/responding-to-events) của mình và sử dụng các [browser API](https://developer.mozilla.org/docs/Web/API/Element) tích hợp sẵn được định nghĩa trên node đó.
 
 ```js
 // You can use any browser APIs, for example:
 myRef.current.scrollIntoView();
 ```
 
-### Example: Focusing a text input {/*example-focusing-a-text-input*/}
+### Ví dụ: Focus một text input {/*example-focusing-a-text-input*/}
 
-In this example, clicking the button will focus the input:
+Trong ví dụ này, việc nhấp vào button sẽ focus input:
 
 <Sandpack>
 
@@ -73,18 +73,18 @@ export default function Form() {
 
 </Sandpack>
 
-To implement this:
+Để triển khai việc này:
 
-1. Declare `inputRef` with the `useRef` Hook.
-2. Pass it as `<input ref={inputRef}>`. This tells React to **put this `<input>`'s DOM node into `inputRef.current`.**
-3. In the `handleClick` function, read the input DOM node from `inputRef.current` and call [`focus()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) on it with `inputRef.current.focus()`.
-4. Pass the `handleClick` event handler to `<button>` with `onClick`.
+1. Khai báo `inputRef` bằng Hook `useRef`.
+2. Truyền nó dưới dạng `<input ref={inputRef}>`. Điều này yêu cầu React **đặt DOM node của `<input>` này vào `inputRef.current`.**
+3. Trong function `handleClick`, đọc node DOM của input từ `inputRef.current` và gọi [`focus()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) trên nó với `inputRef.current.focus()`.
+4. Truyền event handler `handleClick` vào `<button>` với `onClick`.
 
-While DOM manipulation is the most common use case for refs, the `useRef` Hook can be used for storing other things outside React, like timer IDs. Similarly to state, refs remain between renders. Refs are like state variables that don't trigger re-renders when you set them. Read about refs in [Referencing Values with Refs.](/learn/referencing-values-with-refs)
+Mặc dù thao tác DOM là trường hợp sử dụng phổ biến nhất của refs, Hook `useRef` có thể được dùng để lưu trữ những thứ khác bên ngoài React, chẳng hạn như ID của timer. Tương tự state, refs vẫn tồn tại qua các lần render. Refs giống như các biến state nhưng không kích hoạt render lại khi bạn gán giá trị cho chúng. Đọc thêm về refs trong [Tham chiếu giá trị bằng Refs.](/learn/referencing-values-with-refs)
 
-### Example: Scrolling to an element {/*example-scrolling-to-an-element*/}
+### Ví dụ: Cuộn đến một phần tử {/*example-scrolling-to-an-element*/}
 
-You can have more than a single ref in a component. In this example, there is a carousel of three images. Each button centers an image by calling the browser [`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView) method on the corresponding DOM node:
+Bạn có thể có nhiều hơn một ref trong một component. Trong ví dụ này, có một carousel gồm ba hình ảnh. Mỗi button căn giữa một hình ảnh bằng cách gọi method [`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView) của browser trên node DOM tương ứng:
 
 <Sandpack>
 
@@ -193,9 +193,9 @@ li {
 
 <DeepDive>
 
-#### How to manage a list of refs using a ref callback {/*how-to-manage-a-list-of-refs-using-a-ref-callback*/}
+#### Cách quản lý danh sách refs bằng ref callback {/*how-to-manage-a-list-of-refs-using-a-ref-callback*/}
 
-In the above examples, there is a predefined number of refs. However, sometimes you might need a ref to each item in the list, and you don't know how many you will have. Something like this **wouldn't work**:
+Trong các ví dụ trên, số lượng ref được xác định trước. Tuy nhiên, đôi khi bạn cần một ref cho từng item trong danh sách và không biết mình sẽ có bao nhiêu item. Cách làm như sau **sẽ không hoạt động**:
 
 ```js
 <ul>
@@ -207,13 +207,13 @@ In the above examples, there is a predefined number of refs. However, sometimes 
 </ul>
 ```
 
-This is because **Hooks must only be called at the top-level of your component.** You can't call `useRef` in a loop, in a condition, or inside a `map()` call.
+Điều này là do **Hooks chỉ được gọi ở cấp cao nhất của component.** Bạn không thể gọi `useRef` trong một loop, trong một điều kiện hoặc bên trong lời gọi `map()`.
 
-One possible way around this is to get a single ref to their parent element, and then use DOM manipulation methods like [`querySelectorAll`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) to "find" the individual child nodes from it. However, this is brittle and can break if your DOM structure changes.
+Một cách có thể giải quyết vấn đề này là lấy một ref duy nhất đến phần tử cha, sau đó sử dụng các method thao tác DOM như [`querySelectorAll`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) để "tìm" các node con riêng lẻ từ đó. Tuy nhiên, cách này dễ hỏng và có thể ngừng hoạt động nếu cấu trúc DOM của bạn thay đổi.
 
-Another solution is to **pass a function to the `ref` attribute.** This is called a [`ref` callback.](/reference/react-dom/components/common#ref-callback) React will call your ref callback with the DOM node when it's time to set the ref, and call the cleanup function returned from the callback when it's time to clear it. This lets you maintain your own array or a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), and access any ref by its index or some kind of ID.
+Một giải pháp khác là **truyền một function vào thuộc tính `ref`.** Đây được gọi là một [`ref` callback.](/reference/react-dom/components/common#ref-callback) React sẽ gọi ref callback của bạn với node DOM khi đến lúc thiết lập ref, đồng thời gọi cleanup function được trả về từ callback khi đến lúc xóa ref. Điều này cho phép bạn tự duy trì một array hoặc một [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), và truy cập bất kỳ ref nào theo index hoặc một loại ID nào đó.
 
-This example shows how you can use this approach to scroll to an arbitrary node in a long list:
+Ví dụ này cho thấy cách bạn có thể sử dụng phương pháp trên để cuộn đến một node bất kỳ trong một danh sách dài:
 
 <Sandpack>
 
@@ -322,7 +322,7 @@ li {
 
 </Sandpack>
 
-In this example, `itemsRef` doesn't hold a single DOM node. Instead, it holds a [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) from item ID to a DOM node. ([Refs can hold any values!](/learn/referencing-values-with-refs)) The [`ref` callback](/reference/react-dom/components/common#ref-callback) on every list item takes care to update the Map:
+Trong ví dụ này, `itemsRef` không chứa một node DOM duy nhất. Thay vào đó, nó chứa một [Map](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map) ánh xạ từ ID của item đến một node DOM. ([Refs có thể chứa bất kỳ giá trị nào!](/learn/referencing-values-with-refs)) [`ref` callback](/reference/react-dom/components/common#ref-callback) trên mỗi item trong danh sách sẽ đảm nhiệm việc cập nhật Map:
 
 ```js
 <li
@@ -340,25 +340,25 @@ In this example, `itemsRef` doesn't hold a single DOM node. Instead, it holds a 
 >
 ```
 
-This lets you read individual DOM nodes from the Map later.
+Điều này cho phép bạn đọc từng node DOM riêng lẻ từ Map về sau.
 
 <Note>
 
-When Strict Mode is enabled, ref callbacks will run twice in development.
+Khi Strict Mode được bật, ref callback sẽ chạy hai lần trong môi trường development.
 
-Read more about [how this helps find bugs](/reference/react/StrictMode#fixing-bugs-found-by-re-running-ref-callbacks-in-development) in callback refs.
+Đọc thêm về [cách điều này giúp phát hiện bug](/reference/react/StrictMode#fixing-bugs-found-by-re-running-ref-callbacks-in-development) trong callback refs.
 
 </Note>
 
 </DeepDive>
 
-## Accessing another component's DOM nodes {/*accessing-another-components-dom-nodes*/}
+## Truy cập node DOM của một component khác {/*accessing-another-components-dom-nodes*/}
 
 <Pitfall>
-Refs are an escape hatch. Manually manipulating _another_ component's DOM nodes can make your code fragile.
+Refs là một escape hatch. Việc thao tác thủ công với node DOM của _một_ component khác có thể khiến code của bạn dễ hỏng.
 </Pitfall>
 
-You can pass refs from parent component to child components [just like any other prop](/learn/passing-props-to-a-component).
+Bạn có thể truyền refs từ component cha xuống component con [giống như mọi prop khác](/learn/passing-props-to-a-component).
 
 ```js {3-4,9}
 import { useRef } from 'react';
@@ -373,9 +373,9 @@ function MyForm() {
 }
 ```
 
-In the above example, a ref is created in the parent component, `MyForm`, and is passed to the child component, `MyInput`. `MyInput` then passes the ref to `<input>`. Because `<input>` is a [built-in component](/reference/react-dom/components/common) React sets the `.current` property of the ref to the `<input>` DOM element.
+Trong ví dụ trên, một ref được tạo trong component cha, `MyForm`, và được truyền vào component con, `MyInput`. `MyInput` sau đó truyền ref vào `<input>`. Vì `<input>` là một [built-in component](/reference/react-dom/components/common), React đặt thuộc tính `.current` của ref thành phần tử DOM `<input>`.
 
-The `inputRef` created in `MyForm` now points to the `<input>` DOM element returned by `MyInput`. A click handler created in `MyForm` can access `inputRef` and call `focus()` to set the focus on `<input>`.
+`inputRef` được tạo trong `MyForm` giờ đây trỏ đến phần tử DOM `<input>` được trả về bởi `MyInput`. Một click handler được tạo trong `MyForm` có thể truy cập `inputRef` và gọi `focus()` để focus `<input>`.
 
 <Sandpack>
 
@@ -408,9 +408,9 @@ export default function MyForm() {
 
 <DeepDive>
 
-#### Exposing a subset of the API with an imperative handle {/*exposing-a-subset-of-the-api-with-an-imperative-handle*/}
+#### Expose một phần API bằng imperative handle {/*exposing-a-subset-of-the-api-with-an-imperative-handle*/}
 
-In the above example, the ref passed to `MyInput` is passed on to the original DOM input element. This lets the parent component call `focus()` on it. However, this also lets the parent component do something else--for example, change its CSS styles. In uncommon cases, you may want to restrict the exposed functionality. You can do that with [`useImperativeHandle`](/reference/react/useImperativeHandle):
+Trong ví dụ trên, ref được truyền vào `MyInput` được truyền tiếp đến phần tử DOM input ban đầu. Điều này cho phép component cha gọi `focus()` trên nó. Tuy nhiên, điều này cũng cho phép component cha làm những việc khác--ví dụ: thay đổi CSS style của nó. Trong những trường hợp không phổ biến, bạn có thể muốn giới hạn chức năng được expose. Bạn có thể thực hiện việc đó bằng [`useImperativeHandle`](/reference/react/useImperativeHandle):
 
 <Sandpack>
 
@@ -446,28 +446,28 @@ export default function Form() {
 
 </Sandpack>
 
-Here, `realInputRef` inside `MyInput` holds the actual input DOM node. However, [`useImperativeHandle`](/reference/react/useImperativeHandle) instructs React to provide your own special object as the value of a ref to the parent component. So `inputRef.current` inside the `Form` component will only have the `focus` method. In this case, the ref "handle" is not the DOM node, but the custom object you create inside [`useImperativeHandle`](/reference/react/useImperativeHandle) call.
+Ở đây, `realInputRef` bên trong `MyInput` chứa node DOM input thực tế. Tuy nhiên, [`useImperativeHandle`](/reference/react/useImperativeHandle) yêu cầu React cung cấp object đặc biệt của riêng bạn làm giá trị của ref cho component cha. Vì vậy, `inputRef.current` bên trong component `Form` sẽ chỉ có method `focus`. Trong trường hợp này, "handle" của ref không phải là node DOM mà là object tùy chỉnh bạn tạo bên trong lời gọi [`useImperativeHandle`](/reference/react/useImperativeHandle).
 
 </DeepDive>
 
-## When React attaches the refs {/*when-react-attaches-the-refs*/}
+## Khi React gắn các ref {/*when-react-attaches-the-refs*/}
 
-In React, every update is split in [two phases](/learn/render-and-commit#step-3-react-commits-changes-to-the-dom):
+Trong React, mỗi lần update được chia thành [hai phase](/learn/render-and-commit#step-3-react-commits-changes-to-the-dom):
 
-* During **render,** React calls your components to figure out what should be on the screen.
-* During **commit,** React applies changes to the DOM.
+* Trong **render,** React gọi các component của bạn để xác định nội dung cần hiển thị trên màn hình.
+* Trong **commit,** React áp dụng các thay đổi vào DOM.
 
-In general, you [don't want](/learn/referencing-values-with-refs#best-practices-for-refs) to access refs during rendering. That goes for refs holding DOM nodes as well. During the first render, the DOM nodes have not yet been created, so `ref.current` will be `null`. And during the rendering of updates, the DOM nodes haven't been updated yet. So it's too early to read them.
+Nhìn chung, bạn [không muốn](/learn/referencing-values-with-refs#best-practices-for-refs) truy cập refs trong quá trình render. Điều này cũng áp dụng cho các ref chứa node DOM. Trong lần render đầu tiên, các node DOM chưa được tạo, vì vậy `ref.current` sẽ là `null`. Trong quá trình render các lần update, các node DOM cũng chưa được cập nhật. Vì vậy, đọc chúng vào thời điểm này là quá sớm.
 
-React sets `ref.current` during the commit. Before updating the DOM, React sets the affected `ref.current` values to `null`. After updating the DOM, React immediately sets them to the corresponding DOM nodes.
+React thiết lập `ref.current` trong quá trình commit. Trước khi cập nhật DOM, React đặt các giá trị `ref.current` bị ảnh hưởng thành `null`. Sau khi cập nhật DOM, React lập tức đặt chúng thành các node DOM tương ứng.
 
-**Usually, you will access refs from event handlers.** If you want to do something with a ref, but there is no particular event to do it in, you might need an Effect. We will discuss Effects on the next pages.
+**Thông thường, bạn sẽ truy cập refs từ các event handler.** Nếu bạn muốn thực hiện việc gì đó với một ref nhưng không có event cụ thể nào để thực hiện, bạn có thể cần một Effect. Chúng ta sẽ thảo luận về Effects ở các trang tiếp theo.
 
 <DeepDive>
 
-#### Flushing state updates synchronously with flushSync {/*flushing-state-updates-synchronously-with-flush-sync*/}
+#### Flushing các state update một cách đồng bộ với flushSync {/*flushing-state-updates-synchronously-with-flush-sync*/}
 
-Consider code like this, which adds a new todo and scrolls the screen down to the last child of the list. Notice how, for some reason, it always scrolls to the todo that was *just before* the last added one:
+Hãy xem đoạn code như sau: đoạn code này thêm một todo mới và cuộn màn hình xuống đến phần tử cuối cùng của danh sách. Lưu ý rằng vì một lý do nào đó, nó luôn cuộn đến todo *ngay trước* todo vừa được thêm cuối cùng:
 
 <Sandpack>
 
@@ -521,16 +521,16 @@ for (let i = 0; i < 20; i++) {
 
 </Sandpack>
 
-The issue is with these two lines:
+Vấn đề nằm ở hai dòng này:
 
 ```js
 setTodos([ ...todos, newTodo]);
 listRef.current.lastChild.scrollIntoView();
 ```
 
-In React, [state updates are queued.](/learn/queueing-a-series-of-state-updates) Usually, this is what you want. However, here it causes a problem because `setTodos` does not immediately update the DOM. So the time you scroll the list to its last element, the todo has not yet been added. This is why scrolling always "lags behind" by one item.
+Trong React, [các state update được xếp vào hàng đợi.](/learn/queueing-a-series-of-state-updates) Thông thường, đây là điều bạn muốn. Tuy nhiên, trong trường hợp này, nó gây ra vấn đề vì `setTodos` không cập nhật DOM ngay lập tức. Vì vậy, tại thời điểm bạn cuộn danh sách đến phần tử cuối cùng, todo vẫn chưa được thêm vào. Đây là lý do việc cuộn luôn “chậm hơn” một item.
 
-To fix this issue, you can force React to update ("flush") the DOM synchronously. To do this, import `flushSync` from `react-dom` and **wrap the state update** into a `flushSync` call:
+Để khắc phục vấn đề này, bạn có thể buộc React cập nhật (“flush”) DOM một cách đồng bộ. Để làm vậy, hãy import `flushSync` từ `react-dom` và **bọc state update** trong một lời gọi `flushSync`:
 
 ```js
 flushSync(() => {
@@ -539,7 +539,7 @@ flushSync(() => {
 listRef.current.lastChild.scrollIntoView();
 ```
 
-This will instruct React to update the DOM synchronously right after the code wrapped in `flushSync` executes. As a result, the last todo will already be in the DOM by the time you try to scroll to it:
+Thao tác này sẽ yêu cầu React cập nhật DOM một cách đồng bộ ngay sau khi code được bọc trong `flushSync` thực thi. Do đó, todo cuối cùng sẽ có sẵn trong DOM vào thời điểm bạn cố cuộn đến nó:
 
 <Sandpack>
 
@@ -598,15 +598,15 @@ for (let i = 0; i < 20; i++) {
 
 </DeepDive>
 
-## Best practices for DOM manipulation with refs {/*best-practices-for-dom-manipulation-with-refs*/}
+## Các phương pháp hay nhất để thao tác DOM với refs {/*best-practices-for-dom-manipulation-with-refs*/}
 
-Refs are an escape hatch. You should only use them when you have to "step outside React". Common examples of this include managing focus, scroll position, or calling browser APIs that React does not expose.
+Refs là một cơ chế “thoát” (escape hatch). Bạn chỉ nên sử dụng chúng khi cần “bước ra ngoài React”. Các ví dụ phổ biến bao gồm quản lý focus, vị trí cuộn hoặc gọi các browser API mà React không cung cấp.
 
-If you stick to non-destructive actions like focusing and scrolling, you shouldn't encounter any problems. However, if you try to **modify** the DOM manually, you can risk conflicting with the changes React is making.
+Nếu bạn chỉ thực hiện những thao tác không mang tính phá hủy như focus và cuộn, bạn sẽ không gặp vấn đề gì. Tuy nhiên, nếu cố **sửa đổi** DOM theo cách thủ công, bạn có thể gây xung đột với những thay đổi mà React đang thực hiện.
 
-To illustrate this problem, this example includes a welcome message and two buttons. The first button toggles its presence using [conditional rendering](/learn/conditional-rendering) and [state](/learn/state-a-components-memory), as you would usually do in React. The second button uses the [`remove()` DOM API](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) to forcefully remove it from the DOM outside of React's control.
+Để minh họa vấn đề này, ví dụ sau có một thông báo chào mừng và hai nút. Nút đầu tiên bật/tắt sự hiện diện của thông báo bằng [conditional rendering](/learn/conditional-rendering) và [state](/learn/state-a-components-memory), giống như cách bạn thường làm trong React. Nút thứ hai sử dụng [`remove()` DOM API](https://developer.mozilla.org/en-US/docs/Web/API/Element/remove) để buộc xóa thông báo khỏi DOM mà không thông qua React.
 
-Try pressing "Toggle with setState" a few times. The message should disappear and appear again. Then press "Remove from the DOM". This will forcefully remove it. Finally, press "Toggle with setState":
+Hãy thử nhấn “Toggle with setState” vài lần. Thông báo sẽ biến mất rồi xuất hiện lại. Sau đó nhấn “Remove from the DOM”. Thao tác này sẽ buộc xóa thông báo. Cuối cùng, hãy nhấn “Toggle with setState”:
 
 <Sandpack>
 
@@ -647,20 +647,20 @@ button {
 
 </Sandpack>
 
-After you've manually removed the DOM element, trying to use `setState` to show it again will lead to a crash. This is because you've changed the DOM, and React doesn't know how to continue managing it correctly.
+Sau khi bạn đã xóa phần tử DOM theo cách thủ công, việc cố sử dụng `setState` để hiển thị lại phần tử đó sẽ dẫn đến crash. Nguyên nhân là bạn đã thay đổi DOM và React không biết cách tiếp tục quản lý DOM một cách chính xác.
 
-**Avoid changing DOM nodes managed by React.** Modifying, adding children to, or removing children from elements that are managed by React can lead to inconsistent visual results or crashes like above.
+**Tránh thay đổi các node DOM do React quản lý.** Việc sửa đổi, thêm children vào hoặc xóa children khỏi các phần tử do React quản lý có thể dẫn đến kết quả hiển thị không nhất quán hoặc các crash như trên.
 
-However, this doesn't mean that you can't do it at all. It requires caution. **You can safely modify parts of the DOM that React has _no reason_ to update.** For example, if some `<div>` is always empty in the JSX, React won't have a reason to touch its children list. Therefore, it is safe to manually add or remove elements there.
+Tuy nhiên, điều này không có nghĩa là bạn hoàn toàn không thể làm vậy. Bạn cần thận trọng. **Bạn có thể sửa đổi an toàn những phần DOM mà React _không có lý do_ để cập nhật.** Ví dụ, nếu một `<div>` nào đó luôn rỗng trong JSX, React sẽ không có lý do để động đến danh sách children của nó. Vì vậy, bạn có thể an toàn thêm hoặc xóa các phần tử ở đó theo cách thủ công.
 
 <Recap>
 
-- Refs are a generic concept, but most often you'll use them to hold DOM elements.
-- You instruct React to put a DOM node into `myRef.current` by passing `<div ref={myRef}>`.
-- Usually, you will use refs for non-destructive actions like focusing, scrolling, or measuring DOM elements.
-- A component doesn't expose its DOM nodes by default. You can opt into exposing a DOM node by using the `ref` prop.
-- Avoid changing DOM nodes managed by React.
-- If you do modify DOM nodes managed by React, modify parts that React has no reason to update.
+- Refs là một khái niệm tổng quát, nhưng thường được dùng nhất để lưu các phần tử DOM.
+- Bạn yêu cầu React đặt một node DOM vào `myRef.current` bằng cách truyền `<div ref={myRef}>`.
+- Thông thường, bạn sẽ dùng refs cho các thao tác không mang tính phá hủy như focus, cuộn hoặc đo các phần tử DOM.
+- Theo mặc định, một component không expose các node DOM của nó. Bạn có thể chọn expose một node DOM bằng cách sử dụng prop `ref`.
+- Tránh thay đổi các node DOM do React quản lý.
+- Nếu bạn có sửa đổi các node DOM do React quản lý, hãy chỉ sửa đổi những phần mà React không có lý do để cập nhật.
 
 </Recap>
 
@@ -668,9 +668,9 @@ However, this doesn't mean that you can't do it at all. It requires caution. **Y
 
 <Challenges>
 
-#### Play and pause the video {/*play-and-pause-the-video*/}
+#### Phát và tạm dừng video {/*play-and-pause-the-video*/}
 
-In this example, the button toggles a state variable to switch between a playing and a paused state. However, in order to actually play or pause the video, toggling state is not enough. You also need to call [`play()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play) and [`pause()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause) on the DOM element for the `<video>`. Add a ref to it, and make the button work.
+Trong ví dụ này, nút sẽ bật/tắt một state variable để chuyển đổi giữa trạng thái đang phát và tạm dừng. Tuy nhiên, để thực sự phát hoặc tạm dừng video, chỉ bật/tắt state là chưa đủ. Bạn cũng cần gọi [`play()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play) và [`pause()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause) trên DOM element của `<video>`. Hãy thêm một ref vào đó và làm cho nút hoạt động.
 
 <Sandpack>
 
@@ -707,11 +707,11 @@ button { display: block; margin-bottom: 20px; }
 
 </Sandpack>
 
-For an extra challenge, keep the "Play" button in sync with whether the video is playing even if the user right-clicks the video and plays it using the built-in browser media controls. You might want to listen to `onPlay` and `onPause` on the video to do that.
+Để thử thách hơn, hãy giữ nút “Play” đồng bộ với trạng thái đang phát của video, ngay cả khi người dùng nhấp chuột phải vào video và phát video bằng các media controls tích hợp của trình duyệt. Bạn có thể muốn lắng nghe `onPlay` và `onPause` trên video để thực hiện việc này.
 
 <Solution>
 
-Declare a ref and put it on the `<video>` element. Then call `ref.current.play()` and `ref.current.pause()` in the event handler depending on the next state.
+Khai báo một ref và đặt nó lên phần tử `<video>`. Sau đó gọi `ref.current.play()` và `ref.current.pause()` trong event handler, tùy thuộc vào state tiếp theo.
 
 <Sandpack>
 
@@ -760,13 +760,13 @@ button { display: block; margin-bottom: 20px; }
 
 </Sandpack>
 
-In order to handle the built-in browser controls, you can add `onPlay` and `onPause` handlers to the `<video>` element and call `setIsPlaying` from them. This way, if the user plays the video using the browser controls, the state will adjust accordingly.
+Để xử lý các controls tích hợp của trình duyệt, bạn có thể thêm các handler `onPlay` và `onPause` vào phần tử `<video>`, rồi gọi `setIsPlaying` từ các handler đó. Nhờ vậy, nếu người dùng phát video bằng các controls của trình duyệt, state sẽ được điều chỉnh tương ứng.
 
 </Solution>
 
-#### Focus the search field {/*focus-the-search-field*/}
+#### Focus vào trường tìm kiếm {/*focus-the-search-field*/}
 
-Make it so that clicking the "Search" button puts focus into the field.
+Hãy làm cho việc nhấp vào nút “Search” đưa focus vào trường tìm kiếm.
 
 <Sandpack>
 
@@ -793,7 +793,7 @@ button { display: block; margin-bottom: 10px; }
 
 <Solution>
 
-Add a ref to the input, and call `focus()` on the DOM node to focus it:
+Thêm một ref vào input và gọi `focus()` trên node DOM để đưa focus vào đó:
 
 <Sandpack>
 
@@ -828,9 +828,9 @@ button { display: block; margin-bottom: 10px; }
 
 </Solution>
 
-#### Scrolling an image carousel {/*scrolling-an-image-carousel*/}
+#### Cuộn carousel hình ảnh {/*scrolling-an-image-carousel*/}
 
-This image carousel has a "Next" button that switches the active image. Make the gallery scroll horizontally to the active image on click. You will want to call [`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView) on the DOM node of the active image:
+Carousel hình ảnh này có một nút “Next” để chuyển sang hình ảnh đang active. Hãy làm cho gallery cuộn theo chiều ngang đến hình ảnh active khi nhấp vào nút. Bạn sẽ cần gọi [`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView) trên node DOM của hình ảnh active:
 
 ```js
 node.scrollIntoView({
@@ -842,7 +842,7 @@ node.scrollIntoView({
 
 <Hint>
 
-You don't need to have a ref to every image for this exercise. It should be enough to have a ref to the currently active image, or to the list itself. Use `flushSync` to ensure the DOM is updated *before* you scroll.
+Bạn không cần có một ref cho mọi hình ảnh trong bài tập này. Chỉ cần có một ref đến hình ảnh hiện đang active hoặc đến chính danh sách là đủ. Sử dụng `flushSync` để đảm bảo DOM được cập nhật *trước* khi bạn cuộn.
 
 </Hint>
 
@@ -955,15 +955,15 @@ img {
 
 <Solution>
 
-You can declare a `selectedRef`, and then pass it conditionally only to the current image:
+Bạn có thể khai báo một `selectedRef`, sau đó chỉ truyền nó có điều kiện cho hình ảnh hiện tại:
 
 ```js
 <li ref={index === i ? selectedRef : null}>
 ```
 
-When `index === i`, meaning that the image is the selected one, the `<li>` will receive the `selectedRef`. React will make sure that `selectedRef.current` always points at the correct DOM node.
+Khi `index === i`, nghĩa là hình ảnh đó là hình ảnh được chọn, `<li>` sẽ nhận `selectedRef`. React sẽ đảm bảo rằng `selectedRef.current` luôn trỏ đến đúng node DOM.
 
-Note that the `flushSync` call is necessary to force React to update the DOM before the scroll. Otherwise, `selectedRef.current` would always point at the previously selected item.
+Lưu ý rằng lời gọi `flushSync` là cần thiết để buộc React cập nhật DOM trước khi cuộn. Nếu không, `selectedRef.current` sẽ luôn trỏ đến item được chọn trước đó.
 
 <Sandpack>
 
@@ -1090,13 +1090,13 @@ img {
 
 </Solution>
 
-#### Focus the search field with separate components {/*focus-the-search-field-with-separate-components*/}
+#### Focus vào trường tìm kiếm với các component riêng biệt {/*focus-the-search-field-with-separate-components*/}
 
-Make it so that clicking the "Search" button puts focus into the field. Note that each component is defined in a separate file and shouldn't be moved out of it. How do you connect them together?
+Hãy làm cho việc nhấp vào nút “Search” đưa focus vào trường tìm kiếm. Lưu ý rằng mỗi component được định nghĩa trong một file riêng và không nên được di chuyển ra khỏi file đó. Bạn kết nối chúng với nhau như thế nào?
 
 <Hint>
 
-You'll need to pass `ref` as a prop to opt into exposing a DOM node from your own component like `SearchInput`.
+Bạn sẽ cần truyền `ref` dưới dạng prop để cho phép expose một node DOM từ component của chính bạn, chẳng hạn như `SearchInput`.
 
 </Hint>
 
@@ -1146,7 +1146,7 @@ button { display: block; margin-bottom: 10px; }
 
 <Solution>
 
-You'll need to add an `onClick` prop to the `SearchButton`, and make the `SearchButton` pass it down to the browser `<button>`. You'll also pass a ref down to `<SearchInput>`, which will forward it to the real `<input>` and populate it. Finally, in the click handler, you'll call `focus` on the DOM node stored inside that ref.
+Bạn sẽ cần thêm một prop `onClick` vào `SearchButton`, đồng thời để `SearchButton` truyền prop đó xuống `<button>` của trình duyệt. Bạn cũng sẽ truyền một ref xuống `<SearchInput>`, component này sẽ chuyển tiếp ref đó đến `<input>` thực tế và gán giá trị cho nó. Cuối cùng, trong click handler, bạn sẽ gọi `focus` trên node DOM được lưu bên trong ref đó.
 
 <Sandpack>
 

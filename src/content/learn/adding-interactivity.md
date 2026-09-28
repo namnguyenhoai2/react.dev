@@ -1,30 +1,30 @@
 ---
-title: Adding Interactivity
+title: Thêm tính tương tác
 ---
 
 <Intro>
 
-Some things on the screen update in response to user input. For example, clicking an image gallery switches the active image. In React, data that changes over time is called *state.* You can add state to any component, and update it as needed. In this chapter, you'll learn how to write components that handle interactions, update their state, and display different output over time.
+Một số nội dung trên màn hình được cập nhật để phản hồi thao tác của người dùng. Ví dụ: khi nhấp vào thư viện ảnh, ảnh đang hoạt động sẽ được thay đổi. Trong React, dữ liệu thay đổi theo thời gian được gọi là *state.* Bạn có thể thêm state vào bất kỳ component nào và cập nhật state khi cần. Trong chương này, bạn sẽ học cách viết các component xử lý tương tác, cập nhật state và hiển thị đầu ra khác nhau theo thời gian.
 
 </Intro>
 
 <YouWillLearn isChapter={true}>
 
-* [How to handle user-initiated events](/learn/responding-to-events)
-* [How to make components "remember" information with state](/learn/state-a-components-memory)
-* [How React updates the UI in two phases](/learn/render-and-commit)
-* [Why state doesn't update right after you change it](/learn/state-as-a-snapshot)
-* [How to queue multiple state updates](/learn/queueing-a-series-of-state-updates)
-* [How to update an object in state](/learn/updating-objects-in-state)
-* [How to update an array in state](/learn/updating-arrays-in-state)
+* [Cách xử lý các sự kiện do người dùng khởi tạo](/learn/responding-to-events)
+* [Cách giúp component “ghi nhớ” thông tin bằng state](/learn/state-a-components-memory)
+* [Cách React cập nhật UI qua hai giai đoạn](/learn/render-and-commit)
+* [Tại sao state không cập nhật ngay sau khi bạn thay đổi](/learn/state-as-a-snapshot)
+* [Cách xếp hàng nhiều lần cập nhật state](/learn/queueing-a-series-of-state-updates)
+* [Cách cập nhật một object trong state](/learn/updating-objects-in-state)
+* [Cách cập nhật một array trong state](/learn/updating-arrays-in-state)
 
 </YouWillLearn>
 
-## Responding to events {/*responding-to-events*/}
+## Phản hồi sự kiện {/*responding-to-events*/}
 
-React lets you add *event handlers* to your JSX. Event handlers are your own functions that will be triggered in response to user interactions like clicking, hovering, focusing on form inputs, and so on.
+React cho phép bạn thêm *event handler* vào JSX. Event handler là các hàm do bạn tự viết, sẽ được kích hoạt để phản hồi các tương tác của người dùng như nhấp, di chuột qua, đặt focus vào các input của form, v.v.
 
-Built-in components like `<button>` only support built-in browser events like `onClick`. However, you can also create your own components, and give their event handler props any application-specific names that you like.
+Các component dựng sẵn như `<button>` chỉ hỗ trợ những sự kiện dựng sẵn của trình duyệt như `onClick`. Tuy nhiên, bạn cũng có thể tự tạo component và đặt cho các props event handler của chúng bất kỳ tên nào phù hợp với ứng dụng.
 
 <Sandpack>
 
@@ -68,22 +68,22 @@ button { margin-right: 10px; }
 
 <LearnMore path="/learn/responding-to-events">
 
-Read **[Responding to Events](/learn/responding-to-events)** to learn how to add event handlers.
+Đọc **[Phản hồi sự kiện](/learn/responding-to-events)** để tìm hiểu cách thêm event handler.
 
 </LearnMore>
 
-## State: a component's memory {/*state-a-components-memory*/}
+## State: bộ nhớ của component {/*state-a-components-memory*/}
 
-Components often need to change what's on the screen as a result of an interaction. Typing into the form should update the input field, clicking "next" on an image carousel should change which image is displayed, clicking "buy" puts a product in the shopping cart. Components need to "remember" things: the current input value, the current image, the shopping cart. In React, this kind of component-specific memory is called *state.*
+Component thường cần thay đổi nội dung trên màn hình do một tương tác gây ra. Việc nhập vào form sẽ cập nhật trường input, nhấp vào "next" trên image carousel sẽ thay đổi ảnh được hiển thị, còn nhấp vào "buy" sẽ thêm sản phẩm vào shopping cart. Component cần “ghi nhớ” nhiều thứ: giá trị input hiện tại, ảnh hiện tại và shopping cart. Trong React, loại bộ nhớ riêng của component này được gọi là *state.*
 
-You can add state to a component with a [`useState`](/reference/react/useState) Hook. *Hooks* are special functions that let your components use React features (state is one of those features). The `useState` Hook lets you declare a state variable. It takes the initial state and returns a pair of values: the current state, and a state setter function that lets you update it.
+Bạn có thể thêm state vào component bằng một [`useState`](/reference/react/useState) Hook. *Hook* là những hàm đặc biệt cho phép component sử dụng các tính năng của React (state là một trong số đó). Hook `useState` cho phép bạn khai báo một biến state. Hook này nhận state ban đầu và trả về một cặp giá trị: state hiện tại và một hàm setter của state, cho phép bạn cập nhật state đó.
 
 ```js
 const [index, setIndex] = useState(0);
 const [showMore, setShowMore] = useState(false);
 ```
 
-Here is how an image gallery uses and updates state on click:
+Sau đây là cách một thư viện ảnh sử dụng và cập nhật state khi được nhấp:
 
 <Sandpack>
 
@@ -229,19 +229,19 @@ button {
 
 <LearnMore path="/learn/state-a-components-memory">
 
-Read **[State: A Component's Memory](/learn/state-a-components-memory)** to learn how to remember a value and update it on interaction.
+Đọc **[State: Bộ nhớ của component](/learn/state-a-components-memory)** để tìm hiểu cách ghi nhớ một giá trị và cập nhật giá trị đó khi có tương tác.
 
 </LearnMore>
 
-## Render and commit {/*render-and-commit*/}
+## Render và commit {/*render-and-commit*/}
 
-Before your components are displayed on the screen, they must be rendered by React. Understanding the steps in this process will help you think about how your code executes and explain its behavior.
+Trước khi được hiển thị trên màn hình, các component phải được React render. Việc hiểu các bước trong quy trình này sẽ giúp bạn hình dung cách code được thực thi và giải thích hành vi của code.
 
-Imagine that your components are cooks in the kitchen, assembling tasty dishes from ingredients. In this scenario, React is the waiter who puts in requests from customers and brings them their orders. This process of requesting and serving UI has three steps:
+Hãy tưởng tượng các component của bạn là những đầu bếp trong bếp, chuẩn bị các món ăn ngon từ nguyên liệu. Trong kịch bản này, React là người phục vụ nhận yêu cầu từ khách hàng và mang món ăn đến cho họ. Quy trình yêu cầu và phục vụ UI này gồm ba bước:
 
-1. **Triggering** a render (delivering the diner's order to the kitchen)
-2. **Rendering** the component (preparing the order in the kitchen)
-3. **Committing** to the DOM (placing the order on the table)
+1. **Kích hoạt** một lần render (chuyển yêu cầu của thực khách vào bếp)
+2. **Render** component (chuẩn bị món ăn trong bếp)
+3. **Commit** vào DOM (đặt món ăn lên bàn)
 
 <IllustrationBlock sequential>
   <Illustration caption="Trigger" alt="React as a server in a restaurant, fetching orders from the users and delivering them to the Component Kitchen." src="/images/docs/illustrations/i_render-and-commit1.png" />
@@ -251,13 +251,13 @@ Imagine that your components are cooks in the kitchen, assembling tasty dishes f
 
 <LearnMore path="/learn/render-and-commit">
 
-Read **[Render and Commit](/learn/render-and-commit)** to learn the lifecycle of a UI update.
+Đọc **[Render và Commit](/learn/render-and-commit)** để tìm hiểu vòng đời của một lần cập nhật UI.
 
 </LearnMore>
 
-## State as a snapshot {/*state-as-a-snapshot*/}
+## State như một snapshot {/*state-as-a-snapshot*/}
 
-Unlike regular JavaScript variables, React state behaves more like a snapshot. Setting it does not change the state variable you already have, but instead triggers a re-render. This can be surprising at first!
+Không giống các biến JavaScript thông thường, state của React hoạt động giống một snapshot hơn. Việc thiết lập state không thay đổi biến state mà bạn đang có, mà thay vào đó sẽ kích hoạt một lần render lại. Điều này lúc đầu có thể khiến bạn bất ngờ!
 
 ```js
 console.log(count);  // 0
@@ -265,7 +265,7 @@ setCount(count + 1); // Request a re-render with 1
 console.log(count);  // Still 0!
 ```
 
-This behavior helps you avoid subtle bugs. Here is a little chat app. Try to guess what happens if you press "Send" first and *then* change the recipient to Bob. Whose name will appear in the `alert` five seconds later?
+Hành vi này giúp bạn tránh các bug khó nhận ra. Đây là một ứng dụng chat nhỏ. Hãy thử đoán điều gì sẽ xảy ra nếu bạn nhấn "Send" trước rồi *sau đó* đổi người nhận thành Bob. Năm giây sau, tên của ai sẽ xuất hiện trong `alert`?
 
 <Sandpack>
 
@@ -314,13 +314,13 @@ label, textarea { margin-bottom: 10px; display: block; }
 
 <LearnMore path="/learn/state-as-a-snapshot">
 
-Read **[State as a Snapshot](/learn/state-as-a-snapshot)** to learn why state appears "fixed" and unchanging inside the event handlers.
+Đọc **[State như một snapshot](/learn/state-as-a-snapshot)** để tìm hiểu tại sao state có vẻ “cố định” và không thay đổi bên trong các event handler.
 
 </LearnMore>
 
-## Queueing a series of state updates {/*queueing-a-series-of-state-updates*/}
+## Xếp hàng một chuỗi lần cập nhật state {/*queueing-a-series-of-state-updates*/}
 
-This component is buggy: clicking "+3" increments the score only once.
+Component này có lỗi: nhấp vào "+3" chỉ tăng điểm một lần.
 
 <Sandpack>
 
@@ -354,7 +354,7 @@ button { display: inline-block; margin: 10px; font-size: 20px; }
 
 </Sandpack>
 
-[State as a Snapshot](/learn/state-as-a-snapshot) explains why this is happening. Setting state requests a new re-render, but does not change it in the already running code. So `score` continues to be `0` right after you call `setScore(score + 1)`.
+[State như một snapshot](/learn/state-as-a-snapshot) giải thích lý do điều này xảy ra. Việc thiết lập state yêu cầu một lần render lại, nhưng không thay đổi state trong đoạn code đang chạy. Vì vậy `score` vẫn tiếp tục là `0` ngay sau khi bạn gọi `setScore(score + 1)`.
 
 ```js
 console.log(score);  // 0
@@ -366,7 +366,7 @@ setScore(score + 1); // setScore(0 + 1);
 console.log(score);  // 0
 ```
 
-You can fix this by passing an *updater function* when setting state. Notice how replacing `setScore(score + 1)` with `setScore(s => s + 1)` fixes the "+3" button. This lets you queue multiple state updates.
+Bạn có thể khắc phục bằng cách truyền một *updater function* khi thiết lập state. Hãy chú ý việc thay `setScore(score + 1)` bằng `setScore(s => s + 1)` đã sửa nút "+3" như thế nào. Cách này cho phép bạn xếp hàng nhiều lần cập nhật state.
 
 <Sandpack>
 
@@ -402,15 +402,15 @@ button { display: inline-block; margin: 10px; font-size: 20px; }
 
 <LearnMore path="/learn/queueing-a-series-of-state-updates">
 
-Read **[Queueing a Series of State Updates](/learn/queueing-a-series-of-state-updates)** to learn how to queue a sequence of state updates.
+Đọc **[Xếp hàng một chuỗi lần cập nhật state](/learn/queueing-a-series-of-state-updates)** để tìm hiểu cách xếp hàng một chuỗi lần cập nhật state.
 
 </LearnMore>
 
-## Updating objects in state {/*updating-objects-in-state*/}
+## Cập nhật object trong state {/*updating-objects-in-state*/}
 
-State can hold any kind of JavaScript value, including objects. But you shouldn't change objects and arrays that you hold in the React state directly. Instead, when you want to update an object and array, you need to create a new one (or make a copy of an existing one), and then update the state to use that copy.
+State có thể chứa mọi kiểu giá trị JavaScript, bao gồm cả object. Tuy nhiên, bạn không nên trực tiếp thay đổi các object và array được lưu trong state của React. Thay vào đó, khi muốn cập nhật một object hoặc array, bạn cần tạo một object hoặc array mới (hoặc tạo bản sao của object hoặc array hiện có), rồi cập nhật state để sử dụng bản sao đó.
 
-Usually, you will use the `...` spread syntax to copy objects and arrays that you want to change. For example, updating a nested object could look like this:
+Thông thường, bạn sẽ dùng cú pháp spread `...` để sao chép các object và array mà bạn muốn thay đổi. Ví dụ, việc cập nhật một object lồng nhau có thể trông như sau:
 
 <Sandpack>
 
@@ -518,7 +518,7 @@ img { width: 200px; height: 200px; }
 
 </Sandpack>
 
-If copying objects in code gets tedious, you can use a library like [Immer](https://github.com/immerjs/use-immer) to reduce repetitive code:
+Nếu việc sao chép object trong code trở nên rườm rà, bạn có thể dùng một library như [Immer](https://github.com/immerjs/use-immer) để giảm lượng code lặp lại:
 
 <Sandpack>
 
@@ -633,13 +633,13 @@ img { width: 200px; height: 200px; }
 
 <LearnMore path="/learn/updating-objects-in-state">
 
-Read **[Updating Objects in State](/learn/updating-objects-in-state)** to learn how to update objects correctly.
+Đọc **[Cập nhật object trong state](/learn/updating-objects-in-state)** để tìm hiểu cách cập nhật object đúng cách.
 
 </LearnMore>
 
-## Updating arrays in state {/*updating-arrays-in-state*/}
+## Cập nhật array trong state {/*updating-arrays-in-state*/}
 
-Arrays are another type of mutable JavaScript objects you can store in state and should treat as read-only. Just like with objects, when you want to update an array stored in state, you need to create a new one (or make a copy of an existing one), and then set state to use the new array:
+Array là một kiểu object JavaScript có thể thay đổi khác mà bạn có thể lưu trong state, và nên xử lý như dữ liệu chỉ đọc. Cũng như với object, khi muốn cập nhật một array được lưu trong state, bạn cần tạo một array mới (hoặc tạo bản sao của array hiện có), rồi thiết lập state để sử dụng array mới đó:
 
 <Sandpack>
 
@@ -705,7 +705,7 @@ function ItemList({ artworks, onToggle }) {
 
 </Sandpack>
 
-If copying arrays in code gets tedious, you can use a library like [Immer](https://github.com/immerjs/use-immer) to reduce repetitive code:
+Nếu việc sao chép array trong code trở nên rườm rà, bạn có thể dùng một library như [Immer](https://github.com/immerjs/use-immer) để giảm lượng code lặp lại:
 
 <Sandpack>
 
@@ -789,12 +789,12 @@ function ItemList({ artworks, onToggle }) {
 
 <LearnMore path="/learn/updating-arrays-in-state">
 
-Read **[Updating Arrays in State](/learn/updating-arrays-in-state)** to learn how to update arrays correctly.
+Đọc **[Cập nhật array trong state](/learn/updating-arrays-in-state)** để tìm hiểu cách cập nhật array đúng cách.
 
 </LearnMore>
 
-## What's next? {/*whats-next*/}
+## Tiếp theo là gì? {/*whats-next*/}
 
-Head over to [Responding to Events](/learn/responding-to-events) to start reading this chapter page by page!
+Hãy chuyển đến [Phản hồi sự kiện](/learn/responding-to-events) để bắt đầu đọc từng trang của chương này!
 
-Or, if you're already familiar with these topics, why not read about [Managing State](/learn/managing-state)?
+Hoặc nếu bạn đã quen thuộc với các chủ đề này, tại sao không đọc về [Quản lý state](/learn/managing-state)?

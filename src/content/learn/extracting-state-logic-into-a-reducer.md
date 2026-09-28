@@ -1,25 +1,25 @@
 ---
-title: Extracting State Logic into a Reducer
+title: Trích xuất logic state vào một reducer
 ---
 
 <Intro>
 
-Components with many state updates spread across many event handlers can get overwhelming. For these cases, you can consolidate all the state update logic outside your component in a single function, called a _reducer._
+Các component có nhiều cập nhật state nằm rải rác trong nhiều event handler có thể trở nên khó quản lý. Trong những trường hợp này, bạn có thể tập trung toàn bộ logic cập nhật state bên ngoài component vào một hàm duy nhất, gọi là _reducer._
 
 </Intro>
 
 <YouWillLearn>
 
-- What a reducer function is
-- How to refactor `useState` to `useReducer`
-- When to use a reducer
-- How to write one well
+- Reducer function là gì
+- Cách refactor `useState` thành `useReducer`
+- Khi nào nên sử dụng reducer
+- Cách viết reducer tốt
 
 </YouWillLearn>
 
-## Consolidate state logic with a reducer {/*consolidate-state-logic-with-a-reducer*/}
+## Tập trung logic state bằng reducer {/*consolidate-state-logic-with-a-reducer*/}
 
-As your components grow in complexity, it can get harder to see at a glance all the different ways in which a component's state gets updated. For example, the `TaskApp` component below holds an array of `tasks` in state and uses three different event handlers to add, remove, and edit tasks:
+Khi component trở nên phức tạp hơn, bạn sẽ khó có thể nhìn nhanh và thấy được tất cả những cách khác nhau mà state của component được cập nhật. Ví dụ: component `TaskApp` dưới đây lưu một mảng `tasks` trong state và sử dụng ba event handler khác nhau để thêm, xóa và chỉnh sửa task:
 
 <Sandpack>
 
@@ -179,17 +179,17 @@ li {
 
 </Sandpack>
 
-Each of its event handlers calls `setTasks` in order to update the state. As this component grows, so does the amount of state logic sprinkled throughout it. To reduce this complexity and keep all your logic in one easy-to-access place, you can move that state logic into a single function outside your component, **called a "reducer".**
+Mỗi event handler đều gọi `setTasks` để cập nhật state. Khi component này phát triển, lượng logic state nằm rải rác bên trong nó cũng tăng theo. Để giảm độ phức tạp này và giữ toàn bộ logic ở một nơi dễ truy cập, bạn có thể chuyển logic state đó vào một hàm duy nhất bên ngoài component, **gọi là "reducer".**
 
-Reducers are a different way to handle state. You can migrate from `useState` to `useReducer` in three steps:
+Reducer là một cách khác để xử lý state. Bạn có thể chuyển từ `useState` sang `useReducer` qua ba bước:
 
-1. **Move** from setting state to dispatching actions.
-2. **Write** a reducer function.
-3. **Use** the reducer from your component.
+1. **Chuyển** từ việc thiết lập state sang dispatch action.
+2. **Viết** một reducer function.
+3. **Sử dụng** reducer trong component.
 
-### Step 1: Move from setting state to dispatching actions {/*step-1-move-from-setting-state-to-dispatching-actions*/}
+### Bước 1: Chuyển từ thiết lập state sang dispatch action {/*step-1-move-from-setting-state-to-dispatching-actions*/}
 
-Your event handlers currently specify _what to do_ by setting state:
+Hiện tại, các event handler của bạn chỉ định _phải làm gì_ bằng cách thiết lập state:
 
 ```js
 function handleAddTask(text) {
@@ -220,13 +220,13 @@ function handleDeleteTask(taskId) {
 }
 ```
 
-Remove all the state setting logic. What you are left with are three event handlers:
+Hãy xóa toàn bộ logic thiết lập state. Khi đó, bạn còn lại ba event handler:
 
-- `handleAddTask(text)` is called when the user presses "Add".
-- `handleChangeTask(task)` is called when the user toggles a task or presses "Save".
-- `handleDeleteTask(taskId)` is called when the user presses "Delete".
+- `handleAddTask(text)` được gọi khi người dùng nhấn "Add".
+- `handleChangeTask(task)` được gọi khi người dùng chuyển đổi một task hoặc nhấn "Save".
+- `handleDeleteTask(taskId)` được gọi khi người dùng nhấn "Delete".
 
-Managing state with reducers is slightly different from directly setting state. Instead of telling React "what to do" by setting state, you specify "what the user just did" by dispatching "actions" from your event handlers. (The state update logic will live elsewhere!) So instead of "setting `tasks`" via an event handler, you're dispatching an "added/changed/deleted a task" action. This is more descriptive of the user's intent.
+Quản lý state bằng reducer hơi khác so với việc trực tiếp thiết lập state. Thay vì nói cho React biết "phải làm gì" bằng cách thiết lập state, bạn chỉ định "người dùng vừa làm gì" bằng cách dispatch "action" từ các event handler. (Logic cập nhật state sẽ nằm ở nơi khác!) Vì vậy, thay vì "thiết lập `tasks`" thông qua event handler, bạn dispatch action "đã thêm/đã thay đổi/đã xóa một task". Cách này mô tả rõ hơn ý định của người dùng.
 
 ```js
 function handleAddTask(text) {
@@ -252,7 +252,7 @@ function handleDeleteTask(taskId) {
 }
 ```
 
-The object you pass to `dispatch` is called an "action":
+Object bạn truyền vào `dispatch` được gọi là một "action":
 
 ```js {3-7}
 function handleDeleteTask(taskId) {
@@ -266,13 +266,13 @@ function handleDeleteTask(taskId) {
 }
 ```
 
-It is a regular JavaScript object. You decide what to put in it, but generally it should contain the minimal information about _what happened_. (You will add the `dispatch` function itself in a later step.)
+Đó là một JavaScript object thông thường. Bạn quyết định đưa gì vào đó, nhưng nhìn chung, object này nên chứa thông tin tối thiểu về _điều đã xảy ra_. (Bạn sẽ thêm function `dispatch` ở bước sau.)
 
 <Note>
 
-An action object can have any shape.
+Một action object có thể có bất kỳ cấu trúc nào.
 
-By convention, it is common to give it a string `type` that describes what happened, and pass any additional information in other fields. The `type` is specific to a component, so in this example either `'added'` or `'added_task'` would be fine. Choose a name that says what happened!
+Theo quy ước, action thường có một chuỗi `type` mô tả điều đã xảy ra, đồng thời truyền mọi thông tin bổ sung trong các field khác. `type` mang tính cụ thể đối với từng component, vì vậy trong ví dụ này, `'added'` hoặc `'added_task'` đều phù hợp. Hãy chọn một tên thể hiện điều đã xảy ra!
 
 ```js
 dispatch({
@@ -284,9 +284,9 @@ dispatch({
 
 </Note>
 
-### Step 2: Write a reducer function {/*step-2-write-a-reducer-function*/}
+### Bước 2: Viết một reducer function {/*step-2-write-a-reducer-function*/}
 
-A reducer function is where you will put your state logic. It takes two arguments, the current state and the action object, and it returns the next state:
+Reducer function là nơi bạn đặt logic state. Hàm này nhận hai đối số: state hiện tại và action object, sau đó trả về state tiếp theo:
 
 ```js
 function yourReducer(state, action) {
@@ -294,15 +294,15 @@ function yourReducer(state, action) {
 }
 ```
 
-React will set the state to what you return from the reducer.
+React sẽ đặt state thành giá trị mà bạn trả về từ reducer.
 
-To move your state setting logic from your event handlers to a reducer function in this example, you will:
+Để chuyển logic thiết lập state từ các event handler sang một reducer function trong ví dụ này, bạn sẽ:
 
-1. Declare the current state (`tasks`) as the first argument.
-2. Declare the `action` object as the second argument.
-3. Return the _next_ state from the reducer (which React will set the state to).
+1. Khai báo state hiện tại (`tasks`) làm đối số thứ nhất.
+2. Khai báo action object `action` làm đối số thứ hai.
+3. Trả về state _tiếp theo_ từ reducer (giá trị mà React sẽ dùng để thiết lập state).
 
-Here is all the state setting logic migrated to a reducer function:
+Dưới đây là toàn bộ logic thiết lập state đã được chuyển vào một reducer function:
 
 ```js
 function tasksReducer(tasks, action) {
@@ -331,13 +331,13 @@ function tasksReducer(tasks, action) {
 }
 ```
 
-Because the reducer function takes state (`tasks`) as an argument, you can **declare it outside of your component.** This decreases the indentation level and can make your code easier to read.
+Vì reducer function nhận state (`tasks`) làm đối số, bạn có thể **khai báo nó bên ngoài component.** Điều này làm giảm mức độ thụt lề và có thể giúp code dễ đọc hơn.
 
 <Note>
 
-The code above uses if/else statements, but it's a convention to use [switch statements](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/switch) inside reducers. The result is the same, but it can be easier to read switch statements at a glance.
+Đoạn code trên sử dụng các câu lệnh if/else, nhưng theo quy ước, người ta thường sử dụng [switch statements](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/switch) bên trong reducer. Kết quả là như nhau, nhưng switch statement có thể dễ đọc hơn khi nhìn lướt qua.
 
-We'll be using them throughout the rest of this documentation like so:
+Chúng ta sẽ sử dụng chúng trong phần còn lại của tài liệu như sau:
 
 ```js
 function tasksReducer(tasks, action) {
@@ -371,19 +371,19 @@ function tasksReducer(tasks, action) {
 }
 ```
 
-We recommend wrapping each `case` block into the `{` and `}` curly braces so that variables declared inside of different `case`s don't clash with each other. Also, a `case` should usually end with a `return`. If you forget to `return`, the code will "fall through" to the next `case`, which can lead to mistakes!
+Chúng tôi khuyến nghị đặt mỗi block `case` bên trong cặp dấu ngoặc nhọn `{` và `}`, để các biến được khai báo bên trong những `case` khác nhau không xung đột với nhau. Ngoài ra, một `case` thường nên kết thúc bằng `return`. Nếu bạn quên `return`, code sẽ "rơi xuống" `case` tiếp theo, điều này có thể dẫn đến lỗi!
 
-If you're not yet comfortable with switch statements, using if/else is completely fine.
+Nếu bạn chưa quen với switch statement, sử dụng if/else hoàn toàn không có vấn đề gì.
 
 </Note>
 
 <DeepDive>
 
-#### Why are reducers called this way? {/*why-are-reducers-called-this-way*/}
+#### Tại sao reducer lại được gọi như vậy? {/*why-are-reducers-called-this-way*/}
 
-Although reducers can "reduce" the amount of code inside your component, they are actually named after the [`reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) operation that you can perform on arrays.
+Mặc dù reducer có thể "giảm" lượng code bên trong component, tên gọi này thực ra bắt nguồn từ thao tác [`reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) mà bạn có thể thực hiện trên các array.
 
-The `reduce()` operation lets you take an array and "accumulate" a single value out of many:
+Thao tác `reduce()` cho phép bạn lấy một array và "tích lũy" nhiều giá trị thành một giá trị duy nhất:
 
 ```
 const arr = [1, 2, 3, 4, 5];
@@ -392,9 +392,9 @@ const sum = arr.reduce(
 ); // 1 + 2 + 3 + 4 + 5
 ```
 
-The function you pass to `reduce` is known as a "reducer". It takes the _result so far_ and the _current item,_ then it returns the _next result._ React reducers are an example of the same idea: they take the _state so far_ and the _action_, and return the _next state._ In this way, they accumulate actions over time into state.
+Function bạn truyền vào `reduce` được gọi là một "reducer". Function này nhận _kết quả tính đến hiện tại_ và _item hiện tại_, sau đó trả về _kết quả tiếp theo_. React reducer cũng hoạt động theo cùng ý tưởng: chúng nhận _state tính đến hiện tại_ và _action_, rồi trả về _state tiếp theo_. Theo cách này, chúng tích lũy các action theo thời gian thành state.
 
-You could even use the `reduce()` method with an `initialState` and an array of `actions` to calculate the final state by passing your reducer function to it:
+Bạn thậm chí có thể sử dụng method `reduce()` với một `initialState` và một array gồm `actions` để tính state cuối cùng bằng cách truyền reducer function của bạn vào đó:
 
 <Sandpack>
 
@@ -453,43 +453,43 @@ export default function tasksReducer(tasks, action) {
 
 </Sandpack>
 
-You probably won't need to do this yourself, but this is similar to what React does!
+Có lẽ bạn sẽ không cần tự làm điều này, nhưng đây cũng tương tự như những gì React thực hiện!
 
 </DeepDive>
 
-### Step 3: Use the reducer from your component {/*step-3-use-the-reducer-from-your-component*/}
+### Bước 3: Sử dụng reducer trong component {/*step-3-use-the-reducer-from-your-component*/}
 
-Finally, you need to hook up the `tasksReducer` to your component. Import the `useReducer` Hook from React:
+Cuối cùng, bạn cần kết nối `tasksReducer` với component của mình. Import `useReducer` Hook từ React:
 
 ```js
 import { useReducer } from 'react';
 ```
 
-Then you can replace `useState`:
+Sau đó, bạn có thể thay thế `useState`:
 
 ```js
 const [tasks, setTasks] = useState(initialTasks);
 ```
 
-with `useReducer` like so:
+bằng `useReducer` như sau:
 
 ```js
 const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 ```
 
-The `useReducer` Hook is similar to `useState`—you must pass it an initial state and it returns a stateful value and a way to set state (in this case, the dispatch function). But it's a little different.
+`useReducer` Hook tương tự như `useState`—bạn phải truyền vào một state ban đầu, và nó trả về một giá trị state cùng một cách để thiết lập state (trong trường hợp này là dispatch function). Tuy nhiên, nó có một chút khác biệt.
 
-The `useReducer` Hook takes two arguments:
+`useReducer` Hook nhận hai đối số:
 
-1. A reducer function
-2. An initial state
+1. Một reducer function
+2. Một state ban đầu
 
-And it returns:
+Và trả về:
 
-1. A stateful value
-2. A dispatch function (to "dispatch" user actions to the reducer)
+1. Một giá trị state
+2. Một dispatch function (để "dispatch" action của người dùng đến reducer)
 
-Now it's fully wired up! Here, the reducer is declared at the bottom of the component file:
+Bây giờ mọi thứ đã được kết nối hoàn chỉnh! Ở đây, reducer được khai báo ở cuối file component:
 
 <Sandpack>
 
@@ -674,7 +674,7 @@ li {
 
 </Sandpack>
 
-If you want, you can even move the reducer to a different file:
+Nếu muốn, bạn thậm chí có thể chuyển reducer sang một file khác:
 
 <Sandpack>
 
@@ -862,30 +862,30 @@ li {
 
 </Sandpack>
 
-Component logic can be easier to read when you separate concerns like this. Now the event handlers only specify _what happened_ by dispatching actions, and the reducer function determines _how the state updates_ in response to them.
+Logic của component có thể dễ đọc hơn khi bạn tách biệt các mối quan tâm như vậy. Bây giờ, các event handler chỉ chỉ định _điều đã xảy ra_ bằng cách dispatch action, còn reducer function sẽ quyết định _cách state được cập nhật_ để phản hồi các action đó.
 
-## Comparing `useState` and `useReducer` {/*comparing-usestate-and-usereducer*/}
+## So sánh `useState` và `useReducer` {/*comparing-usestate-and-usereducer*/}
 
-Reducers are not without downsides! Here's a few ways you can compare them:
+Reducer không phải không có nhược điểm! Dưới đây là một vài cách để bạn so sánh chúng:
 
-- **Code size:** Generally, with `useState` you have to write less code upfront. With `useReducer`, you have to write both a reducer function _and_ dispatch actions. However, `useReducer` can help cut down on the code if many event handlers modify state in a similar way.
-- **Readability:** `useState` is very easy to read when the state updates are simple. When they get more complex, they can bloat your component's code and make it difficult to scan. In this case, `useReducer` lets you cleanly separate the _how_ of update logic from the _what happened_ of event handlers.
-- **Debugging:** When you have a bug with `useState`, it can be difficult to tell _where_ the state was set incorrectly, and _why_. With `useReducer`, you can add a console log into your reducer to see every state update, and _why_ it happened (due to which `action`). If each `action` is correct, you'll know that the mistake is in the reducer logic itself. However, you have to step through more code than with `useState`.
-- **Testing:** A reducer is a pure function that doesn't depend on your component. This means that you can export and test it separately in isolation. While generally it's best to test components in a more realistic environment, for complex state update logic it can be useful to assert that your reducer returns a particular state for a particular initial state and action.
-- **Personal preference:** Some people like reducers, others don't. That's okay. It's a matter of preference. You can always convert between `useState` and `useReducer` back and forth: they are equivalent!
+- **Kích thước code:** Nhìn chung, với `useState`, bạn phải viết ít code hơn ngay từ đầu. Với `useReducer`, bạn phải viết cả một hàm reducer _và_ các action dispatch. Tuy nhiên, `useReducer` có thể giúp giảm lượng code nếu nhiều event handler sửa đổi state theo cách tương tự.
+- **Khả năng đọc:** `useState` rất dễ đọc khi các thao tác cập nhật state đơn giản. Khi chúng trở nên phức tạp hơn, chúng có thể làm code của component phình to và khó xem nhanh. Trong trường hợp này, `useReducer` cho phép bạn tách riêng một cách rõ ràng _cách thức_ logic cập nhật hoạt động khỏi _điều đã xảy ra_ trong các event handler.
+- **Debug:** Khi bạn gặp lỗi với `useState`, có thể khó xác định _state đã được thiết lập sai ở đâu_ và _vì sao_. Với `useReducer`, bạn có thể thêm một console log vào reducer để xem mọi lần cập nhật state và _lý do_ nó xảy ra (do `action` nào). Nếu mỗi `action` đều đúng, bạn sẽ biết rằng lỗi nằm trong chính logic của reducer. Tuy nhiên, bạn phải lần theo nhiều code hơn so với `useState`.
+- **Testing:** Reducer là một pure function không phụ thuộc vào component của bạn. Điều này có nghĩa là bạn có thể export và test riêng nó một cách độc lập. Mặc dù nhìn chung, tốt nhất là nên test các component trong một môi trường thực tế hơn, nhưng với logic cập nhật state phức tạp, việc xác nhận rằng reducer trả về một state cụ thể với một state ban đầu và action cụ thể có thể rất hữu ích.
+- **Sở thích cá nhân:** Một số người thích reducer, những người khác thì không. Điều đó hoàn toàn ổn. Đây là vấn đề về sở thích. Bạn luôn có thể chuyển đổi qua lại giữa `useState` và `useReducer`: chúng tương đương nhau!
 
-We recommend using a reducer if you often encounter bugs due to incorrect state updates in some component, and want to introduce more structure to its code. You don't have to use reducers for everything: feel free to mix and match! You can even `useState` and `useReducer` in the same component.
+Chúng tôi khuyên bạn nên dùng reducer nếu thường xuyên gặp lỗi do cập nhật state không chính xác trong một component nào đó và muốn đưa thêm cấu trúc vào code của component. Bạn không cần dùng reducer cho mọi thứ: hãy thoải mái kết hợp chúng! Bạn thậm chí có thể `useState` và `useReducer` trong cùng một component.
 
-## Writing reducers well {/*writing-reducers-well*/}
+## Viết reducer hiệu quả {/*writing-reducers-well*/}
 
-Keep these two tips in mind when writing reducers:
+Hãy ghi nhớ hai mẹo sau khi viết reducer:
 
-- **Reducers must be pure.** Similar to [state updater functions](/learn/queueing-a-series-of-state-updates), reducers run during rendering! (Actions are queued until the next render.) This means that reducers [must be pure](/learn/keeping-components-pure)—same inputs always result in the same output. They should not send requests, schedule timeouts, or perform any side effects (operations that impact things outside the component). They should update [objects](/learn/updating-objects-in-state) and [arrays](/learn/updating-arrays-in-state) without mutations.
-- **Each action describes a single user interaction, even if that leads to multiple changes in the data.** For example, if a user presses "Reset" on a form with five fields managed by a reducer, it makes more sense to dispatch one `reset_form` action rather than five separate `set_field` actions. If you log every action in a reducer, that log should be clear enough for you to reconstruct what interactions or responses happened in what order. This helps with debugging!
+- **Reducer phải là pure function.** Tương tự như [các hàm cập nhật state](/learn/queueing-a-series-of-state-updates), reducer chạy trong quá trình render! (Các action được xếp hàng cho đến lần render tiếp theo.) Điều này có nghĩa là reducer [phải là pure function](/learn/keeping-components-pure)—cùng input luôn phải cho ra cùng output. Chúng không được gửi request, lên lịch timeout hoặc thực hiện bất kỳ side effect nào (các thao tác ảnh hưởng đến những thứ bên ngoài component). Chúng nên cập nhật [object](/learn/updating-objects-in-state) và [array](/learn/updating-arrays-in-state) mà không thực hiện mutation.
+- **Mỗi action mô tả một tương tác người dùng duy nhất, ngay cả khi tương tác đó dẫn đến nhiều thay đổi trong dữ liệu.** Ví dụ, nếu người dùng nhấn "Reset" trên một form có năm trường được quản lý bởi reducer, việc dispatch một action `reset_form` sẽ hợp lý hơn so với việc dispatch năm action `set_field` riêng biệt. Nếu bạn log mọi action trong reducer, log đó phải đủ rõ để bạn tái hiện những tương tác hoặc phản hồi nào đã xảy ra và theo thứ tự nào. Điều này giúp debug dễ hơn!
 
-## Writing concise reducers with Immer {/*writing-concise-reducers-with-immer*/}
+## Viết reducer ngắn gọn với Immer {/*writing-concise-reducers-with-immer*/}
 
-Just like with [updating objects](/learn/updating-objects-in-state#write-concise-update-logic-with-immer) and [arrays](/learn/updating-arrays-in-state#write-concise-update-logic-with-immer) in regular state, you can use the Immer library to make reducers more concise. Here, [`useImmerReducer`](https://github.com/immerjs/use-immer#useimmerreducer) lets you mutate the state with `push` or `arr[i] =` assignment:
+Cũng giống như khi [cập nhật object](/learn/updating-objects-in-state#write-concise-update-logic-with-immer) và [array](/learn/updating-arrays-in-state#write-concise-update-logic-with-immer) trong state thông thường, bạn có thể dùng thư viện Immer để viết reducer ngắn gọn hơn. Ở đây, [`useImmerReducer`](https://github.com/immerjs/use-immer#useimmerreducer) cho phép bạn mutate state bằng phép gán `push` hoặc `arr[i] =`:
 
 <Sandpack>
 
@@ -1082,34 +1082,34 @@ li {
 
 </Sandpack>
 
-Reducers must be pure, so they shouldn't mutate state. But Immer provides you with a special `draft` object which is safe to mutate. Under the hood, Immer will create a copy of your state with the changes you made to the `draft`. This is why reducers managed by `useImmerReducer` can mutate their first argument and don't need to return state.
+Reducer phải là pure function, vì vậy không được mutate state. Nhưng Immer cung cấp cho bạn một object `draft` đặc biệt, an toàn để mutate. Ở bên trong, Immer sẽ tạo một bản sao state với những thay đổi bạn đã thực hiện trên `draft`. Đây là lý do các reducer được quản lý bởi `useImmerReducer` có thể mutate đối số đầu tiên và không cần return state.
 
 <Recap>
 
-- To convert from `useState` to `useReducer`:
-  1. Dispatch actions from event handlers.
-  2. Write a reducer function that returns the next state for a given state and action.
-  3. Replace `useState` with `useReducer`.
-- Reducers require you to write a bit more code, but they help with debugging and testing.
-- Reducers must be pure.
-- Each action describes a single user interaction.
-- Use Immer if you want to write reducers in a mutating style.
+- Để chuyển từ `useState` sang `useReducer`:
+  1. Dispatch action từ các event handler.
+  2. Viết một hàm reducer trả về state tiếp theo dựa trên state và action đã cho.
+  3. Thay thế `useState` bằng `useReducer`.
+- Reducer yêu cầu bạn viết nhiều code hơn một chút, nhưng chúng giúp debug và testing dễ dàng hơn.
+- Reducer phải là pure function.
+- Mỗi action mô tả một tương tác người dùng duy nhất.
+- Dùng Immer nếu bạn muốn viết reducer theo kiểu mutation.
 
 </Recap>
 
 <Challenges>
 
-#### Dispatch actions from event handlers {/*dispatch-actions-from-event-handlers*/}
+#### Dispatch action từ các event handler {/*dispatch-actions-from-event-handlers*/}
 
-Currently, the event handlers in `ContactList.js` and `Chat.js` have `// TODO` comments. This is why typing into the input doesn't work, and clicking on the buttons doesn't change the selected recipient.
+Hiện tại, các event handler trong `ContactList.js` và `Chat.js` có các comment `// TODO`. Đây là lý do việc nhập vào input không hoạt động và việc nhấp vào các button không thay đổi người nhận đã chọn.
 
-Replace these two `// TODO`s with the code to `dispatch` the corresponding actions. To see the expected shape and the type of the actions, check the reducer in `messengerReducer.js`. The reducer is already written so you won't need to change it. You only need to dispatch the actions in `ContactList.js` and `Chat.js`.
+Hãy thay thế hai `// TODO` này bằng code để `dispatch` các action tương ứng. Để xem cấu trúc dự kiến và kiểu của các action, hãy kiểm tra reducer trong `messengerReducer.js`. Reducer đã được viết sẵn nên bạn không cần thay đổi nó. Bạn chỉ cần dispatch các action trong `ContactList.js` và `Chat.js`.
 
 <Hint>
 
-The `dispatch` function is already available in both of these components because it was passed as a prop. So you need to call `dispatch` with the corresponding action object.
+Hàm `dispatch` đã có sẵn trong cả hai component này vì nó được truyền vào dưới dạng prop. Vì vậy, bạn cần gọi `dispatch` với object action tương ứng.
 
-To check the action object shape, you can look at the reducer and see which `action` fields it expects to see. For example, the `changed_selection` case in the reducer looks like this:
+Để kiểm tra cấu trúc của object action, bạn có thể xem reducer và xác định những trường `action` nào mà nó yêu cầu. Ví dụ, case `changed_selection` trong reducer có dạng như sau:
 
 ```js
 case 'changed_selection': {
@@ -1120,7 +1120,7 @@ case 'changed_selection': {
 }
 ```
 
-This means that your action object should have a `type: 'changed_selection'`. You also see the `action.contactId` being used, so you need to include a `contactId` property into your action.
+Điều này có nghĩa là object action của bạn phải có một `type: 'changed_selection'`. Bạn cũng thấy `action.contactId` được sử dụng, vì vậy bạn cần thêm một thuộc tính `contactId` vào action.
 
 </Hint>
 
@@ -1256,7 +1256,7 @@ textarea {
 
 <Solution>
 
-From the reducer code, you can infer that actions need to look like this:
+Từ code của reducer, bạn có thể suy ra rằng các action cần có dạng như sau:
 
 ```js
 // When the user presses "Alice"
@@ -1272,7 +1272,7 @@ dispatch({
 });
 ```
 
-Here is the example updated to dispatch the corresponding messages:
+Dưới đây là ví dụ đã được cập nhật để dispatch các message tương ứng:
 
 <Sandpack>
 
@@ -1411,12 +1411,12 @@ textarea {
 
 </Solution>
 
-#### Clear the input on sending a message {/*clear-the-input-on-sending-a-message*/}
+#### Xóa input khi gửi message {/*clear-the-input-on-sending-a-message*/}
 
-Currently, pressing "Send" doesn't do anything. Add an event handler to the "Send" button that will:
+Hiện tại, việc nhấn "Send" không thực hiện điều gì. Hãy thêm một event handler vào button "Send" để:
 
-1. Show an `alert` with the recipient's email and the message.
-2. Clear the message input.
+1. Hiển thị một `alert` cùng với email của người nhận và message.
+2. Xóa input message.
 
 <Sandpack>
 
@@ -1555,7 +1555,7 @@ textarea {
 
 <Solution>
 
-There are a couple of ways you could do it in the "Send" button event handler. One approach is to show an alert and then dispatch an `edited_message` action with an empty `message`:
+Có một vài cách bạn có thể thực hiện việc này trong event handler của button "Send". Một cách là hiển thị alert rồi dispatch một action `edited_message` với một `message` rỗng:
 
 <Sandpack>
 
@@ -1701,9 +1701,9 @@ textarea {
 
 </Sandpack>
 
-This works and clears the input when you hit "Send".
+Cách này hoạt động và sẽ xóa input khi bạn nhấn "Send".
 
-However, _from the user's perspective_, sending a message is a different action than editing the field. To reflect that, you could instead create a _new_ action called `sent_message`, and handle it separately in the reducer:
+Tuy nhiên, _theo góc nhìn của người dùng_, gửi một message là một action khác với chỉnh sửa field. Để phản ánh điều đó, thay vào đó bạn có thể tạo một action _mới_ có tên `sent_message` và xử lý nó riêng trong reducer:
 
 <Sandpack>
 
@@ -1854,15 +1854,15 @@ textarea {
 
 </Sandpack>
 
-The resulting behavior is the same. But keep in mind that action types should ideally describe "what the user did" rather than "how you want the state to change". This makes it easier to later add more features.
+Hành vi cuối cùng là như nhau. Nhưng hãy nhớ rằng các action type lý tưởng nhất nên mô tả "người dùng đã làm gì" thay vì "bạn muốn state thay đổi như thế nào". Điều này giúp bạn dễ dàng bổ sung thêm tính năng sau này.
 
-With either solution, it's important that you **don't** place the `alert` inside a reducer. The reducer should be a pure function--it should only calculate the next state. It should not "do" anything, including displaying messages to the user. That should happen in the event handler. (To help catch mistakes like this, React will call your reducers multiple times in Strict Mode. This is why, if you put an alert in a reducer, it fires twice.)
+Với cả hai cách, điều quan trọng là bạn **không** đặt `alert` bên trong reducer. Reducer phải là một pure function—nó chỉ nên tính toán state tiếp theo. Nó không được "thực hiện" bất kỳ việc gì, bao gồm cả việc hiển thị message cho người dùng. Việc đó phải diễn ra trong event handler. (Để giúp phát hiện những lỗi như vậy, React sẽ gọi reducer nhiều lần trong Strict Mode. Đây là lý do nếu bạn đặt alert trong reducer, nó sẽ hiển thị hai lần.)
 
 </Solution>
 
-#### Restore input values when switching between tabs {/*restore-input-values-when-switching-between-tabs*/}
+#### Khôi phục giá trị input khi chuyển đổi giữa các tab {/*restore-input-values-when-switching-between-tabs*/}
 
-In this example, switching between different recipients always clears the text input:
+Trong ví dụ này, việc chuyển đổi giữa những người nhận khác nhau luôn xóa text input:
 
 ```js
 case 'changed_selection': {
@@ -1873,13 +1873,13 @@ case 'changed_selection': {
   };
 ```
 
-This is because you don't want to share a single message draft between several recipients. But it would be better if your app "remembered" a draft for each contact separately, restoring them when you switch contacts.
+Điều này là do bạn không muốn dùng chung một message draft giữa nhiều người nhận. Nhưng sẽ tốt hơn nếu app của bạn "ghi nhớ" một draft riêng cho từng contact và khôi phục chúng khi bạn chuyển contact.
 
-Your task is to change the way the state is structured so that you remember a separate message draft _per contact_. You would need to make a few changes to the reducer, the initial state, and the components.
+Nhiệm vụ của bạn là thay đổi cách cấu trúc state để ghi nhớ một message draft _cho mỗi contact_. Bạn sẽ cần thực hiện một vài thay đổi đối với reducer, state ban đầu và các component.
 
 <Hint>
 
-You can structure your state like this:
+Bạn có thể cấu trúc state như sau:
 
 ```js
 export const initialState = {
@@ -1891,7 +1891,7 @@ export const initialState = {
 };
 ```
 
-The `[key]: value` [computed property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#computed_property_names) syntax can help you update the `messages` object:
+Cú pháp `[key]: value` [thuộc tính computed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#computed_property_names) có thể giúp bạn cập nhật đối tượng `messages`:
 
 ```js
 {
@@ -2053,7 +2053,7 @@ textarea {
 
 <Solution>
 
-You'll need to update the reducer to store and update a separate message draft per contact:
+Bạn sẽ cần cập nhật reducer để lưu trữ và cập nhật một bản nháp tin nhắn riêng cho từng liên hệ:
 
 ```js
 // When the input is edited
@@ -2071,13 +2071,13 @@ case 'edited_message': {
 }
 ```
 
-You would also update the `Messenger` component to read the message for the currently selected contact:
+Bạn cũng sẽ cập nhật component `Messenger` để đọc tin nhắn của liên hệ hiện đang được chọn:
 
 ```js
 const message = state.messages[state.selectedId];
 ```
 
-Here is the complete solution:
+Đây là lời giải hoàn chỉnh:
 
 <Sandpack>
 
@@ -2237,19 +2237,19 @@ textarea {
 
 </Sandpack>
 
-Notably, you didn't need to change any of the event handlers to implement this different behavior. Without a reducer, you would have to change every event handler that updates the state.
+Đáng chú ý là bạn không cần thay đổi bất kỳ event handler nào để triển khai hành vi khác này. Nếu không có reducer, bạn sẽ phải thay đổi mọi event handler cập nhật state.
 
 </Solution>
 
-#### Implement `useReducer` from scratch {/*implement-usereducer-from-scratch*/}
+#### Triển khai `useReducer` từ đầu {/*implement-usereducer-from-scratch*/}
 
-In the earlier examples, you imported the `useReducer` Hook from React. This time, you will implement _the `useReducer` Hook itself!_ Here is a stub to get you started. It shouldn't take more than 10 lines of code.
+Trong các ví dụ trước, bạn đã import Hook `useReducer` từ React. Lần này, bạn sẽ tự triển khai _chính Hook `useReducer` này!_ Đây là một stub để giúp bạn bắt đầu. Phần này không nên cần quá 10 dòng code.
 
-To test your changes, try typing into the input or select a contact.
+Để kiểm tra các thay đổi, hãy thử nhập nội dung vào input hoặc chọn một liên hệ.
 
 <Hint>
 
-Here is a more detailed sketch of the implementation:
+Dưới đây là phác thảo chi tiết hơn về cách triển khai:
 
 ```js
 export function useReducer(reducer, initialState) {
@@ -2263,7 +2263,7 @@ export function useReducer(reducer, initialState) {
 }
 ```
 
-Recall that a reducer function takes two arguments--the current state and the action object--and it returns the next state. What should your `dispatch` implementation do with it?
+Hãy nhớ rằng một hàm reducer nhận hai đối số—state hiện tại và object action—rồi trả về state tiếp theo. Bạn nên xử lý chúng như thế nào trong triển khai `dispatch`?
 
 </Hint>
 
@@ -2439,7 +2439,7 @@ textarea {
 
 <Solution>
 
-Dispatching an action calls a reducer with the current state and the action, and stores the result as the next state. This is what it looks like in code:
+Việc dispatch một action sẽ gọi reducer với state hiện tại và action đó, rồi lưu kết quả làm state tiếp theo. Trong code, điều này trông như sau:
 
 <Sandpack>
 
@@ -2614,7 +2614,7 @@ textarea {
 
 </Sandpack>
 
-Though it doesn't matter in most cases, a slightly more accurate implementation looks like this:
+Mặc dù trong hầu hết trường hợp điều này không quan trọng, một cách triển khai chính xác hơn một chút sẽ trông như sau:
 
 ```js
 function dispatch(action) {
@@ -2622,7 +2622,7 @@ function dispatch(action) {
 }
 ```
 
-This is because the dispatched actions are queued until the next render, [similar to the updater functions.](/learn/queueing-a-series-of-state-updates)
+Điều này là vì các action được dispatch sẽ được xếp hàng cho đến lần render tiếp theo, [tương tự như các hàm updater.](/learn/queueing-a-series-of-state-updates)
 
 </Solution>
 

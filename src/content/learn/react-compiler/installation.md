@@ -1,56 +1,56 @@
 ---
-title: Installation
+title: Cài đặt
 ---
 
 <Intro>
-This guide will help you install and configure React Compiler in your React application.
+Hướng dẫn này sẽ giúp bạn cài đặt và cấu hình React Compiler trong ứng dụng React của mình.
 </Intro>
 
 <YouWillLearn>
 
-* How to install React Compiler
-* Basic configuration for different build tools
-* How to verify your setup is working
+* Cách cài đặt React Compiler
+* Cấu hình cơ bản cho các build tool khác nhau
+* Cách xác minh thiết lập của bạn đang hoạt động
 
 </YouWillLearn>
 
-## Prerequisites {/*prerequisites*/}
+## Điều kiện tiên quyết {/*prerequisites*/}
 
-React Compiler is designed to work best with React 19, but it also supports React 17 and 18. Learn more about [React version compatibility](/reference/react-compiler/target).
+React Compiler được thiết kế để hoạt động tốt nhất với React 19, nhưng cũng hỗ trợ React 17 và 18. Tìm hiểu thêm về [khả năng tương thích với phiên bản React](/reference/react-compiler/target).
 
-## Installation {/*installation*/}
+## Cài đặt {/*installation*/}
 
-Install React Compiler as a `devDependency`:
+Cài đặt React Compiler dưới dạng `devDependency`:
 
 <TerminalBlock>
 npm install -D babel-plugin-react-compiler@latest
 </TerminalBlock>
 
-Or with Yarn:
+Hoặc với Yarn:
 
 <TerminalBlock>
 yarn add -D babel-plugin-react-compiler@latest
 </TerminalBlock>
 
-Or with pnpm:
+Hoặc với pnpm:
 
 <TerminalBlock>
 pnpm install -D babel-plugin-react-compiler@latest
 </TerminalBlock>
 
-## Basic Setup {/*basic-setup*/}
+## Thiết lập cơ bản {/*basic-setup*/}
 
-React Compiler is designed to work by default without any configuration. However, if you need to configure it in special circumstances (for example, to target React versions below 19), refer to the [compiler options reference](/reference/react-compiler/configuration).
+React Compiler được thiết kế để hoạt động mặc định mà không cần cấu hình. Tuy nhiên, nếu bạn cần cấu hình trong các trường hợp đặc biệt (ví dụ: nhắm đến các phiên bản React thấp hơn 19), hãy tham khảo [tài liệu tham khảo về các tùy chọn của compiler](/reference/react-compiler/configuration).
 
-The setup process depends on your build tool. React Compiler includes a Babel plugin that integrates with your build pipeline.
+Quy trình thiết lập phụ thuộc vào build tool của bạn. React Compiler bao gồm một Babel plugin tích hợp với build pipeline của bạn.
 
 <Pitfall>
-React Compiler must run **first** in your Babel plugin pipeline. The compiler needs the original source information for proper analysis, so it must process your code before other transformations.
+React Compiler phải chạy **đầu tiên** trong Babel plugin pipeline của bạn. Compiler cần thông tin source ban đầu để phân tích chính xác, vì vậy nó phải xử lý code của bạn trước các phép biến đổi khác.
 </Pitfall>
 
 ### Babel {/*babel*/}
 
-Create or update your `babel.config.js`:
+Tạo hoặc cập nhật `babel.config.js` của bạn:
 
 ```js {3}
 module.exports = {
@@ -64,7 +64,7 @@ module.exports = {
 
 ### Vite {/*vite*/}
 
-If you use Vite with version 6.0.0 or later of `@vitejs/plugin-react`, you can use the `reactCompilerPreset`:
+Nếu bạn sử dụng Vite với phiên bản 6.0.0 trở lên của `@vitejs/plugin-react`, bạn có thể sử dụng `reactCompilerPreset`:
 
 <TerminalBlock>
 npm install -D @rolldown/plugin-babel
@@ -87,7 +87,7 @@ export default defineConfig({
 ```
 
 <Note>
-In `@vitejs/plugin-react@6.0.0`, the inline Babel option was removed. If you're using an older version, you can use:
+Trong `@vitejs/plugin-react@6.0.0`, tùy chọn Babel inline đã bị loại bỏ. Nếu bạn đang sử dụng phiên bản cũ hơn, bạn có thể dùng:
 
 ```js
 // vite.config.js
@@ -106,7 +106,7 @@ export default defineConfig({
 ```
 </Note>
 
-Alternatively, you can use the Babel plugin directly with `@rolldown/plugin-babel`:
+Ngoài ra, bạn có thể sử dụng trực tiếp Babel plugin với `@rolldown/plugin-babel`:
 
 ```js {3,9}
 // vite.config.js
@@ -126,10 +126,10 @@ export default defineConfig({
 
 ### Next.js {/*usage-with-nextjs*/}
 
-Please refer to the [Next.js docs](https://nextjs.org/docs/app/api-reference/next-config-js/reactCompiler) for more information.
+Vui lòng tham khảo [tài liệu Next.js](https://nextjs.org/docs/app/api-reference/next-config-js/reactCompiler) để biết thêm thông tin.
 
 ### React Router {/*usage-with-react-router*/}
-Install `vite-plugin-babel`, and add the compiler's Babel plugin to it:
+Cài đặt `vite-plugin-babel`, rồi thêm Babel plugin của compiler vào đó:
 
 <TerminalBlock>
 npm install vite-plugin-babel
@@ -161,63 +161,63 @@ export default defineConfig({
 
 ### Webpack {/*usage-with-webpack*/}
 
-A community webpack loader is [now available here](https://github.com/SukkaW/react-compiler-webpack).
+Một webpack loader do cộng đồng phát triển [hiện đã có tại đây](https://github.com/SukkaW/react-compiler-webpack).
 
 ### Expo {/*usage-with-expo*/}
 
-Please refer to [Expo's docs](https://docs.expo.dev/guides/react-compiler/) to enable and use the React Compiler in Expo apps.
+Vui lòng tham khảo [tài liệu Expo](https://docs.expo.dev/guides/react-compiler/) để bật và sử dụng React Compiler trong các ứng dụng Expo.
 
 ### Metro (React Native) {/*usage-with-react-native-metro*/}
 
-React Native uses Babel via Metro, so refer to the [Usage with Babel](#babel) section for installation instructions.
+React Native sử dụng Babel thông qua Metro, vì vậy hãy tham khảo phần [Sử dụng với Babel](#babel) để biết hướng dẫn cài đặt.
 
 ### Rspack {/*usage-with-rspack*/}
 
-Please refer to [Rspack's docs](https://rspack.dev/guide/tech/react#react-compiler) to enable and use the React Compiler in Rspack apps.
+Vui lòng tham khảo [tài liệu Rspack](https://rspack.dev/guide/tech/react#react-compiler) để bật và sử dụng React Compiler trong các ứng dụng Rspack.
 
 ### Rsbuild {/*usage-with-rsbuild*/}
 
-Please refer to [Rsbuild's docs](https://rsbuild.dev/guide/framework/react#react-compiler) to enable and use the React Compiler in Rsbuild apps.
+Vui lòng tham khảo [tài liệu Rsbuild](https://rsbuild.dev/guide/framework/react#react-compiler) để bật và sử dụng React Compiler trong các ứng dụng Rsbuild.
 
 
-## ESLint Integration {/*eslint-integration*/}
+## Tích hợp ESLint {/*eslint-integration*/}
 
-React Compiler includes an ESLint rule that helps identify code that can't be optimized. When the ESLint rule reports an error, it means the compiler will skip optimizing that specific component or hook. This is safe: the compiler will continue optimizing other parts of your codebase. You don't need to fix all violations immediately. Address them at your own pace to gradually increase the number of optimized components.
+React Compiler bao gồm một ESLint rule giúp xác định code không thể được tối ưu hóa. Khi ESLint rule báo lỗi, điều đó có nghĩa là compiler sẽ bỏ qua việc tối ưu hóa component hoặc hook cụ thể đó. Điều này an toàn: compiler vẫn tiếp tục tối ưu hóa các phần khác trong codebase của bạn. Bạn không cần sửa ngay tất cả các vi phạm. Hãy xử lý chúng theo tiến độ của riêng bạn để dần tăng số lượng component được tối ưu hóa.
 
-Install the ESLint plugin:
+Cài đặt ESLint plugin:
 
 <TerminalBlock>
 npm install -D eslint-plugin-react-hooks@latest
 </TerminalBlock>
 
-If you haven't already configured eslint-plugin-react-hooks, follow the [installation instructions in the readme](https://github.com/react/react/blob/main/packages/eslint-plugin-react-hooks/README.md#installation). The compiler rules are available in the `recommended-latest` preset.
+Nếu bạn chưa cấu hình eslint-plugin-react-hooks, hãy làm theo [hướng dẫn cài đặt trong readme](https://github.com/react/react/blob/main/packages/eslint-plugin-react-hooks/README.md#installation). Các rule của compiler có trong `recommended-latest` preset.
 
-The ESLint rule will:
-- Identify violations of the [Rules of React](/reference/rules)
-- Show which components can't be optimized
-- Provide helpful error messages for fixing issues
+ESLint rule sẽ:
+- Xác định các vi phạm [Rules of React](/reference/rules)
+- Cho biết component nào không thể được tối ưu hóa
+- Cung cấp thông báo lỗi hữu ích để khắc phục vấn đề
 
-## Verify Your Setup {/*verify-your-setup*/}
+## Xác minh thiết lập của bạn {/*verify-your-setup*/}
 
-After installation, verify that React Compiler is working correctly.
+Sau khi cài đặt, hãy xác minh React Compiler đang hoạt động chính xác.
 
-### Check React DevTools {/*check-react-devtools*/}
+### Kiểm tra React DevTools {/*check-react-devtools*/}
 
-Components optimized by React Compiler will show a "Memo ✨" badge in React DevTools:
+Các component được React Compiler tối ưu hóa sẽ hiển thị huy hiệu "Memo ✨" trong React DevTools:
 
-1. Install the [React Developer Tools](/learn/react-developer-tools) browser extension
-2. Open your app in development mode
-3. Open React DevTools
-4. Look for the ✨ emoji next to component names
+1. Cài đặt tiện ích mở rộng trình duyệt [React Developer Tools](/learn/react-developer-tools)
+2. Mở ứng dụng của bạn ở development mode
+3. Mở React DevTools
+4. Tìm emoji ✨ bên cạnh tên component
 
-If the compiler is working:
-- Components will show a "Memo ✨" badge in React DevTools
-- Expensive calculations will be automatically memoized
-- No manual `useMemo` is required
+Nếu compiler đang hoạt động:
+- Các component sẽ hiển thị huy hiệu "Memo ✨" trong React DevTools
+- Các phép tính tốn kém sẽ được tự động memoize
+- Không cần `useMemo` thủ công
 
-### Check Build Output {/*check-build-output*/}
+### Kiểm tra output của build {/*check-build-output*/}
 
-You can also verify the compiler is running by checking your build output. The compiled code will include automatic memoization logic that the compiler adds automatically.
+Bạn cũng có thể xác minh compiler đang chạy bằng cách kiểm tra output của build. Code đã compile sẽ bao gồm logic memoization tự động do compiler tự động thêm vào.
 
 ```js
 import { c as _c } from "react/compiler-runtime";
@@ -235,11 +235,11 @@ export default function MyApp() {
 
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Opting out specific components {/*opting-out-specific-components*/}
+### Loại trừ các component cụ thể {/*opting-out-specific-components*/}
 
-If a component is causing issues after compilation, you can temporarily opt it out using the `"use no memo"` directive:
+Nếu một component gây ra sự cố sau khi compile, bạn có thể tạm thời loại trừ component đó bằng directive `"use no memo"`:
 
 ```js
 function ProblematicComponent() {
@@ -248,16 +248,16 @@ function ProblematicComponent() {
 }
 ```
 
-This tells the compiler to skip optimization for this specific component. You should fix the underlying issue and remove the directive once resolved.
+Điều này yêu cầu compiler bỏ qua việc tối ưu hóa component cụ thể này. Bạn nên khắc phục vấn đề nền tảng và xóa directive sau khi vấn đề được giải quyết.
 
-For more troubleshooting help, see the [debugging guide](/learn/react-compiler/debugging).
+Để được trợ giúp thêm về khắc phục sự cố, hãy xem [hướng dẫn debugging](/learn/react-compiler/debugging).
 
-## Next Steps {/*next-steps*/}
+## Các bước tiếp theo {/*next-steps*/}
 
-Now that you have React Compiler installed, learn more about:
+Bây giờ bạn đã cài đặt React Compiler, hãy tìm hiểu thêm về:
 
-- [React version compatibility](/reference/react-compiler/target) for React 17 and 18
-- [Configuration options](/reference/react-compiler/configuration) to customize the compiler
-- [Incremental adoption strategies](/learn/react-compiler/incremental-adoption) for existing codebases
-- [Debugging techniques](/learn/react-compiler/debugging) for troubleshooting issues
-- [Compiling Libraries guide](/reference/react-compiler/compiling-libraries) for compiling your React library
+- [khả năng tương thích với phiên bản React](/reference/react-compiler/target) cho React 17 và 18
+- [Các tùy chọn cấu hình](/reference/react-compiler/configuration) để tùy chỉnh compiler
+- [Các chiến lược áp dụng từng bước](/learn/react-compiler/incremental-adoption) cho các codebase hiện có
+- [Các kỹ thuật debugging](/learn/react-compiler/debugging) để khắc phục sự cố
+- [Hướng dẫn Compiling Libraries](/reference/react-compiler/compiling-libraries) để compile thư viện React của bạn

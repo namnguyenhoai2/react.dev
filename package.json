@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "dev": "next-remote-watch ./src/content",
-    "preview": "npx --yes serve@14 dist --listen 8080",
+    "preview": "python -m http.server 8081 --directory dist",
     "prebuild:rsc": "node scripts/buildRscWorker.mjs",
     "build": "node scripts/buildRscWorker.mjs && node ./scripts/generateOgImages.mjs && next build && node scripts/generateStaticAssets.js",
     "download:fonts": "node --experimental-modules ./scripts/downloadFonts.mjs",

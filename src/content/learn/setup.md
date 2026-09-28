@@ -1,28 +1,28 @@
 ---
-title: Setup
+title: Thiết lập
 ---
 <Intro>
 
-React integrates with tools like editors, TypeScript, browser extensions, and compilers. This section will help you get your environment set up.
+React tích hợp với các công cụ như trình soạn thảo, TypeScript, tiện ích mở rộng trình duyệt và trình biên dịch. Phần này sẽ giúp bạn thiết lập môi trường của mình.
 
 </Intro>
 
-## Editor Setup {/*editor-setup*/}
+## Thiết lập trình soạn thảo {/*editor-setup*/}
 
-See our [recommended editors](/learn/editor-setup) and learn how to set them up to work with React.
+Xem các [trình soạn thảo được đề xuất](/learn/editor-setup) của chúng tôi và tìm hiểu cách thiết lập để chúng hoạt động với React.
 
-## Using TypeScript {/*using-typescript*/}
+## Sử dụng TypeScript {/*using-typescript*/}
 
-TypeScript is a popular way to add type definitions to JavaScript codebases. [Learn how to integrate TypeScript into your React projects](/learn/typescript).
+TypeScript là một cách phổ biến để thêm các định nghĩa kiểu vào các codebase JavaScript. [Tìm hiểu cách tích hợp TypeScript vào các dự án React của bạn](/learn/typescript).
 
 ## React Developer Tools {/*react-developer-tools*/}
 
-React Developer Tools is a browser extension that can inspect React components, edit props and state, and identify performance problems. Learn how to install it [here](learn/react-developer-tools).
+React Developer Tools là một tiện ích mở rộng trình duyệt có thể kiểm tra các component React, chỉnh sửa props và state, đồng thời xác định các vấn đề về hiệu suất. Tìm hiểu cách cài đặt tại [đây](learn/react-developer-tools).
 
 ## React Compiler {/*react-compiler*/}
 
-React Compiler is a tool that automatically optimizes your React app. [Learn more](/learn/react-compiler).
+React Compiler là một công cụ tự động tối ưu hóa ứng dụng React của bạn. [Tìm hiểu thêm](/learn/react-compiler).
 
-## Next steps {/*next-steps*/}
+## Các bước tiếp theo {/*next-steps*/}
 
-Head to the [Quick Start](/learn) guide for a tour of the most important React concepts you will encounter every day.
+Truy cập hướng dẫn [Bắt đầu nhanh](/learn) để tìm hiểu tổng quan về những khái niệm React quan trọng nhất mà bạn sẽ gặp hằng ngày.

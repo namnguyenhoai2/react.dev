@@ -1,28 +1,28 @@
 ---
-title: Updating Arrays in State
+title: Cập nhật Array trong State
 ---
 
 <Intro>
 
-Arrays are mutable in JavaScript, but you should treat them as immutable when you store them in state. Just like with objects, when you want to update an array stored in state, you need to create a new one (or make a copy of an existing one), and then set state to use the new array.
+Array có thể thay đổi (mutable) trong JavaScript, nhưng bạn nên xem chúng là bất biến (immutable) khi lưu trong state. Cũng giống như với object, khi muốn cập nhật một array được lưu trong state, bạn cần tạo một array mới (hoặc tạo bản sao của array hiện có), sau đó đặt state sử dụng array mới.
 
 </Intro>
 
 <YouWillLearn>
 
-- How to add, remove, or change items in an array in React state
-- How to update an object inside of an array
-- How to make array copying less repetitive with Immer
+- Cách thêm, xóa hoặc thay đổi các phần tử trong array trong React state
+- Cách cập nhật một object bên trong array
+- Cách giảm sự lặp lại khi sao chép array bằng Immer
 
 </YouWillLearn>
 
-## Updating arrays without mutation {/*updating-arrays-without-mutation*/}
+## Cập nhật array mà không mutation {/*updating-arrays-without-mutation*/}
 
-In JavaScript, arrays are just another kind of object. [Like with objects](/learn/updating-objects-in-state), **you should treat arrays in React state as read-only.** This means that you shouldn't reassign items inside an array like `arr[0] = 'bird'`, and you also shouldn't use methods that mutate the array, such as `push()` and `pop()`.
+Trong JavaScript, array chỉ là một loại object khác. [Cũng như với object](/learn/updating-objects-in-state), **bạn nên xem array trong React state là chỉ-đọc.** Điều này có nghĩa là bạn không nên gán lại các phần tử bên trong array như `arr[0] = 'bird'`, đồng thời cũng không nên sử dụng các method làm thay đổi array, chẳng hạn như `push()` và `pop()`.
 
-Instead, every time you want to update an array, you'll want to pass a *new* array to your state setting function. To do that, you can create a new array from the original array in your state by calling its non-mutating methods like `filter()` and `map()`. Then you can set your state to the resulting new array.
+Thay vào đó, mỗi khi muốn cập nhật một array, bạn nên truyền một array *mới* vào hàm thiết lập state. Để làm vậy, bạn có thể tạo một array mới từ array gốc trong state bằng cách gọi các method không làm thay đổi array như `filter()` và `map()`. Sau đó, bạn có thể đặt state thành array mới thu được.
 
-Here is a reference table of common array operations. When dealing with arrays inside React state, you will need to avoid the methods in the left column, and instead prefer the methods in the right column:
+Dưới đây là bảng tham khảo các thao tác array phổ biến. Khi làm việc với các array bên trong React state, bạn cần tránh các method ở cột bên trái và thay vào đó ưu tiên các method ở cột bên phải:
 
 |           | avoid (mutates the array)           | prefer (returns a new array)                                        |
 | --------- | ----------------------------------- | ------------------------------------------------------------------- |
@@ -31,22 +31,22 @@ Here is a reference table of common array operations. When dealing with arrays i
 | replacing | `splice`, `arr[i] = ...` assignment | `map` ([example](#replacing-items-in-an-array))                     |
 | sorting   | `reverse`, `sort`                   | copy the array first ([example](#making-other-changes-to-an-array)) |
 
-Alternatively, you can [use Immer](#write-concise-update-logic-with-immer) which lets you use methods from both columns.
+Ngoài ra, bạn có thể [sử dụng Immer](#write-concise-update-logic-with-immer), cho phép bạn sử dụng các method từ cả hai cột.
 
 <Pitfall>
 
-Unfortunately, [`slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) and [`splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) are named similarly but are very different:
+Thật không may, [`slice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) và [`splice`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) có tên tương tự nhau nhưng rất khác biệt:
 
-* `slice` lets you copy an array or a part of it.
-* `splice` **mutates** the array (to insert or delete items).
+* `slice` cho phép bạn sao chép một array hoặc một phần của array.
+* `splice` **làm thay đổi** array (để chèn hoặc xóa các phần tử).
 
-In React, you will be using `slice` (no `p`!) a lot more often because you don't want to mutate objects or arrays in state. [Updating Objects](/learn/updating-objects-in-state) explains what mutation is and why it's not recommended for state.
+Trong React, bạn sẽ sử dụng `slice` (không có `p`!) thường xuyên hơn nhiều, vì bạn không muốn làm thay đổi object hoặc array trong state. [Cập nhật Object](/learn/updating-objects-in-state) giải thích mutation là gì và tại sao không nên sử dụng nó cho state.
 
 </Pitfall>
 
-### Adding to an array {/*adding-to-an-array*/}
+### Thêm vào array {/*adding-to-an-array*/}
 
-`push()` will mutate an array, which you don't want:
+`push()` sẽ làm thay đổi array, điều bạn không muốn:
 
 <Sandpack>
 
@@ -88,7 +88,7 @@ button { margin-left: 5px; }
 
 </Sandpack>
 
-Instead, create a *new* array which contains the existing items *and* a new item at the end. There are multiple ways to do this, but the easiest one is to use the `...` [array spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_array_literals) syntax:
+Thay vào đó, hãy tạo một array *mới* chứa các phần tử hiện có *và* một phần tử mới ở cuối. Có nhiều cách để làm việc này, nhưng cách dễ nhất là sử dụng cú pháp `...` [array spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_array_literals):
 
 ```js
 setArtists( // Replace the state
@@ -99,7 +99,7 @@ setArtists( // Replace the state
 );
 ```
 
-Now it works correctly:
+Bây giờ code hoạt động chính xác:
 
 <Sandpack>
 
@@ -141,7 +141,7 @@ button { margin-left: 5px; }
 
 </Sandpack>
 
-The array spread syntax also lets you prepend an item by placing it *before* the original `...artists`:
+Cú pháp array spread cũng cho phép bạn thêm một phần tử vào đầu bằng cách đặt phần tử đó *trước* `...artists` ban đầu:
 
 ```js
 setArtists([
@@ -150,11 +150,11 @@ setArtists([
 ]);
 ```
 
-In this way, spread can do the job of both `push()` by adding to the end of an array and `unshift()` by adding to the beginning of an array. Try it in the sandbox above!
+Theo cách này, spread có thể thực hiện công việc của cả `push()` bằng cách thêm vào cuối array và `unshift()` bằng cách thêm vào đầu array. Hãy thử trong sandbox ở trên!
 
-### Removing from an array {/*removing-from-an-array*/}
+### Xóa khỏi array {/*removing-from-an-array*/}
 
-The easiest way to remove an item from an array is to *filter it out*. In other words, you will produce a new array that will not contain that item. To do this, use the `filter` method, for example:
+Cách dễ nhất để xóa một phần tử khỏi array là *lọc phần tử đó ra*. Nói cách khác, bạn sẽ tạo một array mới không chứa phần tử đó. Để làm vậy, hãy sử dụng method `filter`, ví dụ:
 
 <Sandpack>
 
@@ -198,7 +198,7 @@ export default function List() {
 
 </Sandpack>
 
-Click the "Delete" button a few times, and look at its click handler.
+Hãy nhấp vào nút "Delete" vài lần và xem click handler của nó.
 
 ```js
 setArtists(
@@ -206,13 +206,13 @@ setArtists(
 );
 ```
 
-Here, `artists.filter(a => a.id !== artist.id)` means "create an array that consists of those `artists` whose IDs are different from `artist.id`". In other words, each artist's "Delete" button will filter _that_ artist out of the array, and then request a re-render with the resulting array. Note that `filter` does not modify the original array.
+Ở đây, `artists.filter(a => a.id !== artist.id)` có nghĩa là “tạo một array gồm những `artists` có ID khác với `artist.id`”. Nói cách khác, nút "Delete" của mỗi artist sẽ lọc _artist đó_ khỏi array, sau đó yêu cầu render lại với array thu được. Lưu ý rằng `filter` không sửa đổi array gốc.
 
-### Transforming an array {/*transforming-an-array*/}
+### Biến đổi array {/*transforming-an-array*/}
 
-If you want to change some or all items of the array, you can use `map()` to create a **new** array. The function you will pass to `map` can decide what to do with each item, based on its data or its index (or both).
+Nếu muốn thay đổi một số hoặc tất cả các phần tử trong array, bạn có thể sử dụng `map()` để tạo một array **mới**. Hàm bạn truyền vào `map` có thể quyết định cần làm gì với từng phần tử, dựa trên dữ liệu hoặc index của phần tử đó (hoặc cả hai).
 
-In this example, an array holds coordinates of two circles and a square. When you press the button, it moves only the circles down by 50 pixels. It does this by producing a new array of data using `map()`:
+Trong ví dụ này, một array chứa tọa độ của hai hình tròn và một hình vuông. Khi nhấn nút, chỉ các hình tròn được di chuyển xuống 50 pixel. Việc này được thực hiện bằng cách tạo một array dữ liệu mới sử dụng `map()`:
 
 <Sandpack>
 
@@ -278,11 +278,11 @@ body { height: 300px; }
 
 </Sandpack>
 
-### Replacing items in an array {/*replacing-items-in-an-array*/}
+### Thay thế các phần tử trong array {/*replacing-items-in-an-array*/}
 
-It is particularly common to want to replace one or more items in an array. Assignments like `arr[0] = 'bird'` are mutating the original array, so instead you'll want to use `map` for this as well.
+Một nhu cầu đặc biệt phổ biến là thay thế một hoặc nhiều phần tử trong array. Các phép gán như `arr[0] = 'bird'` sẽ làm thay đổi array gốc, vì vậy thay vào đó bạn cũng nên sử dụng `map` cho việc này.
 
-To replace an item, create a new array with `map`. Inside your `map` call, you will receive the item index as the second argument. Use it to decide whether to return the original item (the first argument) or something else:
+Để thay thế một phần tử, hãy tạo một array mới với `map`. Bên trong lời gọi `map`, bạn sẽ nhận được index của phần tử dưới dạng đối số thứ hai. Hãy sử dụng nó để quyết định trả về phần tử gốc (đối số thứ nhất) hay một giá trị khác:
 
 <Sandpack>
 
@@ -332,11 +332,11 @@ button { margin: 5px; }
 
 </Sandpack>
 
-### Inserting into an array {/*inserting-into-an-array*/}
+### Chèn vào array {/*inserting-into-an-array*/}
 
-Sometimes, you may want to insert an item at a particular position that's neither at the beginning nor at the end. To do this, you can use the `...` array spread syntax together with the `slice()` method. The `slice()` method lets you cut a "slice" of the array. To insert an item, you will create an array that spreads the slice _before_ the insertion point, then the new item, and then the rest of the original array.
+Đôi khi, bạn có thể muốn chèn một phần tử vào một vị trí cụ thể không nằm ở đầu cũng không nằm ở cuối. Để làm vậy, bạn có thể sử dụng cú pháp `...` array spread cùng với method `slice()`. Method `slice()` cho phép bạn cắt một "slice" của array. Để chèn một phần tử, bạn sẽ tạo một array trong đó spread phần slice _trước_ vị trí chèn, sau đó là phần tử mới, rồi đến phần còn lại của array gốc.
 
-In this example, the Insert button always inserts at the index `1`:
+Trong ví dụ này, nút Insert luôn chèn tại index `1`:
 
 <Sandpack>
 
@@ -396,13 +396,13 @@ button { margin-left: 5px; }
 
 </Sandpack>
 
-### Making other changes to an array {/*making-other-changes-to-an-array*/}
+### Thực hiện các thay đổi khác với array {/*making-other-changes-to-an-array*/}
 
-There are some things you can't do with the spread syntax and non-mutating methods like `map()` and `filter()` alone. For example, you may want to reverse or sort an array. The JavaScript `reverse()` and `sort()` methods are mutating the original array, so you can't use them directly.
+Có một số việc bạn không thể thực hiện chỉ bằng cú pháp spread và các method không làm thay đổi array như `map()` và `filter()`. Ví dụ, bạn có thể muốn đảo ngược hoặc sắp xếp một array. Các method JavaScript `reverse()` và `sort()` làm thay đổi array gốc, vì vậy bạn không thể sử dụng chúng trực tiếp.
 
-**However, you can copy the array first, and then make changes to it.**
+**Tuy nhiên, bạn có thể sao chép array trước, rồi thực hiện các thay đổi trên bản sao.**
 
-For example:
+Ví dụ:
 
 <Sandpack>
 
@@ -441,9 +441,9 @@ export default function List() {
 
 </Sandpack>
 
-Here, you use the `[...list]` spread syntax to create a copy of the original array first. Now that you have a copy, you can use mutating methods like `nextList.reverse()` or `nextList.sort()`, or even assign individual items with `nextList[0] = "something"`.
+Ở đây, bạn sử dụng cú pháp `[...list]` spread để tạo bản sao của array gốc trước. Khi đã có bản sao, bạn có thể sử dụng các method làm thay đổi array như `nextList.reverse()` hoặc `nextList.sort()`, hoặc thậm chí gán cho từng phần tử bằng `nextList[0] = "something"`.
 
-However, **even if you copy an array, you can't mutate existing items _inside_ of it directly.** This is because copying is shallow--the new array will contain the same items as the original one. So if you modify an object inside the copied array, you are mutating the existing state. For example, code like this is a problem.
+Tuy nhiên, **ngay cả khi đã sao chép một array, bạn cũng không thể trực tiếp làm thay đổi các phần tử hiện có _bên trong_ array đó.** Lý do là việc sao chép chỉ mang tính nông (shallow)—array mới sẽ chứa các phần tử giống với array gốc. Vì vậy, nếu bạn sửa đổi một object bên trong array đã sao chép, bạn đang làm thay đổi state hiện có. Ví dụ, đoạn code như sau sẽ gây ra vấn đề.
 
 ```js
 const nextList = [...list];
@@ -451,15 +451,15 @@ nextList[0].seen = true; // Problem: mutates list[0]
 setList(nextList);
 ```
 
-Although `nextList` and `list` are two different arrays, **`nextList[0]` and `list[0]` point to the same object.** So by changing `nextList[0].seen`, you are also changing `list[0].seen`. This is a state mutation, which you should avoid! You can solve this issue in a similar way to [updating nested JavaScript objects](/learn/updating-objects-in-state#updating-a-nested-object)--by copying individual items you want to change instead of mutating them. Here's how.
+Mặc dù `nextList` và `list` là hai array khác nhau, **`nextList[0]` và `list[0]` trỏ đến cùng một object.** Vì vậy, khi thay đổi `nextList[0].seen`, bạn cũng đang thay đổi `list[0].seen`. Đây là state mutation, điều bạn nên tránh! Bạn có thể giải quyết vấn đề này tương tự như cách [cập nhật các object JavaScript lồng nhau](/learn/updating-objects-in-state#updating-a-nested-object)—bằng cách sao chép từng phần tử muốn thay đổi thay vì làm thay đổi chúng. Cách thực hiện như sau.
 
-## Updating objects inside arrays {/*updating-objects-inside-arrays*/}
+## Cập nhật các object bên trong array {/*updating-objects-inside-arrays*/}
 
-Objects are not _really_ located "inside" arrays. They might appear to be "inside" in code, but each object in an array is a separate value, to which the array "points". This is why you need to be careful when changing nested fields like `list[0]`. Another person's artwork list may point to the same element of the array!
+Object không thực sự nằm "bên trong" array. Chúng có thể trông như nằm "bên trong" trong code, nhưng mỗi object trong array là một giá trị riêng biệt mà array "trỏ đến". Đây là lý do bạn cần cẩn thận khi thay đổi các field lồng nhau như `list[0]`. Danh sách tác phẩm của một người khác có thể trỏ đến cùng một phần tử trong array!
 
-**When updating nested state, you need to create copies from the point where you want to update, and all the way up to the top level.** Let's see how this works.
+**Khi cập nhật state lồng nhau, bạn cần tạo các bản sao bắt đầu từ vị trí muốn cập nhật và lên đến tận cấp cao nhất.** Hãy cùng xem cách hoạt động của việc này.
 
-In this example, two separate artwork lists have the same initial state. They are supposed to be isolated, but because of a mutation, their state is accidentally shared, and checking a box in one list affects the other list:
+Trong ví dụ này, hai danh sách artwork riêng biệt có cùng state ban đầu. Chúng vốn phải được tách biệt, nhưng do một mutation, state của chúng vô tình được dùng chung, và việc đánh dấu một ô trong danh sách này lại ảnh hưởng đến danh sách kia:
 
 <Sandpack>
 
@@ -539,7 +539,7 @@ function ItemList({ artworks, onToggle }) {
 
 </Sandpack>
 
-The problem is in code like this:
+Vấn đề nằm trong đoạn code như sau:
 
 ```js
 const myNextList = [...myList];
@@ -548,9 +548,9 @@ artwork.seen = nextSeen; // Problem: mutates an existing item
 setMyList(myNextList);
 ```
 
-Although the `myNextList` array itself is new, the *items themselves* are the same as in the original `myList` array. So changing `artwork.seen` changes the *original* artwork item. That artwork item is also in `yourList`, which causes the bug. Bugs like this can be difficult to think about, but thankfully they disappear if you avoid mutating state.
+Mặc dù bản thân mảng `myNextList` là một mảng mới, *các item trong mảng* lại giống với các item trong mảng `myList` ban đầu. Vì vậy, việc thay đổi `artwork.seen` sẽ thay đổi *item artwork ban đầu*. Item artwork đó cũng nằm trong `yourList`, từ đó gây ra lỗi. Những bug như thế này có thể khó hình dung, nhưng may mắn là chúng sẽ biến mất nếu bạn tránh mutate state.
 
-**You can use `map` to substitute an old item with its updated version without mutation.**
+**Bạn có thể dùng `map` để thay thế một item cũ bằng phiên bản đã cập nhật của nó mà không cần mutation.**
 
 ```js
 setMyList(myList.map(artwork => {
@@ -564,9 +564,9 @@ setMyList(myList.map(artwork => {
 }));
 ```
 
-Here, `...` is the object spread syntax used to [create a copy of an object.](/learn/updating-objects-in-state#copying-objects-with-the-spread-syntax)
+Ở đây, `...` là object spread syntax được dùng để [tạo một bản sao của object.](/learn/updating-objects-in-state#copying-objects-with-the-spread-syntax)
 
-With this approach, none of the existing state items are being mutated, and the bug is fixed:
+Với cách tiếp cận này, không có item state hiện có nào bị mutate, và bug đã được khắc phục:
 
 <Sandpack>
 
@@ -652,16 +652,16 @@ function ItemList({ artworks, onToggle }) {
 
 </Sandpack>
 
-In general, **you should only mutate objects that you have just created.** If you were inserting a *new* artwork, you could mutate it, but if you're dealing with something that's already in state, you need to make a copy.
+Nói chung, **bạn chỉ nên mutate những object mà mình vừa tạo.** Nếu bạn đang chèn một artwork *mới*, bạn có thể mutate nó, nhưng nếu đang làm việc với thứ đã có trong state, bạn cần tạo một bản sao.
 
-### Write concise update logic with Immer {/*write-concise-update-logic-with-immer*/}
+### Viết logic cập nhật ngắn gọn với Immer {/*write-concise-update-logic-with-immer*/}
 
-Updating nested arrays without mutation can get a little bit repetitive. [Just as with objects](/learn/updating-objects-in-state#write-concise-update-logic-with-immer):
+Việc cập nhật các mảng lồng nhau mà không mutate có thể trở nên hơi lặp lại. [Cũng giống như với object](/learn/updating-objects-in-state#write-concise-update-logic-with-immer):
 
-- Generally, you shouldn't need to update state more than a couple of levels deep. If your state objects are very deep, you might want to [restructure them differently](/learn/choosing-the-state-structure#avoid-deeply-nested-state) so that they are flat.
-- If you don't want to change your state structure, you might prefer to use [Immer](https://github.com/immerjs/use-immer), which lets you write using the convenient but mutating syntax and takes care of producing the copies for you.
+- Nhìn chung, bạn không nên cần cập nhật state sâu hơn một vài cấp. Nếu các state object của bạn rất sâu, bạn có thể muốn [tái cấu trúc chúng theo cách khác](/learn/choosing-the-state-structure#avoid-deeply-nested-state) để chúng trở nên phẳng.
+- Nếu không muốn thay đổi cấu trúc state, bạn có thể thích sử dụng [Immer](https://github.com/immerjs/use-immer), cho phép bạn viết bằng syntax thuận tiện nhưng có tính mutation và tự đảm nhiệm việc tạo các bản sao.
 
-Here is the Art Bucket List example rewritten with Immer:
+Dưới đây là ví dụ Art Bucket List được viết lại bằng Immer:
 
 <Sandpack>
 
@@ -762,7 +762,7 @@ function ItemList({ artworks, onToggle }) {
 
 </Sandpack>
 
-Note how with Immer, **mutation like `artwork.seen = nextSeen` is now okay:**
+Hãy chú ý rằng với Immer, **mutation như `artwork.seen = nextSeen` giờ đây là hợp lệ:**
 
 ```js
 updateMyTodos(draft => {
@@ -771,17 +771,17 @@ updateMyTodos(draft => {
 });
 ```
 
-This is because you're not mutating the _original_ state, but you're mutating a special `draft` object provided by Immer. Similarly, you can apply mutating methods like `push()` and `pop()` to the content of the `draft`.
+Điều này là vì bạn không mutate state _ban đầu_, mà mutate một object `draft` đặc biệt do Immer cung cấp. Tương tự, bạn có thể áp dụng các method có tính mutation như `push()` và `pop()` lên nội dung của `draft`.
 
-Behind the scenes, Immer always constructs the next state from scratch according to the changes that you've done to the `draft`. This keeps your event handlers very concise without ever mutating state.
+Ở phía sau, Immer luôn xây dựng state tiếp theo từ đầu dựa trên những thay đổi bạn đã thực hiện trên `draft`. Điều này giúp các event handler của bạn ngắn gọn mà không bao giờ mutate state.
 
 <Recap>
 
-- You can put arrays into state, but you can't change them.
-- Instead of mutating an array, create a *new* version of it, and update the state to it.
-- You can use the `[...arr, newItem]` array spread syntax to create arrays with new items.
-- You can use `filter()` and `map()` to create new arrays with filtered or transformed items.
-- You can use Immer to keep your code concise.
+- Bạn có thể đưa các mảng vào state, nhưng không thể thay đổi chúng.
+- Thay vì mutate một mảng, hãy tạo một phiên bản *mới* của mảng đó rồi cập nhật state thành phiên bản mới.
+- Bạn có thể dùng array spread syntax `[...arr, newItem]` để tạo các mảng có item mới.
+- Bạn có thể dùng `filter()` và `map()` để tạo các mảng mới với các item đã được filter hoặc transform.
+- Bạn có thể dùng Immer để giữ cho code ngắn gọn.
 
 </Recap>
 
@@ -789,9 +789,9 @@ Behind the scenes, Immer always constructs the next state from scratch according
 
 <Challenges>
 
-#### Update an item in the shopping cart {/*update-an-item-in-the-shopping-cart*/}
+#### Cập nhật một item trong shopping cart {/*update-an-item-in-the-shopping-cart*/}
 
-Fill in the `handleIncreaseClick` logic so that pressing "+" increases the corresponding number:
+Hoàn thiện logic `handleIncreaseClick` để khi nhấn "+" thì số lượng tương ứng tăng lên:
 
 <Sandpack>
 
@@ -849,7 +849,7 @@ button { margin: 5px; }
 
 <Solution>
 
-You can use the `map` function to create a new array, and then use the `...` object spread syntax to create a copy of the changed object for the new array:
+Bạn có thể dùng function `map` để tạo một mảng mới, sau đó dùng object spread syntax `...` để tạo một bản sao của object đã thay đổi cho mảng mới:
 
 <Sandpack>
 
@@ -916,9 +916,9 @@ button { margin: 5px; }
 
 </Solution>
 
-#### Remove an item from the shopping cart {/*remove-an-item-from-the-shopping-cart*/}
+#### Xóa một item khỏi shopping cart {/*remove-an-item-from-the-shopping-cart*/}
 
-This shopping cart has a working "+" button, but the "–" button doesn't do anything. You need to add an event handler to it so that pressing it decreases the `count` of the corresponding product. If you press "–" when the count is 1, the product should automatically get removed from the cart. Make sure it never shows 0.
+Shopping cart này có button "+", nhưng button "–" không làm gì cả. Bạn cần thêm một event handler cho button đó để khi nhấn, nó giảm `count` của product tương ứng. Nếu nhấn "–" khi số lượng là 1, product đó sẽ tự động bị xóa khỏi cart. Hãy đảm bảo số lượng không bao giờ hiển thị là 0.
 
 <Sandpack>
 
@@ -988,7 +988,7 @@ button { margin: 5px; }
 
 <Solution>
 
-You can first use `map` to produce a new array, and then `filter` to remove products with a `count` set to `0`:
+Trước tiên, bạn có thể dùng `map` để tạo ra một mảng mới, sau đó dùng `filter` để xóa các product có `count` được đặt thành `0`:
 
 <Sandpack>
 
@@ -1077,9 +1077,9 @@ button { margin: 5px; }
 
 </Solution>
 
-#### Fix the mutations using non-mutative methods {/*fix-the-mutations-using-non-mutative-methods*/}
+#### Sửa các mutation bằng các method không mutate {/*fix-the-mutations-using-non-mutative-methods*/}
 
-In this example, all of the event handlers in `App.js` use mutation. As a result, editing and deleting todos doesn't work. Rewrite `handleAddTodo`, `handleChangeTodo`, and `handleDeleteTodo` to use the non-mutative methods:
+Trong ví dụ này, tất cả event handler trong `App.js` đều sử dụng mutation. Vì vậy, việc chỉnh sửa và xóa todo không hoạt động. Hãy viết lại `handleAddTodo`, `handleChangeTodo` và `handleDeleteTodo` để sử dụng các method không mutate:
 
 <Sandpack>
 
@@ -1242,7 +1242,7 @@ ul, li { margin: 0; padding: 0; }
 
 <Solution>
 
-In `handleAddTodo`, you can use the array spread syntax. In `handleChangeTodo`, you can create a new array with `map`. In `handleDeleteTodo`, you can create a new array with `filter`. Now the list works correctly:
+Trong `handleAddTodo`, bạn có thể dùng array spread syntax. Trong `handleChangeTodo`, bạn có thể tạo một mảng mới với `map`. Trong `handleDeleteTodo`, bạn có thể tạo một mảng mới với `filter`. Giờ đây danh sách hoạt động chính xác:
 
 <Sandpack>
 
@@ -1410,9 +1410,9 @@ ul, li { margin: 0; padding: 0; }
 </Solution>
 
 
-#### Fix the mutations using Immer {/*fix-the-mutations-using-immer*/}
+#### Sửa các mutation bằng Immer {/*fix-the-mutations-using-immer*/}
 
-This is the same example as in the previous challenge. This time, fix the mutations by using Immer. For your convenience, `useImmer` is already imported, so you need to change the `todos` state variable to use it.
+Đây là ví dụ giống với challenge trước. Lần này, hãy sửa các mutation bằng cách sử dụng Immer. Để thuận tiện, `useImmer` đã được import sẵn, vì vậy bạn cần thay đổi biến state `todos` để sử dụng nó.
 
 <Sandpack>
 
@@ -1594,7 +1594,7 @@ ul, li { margin: 0; padding: 0; }
 
 <Solution>
 
-With Immer, you can write code in the mutative fashion, as long as you're only mutating parts of the `draft` that Immer gives you. Here, all mutations are performed on the `draft` so the code works:
+Với Immer, bạn có thể viết code theo phong cách có mutation, miễn là bạn chỉ mutate các phần của `draft` mà Immer cung cấp cho bạn. Ở đây, tất cả mutation đều được thực hiện trên `draft`, vì vậy code hoạt động:
 
 <Sandpack>
 
@@ -1780,9 +1780,9 @@ ul, li { margin: 0; padding: 0; }
 
 </Sandpack>
 
-You can also mix and match the mutative and non-mutative approaches with Immer.
+Bạn cũng có thể kết hợp cách tiếp cận có mutation và không mutate với Immer.
 
-For example, in this version `handleAddTodo` is implemented by mutating the Immer `draft`, while `handleChangeTodo` and `handleDeleteTodo` use the non-mutative `map` and `filter` methods:
+Ví dụ, trong phiên bản này, `handleAddTodo` được triển khai bằng cách mutate `draft` của Immer, trong khi `handleChangeTodo` và `handleDeleteTodo` sử dụng các method không mutate `map` và `filter`:
 
 <Sandpack>
 
@@ -1965,7 +1965,7 @@ ul, li { margin: 0; padding: 0; }
 
 </Sandpack>
 
-With Immer, you can pick the style that feels the most natural for each separate case.
+Với Immer, bạn có thể chọn phong cách cảm thấy tự nhiên nhất cho từng trường hợp riêng biệt.
 
 </Solution>
 
