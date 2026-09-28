@@ -1,5 +1,5 @@
 {
-  "title": "Learn React",
+  "title": "Học React",
   "path": "/learn",
   "routes": [
     {
@@ -7,51 +7,51 @@
       "sectionHeader": "GET STARTED"
     },
     {
-      "title": "Quick Start",
+      "title": "Bắt đầu nhanh",
       "path": "/learn",
       "routes": [
         {
-          "title": "Tutorial: Tic-Tac-Toe",
+          "title": "Hướng dẫn: Tic-Tac-Toe",
           "path": "/learn/tutorial-tic-tac-toe"
         },
         {
-          "title": "Thinking in React",
+          "title": "Tư duy bằng React",
           "path": "/learn/thinking-in-react"
         }
       ]
     },
     {
-      "title": "Installation",
+      "title": "Cài đặt",
       "path": "/learn/installation",
       "routes": [
         {
-          "title": "Creating a React App",
+          "title": "Tạo ứng dụng React",
           "path": "/learn/creating-a-react-app"
         },
         {
-          "title": "Build a React App from Scratch",
+          "title": "Xây dựng ứng dụng React từ đầu",
           "path": "/learn/build-a-react-app-from-scratch"
         },
         {
-          "title": "Add React to an Existing Project",
+          "title": "Thêm React vào dự án hiện có",
           "path": "/learn/add-react-to-an-existing-project"
         }
       ]
     },
     {
-      "title": "Setup",
+      "title": "Thiết lập",
       "path": "/learn/setup",
       "routes": [
         {
-          "title": "Editor Setup",
+          "title": "Thiết lập trình soạn thảo",
           "path": "/learn/editor-setup"
         },
         {
-          "title": "Using TypeScript",
+          "title": "Sử dụng TypeScript",
           "path": "/learn/typescript"
         },
         {
-          "title": "React Developer Tools",
+          "title": "Công cụ phát triển React",
           "path": "/learn/react-developer-tools"
         }
       ]
@@ -62,19 +62,19 @@
       "canary": true,
       "routes": [
         {
-          "title": "Introduction",
+          "title": "Giới thiệu",
           "path": "/learn/react-compiler/introduction"
         },
         {
-          "title": "Installation",
+          "title": "Cài đặt",
           "path": "/learn/react-compiler/installation"
         },
         {
-          "title": "Incremental Adoption",
+          "title": "Áp dụng dần",
           "path": "/learn/react-compiler/incremental-adoption"
         },
         {
-          "title": "Debugging and Troubleshooting",
+          "title": "Gỡ lỗi và khắc phục sự cố",
           "path": "/learn/react-compiler/debugging"
         }
       ]
@@ -84,153 +84,153 @@
       "sectionHeader": "LEARN REACT"
     },
     {
-      "title": "Describing the UI",
+      "title": "Mô tả giao diện người dùng",
       "tags": [],
       "path": "/learn/describing-the-ui",
       "routes": [
         {
-          "title": "Your First Component",
+          "title": "Component đầu tiên của bạn",
           "path": "/learn/your-first-component"
         },
         {
-          "title": "Importing and Exporting Components",
+          "title": "Import và export component",
           "path": "/learn/importing-and-exporting-components"
         },
         {
-          "title": "Writing Markup with JSX",
+          "title": "Viết markup bằng JSX",
           "path": "/learn/writing-markup-with-jsx"
         },
         {
-          "title": "JavaScript in JSX with Curly Braces",
+          "title": "JavaScript trong JSX với dấu ngoặc nhọn",
           "path": "/learn/javascript-in-jsx-with-curly-braces"
         },
         {
-          "title": "Passing Props to a Component",
+          "title": "Truyền props cho component",
           "path": "/learn/passing-props-to-a-component"
         },
         {
-          "title": "Conditional Rendering",
+          "title": "Render có điều kiện",
           "path": "/learn/conditional-rendering"
         },
         {
-          "title": "Rendering Lists",
+          "title": "Render danh sách",
           "path": "/learn/rendering-lists"
         },
         {
-          "title": "Keeping Components Pure",
+          "title": "Giữ component thuần khiết",
           "path": "/learn/keeping-components-pure"
         },
         {
-          "title": "Your UI as a Tree",
+          "title": "Giao diện người dùng dưới dạng cây",
           "path": "/learn/understanding-your-ui-as-a-tree"
         }
       ]
     },
     {
-      "title": "Adding Interactivity",
+      "title": "Thêm tính tương tác",
       "path": "/learn/adding-interactivity",
       "tags": [],
       "routes": [
         {
-          "title": "Responding to Events",
+          "title": "Phản hồi sự kiện",
           "path": "/learn/responding-to-events"
         },
         {
-          "title": "State: A Component's Memory",
+          "title": "State: Bộ nhớ của component",
           "path": "/learn/state-a-components-memory"
         },
         {
-          "title": "Render and Commit",
+          "title": "Render và commit",
           "path": "/learn/render-and-commit"
         },
         {
-          "title": "State as a Snapshot",
+          "title": "State như một ảnh chụp nhanh",
           "path": "/learn/state-as-a-snapshot"
         },
         {
-          "title": "Queueing a Series of State Updates",
+          "title": "Xếp hàng một loạt cập nhật state",
           "path": "/learn/queueing-a-series-of-state-updates"
         },
         {
-          "title": "Updating Objects in State",
+          "title": "Cập nhật object trong state",
           "path": "/learn/updating-objects-in-state"
         },
         {
-          "title": "Updating Arrays in State",
+          "title": "Cập nhật array trong state",
           "path": "/learn/updating-arrays-in-state"
         }
       ]
     },
     {
-      "title": "Managing State",
+      "title": "Quản lý state",
       "path": "/learn/managing-state",
       "tags": ["intermediate"],
       "routes": [
         {
-          "title": "Reacting to Input with State",
+          "title": "Phản hồi input bằng state",
           "path": "/learn/reacting-to-input-with-state"
         },
         {
-          "title": "Choosing the State Structure",
+          "title": "Chọn cấu trúc state",
           "path": "/learn/choosing-the-state-structure"
         },
         {
-          "title": "Sharing State Between Components",
+          "title": "Chia sẻ state giữa các component",
           "path": "/learn/sharing-state-between-components"
         },
         {
-          "title": "Preserving and Resetting State",
+          "title": "Giữ nguyên và đặt lại state",
           "path": "/learn/preserving-and-resetting-state"
         },
         {
-          "title": "Extracting State Logic into a Reducer",
+          "title": "Trích xuất logic state vào reducer",
           "path": "/learn/extracting-state-logic-into-a-reducer"
         },
         {
-          "title": "Passing Data Deeply with Context",
+          "title": "Truyền dữ liệu sâu bằng context",
           "path": "/learn/passing-data-deeply-with-context"
         },
         {
-          "title": "Scaling Up with Reducer and Context",
+          "title": "Mở rộng với reducer và context",
           "path": "/learn/scaling-up-with-reducer-and-context"
         }
       ]
     },
     {
-      "title": "Escape Hatches",
+      "title": "Lối thoát",
       "path": "/learn/escape-hatches",
       "tags": ["advanced"],
       "routes": [
         {
-          "title": "Referencing Values with Refs",
+          "title": "Tham chiếu giá trị bằng ref",
           "path": "/learn/referencing-values-with-refs"
         },
         {
-          "title": "Manipulating the DOM with Refs",
+          "title": "Thao tác với DOM bằng ref",
           "path": "/learn/manipulating-the-dom-with-refs"
         },
         {
-          "title": "Synchronizing with Effects",
+          "title": "Đồng bộ với effect",
           "path": "/learn/synchronizing-with-effects"
         },
         {
-          "title": "You Might Not Need an Effect",
+          "title": "Có thể bạn không cần effect",
           "path": "/learn/you-might-not-need-an-effect"
         },
         {
-          "title": "Lifecycle of Reactive Effects",
+          "title": "Vòng đời của reactive effect",
           "path": "/learn/lifecycle-of-reactive-effects"
         },
         {
-          "title": "Separating Events from Effects",
+          "title": "Tách sự kiện khỏi effect",
           "path": "/learn/separating-events-from-effects"
         },
         {
-          "title": "Removing Effect Dependencies",
+          "title": "Loại bỏ dependency của effect",
           "path": "/learn/removing-effect-dependencies"
         },
         {
-          "title": "Reusing Logic with Custom Hooks",
+          "title": "Tái sử dụng logic với custom hook",
           "path": "/learn/reusing-logic-with-custom-hooks"
         }
       ]
