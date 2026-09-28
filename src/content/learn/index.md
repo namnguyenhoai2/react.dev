@@ -1,29 +1,29 @@
 ---
-title: Quick Start
+title: Bắt đầu nhanh
 ---
 
 <Intro>
 
-Welcome to the React documentation! This page will give you an introduction to 80% of the React concepts that you will use on a daily basis.
+Chào mừng bạn đến với tài liệu React! Trang này sẽ giới thiệu cho bạn 80% các khái niệm React mà bạn sẽ sử dụng hằng ngày.
 
 </Intro>
 
 <YouWillLearn>
 
-- How to create and nest components
-- How to add markup and styles
-- How to display data
-- How to render conditions and lists
-- How to respond to events and update the screen
-- How to share data between components
+- Cách tạo và lồng ghép các component
+- Cách thêm markup và style
+- Cách hiển thị dữ liệu
+- Cách render các điều kiện và danh sách
+- Cách phản hồi sự kiện và cập nhật màn hình
+- Cách chia sẻ dữ liệu giữa các component
 
 </YouWillLearn>
 
-## Creating and nesting components {/*components*/}
+## Tạo và lồng ghép các component {/*components*/}
 
-React apps are made out of *components*. A component is a piece of the UI (user interface) that has its own logic and appearance. A component can be as small as a button, or as large as an entire page.
+Các ứng dụng React được tạo nên từ *component*. Một component là một phần của UI (giao diện người dùng), có logic và giao diện riêng. Một component có thể nhỏ như một button hoặc lớn như toàn bộ một trang.
 
-React components are JavaScript functions that return markup:
+Các component React là những hàm JavaScript trả về markup:
 
 ```js
 function MyButton() {
@@ -33,7 +33,7 @@ function MyButton() {
 }
 ```
 
-Now that you've declared `MyButton`, you can nest it into another component:
+Sau khi đã khai báo `MyButton`, bạn có thể lồng nó vào một component khác:
 
 ```js {5}
 export default function MyApp() {
@@ -46,9 +46,9 @@ export default function MyApp() {
 }
 ```
 
-Notice that `<MyButton />` starts with a capital letter. That's how you know it's a React component. React component names must always start with a capital letter, while HTML tags must be lowercase.
+Hãy chú ý rằng `<MyButton />` bắt đầu bằng một chữ cái viết hoa. Đây là cách bạn nhận biết đó là một component React. Tên component React luôn phải bắt đầu bằng chữ cái viết hoa, còn các tag HTML phải viết thường.
 
-Have a look at the result:
+Hãy xem kết quả:
 
 <Sandpack>
 
@@ -73,13 +73,13 @@ export default function MyApp() {
 
 </Sandpack>
 
-The `export default` keywords specify the main component in the file. If you're not familiar with some piece of JavaScript syntax, [MDN](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) and [javascript.info](https://javascript.info/import-export) have great references.
+Các từ khóa `export default` chỉ định component chính trong file. Nếu bạn chưa quen với một số cú pháp JavaScript, [MDN](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) và [javascript.info](https://javascript.info/import-export) có các tài liệu tham khảo rất hữu ích.
 
-## Writing markup with JSX {/*writing-markup-with-jsx*/}
+## Viết markup bằng JSX {/*writing-markup-with-jsx*/}
 
-The markup syntax you've seen above is called *JSX*. It is optional, but most React projects use JSX for its convenience. All of the [tools we recommend for local development](/learn/installation) support JSX out of the box.
+Cú pháp markup bạn đã thấy ở trên được gọi là *JSX*. JSX là tùy chọn, nhưng hầu hết các dự án React đều sử dụng JSX vì tính tiện lợi của nó. Tất cả [công cụ chúng tôi khuyến nghị để phát triển cục bộ](/learn/installation) đều hỗ trợ JSX ngay từ đầu.
 
-JSX is stricter than HTML. You have to close tags like `<br />`. Your component also can't return multiple JSX tags. You have to wrap them into a shared parent, like a `<div>...</div>` or an empty `<>...</>` wrapper:
+JSX nghiêm ngặt hơn HTML. Bạn phải đóng các tag như `<br />`. Component của bạn cũng không thể trả về nhiều tag JSX. Bạn phải bọc chúng trong một phần tử cha chung, chẳng hạn như một `<div>...</div>` hoặc một wrapper `<>...</>` rỗng:
 
 ```js {3,6}
 function AboutPage() {
@@ -92,17 +92,17 @@ function AboutPage() {
 }
 ```
 
-If you have a lot of HTML to port to JSX, you can use an [online converter.](https://transform.tools/html-to-jsx)
+Nếu có nhiều HTML cần chuyển sang JSX, bạn có thể sử dụng [trình chuyển đổi trực tuyến.](https://transform.tools/html-to-jsx)
 
-## Adding styles {/*adding-styles*/}
+## Thêm style {/*adding-styles*/}
 
-In React, you specify a CSS class with `className`. It works the same way as the HTML [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class) attribute:
+Trong React, bạn chỉ định một class CSS bằng `className`. Nó hoạt động giống như thuộc tính [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class) của HTML:
 
 ```js
 <img className="avatar" />
 ```
 
-Then you write the CSS rules for it in a separate CSS file:
+Sau đó, bạn viết các quy tắc CSS cho class đó trong một file CSS riêng:
 
 ```css
 /* In your CSS */
@@ -111,11 +111,11 @@ Then you write the CSS rules for it in a separate CSS file:
 }
 ```
 
-React does not prescribe how you add CSS files. In the simplest case, you'll add a [`<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag to your HTML. If you use a build tool or a framework, consult its documentation to learn how to add a CSS file to your project.
+React không quy định cách bạn thêm các file CSS. Trong trường hợp đơn giản nhất, bạn sẽ thêm một tag [`<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) vào HTML. Nếu sử dụng build tool hoặc framework, hãy tham khảo tài liệu của công cụ đó để biết cách thêm file CSS vào dự án.
 
-## Displaying data {/*displaying-data*/}
+## Hiển thị dữ liệu {/*displaying-data*/}
 
-JSX lets you put markup into JavaScript. Curly braces let you "escape back" into JavaScript so that you can embed some variable from your code and display it to the user. For example, this will display `user.name`:
+JSX cho phép bạn đưa markup vào JavaScript. Dấu ngoặc nhọn cho phép bạn “thoát trở lại” JavaScript để nhúng một biến trong code và hiển thị biến đó cho người dùng. Ví dụ, đoạn này sẽ hiển thị `user.name`:
 
 ```js {3}
 return (
@@ -125,7 +125,7 @@ return (
 );
 ```
 
-You can also "escape into JavaScript" from JSX attributes, but you have to use curly braces *instead of* quotes. For example, `className="avatar"` passes the `"avatar"` string as the CSS class, but `src={user.imageUrl}` reads the JavaScript `user.imageUrl` variable value, and then passes that value as the `src` attribute:
+Bạn cũng có thể “thoát vào JavaScript” từ các thuộc tính JSX, nhưng phải sử dụng dấu ngoặc nhọn *thay vì* dấu ngoặc kép. Ví dụ, `className="avatar"` truyền chuỗi `"avatar"` làm class CSS, còn `src={user.imageUrl}` đọc giá trị của biến JavaScript `user.imageUrl`, rồi truyền giá trị đó làm thuộc tính `src`:
 
 ```js {3,4}
 return (
@@ -136,7 +136,7 @@ return (
 );
 ```
 
-You can put more complex expressions inside the JSX curly braces too, for example, [string concatenation](https://javascript.info/operators#string-concatenation-with-binary):
+Bạn cũng có thể đặt các biểu thức phức tạp hơn bên trong dấu ngoặc nhọn JSX, chẳng hạn như [phép nối chuỗi](https://javascript.info/operators#string-concatenation-with-binary):
 
 <Sandpack>
 
@@ -177,11 +177,11 @@ export default function Profile() {
 
 </Sandpack>
 
-In the above example, `style={{}}` is not a special syntax, but a regular `{}` object inside the `style={ }` JSX curly braces. You can use the `style` attribute when your styles depend on JavaScript variables.
+Trong ví dụ trên, `style={{}}` không phải cú pháp đặc biệt mà là một object `{}` thông thường bên trong dấu ngoặc nhọn JSX của `style={ }`. Bạn có thể sử dụng thuộc tính `style` khi style của bạn phụ thuộc vào các biến JavaScript.
 
-## Conditional rendering {/*conditional-rendering*/}
+## Render có điều kiện {/*conditional-rendering*/}
 
-In React, there is no special syntax for writing conditions. Instead, you'll use the same techniques as you use when writing regular JavaScript code. For example, you can use an [`if`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) statement to conditionally include JSX:
+Trong React không có cú pháp đặc biệt để viết điều kiện. Thay vào đó, bạn sẽ sử dụng các kỹ thuật giống như khi viết code JavaScript thông thường. Ví dụ, bạn có thể sử dụng câu lệnh [`if`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) để đưa JSX vào một cách có điều kiện:
 
 ```js
 let content;
@@ -197,7 +197,7 @@ return (
 );
 ```
 
-If you prefer more compact code, you can use the [conditional `?` operator.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) Unlike `if`, it works inside JSX:
+Nếu muốn code ngắn gọn hơn, bạn có thể sử dụng [toán tử `?` có điều kiện.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) Không giống như `if`, toán tử này hoạt động bên trong JSX:
 
 ```js
 <div>
@@ -209,7 +209,7 @@ If you prefer more compact code, you can use the [conditional `?` operator.](htt
 </div>
 ```
 
-When you don't need the `else` branch, you can also use a shorter [logical `&&` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND#short-circuit_evaluation):
+Khi không cần nhánh `else`, bạn cũng có thể sử dụng cú pháp [`&&` logic](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND#short-circuit_evaluation) ngắn hơn:
 
 ```js
 <div>
@@ -217,13 +217,13 @@ When you don't need the `else` branch, you can also use a shorter [logical `&&` 
 </div>
 ```
 
-All of these approaches also work for conditionally specifying attributes. If you're unfamiliar with some of this JavaScript syntax, you can start by always using `if...else`.
+Tất cả các cách tiếp cận này cũng có thể được sử dụng để chỉ định thuộc tính theo điều kiện. Nếu chưa quen với một số cú pháp JavaScript này, bạn có thể bắt đầu bằng cách luôn sử dụng `if...else`.
 
-## Rendering lists {/*rendering-lists*/}
+## Render danh sách {/*rendering-lists*/}
 
-You will rely on JavaScript features like [`for` loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for) and the [array `map()` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) to render lists of components.
+Bạn sẽ dựa vào các tính năng JavaScript như [vòng lặp `for`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for) và hàm [array `map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) để render danh sách các component.
 
-For example, let's say you have an array of products:
+Ví dụ, giả sử bạn có một array sản phẩm:
 
 ```js
 const products = [
@@ -233,7 +233,7 @@ const products = [
 ];
 ```
 
-Inside your component, use the `map()` function to transform an array of products into an array of `<li>` items:
+Bên trong component, hãy sử dụng hàm `map()` để chuyển một array sản phẩm thành một array các item `<li>`:
 
 ```js
 const listItems = products.map(product =>
@@ -247,7 +247,7 @@ return (
 );
 ```
 
-Notice how `<li>` has a `key` attribute. For each item in a list, you should pass a string or a number that uniquely identifies that item among its siblings. Usually, a key should be coming from your data, such as a database ID. React uses your keys to know what happened if you later insert, delete, or reorder the items.
+Hãy chú ý rằng `<li>` có thuộc tính `key`. Với mỗi item trong danh sách, bạn nên truyền một chuỗi hoặc một số xác định duy nhất item đó giữa các phần tử cùng cấp. Thông thường, key nên lấy từ dữ liệu của bạn, chẳng hạn như ID trong database. React sử dụng các key của bạn để biết điều gì đã xảy ra nếu sau đó bạn chèn, xóa hoặc sắp xếp lại các item.
 
 <Sandpack>
 
@@ -278,9 +278,9 @@ export default function ShoppingList() {
 
 </Sandpack>
 
-## Responding to events {/*responding-to-events*/}
+## Phản hồi sự kiện {/*responding-to-events*/}
 
-You can respond to events by declaring *event handler* functions inside your components:
+Bạn có thể phản hồi các sự kiện bằng cách khai báo các hàm *event handler* bên trong component:
 
 ```js {2-4,7}
 function MyButton() {
@@ -296,19 +296,19 @@ function MyButton() {
 }
 ```
 
-Notice how `onClick={handleClick}` has no parentheses at the end! Do not _call_ the event handler function: you only need to *pass it down*. React will call your event handler when the user clicks the button.
+Hãy chú ý rằng `onClick={handleClick}` không có dấu ngoặc đơn ở cuối! Đừng _gọi_ hàm event handler; bạn chỉ cần *truyền nó xuống*. React sẽ gọi event handler của bạn khi người dùng click button.
 
-## Updating the screen {/*updating-the-screen*/}
+## Cập nhật màn hình {/*updating-the-screen*/}
 
-Often, you'll want your component to "remember" some information and display it. For example, maybe you want to count the number of times a button is clicked. To do this, add *state* to your component.
+Thông thường, bạn sẽ muốn component của mình “ghi nhớ” một số thông tin và hiển thị thông tin đó. Ví dụ, có thể bạn muốn đếm số lần một button được click. Để làm việc này, hãy thêm *state* vào component.
 
-First, import [`useState`](/reference/react/useState) from React:
+Trước tiên, import [`useState`](/reference/react/useState) từ React:
 
 ```js
 import { useState } from 'react';
 ```
 
-Now you can declare a *state variable* inside your component:
+Bây giờ bạn có thể khai báo một *biến state* bên trong component:
 
 ```js
 function MyButton() {
@@ -316,9 +316,9 @@ function MyButton() {
   // ...
 ```
 
-You’ll get two things from `useState`: the current state (`count`), and the function that lets you update it (`setCount`). You can give them any names, but the convention is to write `[something, setSomething]`.
+Bạn sẽ nhận được hai thứ từ `useState`: state hiện tại (`count`) và hàm cho phép bạn cập nhật state (`setCount`). Bạn có thể đặt cho chúng bất kỳ tên nào, nhưng quy ước là viết `[something, setSomething]`.
 
-The first time the button is displayed, `count` will be `0` because you passed `0` to `useState()`. When you want to change state, call `setCount()` and pass the new value to it. Clicking this button will increment the counter:
+Lần đầu tiên button được hiển thị, `count` sẽ là `0` vì bạn đã truyền `0` vào `useState()`. Khi muốn thay đổi state, hãy gọi `setCount()` và truyền giá trị mới vào đó. Click button này sẽ tăng counter:
 
 ```js {5}
 function MyButton() {
@@ -336,9 +336,9 @@ function MyButton() {
 }
 ```
 
-React will call your component function again. This time, `count` will be `1`. Then it will be `2`. And so on.
+React sẽ gọi lại hàm component của bạn. Lần này, `count` sẽ là `1`. Sau đó sẽ là `2`. Và cứ tiếp tục như vậy.
 
-If you render the same component multiple times, each will get its own state. Click each button separately:
+Nếu render cùng một component nhiều lần, mỗi component sẽ có state riêng. Hãy click từng button riêng biệt:
 
 <Sandpack>
 
@@ -379,59 +379,57 @@ button {
 
 </Sandpack>
 
-Notice how each button "remembers" its own `count` state and doesn't affect other buttons.
+Hãy chú ý rằng mỗi button đều “ghi nhớ” state `count` riêng của mình và không ảnh hưởng đến các button khác.
 
-## Using Hooks {/*using-hooks*/}
+## Sử dụng Hooks {/*using-hooks*/}
 
-Functions starting with `use` are called *Hooks*. `useState` is a built-in Hook provided by React. You can find other built-in Hooks in the [API reference.](/reference/react) You can also write your own Hooks by combining the existing ones.
+Các hàm bắt đầu bằng `use` được gọi là *Hooks*. `useState` là một Hook tích hợp sẵn do React cung cấp. Bạn có thể tìm thấy các Hook tích hợp sẵn khác trong [tài liệu tham khảo API.](/reference/react) Bạn cũng có thể tự viết Hook bằng cách kết hợp các Hook hiện có.
 
-Hooks are more restrictive than other functions. You can only call Hooks *at the top* of your components (or other Hooks). If you want to use `useState` in a condition or a loop, extract a new component and put it there.
+Hooks có nhiều hạn chế hơn các hàm khác. Bạn chỉ có thể gọi Hooks *ở cấp cao nhất* bên trong component (hoặc các Hook khác). Nếu muốn sử dụng `useState` trong một điều kiện hoặc vòng lặp, hãy tách thành một component mới và đặt nó ở đó.
 
-## Sharing data between components {/*sharing-data-between-components*/}
+## Chia sẻ dữ liệu giữa các component {/*sharing-data-between-components*/}
 
-In the previous example, each `MyButton` had its own independent `count`, and when each button was clicked, only the `count` for the button clicked changed:
+Trong ví dụ trước, mỗi `MyButton` có `count` độc lập riêng, và khi click từng button, chỉ `count` của button được click thay đổi:
 
 <DiagramGroup>
 
 <Diagram name="sharing_data_child" height={367} width={407} alt="Diagram showing a tree of three components, one parent labeled MyApp and two children labeled MyButton. Both MyButton components contain a count with value zero.">
 
-Initially, each `MyButton`'s `count` state is `0`
+Ban đầu, state `count` của mỗi `MyButton` là `0`
 
 </Diagram>
 
 <Diagram name="sharing_data_child_clicked" height={367} width={407} alt="The same diagram as the previous, with the count of the first child MyButton component highlighted indicating a click with the count value incremented to one. The second MyButton component still contains value zero." >
 
-The first `MyButton` updates its `count` to `1`
+`MyButton` đầu tiên cập nhật `count` của nó thành `1`
 
 </Diagram>
 
 </DiagramGroup>
 
-However, often you'll need components to *share data and always update together*.
+Tuy nhiên, thường bạn sẽ cần các component *chia sẻ dữ liệu và luôn cập nhật cùng nhau*.Để cả hai component `MyButton` hiển thị cùng một `count` và cập nhật cùng nhau, bạn cần chuyển state từ các button riêng lẻ “lên trên” đến component gần nhất chứa tất cả chúng.
 
-To make both `MyButton` components display the same `count` and update together, you need to move the state from the individual buttons "upwards" to the closest component containing all of them.
-
-In this example, it is `MyApp`:
+Trong ví dụ này, đó là `MyApp`:
 
 <DiagramGroup>
 
 <Diagram name="sharing_data_parent" height={385} width={410} alt="Diagram showing a tree of three components, one parent labeled MyApp and two children labeled MyButton. MyApp contains a count value of zero which is passed down to both of the MyButton components, which also show value zero." >
 
-Initially, `MyApp`'s `count` state is `0` and is passed down to both children
+Ban đầu, state `count` của `MyApp` là `0` và được truyền xuống cả hai component con
 
 </Diagram>
 
 <Diagram name="sharing_data_parent_clicked" height={385} width={410} alt="The same diagram as the previous, with the count of the parent MyApp component highlighted indicating a click with the value incremented to one. The flow to both of the children MyButton components is also highlighted, and the count value in each child is set to one indicating the value was passed down." >
 
-On click, `MyApp` updates its `count` state to `1` and passes it down to both children
+Khi được click, `MyApp` cập nhật state `count` của nó thành `1` rồi truyền state đó xuống cả hai component con
 
 </Diagram>
 
 </DiagramGroup>
 
-Now when you click either button, the `count` in `MyApp` will change, which will change both of the counts in `MyButton`. Here's how you can express this in code.
+Giờ đây, khi bạn click vào một trong hai button, `count` trong `MyApp` sẽ thay đổi, kéo theo cả hai giá trị đếm trong `MyButton` cùng thay đổi. Sau đây là cách bạn biểu diễn điều này trong code.
 
-First, *move the state up* from `MyButton` into `MyApp`:
+Trước tiên, *đưa state lên trên* từ `MyButton` vào `MyApp`:
 
 ```js {2-6,18}
 export default function MyApp() {
@@ -456,7 +454,7 @@ function MyButton() {
 
 ```
 
-Then, *pass the state down* from `MyApp` to each `MyButton`, together with the shared click handler. You can pass information to `MyButton` using the JSX curly braces, just like you previously did with built-in tags like `<img>`:
+Sau đó, *truyền state xuống* từ `MyApp` đến từng `MyButton`, cùng với click handler dùng chung. Bạn có thể truyền thông tin đến `MyButton` bằng dấu ngoặc nhọn JSX, giống như cách bạn đã làm trước đó với các tag tích hợp sẵn như `<img>`:
 
 ```js {11-12}
 export default function MyApp() {
@@ -476,9 +474,9 @@ export default function MyApp() {
 }
 ```
 
-The information you pass down like this is called _props_. Now the `MyApp` component contains the `count` state and the `handleClick` event handler, and *passes both of them down as props* to each of the buttons.
+Thông tin bạn truyền xuống theo cách này được gọi là _props_. Giờ đây, component `MyApp` chứa state `count` và event handler `handleClick`, đồng thời *truyền cả hai xuống dưới dạng props* cho từng button.
 
-Finally, change `MyButton` to *read* the props you have passed from its parent component:
+Cuối cùng, thay đổi `MyButton` để *đọc* các props bạn đã truyền từ component cha:
 
 ```js {1,3}
 function MyButton({ count, onClick }) {
@@ -490,7 +488,7 @@ function MyButton({ count, onClick }) {
 }
 ```
 
-When you click the button, the `onClick` handler fires. Each button's `onClick` prop was set to the `handleClick` function inside `MyApp`, so the code inside of it runs. That code calls `setCount(count + 1)`, incrementing the `count` state variable. The new `count` value is passed as a prop to each button, so they all show the new value. This is called "lifting state up". By moving state up, you've shared it between components.
+Khi bạn click vào button, handler `onClick` sẽ được kích hoạt. Prop `onClick` của mỗi button được gán cho function `handleClick` bên trong `MyApp`, nên code bên trong function đó sẽ chạy. Code này gọi `setCount(count + 1)`, làm tăng biến state `count`. Giá trị `count` mới được truyền dưới dạng prop cho mỗi button, nên tất cả chúng đều hiển thị giá trị mới. Đây được gọi là “đưa state lên trên” (lifting state up). Bằng cách đưa state lên trên, bạn đã chia sẻ state đó giữa các component.
 
 <Sandpack>
 
@@ -531,8 +529,8 @@ button {
 
 </Sandpack>
 
-## Next Steps {/*next-steps*/}
+## Các bước tiếp theo {/*next-steps*/}
 
-By now, you know the basics of how to write React code!
+Đến đây, bạn đã biết những kiến thức cơ bản về cách viết code React!
 
-Check out the [Tutorial](/learn/tutorial-tic-tac-toe) to put them into practice and build your first mini-app with React.
+Hãy xem [Tutorial](/learn/tutorial-tic-tac-toe) để thực hành và xây dựng mini-app đầu tiên của bạn với React.
