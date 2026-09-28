@@ -1,31 +1,31 @@
 ---
-title: Rules of Hooks
+title: Quy tắc của Hooks
 ---
 
-You are probably here because you got the following error message:
+Có lẽ bạn đang ở đây vì gặp thông báo lỗi sau:
 
 <ConsoleBlock level="error">
 
-Hooks can only be called inside the body of a function component.
+Hooks chỉ có thể được gọi bên trong phần thân của một function component.
 
 </ConsoleBlock>
 
-There are three common reasons you might be seeing it:
+Có ba lý do phổ biến khiến bạn thấy lỗi này:
 
-1. You might be **breaking the Rules of Hooks**.
-2. You might have **mismatching versions** of React and React DOM.
-3. You might have **more than one copy of React** in the same app.
+1. Bạn có thể đang **vi phạm Quy tắc của Hooks**.
+2. Bạn có thể đang sử dụng các phiên bản **không tương thích** của React và React DOM.
+3. Bạn có thể có **nhiều hơn một bản sao của React** trong cùng một ứng dụng.
 
-Let's look at each of these cases.
+Hãy xem xét từng trường hợp.
 
-## Breaking Rules of Hooks {/*breaking-rules-of-hooks*/}
+## Vi phạm Quy tắc của Hooks {/*breaking-rules-of-hooks*/}
 
-Functions whose names start with `use` are called [*Hooks*](/reference/react) in React.
+Các hàm có tên bắt đầu bằng `use` được gọi là [*Hooks*](/reference/react) trong React.
 
-**Don’t call Hooks inside loops, conditions, or nested functions.** Instead, always use Hooks at the top level of your React function, before any early returns. You can only call Hooks while React is rendering a function component:
+**Đừng gọi Hooks bên trong các vòng lặp, điều kiện hoặc hàm lồng nhau.** Thay vào đó, luôn sử dụng Hooks ở cấp cao nhất trong function React của bạn, trước mọi lệnh return sớm. Bạn chỉ có thể gọi Hooks khi React đang render một function component:
 
-* ✅ Call them at the top level in the body of a [function component](/learn/your-first-component).
-* ✅ Call them at the top level in the body of a [custom Hook](/learn/reusing-logic-with-custom-hooks).
+* ✅ Gọi chúng ở cấp cao nhất trong phần thân của một [function component](/learn/your-first-component).
+* ✅ Gọi chúng ở cấp cao nhất trong phần thân của một [custom Hook](/learn/reusing-logic-with-custom-hooks).
 
 ```js{2-3,8-9}
 function Counter() {
@@ -41,15 +41,15 @@ function useWindowWidth() {
 }
 ```
 
-It’s **not** supported to call Hooks (functions starting with `use`) in any other cases, for example:
+Không được hỗ trợ việc gọi Hooks (các hàm bắt đầu bằng `use`) trong bất kỳ trường hợp nào khác, chẳng hạn như:
 
-* 🔴 Do not call Hooks inside conditions or loops.
-* 🔴 Do not call Hooks after a conditional `return` statement.
-* 🔴 Do not call Hooks in event handlers.
-* 🔴 Do not call Hooks in class components.
-* 🔴 Do not call Hooks inside functions passed to `useMemo`, `useReducer`, or `useEffect`.
+* 🔴 Không gọi Hooks bên trong các điều kiện hoặc vòng lặp.
+* 🔴 Không gọi Hooks sau câu lệnh `return` điều kiện.
+* 🔴 Không gọi Hooks trong các event handler.
+* 🔴 Không gọi Hooks trong các class component.
+* 🔴 Không gọi Hooks bên trong các hàm được truyền vào `useMemo`, `useReducer` hoặc `useEffect`.
 
-If you break these rules, you might see this error.
+Nếu vi phạm các quy tắc này, bạn có thể thấy lỗi trên.
 
 ```js{3-4,11-12,20-21}
 function Bad({ cond }) {
@@ -103,25 +103,25 @@ class Bad extends React.Component {
 }
 ```
 
-You can use the [`eslint-plugin-react-hooks` plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) to catch these mistakes.
+Bạn có thể sử dụng plugin [`eslint-plugin-react-hooks` để phát hiện những lỗi này](https://www.npmjs.com/package/eslint-plugin-react-hooks).
 
 <Note>
 
-[Custom Hooks](/learn/reusing-logic-with-custom-hooks) *may* call other Hooks (that's their whole purpose). This works because custom Hooks are also supposed to only be called while a function component is rendering.
+[Custom Hooks](/learn/reusing-logic-with-custom-hooks) *có thể* gọi các Hooks khác (đó chính là mục đích của chúng). Điều này hoạt động vì custom Hooks cũng chỉ được gọi khi một function component đang được render.
 
 </Note>
 
-## Mismatching Versions of React and React DOM {/*mismatching-versions-of-react-and-react-dom*/}
+## Các phiên bản React và React DOM không tương thích {/*mismatching-versions-of-react-and-react-dom*/}
 
-You might be using a version of `react-dom` (< 16.8.0) or `react-native` (< 0.59) that doesn't yet support Hooks. You can run `npm ls react-dom` or `npm ls react-native` in your application folder to check which version you're using. If you find more than one of them, this might also create problems (more on that below).
+Bạn có thể đang sử dụng một phiên bản của `react-dom` (< 16.8.0) hoặc `react-native` (< 0.59) chưa hỗ trợ Hooks. Bạn có thể chạy `npm ls react-dom` hoặc `npm ls react-native` trong thư mục ứng dụng để kiểm tra phiên bản đang sử dụng. Nếu tìm thấy nhiều hơn một phiên bản, điều này cũng có thể gây ra sự cố (sẽ nói thêm bên dưới).
 
-## Duplicate React {/*duplicate-react*/}
+## React trùng lặp {/*duplicate-react*/}
 
-In order for Hooks to work, the `react` import from your application code needs to resolve to the same module as the `react` import from inside the `react-dom` package.
+Để Hooks hoạt động, import `react` từ mã ứng dụng của bạn cần trỏ đến cùng module với import `react` bên trong package `react-dom`.
 
-If these `react` imports resolve to two different exports objects, you will see this warning. This may happen if you **accidentally end up with two copies** of the `react` package.
+Nếu các import `react` này trỏ đến hai export object khác nhau, bạn sẽ thấy cảnh báo này. Điều này có thể xảy ra nếu bạn **vô tình có hai bản sao** của package `react`.
 
-If you use Node for package management, you can run this check in your project folder:
+Nếu sử dụng Node để quản lý package, bạn có thể chạy lệnh kiểm tra này trong thư mục dự án:
 
 <TerminalBlock>
 
@@ -129,9 +129,9 @@ npm ls react
 
 </TerminalBlock>
 
-If you see more than one React, you'll need to figure out why this happens and fix your dependency tree. For example, maybe a library you're using incorrectly specifies `react` as a dependency (rather than a peer dependency). Until that library is fixed, [Yarn resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/) is one possible workaround.
+Nếu thấy nhiều hơn một React, bạn cần tìm hiểu nguyên nhân và sửa dependency tree. Ví dụ, có thể một library bạn đang sử dụng đã khai báo không đúng `react` dưới dạng dependency (thay vì peer dependency). Cho đến khi library đó được sửa, [Yarn resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/) là một cách khắc phục tạm thời khả thi.
 
-You can also try to debug this problem by adding some logs and restarting your development server:
+Bạn cũng có thể thử debug sự cố này bằng cách thêm một số log và khởi động lại development server:
 
 ```js
 // Add this in node_modules/react-dom/index.js
@@ -143,16 +143,16 @@ window.React2 = require('react');
 console.log(window.React1 === window.React2);
 ```
 
-If it prints `false` then you might have two Reacts and need to figure out why that happened. [This issue](https://github.com/react/react/issues/13991) includes some common reasons encountered by the community.
+Nếu kết quả in ra là `false` thì có thể bạn có hai React và cần tìm hiểu lý do xảy ra việc đó. [Vấn đề này](https://github.com/react/react/issues/13991) bao gồm một số nguyên nhân phổ biến được cộng đồng ghi nhận.
 
-This problem can also come up when you use `npm link` or an equivalent. In that case, your bundler might "see" two Reacts — one in application folder and one in your library folder. Assuming `myapp` and `mylib` are sibling folders, one possible fix is to run `npm link ../myapp/node_modules/react` from `mylib`. This should make the library use the application's React copy.
+Sự cố này cũng có thể xảy ra khi bạn sử dụng `npm link` hoặc một công cụ tương đương. Trong trường hợp đó, bundler của bạn có thể “nhìn thấy” hai React — một trong thư mục ứng dụng và một trong thư mục library. Giả sử `myapp` và `mylib` là hai thư mục cùng cấp, một cách khắc phục có thể là chạy `npm link ../myapp/node_modules/react` từ `mylib`. Việc này sẽ khiến library sử dụng bản sao React của ứng dụng.
 
 <Note>
 
-In general, React supports using multiple independent copies on one page (for example, if an app and a third-party widget both use it). It only breaks if `require('react')` resolves differently between the component and the `react-dom` copy it was rendered with.
+Nhìn chung, React hỗ trợ sử dụng nhiều bản sao độc lập trên cùng một trang (ví dụ: một app và một widget bên thứ ba cùng sử dụng React). Chỉ xảy ra lỗi nếu `require('react')` trỏ đến các bản khác nhau giữa component và bản sao `react-dom` dùng để render component đó.
 
 </Note>
 
-## Other Causes {/*other-causes*/}
+## Các nguyên nhân khác {/*other-causes*/}
 
-If none of this worked, please comment in [this issue](https://github.com/react/react/issues/13991) and we'll try to help. Try to create a small reproducing example — you might discover the problem as you're doing it.
+Nếu không cách nào ở trên hiệu quả, vui lòng bình luận trong [vấn đề này](https://github.com/react/react/issues/13991) và chúng tôi sẽ cố gắng hỗ trợ. Hãy thử tạo một ví dụ nhỏ có thể tái hiện lỗi — có thể bạn sẽ phát hiện ra vấn đề trong quá trình thực hiện.

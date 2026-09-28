@@ -1,27 +1,27 @@
 ---
-title: "Meet the Team"
+title: "Gặp gỡ đội ngũ"
 ---
 
 <Intro>
 
-React development is led by contributors from companies and communities all over the world.
+Việc phát triển React được dẫn dắt bởi các contributor đến từ các công ty và cộng đồng trên toàn thế giới.
 
 </Intro>
 
-React work is organized into working groups, each responsible for an area of the project such as Server, DOM, Fiber, Docs & Community, Compiler, DevX, and React Native. Each working group is represented on the React Leadership Council, which coordinates direction across the project.
+Công việc của React được tổ chức thành các working group, mỗi nhóm chịu trách nhiệm về một lĩnh vực của dự án như Server, DOM, Fiber, Docs & Community, Compiler, DevX và React Native. Mỗi working group đều có đại diện trong React Leadership Council, cơ quan điều phối định hướng chung của dự án.
 
-## Leadership Council {/*leadership-council*/}
+## Hội đồng lãnh đạo {/*leadership-council*/}
 
 <TeamMember name="Andrew Clark" permalink="andrew-clark" photo="/images/team/acdlite.jpg" github="acdlite" twitter="acdlite" threads="acdlite" title="Engineer at Vercel" group="Fiber*, DOM">
-    Andrew got started with web development by making sites with WordPress, and eventually tricked himself into doing JavaScript. His favorite pastime is karaoke. Andrew is either a Disney villain or a Disney princess, depending on the day.
+    Andrew bắt đầu làm web bằng cách tạo các website với WordPress, rồi cuối cùng tự khiến mình phải làm JavaScript. Sở thích yêu thích của anh là karaoke. Andrew có thể là một phản diện Disney hoặc một công chúa Disney, tùy từng ngày.
 </TeamMember>
 
 <TeamMember name="Jack Pope" permalink="jack-pope" photo="/images/team/jack-pope.jpg" github="jackpope" personal="jackpope.me" title="Engineer at Meta" group="DOM*, Fiber">
-    Shortly after being introduced to AutoHotkey, Jack had written scripts to automate everything he could think of. When reaching limitations there, he dove headfirst into web app development and hasn't looked back. Most recently, Jack worked on the web platform at Instagram before moving to React. His favorite programming language is JSX.
+    Không lâu sau khi được giới thiệu về AutoHotkey, Jack đã viết các script để tự động hóa mọi thứ anh có thể nghĩ ra. Khi gặp giới hạn ở đó, anh lao đầu vào phát triển web app và không ngoái lại. Gần đây nhất, Jack làm việc trên web platform tại Instagram trước khi chuyển sang React. Ngôn ngữ lập trình yêu thích của anh là JSX.
 </TeamMember>
 
 <TeamMember name="Mofei Zhang" permalink="mofei-zhang" photo="/images/team/mofei-zhang.png" github="mofeiZ" threads="z_mofei" title="Engineer at Meta" group="Compiler*">
-    Mofei started programming when she realized it can help her cheat in video games. She focused on operating systems in undergrad / grad school, but now finds herself happily tinkering on React. Outside of work, she enjoys debugging bouldering problems and planning her next backpacking trip(s).
+    Mofei bắt đầu lập trình khi nhận ra rằng nó có thể giúp cô gian lận trong các trò chơi điện tử. Cô tập trung vào hệ điều hành khi học đại học và cao học, nhưng giờ đây lại vui vẻ mày mò với React. Ngoài giờ làm, cô thích debug các bài toán bouldering và lên kế hoạch cho (những) chuyến backpacking tiếp theo.
 </TeamMember>
 
 <TeamMember name="Moti Zilberman" permalink="moti-zilberman" photo="/images/team/gh-motiz88.jpg" github="motiz88" title="Engineer at Meta" group="DevX*" />
@@ -29,14 +29,14 @@ React work is organized into working groups, each responsible for an area of the
 <TeamMember name="Nicola Corti" permalink="nicola-corti" photo="/images/team/gh-cortinico.jpg" github="cortinico" twitter="cortinico" title="Engineer at Meta" group="React Native*, Docs & Community" />
 
 <TeamMember name="Rick Hanlon" permalink="rick-hanlon" photo="/images/team/rickhanlonii.jpg" github="rickhanlonii" twitter="rickyfm" threads="rickhanlonii" bsky="ricky.fm" title="Engineer at Meta" group="Docs & Community*, DOM, Fiber, Server, DevX">
-    Ricky majored in theoretical math and somehow found himself on the React Native team for a couple years before joining the React team. When he's not programming you can find him snowboarding, biking, climbing, golfing, or closing GitHub issues that do not match the issue template.
+    Ricky học chuyên ngành toán lý thuyết và bằng cách nào đó đã gia nhập đội React Native trong vài năm trước khi chuyển sang đội React. Khi không lập trình, bạn có thể bắt gặp anh trượt tuyết, đạp xe, leo núi, chơi golf hoặc đóng các issue trên GitHub không tuân theo issue template.
 </TeamMember>
 
 <TeamMember name="Sebastian Silbermann" permalink="sebastian-silbermann" photo="/images/team/sebsilbermann.jpg" github="eps1lon" twitter="sebsilbermann" threads="sebsilbermann" title="Engineer at Vercel" group="Server*, DOM, Fiber, DevX">
-    Sebastian learned programming to make the browser games he played during class more enjoyable. Eventually this lead to contributing to as much open source code as possible. Outside of coding he's busy making sure people don't confuse him with the other Sebastians and Zilberman of the React community.
+    Sebastian học lập trình để làm cho các trò chơi trên trình duyệt mà anh chơi trong giờ học trở nên thú vị hơn. Cuối cùng, điều đó dẫn đến việc anh đóng góp nhiều nhất có thể cho mã nguồn mở. Ngoài việc viết code, anh bận rộn bảo đảm mọi người không nhầm anh với những Sebastian và Zilberman khác trong cộng đồng React.
 </TeamMember>
 
-## Working Group members {/*working-group-members*/}
+## Thành viên Working Group {/*working-group-members*/}
 
 <TeamMember name="Alex Hunt" permalink="alex-hunt" photo="/images/team/gh-huntie.jpg" github="huntie" twitter="huntie" title="Engineer at Meta" group="DevX, React Native" />
 
@@ -47,17 +47,17 @@ React work is organized into working groups, each responsible for an area of the
 <TeamMember name="Brent Vatne" permalink="brent-vatne" photo="/images/team/gh-brentvatne.jpg" github="brentvatne" title="Engineer at Expo" group="React Native" />
 
 <TeamMember name="Dan Abramov" permalink="dan-abramov" photo="/images/team/gaearon.jpg" github="gaearon" bsky="danabra.mov" title="Engineer at Vercel" group="Docs & Community">
-    Dan got into programming after he accidentally discovered Visual Basic inside Microsoft PowerPoint. He has found his true calling in turning [Sebastian](#sebastian-markbåge)'s tweets into long-form blog posts. Dan occasionally wins at Fortnite by hiding in a bush until the game ends.
+    Dan bắt đầu lập trình sau khi tình cờ phát hiện Visual Basic bên trong Microsoft PowerPoint. Anh đã tìm thấy thiên hướng thực sự của mình là biến các tweet của [Sebastian](#sebastian-markbåge) thành các bài blog dài. Thỉnh thoảng Dan thắng Fortnite bằng cách trốn trong một bụi cây cho đến khi trò chơi kết thúc.
 </TeamMember>
 
 <TeamMember name="Hendrik Liebau" permalink="hendrik-liebau" photo="/images/team/hendrik.jpg" github="unstubbable" bsky="unstubbable.bsky.social" twitter="unstubbable" title="Engineer at Vercel" group="Server">
-    Hendrik’s journey in tech started in the late 90s when he built his first websites with Netscape Communicator. After earning a diploma in computer science and working at digital agencies, he built a React Server Components bundler and library, paving the way to his role on the Next.js team. Outside of work, he enjoys cycling and tinkering in his workshop.
+    Hành trình của Hendrik trong lĩnh vực công nghệ bắt đầu vào cuối những năm 90, khi anh xây dựng các website đầu tiên bằng Netscape Communicator. Sau khi lấy bằng khoa học máy tính và làm việc tại các digital agency, anh xây dựng một bundler và library cho React Server Components, mở đường cho vai trò của mình trong đội Next.js. Ngoài giờ làm, anh thích đạp xe và mày mò trong xưởng của mình.
 </TeamMember>
 
 <TeamMember name="Jordan Eldredge" permalink="jordan-eldredge" photo="/images/team/gh-captbaritone.jpg" github="captbaritone" title="Engineer at Meta" group="Server" />
 
 <TeamMember name="Josh Story" permalink="josh-story" photo="/images/team/josh.jpg" github="gnoff" bsky="storyhb.com" title="Engineer at Vercel" group="DOM, Fiber, Server">
-    Josh majored in Mathematics and discovered programming while in college. His first professional developer job was to program insurance rate calculations in Microsoft Excel, the paragon of Reactive Programming which must be why he now works on React. In between that time Josh has been an IC, Manager, and Executive at a few startups. outside of work he likes to push his limits with cooking.
+    Josh học chuyên ngành Toán học và phát hiện ra lập trình khi còn học đại học. Công việc developer chuyên nghiệp đầu tiên của anh là lập trình các phép tính mức phí bảo hiểm trong Microsoft Excel, hình mẫu của Reactive Programming, có lẽ đó là lý do anh hiện làm việc với React. Trong khoảng thời gian giữa lúc đó và hiện tại, Josh từng là IC, Manager và Executive tại một vài startup. Ngoài giờ làm, anh thích thử thách giới hạn của mình bằng việc nấu ăn.
 </TeamMember>
 
 <TeamMember name="Kevin Gozali" permalink="kevin-gozali" photo="/images/team/gh-fkgozali.jpg" github="fkgozali" title="Engineer at Meta" group="React Native" />
@@ -67,11 +67,11 @@ React work is organized into working groups, each responsible for an area of the
 <TeamMember name="Krzysztof Magiera" permalink="krzysztof-magiera" photo="/images/team/gh-kmagiera.jpg" github="kmagiera" title="Engineer at Software Mansion" group="React Native" />
 
 <TeamMember name="Lauren Tan" permalink="lauren-tan" photo="/images/team/lauren.jpg" github="poteto" twitter="potetotes" threads="potetotes" bsky="no.lol" title="Engineer at Cursor" group="Compiler">
-    Lauren's programming career peaked when she first discovered the `<marquee>` tag. She’s been chasing that high ever since. She studied Finance instead of CS in college, so she learned to code using Excel. Lauren enjoys dropping cheeky memes in chat, playing video games with her partner, learning Korean, and petting her dog Zelda.
+    Đỉnh cao sự nghiệp lập trình của Lauren là khi cô lần đầu phát hiện thẻ `<marquee>`. Kể từ đó, cô luôn cố tìm lại cảm giác hưng phấn ấy. Cô học Tài chính thay vì CS ở đại học, nên đã học code bằng Excel. Lauren thích thả những meme tinh nghịch trong chat, chơi trò chơi điện tử với người yêu, học tiếng Hàn và vuốt ve chú chó Zelda của mình.
 </TeamMember>
 
 <TeamMember name="Matt Carroll" permalink="matt-carroll" photo="/images/team/matt-carroll.png" github="mattcarrollcode" twitter="mattcarrollcode" threads="mattcarrollcode" title="Developer Advocate at Meta" group="Docs & Community">
-    Matt stumbled into coding, and since then, has become enamored with creating things in communities that can’t be created alone. Prior to React, he worked on YouTube, the Google Assistant, Fuchsia, and Google Cloud AI and Evernote. When he's not trying to make better developer tools he enjoys the mountains, jazz, and spending time with his family.
+    Matt tình cờ đến với việc viết code, và từ đó say mê việc tạo ra những thứ trong các cộng đồng mà một người không thể tự mình tạo ra. Trước React, anh từng làm việc với YouTube, Google Assistant, Fuchsia, Google Cloud AI và Evernote. Khi không cố gắng tạo ra các developer tools tốt hơn, anh thích núi non, jazz và dành thời gian cho gia đình.
 </TeamMember>
 
 <TeamMember name="Michael Leon" permalink="michael-leon" photo="/images/team/gh-fbmal7.jpg" github="fbmal7" title="Engineer at Meta" group="DevX" />
@@ -79,7 +79,7 @@ React work is organized into working groups, each responsible for an area of the
 <TeamMember name="Michał Pierzchała" permalink="michal-pierzchala" photo="/images/team/gh-thymikee.jpg" github="thymikee" title="Engineer at Callstack" group="React Native" />
 
 <TeamMember name="Mike Vitousek" permalink="mike-vitousek" photo="/images/team/mike.jpg" github="mvitousek" title="Engineer at Meta" group="Compiler">
-    Mike went to grad school dreaming of becoming a professor but realized that he liked building things a lot more than writing grant applications. Mike joined Meta to work on JavaScript infrastructure, which ultimately led him to work on the React Compiler. When not hacking on either Javascript or OCaml, Mike can often be found hiking or skiing in the Pacific Northwest.
+    Mike học cao học với ước mơ trở thành giáo sư, nhưng nhận ra rằng mình thích xây dựng mọi thứ hơn nhiều so với viết các đơn xin tài trợ nghiên cứu. Mike gia nhập Meta để làm việc trên JavaScript infrastructure, công việc cuối cùng dẫn anh đến React Compiler. Khi không hack trên Javascript hoặc OCaml, Mike thường được bắt gặp đang đi bộ đường dài hoặc trượt tuyết ở Pacific Northwest.
 </TeamMember>
 
 <TeamMember name="Pieter De Baets" permalink="pieter-de-baets" photo="/images/team/gh-javache.jpg" github="javache" title="Engineer at Meta" group="Compiler, Fiber, React Native" />
@@ -91,57 +91,57 @@ React work is organized into working groups, each responsible for an area of the
 <TeamMember name="Rubén Norte" permalink="ruben-norte" photo="/images/team/gh-rubennorte.jpg" github="rubennorte" title="Engineer at Meta" group="Fiber, React Native" />
 
 <TeamMember name="Ruslan Lesiutin" permalink="ruslan-lesiutin" photo="/images/team/lesiutin.jpg" github="hoxyq" twitter="ruslanlesiutin" threads="lesiutin" title="Engineer at Meta" group="DOM, DevX">
-    Ruslan's introduction to UI programming started when he was a kid by manually editing HTML templates for his custom gaming forums. Somehow, he ended up majoring in Computer Science. He enjoys music, games, and memes. Mostly memes.
+    Ruslan bắt đầu làm quen với UI programming khi còn nhỏ bằng cách chỉnh sửa thủ công các HTML template cho những diễn đàn game tùy chỉnh của mình. Bằng cách nào đó, anh lại học chuyên ngành Computer Science. Anh thích âm nhạc, trò chơi và meme. Chủ yếu là meme.
 </TeamMember>
 
 <TeamMember name="Sam Selikoff" permalink="sam-selikoff" photo="/images/team/gh-samselikoff.jpg" github="samselikoff" title="Engineer at Vercel" group="Docs & Community" />
 
 <TeamMember name="Sophie Alpert" permalink="sophie-alpert" photo="/images/team/sophiebits.jpg" github="sophiebits" twitter="sophiebits" threads="sophiebits" personal="sophiebits.com" title="Independent Engineer" group="Docs & Community, DOM, Fiber">
-    Four days after React was released, Sophie rewrote the entirety of her then-current project to use it, which she now realizes was perhaps a bit reckless. After she became the project's #1 committer, she wondered why she wasn't getting paid by Facebook like everyone else was and joined the team officially to lead React through its adolescent years. Though she quit that job years ago, somehow she's still in the team's group chats and “providing value”.
+    Bốn ngày sau khi React được phát hành, Sophie đã viết lại toàn bộ dự án lúc đó của mình để sử dụng nó, và giờ cô nhận ra rằng có lẽ mình đã hơi liều lĩnh. Sau khi trở thành committer số 1 của dự án, cô tự hỏi tại sao mình không được Facebook trả lương như mọi người khác và chính thức gia nhập đội để dẫn dắt React qua những năm tháng vị thành niên. Dù đã nghỉ công việc đó nhiều năm trước, bằng cách nào đó cô vẫn ở trong các group chat của đội và vẫn đang “mang lại giá trị”.
 </TeamMember>
 
 <TeamMember name="Steven Moyes" permalink="steven-moyes" photo="/images/team/gh-stmoy.jpg" github="stmoy" title="Engineer at Amazon" group="React Native" />
 
 <TeamMember name="Vitali Zaidman" permalink="vitali-zaidman" photo="/images/team/gh-vzaidman.jpg" github="vzaidman" title="Engineer at Meta" group="DevX" />
 
-## Advisors {/*advisors*/}
+## Cố vấn {/*advisors*/}
 
 <TeamMember name="Eli White" permalink="eli-white" photo="/images/team/eli-white.jpg" github="elicwhite" twitter="Eli_White" threads="elicwhite" title="Engineer at Meta">
-    Eli got into programming after he got suspended from middle school for hacking. He has been working on React and React Native since 2017. He enjoys eating treats, especially ice cream and apple pie. You can find Eli trying quirky activities like parkour, indoor skydiving, and aerial silks.
+    Eli bắt đầu lập trình sau khi bị đình chỉ học ở trường trung học cơ sở vì hack. Anh đã làm việc trên React và React Native từ năm 2017. Anh thích ăn đồ ăn vặt, đặc biệt là kem và bánh táo. Bạn có thể bắt gặp Eli thử những hoạt động kỳ lạ như parkour, indoor skydiving và aerial silks.
 </TeamMember>
 
 <TeamMember name="Jason Bonta" permalink="jason-bonta" photo="/images/team/jasonbonta.jpg" threads="someextent" title="Engineering Manager at Meta">
-    Jason abandoned embedded C for a career in front-end engineering and never looked back. Armed with esoteric CSS knowledge and a passion for beautiful UI, Jason joined Facebook in 2010, where he now feels privileged to have seen JavaScript development come of age. Though he may not understand how `for...of` loops work, he loves getting to work with brilliant people on projects that enable amazing UX.
+    Jason từ bỏ embedded C để theo đuổi sự nghiệp front-end engineering và không bao giờ ngoái lại. Với kiến thức CSS uyên thâm và niềm đam mê UI đẹp, Jason gia nhập Facebook vào năm 2010, nơi giờ đây anh cảm thấy may mắn khi được chứng kiến JavaScript development trưởng thành. Dù có thể không hiểu cách các vòng lặp `for...of` hoạt động, anh thích được làm việc cùng những người tài năng trong các dự án giúp tạo ra UX tuyệt vời.
 </TeamMember>
 
 <TeamMember name="Jimmy Lai" permalink="jimmy-lai" photo="/images/team/jimmy-lai.jpg" github="feedthejim" title="Engineering Director, Next.js at Vercel">
-    Like many others, Jimmy started programming with the hopes of being able to work in the gaming industry. Fast forward a few years, he somehow decided that React and JavaScript were pretty fun and that helping other developers build fast experiences was a more interesting life goal. After starting his career at Meta, working on product infrastructure and (briefly) on React Native, Jimmy now works at Vercel, where he helps his team build Next.js. He sadly does not get much time for video games anymore.
+    Giống như nhiều người khác, Jimmy bắt đầu lập trình với hy vọng có thể làm việc trong ngành game. Vài năm sau, bằng cách nào đó anh quyết định rằng React và JavaScript khá thú vị, đồng thời giúp các developer khác xây dựng những trải nghiệm nhanh là một mục tiêu cuộc sống thú vị hơn. Sau khi bắt đầu sự nghiệp tại Meta, làm việc trên product infrastructure và (trong thời gian ngắn) trên React Native, Jimmy hiện làm việc tại Vercel, nơi anh giúp đội của mình xây dựng Next.js. Đáng buồn là giờ anh không còn nhiều thời gian cho trò chơi điện tử.
 </TeamMember>
 
 <TeamMember name="Seth Webster" permalink="seth-webster" photo="/images/team/seth.jpg" github="sethwebster" twitter="sethwebster" threads="sethwebster" personal="sethwebster.com" title="Executive Director, React Foundation, Chief Developer Evangelist at Expo">
-    Seth started programming as a kid growing up in Tucson, AZ. After school, he was bitten by the music bug and was a touring musician for about 10 years before returning to *work*, starting with Intuit. In his spare time, he loves [taking pictures](https://www.sethwebster.com) and flying for animal rescues in the northeastern United States.
+    Seth bắt đầu lập trình khi còn nhỏ, lớn lên ở Tucson, AZ. Sau khi học xong, anh bị âm nhạc cuốn hút và là một nhạc sĩ lưu diễn trong khoảng 10 năm trước khi quay lại với *công việc*, bắt đầu tại Intuit. Khi rảnh, anh thích [chụp ảnh](https://www.sethwebster.com) và lái máy bay cho các hoạt động cứu hộ động vật ở vùng đông bắc Hoa Kỳ.
 </TeamMember>
 
 ## Emeritus {/*emeritus*/}
 
 <TeamMember name="Joe Savona" permalink="joe-savona" photo="/images/team/joe.jpg" github="josephsavona" twitter="en_JS" threads="joesavona" title="Engineer at Meta">
-    Joe was planning to major in math and philosophy but got into computer science after writing physics simulations in Matlab. Prior to React, he worked on Relay, RSocket.js, and the Skip programming language. While he’s not building some sort of reactive system he enjoys running, studying Japanese, and spending time with his family.
+    Joe dự định học chuyên ngành toán và triết học, nhưng chuyển sang khoa học máy tính sau khi viết các mô phỏng vật lý trong Matlab. Trước React, anh từng làm việc trên Relay, RSocket.js và ngôn ngữ lập trình Skip. Khi không xây dựng một hệ thống reactive nào đó, anh thích chạy bộ, học tiếng Nhật và dành thời gian cho gia đình.
 </TeamMember>
 
 <TeamMember name="Jordan Brown" permalink="jordan-brown" photo="/images/team/jordan.jpg" github="jbrown215" title="Engineer at Meta">
-    Jordan started coding by building iPhone apps, where he was pushing and popping view controllers before he knew that for-loops were a thing. He enjoys working on technology that developers love, which naturally drew him to React. Outside of work he enjoys reading, kiteboarding, and playing guitar.
+    Jordan bắt đầu viết code bằng cách xây dựng các app iPhone, nơi anh đã push và pop các view controller trước khi biết rằng for-loop tồn tại. Anh thích làm việc trên những công nghệ mà developer yêu thích, điều này tự nhiên đưa anh đến với React. Ngoài giờ làm, anh thích đọc sách, kiteboarding và chơi guitar.
 </TeamMember>
 
 <TeamMember name="Pieter Vanderwerff" permalink="pieter-vanderwerff" photo="/images/team/pieter.jpg" github="pieterv" threads="pietervanderwerff" title="Engineer at Meta">
-    Pieter studied building science but after failing to get a job he made himself a website and things escalated from there. At Meta, he enjoys working on performance, languages and now React. When he's not programming you can find him off-road in the mountains.
+    Pieter học building science, nhưng sau khi không tìm được việc, anh tự tạo một website cho mình và mọi chuyện cứ thế phát triển. Tại Meta, anh thích làm việc về performance, languages và giờ là React. Khi không lập trình, bạn có thể bắt gặp anh đang off-road trên núi.
 </TeamMember>
 
 <TeamMember name="Sebastian Markbåge" permalink="sebastian-markbåge" photo="/images/team/sebmarkbage.jpg" github="sebmarkbage" twitter="sebmarkbage" threads="sebmarkbage" title="Engineer at Vercel">
-    Sebastian majored in psychology. He's usually quiet. Even when he says something, it often doesn't make sense to the rest of us until a few months later. The correct way to pronounce his surname is "mark-boa-geh" but he settled for "mark-beige" out of pragmatism -- and that's how he approaches React.
+    Sebastian học chuyên ngành tâm lý học. Anh thường khá ít nói. Ngay cả khi anh nói điều gì đó, phần còn lại của chúng tôi thường phải vài tháng sau mới hiểu được. Cách phát âm đúng họ của anh là "mark-boa-geh", nhưng vì thực tế anh chọn "mark-beige" -- và đó cũng là cách anh tiếp cận React.
 </TeamMember>
 
 <TeamMember name="Yuzhi Zheng" permalink="yuzhi-zheng" photo="/images/team/yuzhi.jpg" github="yuzhi" twitter="yuzhiz" threads="yuzhiz" title="Engineering Manager at Meta">
-    Yuzhi studied Computer Science in school. She liked the instant gratification of seeing code come to life without having to physically be in a laboratory. Now she’s a manager in the React org. Before management, she used to work on the Relay data fetching framework. In her spare time, Yuzhi enjoys optimizing her life via gardening and home improvement projects.
+    Yuzhi học Computer Science ở trường. Cô thích cảm giác thỏa mãn tức thì khi thấy code hoạt động mà không cần phải thực sự ở trong phòng thí nghiệm. Hiện giờ cô là manager trong React org. Trước khi làm quản lý, cô từng làm việc trên Relay data fetching framework. Khi rảnh, Yuzhi thích tối ưu hóa cuộc sống của mình thông qua việc làm vườn và các dự án cải tạo nhà cửa.
 </TeamMember>
 
-You can find the past team members and other people who significantly contributed to React over the years on the [acknowledgements](/community/acknowledgements) page.
+Bạn có thể tìm thấy các thành viên cũ trong nhóm và những người khác đã có đóng góp đáng kể cho React trong nhiều năm qua trên trang [ghi nhận](/community/acknowledgements).
