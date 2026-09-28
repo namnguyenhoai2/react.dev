@@ -51,7 +51,10 @@ const CodeBlock = function CodeBlock({
   noShadow?: boolean;
   onLineHover?: (lineNumber: number | null) => void;
 }) {
-  code = code.trimEnd();
+  // Markdown files may use Windows (CRLF) line endings. Normalize them before
+  // splitting into rendered lines so a leftover `\r` cannot become an extra
+  // visual line break inside the <pre>.
+  code = code.replace(/\r\n?/g, '\n').trimEnd();
   let lang = jsxLang;
   if (className === 'language-css') {
     lang = cssLang;
