@@ -10,6 +10,7 @@
  */
 
 import Image from 'next/image';
+import {assetPath} from 'utils/assetPath';
 
 interface DiagramProps {
   name: string;
@@ -43,7 +44,7 @@ export function Diagram({
       {captionPosition === 'top' && <Caption text={children} />}
       <div className="dark-image">
         <Image
-          src={`/images/docs/diagrams/${name}.dark.png`}
+          src={assetPath(`/images/docs/diagrams/${name}.dark.png`)}
           alt={alt}
           height={height}
           width={width}
@@ -51,7 +52,7 @@ export function Diagram({
       </div>
       <div className="light-image">
         <Image
-          src={`/images/docs/diagrams/${name}.png`}
+          src={assetPath(`/images/docs/diagrams/${name}.png`)}
           alt={alt}
           height={height}
           width={width}

@@ -35,6 +35,7 @@ import {ExternalLink} from 'components/ExternalLink';
 import sidebarBlog from '../../sidebarBlog.json';
 import * as React from 'react';
 import Image from 'next/image';
+import {assetPath} from 'utils/assetPath';
 
 function Section({children, background = null}) {
   return (
@@ -131,7 +132,7 @@ export function HomeContent() {
               loading="eager"
               width={313}
               height={160}
-              src="/images/uwu.png"
+              src={assetPath('/images/uwu.png')}
             />
           </div>
           <Logo
@@ -512,7 +513,7 @@ export function HomeContent() {
                 alt="logo do @sawaratsuki1004 tạo"
                 title="logo do @sawaratsuki1004 tạo"
                 className="uwu-visible mb-10 lg:mb-8 h-24 lg:h-32"
-                src="/images/uwu.png"
+                src={assetPath('/images/uwu.png')}
               />
             </div>
             <Logo className="uwu-hidden text-brand dark:text-brand-dark w-24 lg:w-28 mb-10 lg:mb-8 mt-12 h-auto mx-auto self-start" />
@@ -672,8 +673,8 @@ function CTA({children, icon, href}) {
   );
 }
 
-const reactConf2021Cover = '/images/home/conf2021/cover.svg';
-const reactConf2019Cover = '/images/home/conf2019/cover.svg';
+const reactConf2021Cover = assetPath('/images/home/conf2021/cover.svg');
+const reactConf2019Cover = assetPath('/images/home/conf2019/cover.svg');
 const communityImages = [
   {
     src: '/images/home/community/react_conf_fun.webp',
@@ -803,7 +804,7 @@ const CommunityImages = memo(function CommunityImages({isLazy}) {
               )}>
               <img
                 loading={isLazy ? 'lazy' : 'eager'}
-                src={src}
+                src={assetPath(src)}
                 alt={alt}
                 className="aspect-[4/3] h-full w-full flex object-cover rounded-2xl bg-gray-10 dark:bg-gray-80"
               />
@@ -1633,7 +1634,7 @@ function Thumbnail({video}) {
       style={{
         backgroundImage:
           typeof image === 'string' && image.startsWith('/')
-            ? 'url(' + image + ')'
+            ? 'url(' + assetPath(image) + ')'
             : null,
       }}>
       {typeof image !== 'string' ? (
@@ -1643,7 +1644,7 @@ function Thumbnail({video}) {
               <img
                 key={i}
                 className="h-8 w-8 border-2 shadow-md border-gray-70 object-cover rounded-full"
-                src={src}
+                src={assetPath(src)}
                 alt=""
               />
             ))}

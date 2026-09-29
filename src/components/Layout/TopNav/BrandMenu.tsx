@@ -11,6 +11,7 @@ import {IconDownload} from 'components/Icon/IconDownload';
 import {IconNewPage} from 'components/Icon/IconNewPage';
 import {ExternalLink} from 'components/ExternalLink';
 import {IconClose} from '../../Icon/IconClose';
+import {assetPath} from 'utils/assetPath';
 
 function MenuItem({
   children,
@@ -61,7 +62,7 @@ export default function BrandMenu({children}: {children: React.ReactNode}) {
           </ContextMenu.Label>
           <DownloadMenuItem
             fileName="react_logo_dark.svg"
-            href="/images/brand/logo_dark.svg">
+            href={assetPath('/images/brand/logo_dark.svg')}>
             <span className="w-8">
               <IconDownload />
             </span>
@@ -69,7 +70,7 @@ export default function BrandMenu({children}: {children: React.ReactNode}) {
           </DownloadMenuItem>
           <DownloadMenuItem
             fileName="react_wordmark_dark.svg"
-            href="/images/brand/wordmark_dark.svg">
+            href={assetPath('/images/brand/wordmark_dark.svg')}>
             <span className="w-8">
               <IconDownload />
             </span>
@@ -89,7 +90,7 @@ export default function BrandMenu({children}: {children: React.ReactNode}) {
           </ContextMenu.Label>
           <DownloadMenuItem
             fileName="react_logo_light.svg"
-            href="/images/brand/logo_light.svg">
+            href={assetPath('/images/brand/logo_light.svg')}>
             <span className="w-8">
               <IconDownload />
             </span>
@@ -97,7 +98,7 @@ export default function BrandMenu({children}: {children: React.ReactNode}) {
           </DownloadMenuItem>
           <DownloadMenuItem
             fileName="react_wordmark_light.svg"
-            href="/images/brand/wordmark_light.svg">
+            href={assetPath('/images/brand/wordmark_light.svg')}>
             <span className="w-8">
               <IconDownload />
             </span>
@@ -127,7 +128,9 @@ export default function BrandMenu({children}: {children: React.ReactNode}) {
               </span>
               <span>Turn off</span>
             </MenuItem>
-            <DownloadMenuItem fileName="react_uwu_png" href="/images/uwu.png">
+            <DownloadMenuItem
+              fileName="react_uwu_png"
+              href={assetPath('/images/uwu.png')}>
               <span className="w-8">
                 <IconDownload />
               </span>

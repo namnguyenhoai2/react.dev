@@ -14,6 +14,7 @@ import Head from 'next/head';
 import {withRouter, Router} from 'next/router';
 import {siteConfig} from '../siteConfig';
 import {finishedTranslations} from 'utils/finishedTranslations';
+import {assetPath} from 'utils/assetPath';
 
 export interface SeoProps {
   title: string;
@@ -93,7 +94,7 @@ export const Seo = withRouter(
         <meta
           property="og:image"
           key="og:image"
-          content={`https://${siteDomain}${image}`}
+          content={`https://${siteDomain}${assetPath(image)}`}
         />
         <meta
           name="twitter:card"
@@ -119,7 +120,7 @@ export const Seo = withRouter(
         <meta
           name="twitter:image"
           key="twitter:image"
-          content={`https://${siteDomain}${image}`}
+          content={`https://${siteDomain}${assetPath(image)}`}
         />
         <meta
           name="google-site-verification"

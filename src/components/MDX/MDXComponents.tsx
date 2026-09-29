@@ -38,6 +38,7 @@ import {IconNavArrow} from '../Icon/IconNavArrow';
 import ButtonLink from 'components/ButtonLink';
 import {TocContext, IsInTocContext} from './TocContext';
 import type {Toc, TocItem} from './TocContext';
+import {assetPath} from 'utils/assetPath';
 import {TeamMember} from './TeamMember';
 import {LanguagesContext} from './LanguagesContext';
 import {finishedTranslations} from 'utils/finishedTranslations';
@@ -515,10 +516,7 @@ function YouTubeIframe(props: any) {
 
 function Image(props: any) {
   const {alt, ...rest} = props;
-  const src =
-    typeof rest.src === 'string' && rest.src.startsWith('/images/')
-      ? `${process.env.NEXT_PUBLIC_BASE_PATH}${rest.src}`
-      : rest.src;
+  const src = typeof rest.src === 'string' ? assetPath(rest.src) : rest.src;
   return (
     <img
       alt={alt}

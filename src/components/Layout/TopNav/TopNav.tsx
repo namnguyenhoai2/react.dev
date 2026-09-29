@@ -32,6 +32,7 @@ import {Logo} from '../../Logo';
 import {SidebarRouteTree} from '../Sidebar';
 import type {RouteItem} from '../getRouteMeta';
 import {siteConfig} from 'siteConfig';
+import {assetPath} from 'utils/assetPath';
 import BrandMenu from './BrandMenu';
 
 declare global {
@@ -282,7 +283,7 @@ export default function TopNav({
                         priority
                         width={63}
                         height={32}
-                        src="/images/uwu.png"
+                        src={assetPath('/images/uwu.png')}
                       />
                     </NextLink>
                   </div>
