@@ -12,7 +12,7 @@
 /**
  * @type {import('next').NextConfig}
  **/
-const basePath = '/react/v9.3';
+const basePath = '/react/v19.3';
 
 const nextConfig = {
   basePath,
