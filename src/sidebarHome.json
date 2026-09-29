@@ -1,5 +1,5 @@
 {
-  "title": "React Docs",
+  "title": "Tài liệu React",
   "path": "/",
   "routes": [
     {
@@ -7,15 +7,15 @@
       "sectionHeader": "GET STARTED"
     },
     {
-      "title": "Quick Start",
+      "title": "Bắt đầu nhanh",
       "path": "/learn"
     },
     {
-      "title": "Installation",
+      "title": "Cài đặt",
       "path": "/learn/installation"
     },
     {
-      "title": "Setup",
+      "title": "Thiết lập",
       "path": "/learn/setup"
     },
     {
@@ -27,19 +27,19 @@
       "sectionHeader": "LEARN REACT"
     },
     {
-      "title": "Describing the UI",
+      "title": "Mô tả giao diện người dùng",
       "path": "/learn/describing-the-ui"
     },
     {
-      "title": "Adding Interactivity",
+      "title": "Thêm tính tương tác",
       "path": "/learn/adding-interactivity"
     },
     {
-      "title": "Managing State",
+      "title": "Quản lý trạng thái",
       "path": "/learn/managing-state"
     },
     {
-      "title": "Escape Hatches",
+      "title": "Lối thoát",
       "path": "/learn/escape-hatches"
     },
     {
@@ -51,7 +51,7 @@
       "path": "/reference/react"
     },
     {
-      "title": "Components",
+      "title": "Thành phần",
       "path": "/reference/react/components"
     },
     {
@@ -59,7 +59,7 @@
       "path": "/reference/react/apis"
     },
     {
-      "title": "Legacy APIs",
+      "title": "API cũ",
       "path": "/reference/react/legacy"
     },
     {
@@ -67,7 +67,7 @@
       "sectionHeader": "REACT DOM API"
     },
     {
-      "title": "Components",
+      "title": "Thành phần",
       "path": "/reference/react-dom/components"
     },
     {
@@ -75,11 +75,11 @@
       "path": "/reference/react-dom"
     },
     {
-      "title": "Client APIs",
+      "title": "API phía máy khách",
       "path": "/reference/react-dom/client"
     },
     {
-      "title": "Server APIs",
+      "title": "API phía máy chủ",
       "path": "/reference/react-dom/server"
     },
     {
@@ -87,15 +87,15 @@
       "sectionHeader": "REACT COMPILER API"
     },
     {
-      "title": "Configuration",
+      "title": "Cấu hình",
       "path": "/reference/react-compiler/configuration"
     },
     {
-      "title": "Directives",
+      "title": "Chỉ thị",
       "path": "/reference/react-compiler/directives"
     },
     {
-      "title": "Compiling Libraries",
+      "title": "Biên dịch thư viện",
       "path": "/reference/react-compiler/compiling-libraries"
     },
     {
@@ -103,7 +103,7 @@
       "sectionHeader": "GET INVOLVED"
     },
     {
-      "title": "React Community",
+      "title": "Cộng đồng React",
       "path": "/community"
     },
     {
@@ -111,7 +111,7 @@
       "sectionHeader": "STAY INFORMED"
     },
     {
-      "title": "React Blog",
+      "title": "Blog React",
       "path": "/blog"
     }
   ]
