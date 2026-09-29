@@ -4,17 +4,17 @@ title: gating
 
 <Intro>
 
-Validates configuration of [gating mode](/reference/react-compiler/gating).
+Xác thực cấu hình của [chế độ gating](/reference/react-compiler/gating).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết quy tắc {/*rule-details*/}
 
-Gating mode lets you gradually adopt React Compiler by marking specific components for optimization. This rule ensures your gating configuration is valid so the compiler knows which components to process.
+Chế độ gating cho phép bạn từng bước áp dụng React Compiler bằng cách đánh dấu các component cụ thể để tối ưu hóa. Quy tắc này đảm bảo cấu hình gating của bạn hợp lệ để compiler biết cần xử lý những component nào.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về mã không đúng đối với quy tắc này:
 
 ```js
 // ❌ Missing required fields
@@ -39,9 +39,9 @@ module.exports = {
 };
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về mã đúng đối với quy tắc này:
 
 ```js
 // ✅ Complete gating configuration

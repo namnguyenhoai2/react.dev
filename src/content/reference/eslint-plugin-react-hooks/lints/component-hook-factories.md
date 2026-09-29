@@ -4,17 +4,17 @@ title: component-hook-factories
 
 <Intro>
 
-Validates against higher order functions defining nested components or hooks. Components and hooks should be defined at the module level.
+Kiểm tra các higher-order function định nghĩa component hoặc hook lồng nhau. Component và hook nên được định nghĩa ở cấp module.
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-Defining components or hooks inside other functions creates new instances on every call. React treats each as a completely different component, destroying and recreating the entire component tree, losing all state, and causing performance problems.
+Việc định nghĩa component hoặc hook bên trong các function khác sẽ tạo ra instance mới ở mỗi lần gọi. React xem mỗi instance là một component hoàn toàn khác, hủy và tạo lại toàn bộ cây component, làm mất toàn bộ state và gây ra các vấn đề về hiệu năng.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js {expectedErrors: {'react-compiler': [14]}}
 // ❌ Factory function creating components
@@ -41,9 +41,9 @@ function createCustomHook(endpoint) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 // ✅ Component defined at module level
@@ -57,11 +57,11 @@ function useData(endpoint) {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I need dynamic component behavior {/*dynamic-behavior*/}
+### Tôi cần hành vi component động {/*dynamic-behavior*/}
 
-You might think you need a factory to create customized components:
+Bạn có thể nghĩ rằng mình cần một factory để tạo các component được tùy chỉnh:
 
 ```js
 // ❌ Wrong: Factory pattern
@@ -79,7 +79,7 @@ const RedButton = makeButton('red');
 const BlueButton = makeButton('blue');
 ```
 
-Pass [JSX as children](/learn/passing-props-to-a-component#passing-jsx-as-children) instead:
+Thay vào đó, hãy truyền [JSX làm children](/learn/passing-props-to-a-component#passing-jsx-as-children):
 
 ```js
 // ✅ Better: Pass JSX as children

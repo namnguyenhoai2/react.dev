@@ -4,47 +4,47 @@ title: refs
 
 <Intro>
 
-Validates correct usage of refs, not reading/writing during render. See the "pitfalls" section in [`useRef()` usage](/reference/react/useRef#usage).
+Xác thực việc sử dụng refs đúng cách, không đọc/ghi trong quá trình render. Xem phần "pitfalls" trong [`useRef()` usage](/reference/react/useRef#usage).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-Refs hold values that aren't used for rendering. Unlike state, changing a ref doesn't trigger a re-render. Reading or writing `ref.current` during render breaks React's expectations. Refs might not be initialized when you try to read them, and their values can be stale or inconsistent.
+Refs lưu giữ các giá trị không được sử dụng cho việc render. Không giống state, việc thay đổi một ref không kích hoạt render lại. Việc đọc hoặc ghi `ref.current` trong quá trình render sẽ phá vỡ các kỳ vọng của React. Refs có thể chưa được khởi tạo khi bạn cố đọc chúng, và giá trị của chúng có thể đã cũ hoặc không nhất quán.
 
-## How It Detects Refs {/*how-it-detects-refs*/}
+## Cách phát hiện refs {/*how-it-detects-refs*/}
 
-The lint only applies these rules to values it knows are refs. A value is inferred as a ref when the compiler sees any of the following patterns:
+Lint chỉ áp dụng các quy tắc này cho những giá trị mà nó biết là refs. Một giá trị được suy luận là ref khi compiler thấy một trong các mẫu sau:
 
-- Returned from `useRef()` or `React.createRef()`.
+- Được trả về từ `useRef()` hoặc `React.createRef()`.
 
   ```js
   const scrollRef = useRef(null);
   ```
 
-- An identifier named `ref` or ending in `Ref` that reads from or writes to `.current`.
+- Một identifier có tên `ref` hoặc kết thúc bằng `Ref`, có thao tác đọc hoặc ghi vào `.current`.
 
   ```js
   buttonRef.current = node;
   ```
 
-- Passed through a JSX `ref` prop (for example `<div ref={someRef} />`).
+- Được truyền qua một prop JSX `ref` (ví dụ: `<div ref={someRef} />`).
 
   ```jsx
   <input ref={inputRef} />
   ```
 
-Once something is marked as a ref, that inference follows the value through assignments, destructuring, or helper calls. This lets the lint surface violations even when `ref.current` is accessed inside another function that received the ref as an argument.
+Sau khi một giá trị được đánh dấu là ref, quá trình suy luận đó sẽ theo dõi giá trị qua các phép gán, destructuring hoặc lời gọi helper. Nhờ đó, lint có thể phát hiện các vi phạm ngay cả khi `ref.current` được truy cập bên trong một hàm khác nhận ref làm đối số.
 
-## Common Violations {/*common-violations*/}
+## Các vi phạm thường gặp {/*common-violations*/}
 
-- Reading `ref.current` during render
-- Updating `refs` during render
-- Using `refs` for values that should be state
+- Đọc `ref.current` trong quá trình render
+- Cập nhật `refs` trong quá trình render
+- Sử dụng `refs` cho các giá trị đáng ra phải là state
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js
 // ❌ Reading ref during render
@@ -62,9 +62,9 @@ function Component({value}) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 // ✅ Read ref in effects/handlers
@@ -108,8 +108,8 @@ function Component() {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### The lint flagged my plain object with `.current` {/*plain-object-current*/}
+### Lint đã đánh dấu plain object của tôi có `.current` {/*plain-object-current*/}
 
-The name heuristic intentionally treats `ref.current` and `fooRef.current` as real refs. If you're modeling a custom container object, pick a different name (for example, `box`) or move the mutable value into state. Renaming avoids the lint because the compiler stops inferring it as a ref.
+Heuristic về tên cố ý coi `ref.current` và `fooRef.current` là các ref thực sự. Nếu bạn đang mô hình hóa một custom container object, hãy chọn tên khác (ví dụ: `box`) hoặc chuyển giá trị mutable vào state. Việc đổi tên sẽ tránh được lint vì compiler không còn suy luận đó là một ref.

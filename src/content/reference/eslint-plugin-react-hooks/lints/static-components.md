@@ -4,17 +4,17 @@ title: static-components
 
 <Intro>
 
-Validates that components are static, not recreated every render. Components that are recreated dynamically can reset state and trigger excessive re-rendering.
+Xác thực rằng các component là static, không được tạo lại trong mỗi lần render. Các component được tạo lại một cách dynamic có thể reset state và gây ra việc re-render quá mức.
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-Components defined inside other components are recreated on every render. React sees each as a brand new component type, unmounting the old one and mounting the new one, destroying all state and DOM nodes in the process.
+Các component được định nghĩa bên trong những component khác sẽ được tạo lại trong mỗi lần render. React xem mỗi component như một component type hoàn toàn mới, unmount component cũ và mount component mới, đồng thời hủy toàn bộ state và các DOM node trong quá trình này.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js
 // ❌ Component defined inside component
@@ -37,9 +37,9 @@ function Parent({type}) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 // ✅ Components at module level
@@ -55,11 +55,11 @@ function Parent({type}) {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I need to render different components conditionally {/*conditional-components*/}
+### Tôi cần render các component khác nhau một cách có điều kiện {/*conditional-components*/}
 
-You might define components inside to access local state:
+Bạn có thể định nghĩa các component ở bên trong để truy cập state cục bộ:
 
 ```js {expectedErrors: {'react-compiler': [13]}}
 // ❌ Wrong: Inner component to access parent state
@@ -78,7 +78,7 @@ function Parent() {
 }
 ```
 
-Pass data as props instead:
+Thay vào đó, hãy truyền dữ liệu dưới dạng props:
 
 ```js
 // ✅ Better: Pass props to static component
@@ -98,6 +98,6 @@ function Parent() {
 
 <Note>
 
-If you find yourself wanting to define components inside other components to access local variables, that's a sign you should be passing props instead. This makes components more reusable and testable.
+Nếu bạn thấy mình muốn định nghĩa các component bên trong những component khác để truy cập các biến cục bộ, đó là dấu hiệu cho thấy bạn nên truyền props thay thế. Điều này giúp các component có khả năng tái sử dụng và dễ kiểm thử hơn.
 
 </Note>

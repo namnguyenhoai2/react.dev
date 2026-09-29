@@ -4,17 +4,17 @@ title: immutability
 
 <Intro>
 
-Validates against mutating props, state, and other values that [are immutable](/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable).
+Kiểm tra việc thay đổi props, state và các giá trị khác [là bất biến](/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-A component’s props and state are immutable snapshots. Never mutate them directly. Instead, pass new props down, and use the setter function from `useState`.
+Props và state của một component là các snapshot bất biến. Không bao giờ thay đổi trực tiếp chúng. Thay vào đó, hãy truyền props mới xuống và sử dụng hàm setter từ `useState`.
 
-## Common Violations {/*common-violations*/}
+## Các lỗi vi phạm thường gặp {/*common-violations*/}
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
 ```js
 // ❌ Array push mutation
@@ -47,7 +47,7 @@ function Component() {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
 ```js
 // ✅ Create new array
@@ -69,11 +69,11 @@ function Component() {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I need to add items to an array {/*add-items-array*/}
+### Tôi cần thêm các phần tử vào một mảng {/*add-items-array*/}
 
-Mutating arrays with methods like `push()` won't trigger re-renders:
+Việc thay đổi mảng bằng các method như `push()` sẽ không kích hoạt việc re-render:
 
 ```js
 // ❌ Wrong: Mutating the array
@@ -93,7 +93,7 @@ function TodoList() {
 }
 ```
 
-Create a new array instead:
+Thay vào đó, hãy tạo một mảng mới:
 
 ```js
 // ✅ Better: Create a new array
@@ -113,9 +113,9 @@ function TodoList() {
 }
 ```
 
-### I need to update nested objects {/*update-nested-objects*/}
+### Tôi cần cập nhật các object lồng nhau {/*update-nested-objects*/}
 
-Mutating nested properties doesn't trigger re-renders:
+Việc thay đổi các thuộc tính lồng nhau sẽ không kích hoạt việc re-render:
 
 ```js
 // ❌ Wrong: Mutating nested object
@@ -135,7 +135,7 @@ function UserProfile() {
 }
 ```
 
-Spread at each level that needs updating:
+Sử dụng spread ở mỗi cấp cần cập nhật:
 
 ```js
 // ✅ Better: Create new objects at each level

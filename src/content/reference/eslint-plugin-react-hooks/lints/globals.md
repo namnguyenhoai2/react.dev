@@ -1,20 +1,20 @@
 ---
-title: globals
+title: biến toàn cục
 ---
 
 <Intro>
 
-Validates against assignment/mutation of globals during render, part of ensuring that [side effects must run outside of render](/reference/rules/components-and-hooks-must-be-pure#side-effects-must-run-outside-of-render).
+Xác thực việc gán/thay đổi các biến toàn cục trong quá trình render, một phần nhằm đảm bảo rằng [các tác dụng phụ phải chạy bên ngoài quá trình render](/reference/rules/components-and-hooks-must-be-pure#side-effects-must-run-outside-of-render).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết quy tắc {/*rule-details*/}
 
-Global variables exist outside React's control. When you modify them during render, you break React's assumption that rendering is pure. This can cause components to behave differently in development vs production, break Fast Refresh, and make your app impossible to optimize with features like React Compiler.
+Các biến toàn cục tồn tại bên ngoài quyền kiểm soát của React. Khi bạn thay đổi chúng trong quá trình render, bạn phá vỡ giả định của React rằng việc render là thuần túy. Điều này có thể khiến các component hoạt động khác nhau giữa môi trường development và production, làm hỏng Fast Refresh, đồng thời khiến ứng dụng của bạn không thể được tối ưu hóa bằng các tính năng như React Compiler.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với quy tắc này:
 
 ```js
 // ❌ Global counter
@@ -47,9 +47,9 @@ function Component({id}) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với quy tắc này:
 
 ```js
 // ✅ Use state for counters

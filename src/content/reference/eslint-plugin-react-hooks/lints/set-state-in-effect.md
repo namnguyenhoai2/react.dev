@@ -4,29 +4,29 @@ title: set-state-in-effect
 
 <Intro>
 
-Validates against calling setState synchronously in an effect, which can lead to re-renders that degrade performance.
+Kiểm tra việc gọi setState một cách đồng bộ trong effect, điều này có thể dẫn đến việc re-render làm giảm hiệu năng.
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-Setting state immediately inside an effect forces React to restart the entire render cycle. When you update state in an effect, React must re-render your component, apply changes to the DOM, and then run effects again. This creates an extra render pass that could have been avoided by transforming data directly during render or deriving state from props. Transform data at the top level of your component instead. This code will naturally re-run when props or state change without triggering additional render cycles.
+Việc cập nhật state ngay lập tức bên trong một effect buộc React phải khởi động lại toàn bộ chu kỳ render. Khi bạn cập nhật state trong một effect, React phải re-render component, áp dụng các thay đổi vào DOM, rồi chạy lại các effect. Điều này tạo ra một lượt render bổ sung mà bạn có thể tránh bằng cách chuyển đổi dữ liệu trực tiếp trong quá trình render hoặc suy ra state từ props. Thay vào đó, hãy chuyển đổi dữ liệu ở cấp cao nhất của component. Đoạn code này sẽ tự động chạy lại khi props hoặc state thay đổi mà không kích hoạt thêm các chu kỳ render.
 
-Synchronous `setState` calls in effects trigger immediate re-renders before the browser can paint, causing performance issues and visual jank. React has to render twice: once to apply the state update, then again after effects run. This double rendering is wasteful when the same result could be achieved with a single render.
+Các lệnh gọi `setState` đồng bộ trong effect sẽ kích hoạt re-render ngay lập tức trước khi trình duyệt có thể vẽ, gây ra vấn đề về hiệu năng và hiện tượng giật hình. React phải render hai lần: một lần để áp dụng việc cập nhật state, sau đó một lần nữa sau khi các effect chạy xong. Việc render hai lần này gây lãng phí khi cùng một kết quả có thể đạt được chỉ với một lần render.
 
-In many cases, you may also not need an effect at all. Please see [You Might Not Need an Effect](/learn/you-might-not-need-an-effect) for more information.
+Trong nhiều trường hợp, bạn cũng có thể không cần effect. Vui lòng xem [Bạn Có thể Không Cần Effect](/learn/you-might-not-need-an-effect) để biết thêm thông tin.
 
-## Common Violations {/*common-violations*/}
+## Các vi phạm thường gặp {/*common-violations*/}
 
-This rule catches several patterns where synchronous setState is used unnecessarily:
+Rule này phát hiện một số mẫu sử dụng setState đồng bộ không cần thiết:
 
-- Setting loading state synchronously
-- Deriving state from props in effects
-- Transforming data in effects instead of render
+- Cập nhật state loading một cách đồng bộ
+- Suy ra state từ props trong effect
+- Chuyển đổi dữ liệu trong effect thay vì trong quá trình render
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js
 // ❌ Synchronous setState in effect
@@ -67,9 +67,9 @@ function Component({selectedId, items}) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 // ✅ setState in an effect is fine if the value comes from a ref
@@ -90,4 +90,4 @@ function Component({selectedId, items}) {
 }
 ```
 
-**When something can be calculated from the existing props or state, don't put it in state.** Instead, calculate it during rendering. This makes your code faster, simpler, and less error-prone. Learn more in [You Might Not Need an Effect](/learn/you-might-not-need-an-effect).
+**Khi có thể tính toán một giá trị từ props hoặc state hiện có, đừng đưa giá trị đó vào state.** Thay vào đó, hãy tính toán giá trị đó trong quá trình render. Điều này giúp code của bạn nhanh hơn, đơn giản hơn và ít lỗi hơn. Tìm hiểu thêm trong [Bạn Có thể Không Cần Effect](/learn/you-might-not-need-an-effect).

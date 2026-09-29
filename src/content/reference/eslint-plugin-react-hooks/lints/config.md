@@ -4,17 +4,17 @@ title: config
 
 <Intro>
 
-Validates the compiler [configuration options](/reference/react-compiler/configuration).
+Xác thực [các tùy chọn cấu hình](/reference/react-compiler/configuration) của compiler.
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-React Compiler accepts various [configuration options](/reference/react-compiler/configuration)  to control its behavior. This rule validates that your configuration uses correct option names and value types, preventing silent failures from typos or incorrect settings.
+React Compiler chấp nhận nhiều [tùy chọn cấu hình](/reference/react-compiler/configuration) để kiểm soát hành vi của nó. Rule này xác thực rằng cấu hình của bạn sử dụng đúng tên tùy chọn và kiểu giá trị, giúp ngăn các lỗi im lặng do lỗi chính tả hoặc cài đặt không chính xác.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không chính xác đối với rule này:
 
 ```js
 // ❌ Unknown option name
@@ -36,9 +36,9 @@ module.exports = {
 };
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code chính xác đối với rule này:
 
 ```js
 // ✅ Valid compiler configuration
@@ -52,11 +52,11 @@ module.exports = {
 };
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Configuration not working as expected {/*config-not-working*/}
+### Cấu hình không hoạt động như mong đợi {/*config-not-working*/}
 
-Your compiler configuration might have typos or incorrect values:
+Cấu hình compiler của bạn có thể chứa lỗi chính tả hoặc giá trị không chính xác:
 
 ```js
 // ❌ Wrong: Common configuration mistakes
@@ -74,7 +74,7 @@ module.exports = {
 };
 ```
 
-Check the [configuration documentation](/reference/react-compiler/configuration) for valid options:
+Hãy xem [tài liệu cấu hình](/reference/react-compiler/configuration) để biết các tùy chọn hợp lệ:
 
 ```js
 // ✅ Better: Valid configuration

@@ -4,17 +4,17 @@ title: preserve-manual-memoization
 
 <Intro>
 
-Validates that existing manual memoization is preserved by the compiler. React Compiler will only compile components and hooks if its inference [matches or exceeds the existing manual memoization](/learn/react-compiler/introduction#what-should-i-do-about-usememo-usecallback-and-reactmemo).
+Xác thực rằng compiler bảo toàn memoization thủ công hiện có. React Compiler chỉ biên dịch các component và hook nếu khả năng suy luận của nó [khớp hoặc vượt qua memoization thủ công hiện có](/learn/react-compiler/introduction#what-should-i-do-about-usememo-usecallback-and-reactmemo).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết quy tắc {/*rule-details*/}
 
-React Compiler preserves your existing `useMemo`, `useCallback`, and `React.memo` calls. If you've manually memoized something, the compiler assumes you had a good reason and won't remove it. However, incomplete dependencies prevent the compiler from understanding your code's data flow and applying further optimizations.
+React Compiler bảo toàn các lời gọi `useMemo`, `useCallback` và `React.memo` hiện có của bạn. Nếu bạn đã tự memoize một thành phần nào đó, compiler giả định rằng bạn có lý do chính đáng và sẽ không loại bỏ nó. Tuy nhiên, các dependency chưa đầy đủ khiến compiler không thể hiểu luồng dữ liệu trong mã của bạn và áp dụng thêm các tối ưu hóa.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về mã không đúng đối với quy tắc này:
 
 ```js
 // ❌ Missing dependencies in useMemo
@@ -37,9 +37,9 @@ function Component({ onUpdate, value }) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về mã đúng đối với quy tắc này:
 
 ```js
 // ✅ Complete dependencies
@@ -60,11 +60,11 @@ function Component({ data, filter }) {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Should I remove my manual memoization? {/*remove-manual-memoization*/}
+### Tôi có nên loại bỏ memoization thủ công không? {/*remove-manual-memoization*/}
 
-You might wonder if React Compiler makes manual memoization unnecessary:
+Bạn có thể tự hỏi liệu React Compiler có khiến memoization thủ công trở nên không cần thiết hay không:
 
 ```js
 // Do I still need this?
@@ -79,7 +79,7 @@ function Component({items, sortBy}) {
 }
 ```
 
-You can safely remove it if using React Compiler:
+Bạn có thể an toàn loại bỏ nó khi sử dụng React Compiler:
 
 ```js
 // ✅ Better: Let the compiler optimize

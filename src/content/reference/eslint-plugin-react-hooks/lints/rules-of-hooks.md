@@ -4,31 +4,31 @@ title: rules-of-hooks
 
 <Intro>
 
-Validates that components and hooks follow the [Rules of Hooks](/reference/rules/rules-of-hooks).
+Xác thực rằng các component và hook tuân thủ [Quy tắc của Hooks](/reference/rules/rules-of-hooks).
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-React relies on the order in which hooks are called to correctly preserve state between renders. Each time your component renders, React expects the exact same hooks to be called in the exact same order. When hooks are called conditionally or in loops, React loses track of which state corresponds to which hook call, leading to bugs like state mismatches and "Rendered fewer/more hooks than expected" errors.
+React dựa vào thứ tự gọi các hook để bảo toàn state chính xác giữa các lần render. Mỗi khi component của bạn render, React mong đợi chính xác cùng một tập hợp hook được gọi theo chính xác cùng một thứ tự. Khi hook được gọi một cách có điều kiện hoặc trong vòng lặp, React sẽ không xác định được state nào tương ứng với lần gọi hook nào, dẫn đến các lỗi như state không khớp và lỗi "Rendered fewer/more hooks than expected".
 
-## Common Violations {/*common-violations*/}
+## Các vi phạm thường gặp {/*common-violations*/}
 
-These patterns violate the Rules of Hooks:
+Các pattern sau vi phạm Rules of Hooks:
 
-- **Hooks in conditions** (`if`/`else`, ternary, `&&`/`||`)
-- **Hooks in loops** (`for`, `while`, `do-while`)
-- **Hooks after early returns**
-- **Hooks in callbacks/event handlers**
-- **Hooks in async functions**
-- **Hooks in class methods**
-- **Hooks at module level**
+- **Hooks trong các điều kiện** (`if`/`else`, toán tử ba ngôi, `&&`/`||`)
+- **Hooks trong các vòng lặp** (`for`, `while`, `do-while`)
+- **Hooks sau các lệnh return sớm**
+- **Hooks trong callback/event handler**
+- **Hooks trong các hàm async**
+- **Hooks trong các method của class**
+- **Hooks ở cấp module**
 
 <Note>
 
-### `use` hook {/*use-hook*/}
+### Hook `use` {/*use-hook*/}
 
-The `use` hook is different from other React hooks. You can call it conditionally and in loops:
+Hook `use` khác với các hook React khác. Bạn có thể gọi hook này một cách có điều kiện và trong các vòng lặp:
 
 ```js
 // ✅ `use` can be conditional
@@ -42,17 +42,17 @@ for (const promise of promises) {
 }
 ```
 
-However, `use` still has restrictions:
-- Can't be wrapped in try/catch
-- Must be called inside a component or hook
+Tuy nhiên, `use` vẫn có các hạn chế:
+- Không thể được bọc trong try/catch
+- Phải được gọi bên trong một component hoặc hook
 
-Learn more: [`use` API Reference](/reference/react/use)
+Tìm hiểu thêm: [`use` Tài liệu tham khảo API](/reference/react/use)
 
 </Note>
 
-### Invalid {/*invalid*/}
+### {/*invalid*/} không hợp lệ
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js
 // ❌ Hook in condition
@@ -80,9 +80,9 @@ try {
 const globalState = useState(0); // Outside component
 ```
 
-### Valid {/*valid*/}
+### {/*valid*/} hợp lệ
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 function Component({ isSpecial, shouldFetch, fetchPromise }) {
@@ -104,11 +104,11 @@ function Component({ isSpecial, shouldFetch, fetchPromise }) {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I want to fetch data based on some condition {/*conditional-data-fetching*/}
+### Tôi muốn fetch dữ liệu dựa trên một điều kiện {/*conditional-data-fetching*/}
 
-You're trying to conditionally call useEffect:
+Bạn đang cố gọi useEffect một cách có điều kiện:
 
 ```js
 // ❌ Conditional hook
@@ -119,7 +119,7 @@ if (isLoggedIn) {
 }
 ```
 
-Call the hook unconditionally, check condition inside:
+Hãy gọi hook vô điều kiện và kiểm tra điều kiện bên trong:
 
 ```js
 // ✅ Condition inside hook
@@ -132,15 +132,15 @@ useEffect(() => {
 
 <Note>
 
-There are better ways to fetch data rather than in a useEffect. Consider using TanStack Query, useSWR, or React Router 6.4+ for data fetching. These solutions handle deduplicating requests, caching responses, and avoiding network waterfalls.
+Có những cách tốt hơn để fetch dữ liệu thay vì thực hiện trong một useEffect. Hãy cân nhắc sử dụng TanStack Query, useSWR hoặc React Router 6.4+ để fetch dữ liệu. Các giải pháp này xử lý việc loại bỏ các request trùng lặp, caching response và tránh network waterfall.
 
-Learn more: [Fetching Data](/learn/synchronizing-with-effects#fetching-data)
+Tìm hiểu thêm: [Fetching Data](/learn/synchronizing-with-effects#fetching-data)
 
 </Note>
 
-### I need different state for different scenarios {/*conditional-state-initialization*/}
+### Tôi cần state khác nhau cho các tình huống khác nhau {/*conditional-state-initialization*/}
 
-You're trying to conditionally initialize state:
+Bạn đang cố khởi tạo state một cách có điều kiện:
 
 ```js
 // ❌ Conditional state
@@ -151,7 +151,7 @@ if (userType === 'admin') {
 }
 ```
 
-Always call useState, conditionally set the initial value:
+Luôn gọi useState và đặt giá trị khởi tạo một cách có điều kiện:
 
 ```js
 // ✅ Conditional initial value
@@ -160,9 +160,9 @@ const [permissions, setPermissions] = useState(
 );
 ```
 
-## Options {/*options*/}
+## Các tùy chọn {/*options*/}
 
-You can configure custom effect hooks using shared ESLint settings (available in `eslint-plugin-react-hooks` 6.1.1 and later):
+Bạn có thể cấu hình các effect hook tùy chỉnh bằng shared ESLint settings (có trong `eslint-plugin-react-hooks` 6.1.1 trở lên):
 
 ```js
 {
@@ -174,6 +174,6 @@ You can configure custom effect hooks using shared ESLint settings (available in
 }
 ```
 
-- `additionalEffectHooks`: Regex pattern matching custom hooks that should be treated as effects. This allows `useEffectEvent` and similar event functions to be called from your custom effect hooks.
+- `additionalEffectHooks`: Mẫu Regex khớp với các hook tùy chỉnh cần được xem như effect. Điều này cho phép `useEffectEvent` và các event function tương tự được gọi từ các effect hook tùy chỉnh của bạn.
 
-This shared configuration is used by both `rules-of-hooks` and `exhaustive-deps` rules, ensuring consistent behavior across all hook-related linting.
+Cấu hình dùng chung này được cả hai rule `rules-of-hooks` và `exhaustive-deps` sử dụng, nhằm đảm bảo hành vi nhất quán trên toàn bộ hoạt động linting liên quan đến hook.

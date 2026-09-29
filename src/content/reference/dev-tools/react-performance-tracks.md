@@ -1,14 +1,14 @@
 ---
-title: React Performance tracks
+title: Các track về hiệu năng của React
 ---
 
 <Intro>
 
-React Performance tracks are specialized custom entries that appear on the Performance panel's timeline in your browser developer tools.
+Các track về hiệu năng của React là những mục tùy chỉnh chuyên biệt xuất hiện trên dòng thời gian của panel Performance trong công cụ dành cho nhà phát triển của trình duyệt.
 
 </Intro>
 
-These tracks are designed to provide developers with comprehensive insights into their React application's performance by visualizing React-specific events and metrics alongside other critical data sources such as network requests, JavaScript execution, and event loop activity, all synchronized on a unified timeline within the Performance panel for a complete understanding of application behavior.
+Các track này được thiết kế để cung cấp cho nhà phát triển những thông tin toàn diện về hiệu năng của ứng dụng React bằng cách trực quan hóa các sự kiện và chỉ số dành riêng cho React cùng với những nguồn dữ liệu quan trọng khác như các yêu cầu mạng, quá trình thực thi JavaScript và hoạt động của event loop, tất cả được đồng bộ trên một dòng thời gian thống nhất trong panel Performance để có được sự hiểu biết đầy đủ về hành vi của ứng dụng.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/overview.png" alt="React Performance Tracks" />
@@ -19,86 +19,86 @@ These tracks are designed to provide developers with comprehensive insights into
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-React Performance tracks are only available in development and profiling builds of React:
+Các track về hiệu năng của React chỉ khả dụng trong các bản build development và profiling của React:
 
-- **Development**: enabled by default.
-- **Profiling**: Only Scheduler tracks are enabled by default. The Components track only lists Components that are in subtrees wrapped with [`<Profiler>`](/reference/react/Profiler). If you have [React Developer Tools extension](/learn/react-developer-tools) enabled, all Components are included in the Components track even if they're not wrapped in `<Profiler>`. Server tracks are not available in profiling builds.
+- **Development**: được bật theo mặc định.
+- **Profiling**: theo mặc định, chỉ các track Scheduler được bật. Track Components chỉ liệt kê những Components nằm trong các cây con được bọc bằng [`<Profiler>`](/reference/react/Profiler). Nếu bạn đã bật [tiện ích React Developer Tools](/learn/react-developer-tools), tất cả Components sẽ được đưa vào track Components ngay cả khi chúng không được bọc trong `<Profiler>`. Các track Server không khả dụng trong các bản build profiling.
 
-If enabled, tracks should appear automatically in the traces you record with the Performance panel of browsers that provide [extensibility APIs](https://developer.chrome.com/docs/devtools/performance/extension).
+Nếu được bật, các track sẽ tự động xuất hiện trong các trace mà bạn ghi lại bằng panel Performance trên những trình duyệt cung cấp [extensibility APIs](https://developer.chrome.com/docs/devtools/performance/extension).
 
 <Pitfall>
 
-The profiling instrumentation that powers React Performance tracks adds some additional overhead, so it is disabled in production builds by default.
-Server Components and Server Requests tracks are only available in development builds.
+Cơ chế instrumentation cho profiling cung cấp năng lượng cho các track về hiệu năng của React tạo thêm một phần overhead, vì vậy theo mặc định, cơ chế này bị tắt trong các bản build production.
+Các track Server Components và Server Requests chỉ khả dụng trong các bản build development.
 
 </Pitfall>
 
-### Using profiling builds {/*using-profiling-builds*/}
+### Sử dụng các bản build profiling {/*using-profiling-builds*/}
 
-In addition to production and development builds, React also includes a special profiling build.
-To use profiling builds, you have to use `react-dom/profiling` instead of `react-dom/client`.
-We recommend that you alias `react-dom/client` to `react-dom/profiling` at build time via bundler aliases instead of manually updating each `react-dom/client` import.
-Your framework might have built-in support for enabling React's profiling build.
+Ngoài các bản build production và development, React còn bao gồm một bản build profiling đặc biệt.
+Để sử dụng các bản build profiling, bạn phải dùng `react-dom/profiling` thay cho `react-dom/client`.
+Chúng tôi khuyến nghị bạn alias `react-dom/client` thành `react-dom/profiling` trong thời gian build thông qua các alias của bundler, thay vì cập nhật thủ công từng import `react-dom/client`.
+Framework của bạn có thể đã tích hợp sẵn hỗ trợ để bật bản build profiling của React.
 
 ---
 
-## Tracks {/*tracks*/}
+## Các track {/*tracks*/}
 
 ### Scheduler {/*scheduler*/}
 
-The Scheduler is an internal React concept used for managing tasks with different priorities. This track consists of 4 subtracks, each representing work of a specific priority:
+Scheduler là một khái niệm nội bộ của React, được dùng để quản lý các task với những mức độ ưu tiên khác nhau. Track này gồm 4 subtrack, mỗi subtrack đại diện cho công việc có một mức độ ưu tiên cụ thể:
 
-- **Blocking** - The synchronous updates, which could've been initiated by user interactions.
-- **Transition** - Non-blocking work that happens in the background, usually initiated via [`startTransition`](/reference/react/startTransition).
-- **Suspense** - Work related to Suspense boundaries, such as displaying fallbacks or revealing content.
-- **Idle** - The lowest priority work that is done when there are no other tasks with higher priority.
+- **Blocking** - Các cập nhật đồng bộ, có thể được khởi tạo bởi những tương tác của người dùng.
+- **Transition** - Công việc không chặn diễn ra trong background, thường được khởi tạo thông qua [`startTransition`](/reference/react/startTransition).
+- **Suspense** - Công việc liên quan đến các boundary Suspense, chẳng hạn như hiển thị fallback hoặc hiển thị nội dung.
+- **Idle** - Công việc có mức độ ưu tiên thấp nhất, được thực hiện khi không còn task nào khác có mức độ ưu tiên cao hơn.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/scheduler.png" alt="Scheduler track" />
   <img className="w-full dark-image" src="/images/docs/performance-tracks/scheduler.dark.png" alt="Scheduler track" />
 </div>
 
-#### Renders {/*renders*/}
+#### Các lần render {/*renders*/}
 
-Every render pass consists of multiple phases that you can see on a timeline:
+Mỗi lượt render gồm nhiều phase mà bạn có thể xem trên dòng thời gian:
 
-- **Update** - this is what caused a new render pass.
-- **Render** - React renders the updated subtree by calling render functions of components. You can see the rendered components subtree on [Components track](#components), which follows the same color scheme.
-- **Commit** - After rendering components, React will submit the changes to the DOM and run layout effects, like [`useLayoutEffect`](/reference/react/useLayoutEffect).
-- **Remaining Effects** - React runs passive effects of a rendered subtree. This usually happens after the paint, and this is when React runs hooks like [`useEffect`](/reference/react/useEffect). One known exception is user interactions, like clicks, or other discrete events. In this scenario, this phase could run before the paint.
+- **Update** - nguyên nhân gây ra một lượt render mới.
+- **Render** - React render cây con đã được cập nhật bằng cách gọi các hàm render của các component. Bạn có thể xem cây con của các component được render trên [Components track](#components), sử dụng cùng một bảng màu.
+- **Commit** - Sau khi render các component, React sẽ submit các thay đổi lên DOM và chạy các layout effect, chẳng hạn như [`useLayoutEffect`](/reference/react/useLayoutEffect).
+- **Remaining Effects** - React chạy các passive effect của cây con đã được render. Việc này thường xảy ra sau khi paint, và đây là lúc React chạy những hook như [`useEffect`](/reference/react/useEffect). Một ngoại lệ đã biết là các tương tác của người dùng, chẳng hạn như thao tác nhấp hoặc các sự kiện rời rạc khác. Trong trường hợp này, phase này có thể chạy trước khi paint.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/scheduler-update.png" alt="Scheduler track: updates" />
   <img className="w-full dark-image" src="/images/docs/performance-tracks/scheduler-update.dark.png" alt="Scheduler track: updates" />
 </div>
 
-[Learn more about renders and commits](/learn/render-and-commit).
+[Tìm hiểu thêm về các lần render và commit](/learn/render-and-commit).
 
-#### Cascading updates {/*cascading-updates*/}
+#### Các cập nhật dây chuyền {/*cascading-updates*/}
 
-Cascading updates is one of the patterns for performance regressions. If an update was scheduled during a render pass, React could discard completed work and start a new pass.
+Các cập nhật dây chuyền là một trong những pattern gây suy giảm hiệu năng. Nếu một cập nhật được lên lịch trong lúc đang diễn ra một lượt render, React có thể loại bỏ phần công việc đã hoàn tất và bắt đầu một lượt mới.
 
-In development builds, React can show you which Component scheduled a new update. This includes both general updates and cascading ones. You can see the enhanced stack trace by clicking on the "Cascading update" entry, which should also display the name of the method that scheduled an update.
+Trong các bản build development, React có thể cho bạn biết Component nào đã lên lịch cho một cập nhật mới. Điều này bao gồm cả các cập nhật thông thường và các cập nhật dây chuyền. Bạn có thể xem stack trace được bổ sung thông tin bằng cách nhấp vào mục "Cascading update", mục này cũng sẽ hiển thị tên của method đã lên lịch cho một cập nhật.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/scheduler-cascading-update.png" alt="Scheduler track: cascading updates" />
   <img className="w-full dark-image" src="/images/docs/performance-tracks/scheduler-cascading-update.dark.png" alt="Scheduler track: cascading updates" />
 </div>
 
-[Learn more about Effects](/learn/you-might-not-need-an-effect).
+[Tìm hiểu thêm về Effects](/learn/you-might-not-need-an-effect).
 
 ### Components {/*components*/}
 
-The Components track visualizes the durations of React components. They are displayed as a flamegraph, where each entry represents the duration of the corresponding component render and all its descendant children components.
+Track Components trực quan hóa thời lượng của các component React. Chúng được hiển thị dưới dạng flamegraph, trong đó mỗi mục đại diện cho thời lượng render của component tương ứng cùng tất cả các component con hậu duệ của nó.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/components-render.png" alt="Components track: render durations" />
   <img className="w-full dark-image" src="/images/docs/performance-tracks/components-render.dark.png" alt="Components track: render durations" />
 </div>
 
-Similar to render durations, effect durations are also represented as a flamegraph, but with a different color scheme that aligns with the corresponding phase on the Scheduler track.
+Tương tự như thời lượng render, thời lượng của effect cũng được biểu diễn dưới dạng flamegraph, nhưng sử dụng bảng màu khác, phù hợp với phase tương ứng trên track Scheduler.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/components-effects.png" alt="Components track: effects durations" />
@@ -107,22 +107,22 @@ Similar to render durations, effect durations are also represented as a flamegra
 
 <Note>
 
-Unlike renders, not all effects are shown on the Components track by default.
+Không giống các lần render, theo mặc định không phải tất cả effect đều được hiển thị trên track Components.
 
-To maintain performance and prevent UI clutter, React will only display those effects, which had a duration of 0.05ms or longer, or triggered an update.
+Để duy trì hiệu năng và tránh làm giao diện trở nên rối mắt, React chỉ hiển thị những effect có thời lượng từ 0.05ms trở lên hoặc đã kích hoạt một cập nhật.
 
 </Note>
 
-Additional events may be displayed during the render and effects phases:
+Các sự kiện bổ sung có thể được hiển thị trong các phase render và effects:
 
-- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Mount</span> - A corresponding subtree of component renders or effects was mounted.
-- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Unmount</span> - A corresponding subtree of component renders or effects was unmounted.
-- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Reconnect</span> - Similar to Mount, but limited to cases when [`<Activity>`](/reference/react/Activity) is used.
-- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Disconnect</span> - Similar to Unmount, but limited to cases when [`<Activity>`](/reference/react/Activity) is used.
+- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Mount</span> - Một cây con tương ứng của các component render hoặc effect đã được mount.
+- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Unmount</span> - Một cây con tương ứng của các component render hoặc effect đã được unmount.
+- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Reconnect</span> - Tương tự Mount, nhưng chỉ giới hạn trong các trường hợp sử dụng [`<Activity>`](/reference/react/Activity).
+- <span style={{padding: '0.125rem 0.25rem', backgroundColor: '#facc15', color: '#1f1f1fff'}}>Disconnect</span> - Tương tự Unmount, nhưng chỉ giới hạn trong các trường hợp sử dụng [`<Activity>`](/reference/react/Activity).
 
-#### Changed props {/*changed-props*/}
+#### Các props đã thay đổi {/*changed-props*/}
 
-In development builds, when you click on a component render entry, you can inspect potential changes in props. You can use this information to identify unnecessary renders.
+Trong các bản build development, khi bạn nhấp vào một mục render của component, bạn có thể kiểm tra những thay đổi tiềm ẩn trong props. Bạn có thể sử dụng thông tin này để xác định các lần render không cần thiết.
 
 <div style={{display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
   <img className="w-full light-image" src="/images/docs/performance-tracks/changed-props.png" alt="Components track: changed props" />
@@ -138,22 +138,22 @@ In development builds, when you click on a component render entry, you can inspe
 
 #### Server Requests {/*server-requests*/}
 
-The Server Requests track visualized all Promises that eventually end up in a React Server Component. This includes any `async` operations like calling `fetch` or async Node.js file operations.
+Track Server Requests trực quan hóa tất cả Promise cuối cùng được sử dụng trong một React Server Component. Điều này bao gồm mọi thao tác `async` như gọi `fetch` hoặc các thao tác file Node.js bất đồng bộ.
 
-React will try to combine Promises that are started from inside third-party code into a single span representing the the duration of the entire operation blocking 1st party code.
-For example, a third party library method called `getUser` that calls `fetch` internally multiple times will be represented as a single span called `getUser`, instead of showing multiple `fetch` spans.
+React sẽ cố gắng kết hợp các Promise được khởi chạy từ bên trong code bên thứ ba thành một span duy nhất, đại diện cho thời lượng của toàn bộ thao tác chặn code bên thứ nhất.
+Ví dụ: một method của thư viện bên thứ ba có tên `getUser`, bên trong gọi `fetch` nhiều lần, sẽ được biểu diễn dưới dạng một span duy nhất có tên `getUser`, thay vì hiển thị nhiều span `fetch`.
 
-Clicking on spans will show you a stack trace of where the Promise was created as well as a view of the value that the Promise resolved to, if available.
+Khi nhấp vào các span, bạn sẽ thấy stack trace cho biết nơi Promise được tạo, cũng như chế độ xem giá trị mà Promise đã resolve tới, nếu có.
 
-Rejected Promises are displayed as red with their rejected value.
+Các Promise bị reject được hiển thị bằng màu đỏ cùng với giá trị bị reject của chúng.
 
 #### Server Components {/*server-components*/}
 
-The Server Components tracks visualize the durations of React Server Components Promises they awaited. Timings are displayed as a flamegraph, where each entry represents the duration of the corresponding component render and all its descendant children components.
+Track Server Components trực quan hóa thời lượng của các Promise của React Server Components mà chúng đã await. Các mốc thời gian được hiển thị dưới dạng flamegraph, trong đó mỗi mục đại diện cho thời lượng render của component tương ứng cùng tất cả các component con hậu duệ của nó.
 
-If you await a Promise, React will display duration of that Promise. To see all I/O operations, use the Server Requests track.
+Nếu bạn await một Promise, React sẽ hiển thị thời lượng của Promise đó. Để xem tất cả thao tác I/O, hãy sử dụng track Server Requests.
 
-Different colors are used to indicate the duration of the component render. The darker the color, the longer the duration.
+Các màu khác nhau được dùng để biểu thị thời lượng render của component. Màu càng đậm thì thời lượng càng dài.
 
-The Server Components track group will always contain a "Primary" track. If React is able to render Server Components concurrently, it will display addititional "Parallel" tracks.
-If more than 8 Server Components are rendered concurrently, React will associate them with the last "Parallel" track instead of adding more tracks.
+Nhóm track Server Components luôn chứa một track "Primary". Nếu React có thể render các Server Components đồng thời, nhóm này sẽ hiển thị thêm các track "Parallel".
+Nếu có hơn 8 Server Components được render đồng thời, React sẽ gán chúng vào track "Parallel" cuối cùng thay vì thêm các track khác.

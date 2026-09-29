@@ -4,17 +4,17 @@ title: use-memo
 
 <Intro>
 
-Validates that the `useMemo` hook is used with a return value. See [`useMemo` docs](/reference/react/useMemo) for more information.
+Xác thực rằng hook `useMemo` được sử dụng với một giá trị trả về. Xem [`useMemo` tài liệu](/reference/react/useMemo) để biết thêm thông tin.
 
 </Intro>
 
-## Rule Details {/*rule-details*/}
+## Chi tiết về rule {/*rule-details*/}
 
-`useMemo` is for computing and caching expensive values, not for side effects. Without a return value, `useMemo` returns `undefined`, which defeats its purpose and likely indicates you're using the wrong hook.
+`useMemo` dùng để tính toán và caching các giá trị tốn nhiều tài nguyên, không dùng cho side effect. Nếu không có giá trị trả về, `useMemo` trả về `undefined`, làm mất đi mục đích của nó và có khả năng cho thấy bạn đang sử dụng sai hook.
 
-### Invalid {/*invalid*/}
+### Không hợp lệ {/*invalid*/}
 
-Examples of incorrect code for this rule:
+Ví dụ về code không đúng đối với rule này:
 
 ```js {expectedErrors: {'react-compiler': [3]}}
 // ❌ No return value
@@ -28,9 +28,9 @@ function Component({ data }) {
 }
 ```
 
-### Valid {/*valid*/}
+### Hợp lệ {/*valid*/}
 
-Examples of correct code for this rule:
+Ví dụ về code đúng đối với rule này:
 
 ```js
 // ✅ Returns computed value
@@ -43,11 +43,11 @@ function Component({ data }) {
 }
 ```
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I need to run side effects when dependencies change {/*side-effects*/}
+### Tôi cần chạy side effect khi các dependency thay đổi {/*side-effects*/}
 
-You might try to use `useMemo` for side effects:
+Bạn có thể thử sử dụng `useMemo` cho các side effect:
 
 {/* TODO(@poteto) fix compiler validation to check for unassigned useMemos */}
 ```js {expectedErrors: {'react-compiler': [4]}}
@@ -65,7 +65,7 @@ function Component({user}) {
 }
 ```
 
-If the side effect needs to happen in response to user interaction, it's best to colocate the side effect with the event:
+Nếu side effect cần xảy ra để phản hồi tương tác của người dùng, tốt nhất là đặt side effect cùng với event:
 
 ```js
 // ✅ Good: Side effects in event handlers
@@ -79,7 +79,7 @@ function Component({user}) {
 }
 ```
 
-If the side effect sychronizes React state with some external state (or vice versa), use `useEffect`:
+Nếu side effect đồng bộ hóa state của React với một state bên ngoài (hoặc ngược lại), hãy sử dụng `useEffect`:
 
 ```js
 // ✅ Good: Synchronization in useEffect
