@@ -4,7 +4,7 @@ title: useImperativeHandle
 
 <Intro>
 
-`useImperativeHandle` is a React Hook that lets you customize the handle exposed as a [ref.](/learn/manipulating-the-dom-with-refs)
+`useImperativeHandle` là một React Hook cho phép bạn tùy chỉnh handle được expose dưới dạng [ref.](/learn/manipulating-the-dom-with-refs)
 
 ```js
 useImperativeHandle(ref, createHandle, dependencies?)
@@ -16,11 +16,11 @@ useImperativeHandle(ref, createHandle, dependencies?)
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `useImperativeHandle(ref, createHandle, dependencies?)` {/*useimperativehandle*/}
 
-Call `useImperativeHandle` at the top level of your component to customize the ref handle it exposes:
+Gọi `useImperativeHandle` ở cấp cao nhất của component để tùy chỉnh ref handle mà component expose:
 
 ```js
 import { useImperativeHandle } from 'react';
@@ -34,33 +34,33 @@ function MyInput({ ref }) {
   // ...
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `ref`: The `ref` you received as a prop to the `MyInput` component.
+* `ref`: `ref` mà bạn nhận được dưới dạng prop của component `MyInput`.
 
-* `createHandle`: A function that takes no arguments and returns the ref handle you want to expose. That ref handle can have any type. Usually, you will return an object with the methods you want to expose.
+* `createHandle`: Một function không nhận đối số và trả về ref handle mà bạn muốn expose. Ref handle đó có thể có bất kỳ kiểu nào. Thông thường, bạn sẽ trả về một object chứa các method mà bạn muốn expose.
 
-* **optional** `dependencies`: The list of all reactive values referenced inside of the `createHandle` code. Reactive values include props, state, and all the variables and functions declared directly inside your component body. If your linter is [configured for React](/learn/editor-setup#linting), it will verify that every reactive value is correctly specified as a dependency. The list of dependencies must have a constant number of items and be written inline like `[dep1, dep2, dep3]`. React will compare each dependency with its previous value using the [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) comparison. If a re-render resulted in a change to some dependency, or if you omitted this argument, your `createHandle` function will re-execute, and the newly created handle will be assigned to the ref.
+* **tùy chọn** `dependencies`: Danh sách tất cả các giá trị reactive được tham chiếu bên trong đoạn code `createHandle`. Các giá trị reactive bao gồm props, state, cùng tất cả các biến và function được khai báo trực tiếp bên trong phần thân component. Nếu linter của bạn được [cấu hình cho React](/learn/editor-setup#linting), nó sẽ kiểm tra để đảm bảo mọi giá trị reactive đều được chỉ định chính xác dưới dạng dependency. Danh sách dependency phải có số lượng phần tử cố định và được viết inline như `[dep1, dep2, dep3]`. React sẽ so sánh từng dependency với giá trị trước đó bằng phép so sánh [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is). Nếu một lần re-render làm thay đổi một dependency nào đó, hoặc nếu bạn bỏ qua đối số này, function `createHandle` của bạn sẽ thực thi lại và handle vừa được tạo sẽ được gán cho ref.
 
 <Note>
 
-Starting with React 19, [`ref` is available as a prop.](/blog/2024/12/05/react-19#ref-as-a-prop) In React 18 and earlier, it was necessary to get the `ref` from [`forwardRef`.](/reference/react/forwardRef)
+Bắt đầu từ React 19, [`ref` có sẵn dưới dạng prop.](/blog/2024/12/05/react-19#ref-as-a-prop) Trong React 18 và các phiên bản trước đó, bạn cần lấy `ref` từ [`forwardRef`.](/reference/react/forwardRef)
 
 </Note>
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`useImperativeHandle` returns `undefined`.
+`useImperativeHandle` trả về `undefined`.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Exposing a custom ref handle to the parent component {/*exposing-a-custom-ref-handle-to-the-parent-component*/}
+### Expose một custom ref handle cho component cha {/*exposing-a-custom-ref-handle-to-the-parent-component*/}
 
-To expose a DOM node to the parent element, pass in the `ref` prop to the node.
+Để expose một DOM node cho phần tử cha, truyền prop `ref` vào node đó.
 
 ```js {2}
 function MyInput({ ref }) {
@@ -68,7 +68,7 @@ function MyInput({ ref }) {
 };
 ```
 
-With the code above, [a ref to `MyInput` will receive the `<input>` DOM node.](/learn/manipulating-the-dom-with-refs) However, you can expose a custom value instead. To customize the exposed handle, call `useImperativeHandle` at the top level of your component:
+Với đoạn code trên, [một ref tới `MyInput` sẽ nhận DOM node `<input>`.](/learn/manipulating-the-dom-with-refs) Tuy nhiên, bạn có thể expose một giá trị tùy chỉnh thay thế. Để tùy chỉnh handle được expose, hãy gọi `useImperativeHandle` ở cấp cao nhất của component:
 
 ```js {4-8}
 import { useImperativeHandle } from 'react';
@@ -84,9 +84,9 @@ function MyInput({ ref }) {
 };
 ```
 
-Note that in the code above, the `ref` is no longer passed to the `<input>`.
+Lưu ý rằng trong đoạn code trên, `ref` không còn được truyền tới `<input>` nữa.
 
-For example, suppose you don't want to expose the entire `<input>` DOM node, but you want to expose two of its methods: `focus` and `scrollIntoView`. To do this, keep the real browser DOM in a separate ref. Then use `useImperativeHandle` to expose a handle with only the methods that you want the parent component to call:
+Ví dụ, giả sử bạn không muốn expose toàn bộ DOM node `<input>`, nhưng muốn expose hai method của nó: `focus` và `scrollIntoView`. Để thực hiện việc này, hãy giữ DOM thực của trình duyệt trong một ref riêng. Sau đó dùng `useImperativeHandle` để expose một handle chỉ chứa các method mà bạn muốn component cha gọi:
 
 ```js {7-14}
 import { useRef, useImperativeHandle } from 'react';
@@ -109,7 +109,7 @@ function MyInput({ ref }) {
 };
 ```
 
-Now, if the parent component gets a ref to `MyInput`, it will be able to call the `focus` and `scrollIntoView` methods on it. However, it will not have full access to the underlying `<input>` DOM node.
+Bây giờ, nếu component cha lấy một ref tới `MyInput`, nó sẽ có thể gọi các method `focus` và `scrollIntoView` trên đó. Tuy nhiên, nó sẽ không có toàn quyền truy cập vào DOM node `<input>` bên dưới.
 
 <Sandpack>
 
@@ -170,9 +170,9 @@ input {
 
 ---
 
-### Exposing your own imperative methods {/*exposing-your-own-imperative-methods*/}
+### Expose các method imperative của riêng bạn {/*exposing-your-own-imperative-methods*/}
 
-The methods you expose via an imperative handle don't have to match the DOM methods exactly. For example, this `Post` component exposes a `scrollAndFocusAddComment` method via an imperative handle. This lets the parent `Page` scroll the list of comments *and* focus the input field when you click the button:
+Các method bạn expose thông qua imperative handle không nhất thiết phải khớp chính xác với các method DOM. Ví dụ, component `Post` này expose một method `scrollAndFocusAddComment` thông qua imperative handle. Điều này cho phép component cha `Page` cuộn danh sách comment *và* focus vào trường input khi bạn nhấp vào nút:
 
 <Sandpack>
 
@@ -285,8 +285,8 @@ export default AddComment;
 
 <Pitfall>
 
-**Do not overuse refs.** You should only use refs for *imperative* behaviors that you can't express as props: for example, scrolling to a node, focusing a node, triggering an animation, selecting text, and so on.
+**Không nên lạm dụng ref.** Bạn chỉ nên dùng ref cho những hành vi *imperative* mà bạn không thể biểu đạt bằng prop: ví dụ như cuộn tới một node, focus vào một node, kích hoạt animation, chọn văn bản, v.v.
 
-**If you can express something as a prop, you should not use a ref.** For example, instead of exposing an imperative handle like `{ open, close }` from a `Modal` component, it is better to take `isOpen` as a prop like `<Modal isOpen={isOpen} />`. [Effects](/learn/synchronizing-with-effects) can help you expose imperative behaviors via props.
+**Nếu bạn có thể biểu đạt điều gì đó bằng prop, bạn không nên dùng ref.** Ví dụ, thay vì expose một imperative handle như `{ open, close }` từ component `Modal`, tốt hơn là nhận `isOpen` dưới dạng prop như `<Modal isOpen={isOpen} />`. [Effect](/learn/synchronizing-with-effects) có thể giúp bạn expose các hành vi imperative thông qua prop.
 
 </Pitfall>

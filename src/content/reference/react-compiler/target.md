@@ -1,10 +1,10 @@
 ---
-title: target
+title: đích
 ---
 
 <Intro>
 
-The `target` option specifies which React version the compiler should generate code for.
+Tùy chọn `target` chỉ định phiên bản React mà compiler nên tạo mã cho phiên bản đó.
 
 </Intro>
 
@@ -18,42 +18,42 @@ The `target` option specifies which React version the compiler should generate c
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `target` {/*target*/}
 
-Configures the React version compatibility for the compiled output.
+Cấu hình khả năng tương thích phiên bản React cho output đã được compile.
 
-#### Type {/*type*/}
+#### Kiểu {/*type*/}
 
 ```
 '17' | '18' | '19'
 ```
 
-#### Default value {/*default-value*/}
+#### Giá trị mặc định {/*default-value*/}
 
 `'19'`
 
-#### Valid values {/*valid-values*/}
+#### Các giá trị hợp lệ {/*valid-values*/}
 
-- **`'19'`**: Target React 19 (default). No additional runtime required.
-- **`'18'`**: Target React 18. Requires `react-compiler-runtime` package.
-- **`'17'`**: Target React 17. Requires `react-compiler-runtime` package.
+- **`'19'`**: Nhắm đến React 19 (mặc định). Không cần runtime bổ sung.
+- **`'18'`**: Nhắm đến React 18. Yêu cầu package `react-compiler-runtime`.
+- **`'17'`**: Nhắm đến React 17. Yêu cầu package `react-compiler-runtime`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- Always use string values, not numbers (e.g., `'17'` not `17`)
-- Don't include patch versions (e.g., use `'18'` not `'18.2.0'`)
-- React 19 includes built-in compiler runtime APIs
-- React 17 and 18 require installing `react-compiler-runtime@latest`
+- Luôn sử dụng giá trị dạng chuỗi, không sử dụng số (ví dụ: `'17'`, không phải `17`)
+- Không bao gồm các phiên bản patch (ví dụ: sử dụng `'18'`, không phải `'18.2.0'`)
+- React 19 tích hợp sẵn các runtime API của compiler
+- React 17 và 18 yêu cầu cài đặt `react-compiler-runtime@latest`
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Targeting React 19 (default) {/*targeting-react-19*/}
+### Nhắm đến React 19 (mặc định) {/*targeting-react-19*/}
 
-For React 19, no special configuration is needed:
+Đối với React 19, không cần cấu hình đặc biệt:
 
 ```js
 {
@@ -61,24 +61,24 @@ For React 19, no special configuration is needed:
 }
 ```
 
-The compiler will use React 19's built-in runtime APIs:
+Compiler sẽ sử dụng các runtime API tích hợp sẵn của React 19:
 
 ```js
 // Compiled output uses React 19's native APIs
 import { c as _c } from 'react/compiler-runtime';
 ```
 
-### Targeting React 17 or 18 {/*targeting-react-17-or-18*/}
+### Nhắm đến React 17 hoặc 18 {/*targeting-react-17-or-18*/}
 
-For React 17 and React 18 projects, you need two steps:
+Đối với các project React 17 và React 18, bạn cần thực hiện hai bước:
 
-1. Install the runtime package:
+1. Cài đặt runtime package:
 
 ```bash
 npm install react-compiler-runtime@latest
 ```
 
-2. Configure the target:
+2. Cấu hình target:
 
 ```js
 // For React 18
@@ -92,7 +92,7 @@ npm install react-compiler-runtime@latest
 }
 ```
 
-The compiler will use the polyfill runtime for both versions:
+Compiler sẽ sử dụng polyfill runtime cho cả hai phiên bản:
 
 ```js
 // Compiled output uses the polyfill
@@ -101,41 +101,41 @@ import { c as _c } from 'react-compiler-runtime';
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Runtime errors about missing compiler runtime {/*missing-runtime*/}
+### Lỗi runtime liên quan đến compiler runtime bị thiếu {/*missing-runtime*/}
 
-If you see errors like "Cannot find module 'react/compiler-runtime'":
+Nếu bạn thấy các lỗi như "Cannot find module 'react/compiler-runtime'":
 
-1. Check your React version:
+1. Kiểm tra phiên bản React của bạn:
    ```bash
    npm why react
    ```
 
-2. If using React 17 or 18, install the runtime:
+2. Nếu đang sử dụng React 17 hoặc 18, hãy cài đặt runtime:
    ```bash
    npm install react-compiler-runtime@latest
    ```
 
-3. Ensure your target matches your React version:
+3. Đảm bảo target khớp với phiên bản React của bạn:
    ```js
    {
      target: '18' // Must match your React major version
    }
    ```
 
-### Runtime package not working {/*runtime-not-working*/}
+### Runtime package không hoạt động {/*runtime-not-working*/}
 
-Ensure the runtime package is:
+Đảm bảo runtime package:
 
-1. Installed in your project (not globally)
-2. Listed in your `package.json` dependencies
-3. The correct version (`@latest` tag)
-4. Not in `devDependencies` (it's needed at runtime)
+1. Được cài đặt trong project của bạn (không phải cài đặt global)
+2. Được liệt kê trong dependencies của `package.json`
+3. Là đúng phiên bản (tag `@latest`)
+4. Không nằm trong `devDependencies` (vì package này cần thiết lúc runtime)
 
-### Checking compiled output {/*checking-output*/}
+### Kiểm tra output đã compile {/*checking-output*/}
 
-To verify the correct runtime is being used, note the different import (`react/compiler-runtime` for builtin, `react-compiler-runtime` standalone package for 17/18):
+Để xác minh runtime chính xác đang được sử dụng, hãy lưu ý import khác nhau (`react/compiler-runtime` cho runtime tích hợp sẵn, `react-compiler-runtime` cho standalone package dành cho 17/18):
 
 ```js
 // For React 19 (built-in runtime)

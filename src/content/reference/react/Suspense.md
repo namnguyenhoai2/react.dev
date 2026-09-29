@@ -4,7 +4,7 @@ title: <Suspense>
 
 <Intro>
 
-`<Suspense>` lets you display a fallback until its children have finished loading.
+`<Suspense>` cho phép bạn hiển thị nội dung dự phòng cho đến khi các phần tử con tải xong.
 
 
 ```js
@@ -19,55 +19,55 @@ title: <Suspense>
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `<Suspense>` {/*suspense*/}
 
 #### Props {/*props*/}
-* `children`: The actual UI you intend to render. If `children` suspends while rendering, the Suspense boundary will switch to rendering `fallback`.
-* `fallback`: An alternate UI to render in place of the actual UI if it has not finished loading. Any valid React node is accepted, though in practice, a fallback is a lightweight placeholder view, such as a loading spinner or skeleton. Suspense will automatically switch to `fallback` when `children` suspends, and back to `children` when the data is ready. If `fallback` suspends while rendering, it will activate the closest parent Suspense boundary.
-* <ExperimentalBadge /> **optional** `defer`: A boolean. When `true`, React may show the `fallback` first and render or stream `children` later, even when nothing in them suspends. Use it for content that is expensive to render. Defaults to `false`.
+* `children`: UI thực tế mà bạn muốn render. Nếu `children` tạm dừng trong khi render, Suspense boundary sẽ chuyển sang render `fallback`.
+* `fallback`: UI thay thế được render thay cho UI thực tế nếu UI đó chưa tải xong. Mọi React node hợp lệ đều được chấp nhận, tuy nhiên trong thực tế, fallback thường là một chế độ xem giữ chỗ nhẹ, chẳng hạn như loading spinner hoặc skeleton. Suspense sẽ tự động chuyển sang `fallback` khi `children` tạm dừng, và quay lại `children` khi dữ liệu đã sẵn sàng. Nếu `fallback` tạm dừng trong khi render, nó sẽ kích hoạt Suspense boundary gần nhất ở cấp cha.
+* <ExperimentalBadge /> **tùy chọn** `defer`: Một boolean. Khi `true`, React có thể hiển thị `fallback` trước và render hoặc stream `children` sau, ngay cả khi không có gì bên trong chúng tạm dừng. Hãy dùng tùy chọn này cho nội dung tốn nhiều chi phí render. Mặc định là `false`.
 
-#### Caveats {/*caveats*/}
+#### Các điểm cần lưu ý {/*caveats*/}
 
-- Suspense does not detect when data is fetched inside an Effect or event handler. It only activates in the [cases listed below.](#what-activates-a-suspense-boundary)
-- React does not preserve any state for renders that got suspended before they were able to mount for the first time. When the component has loaded, React will retry rendering the suspended tree from scratch.
-- If Suspense was displaying content for the tree, but then it suspended again, the `fallback` will be shown again unless the update causing it was caused by [`startTransition`](/reference/react/startTransition) or [`useDeferredValue`](/reference/react/useDeferredValue).
-- React reveals suspended content at most once every 300ms, measured from the last reveal. Boundaries that become ready within that window are [revealed together](/blog/2025/10/01/react-19-2#batching-suspense-boundaries-for-ssr) rather than one at a time.
-- If React needs to hide the already visible content because it suspended again, it will clean up [layout Effects](/reference/react/useLayoutEffect) in the content tree. When the content is ready to be shown again, React will fire the layout Effects again. This ensures that Effects measuring the DOM layout don't try to do this while the content is hidden.
-- React includes under-the-hood optimizations like *Streaming Server Rendering* and *Selective Hydration* that are integrated with Suspense. Read [an architectural overview](https://github.com/reactwg/react-18/discussions/37) and watch [a technical talk](https://www.youtube.com/watch?v=pj5N-Khihgc) to learn more.
+- Suspense không phát hiện khi dữ liệu được fetch bên trong Effect hoặc event handler. Nó chỉ kích hoạt trong [các trường hợp](#what-activates-a-suspense-boundary) được liệt kê bên dưới.
+- React không giữ lại state cho các lần render bị tạm dừng trước khi chúng có thể mount lần đầu. Khi component đã tải xong, React sẽ thử render lại suspended tree từ đầu.
+- Nếu Suspense đang hiển thị nội dung cho tree nhưng sau đó tree lại tạm dừng, `fallback` sẽ được hiển thị lại, trừ khi update gây ra việc đó được tạo bởi [`startTransition`](/reference/react/startTransition) hoặc [`useDeferredValue`](/reference/react/useDeferredValue).
+- React hiển thị nội dung bị tạm dừng nhiều nhất một lần trong mỗi 300ms, tính từ lần hiển thị gần nhất. Các boundary sẵn sàng trong khoảng thời gian đó sẽ được [hiển thị cùng nhau](/blog/2025/10/01/react-19-2#batching-suspense-boundaries-for-ssr) thay vì hiển thị lần lượt.
+- Nếu React cần ẩn nội dung đã hiển thị vì nội dung đó lại tạm dừng, nó sẽ dọn dẹp [layout Effects](/reference/react/useLayoutEffect) trong content tree. Khi nội dung sẵn sàng để hiển thị lại, React sẽ chạy các layout Effects lần nữa. Điều này đảm bảo các Effect đo layout của DOM không cố thực hiện việc đó trong khi nội dung bị ẩn.
+- React tích hợp các tối ưu hóa bên dưới như *Streaming Server Rendering* và *Selective Hydration* với Suspense. Hãy đọc [phần tổng quan về kiến trúc](https://github.com/reactwg/react-18/discussions/37) và xem [bài nói chuyện kỹ thuật](https://www.youtube.com/watch?v=pj5N-Khihgc) để tìm hiểu thêm.
 
 ---
 
-### What activates a Suspense boundary {/*what-activates-a-suspense-boundary*/}
+### Điều gì kích hoạt Suspense boundary {/*what-activates-a-suspense-boundary*/}
 
-A Suspense boundary waits for its content to be ready before revealing it. Any of the following keeps a boundary from revealing its content:
+Suspense boundary chờ nội dung sẵn sàng trước khi hiển thị nội dung đó. Bất kỳ điều nào sau đây cũng khiến boundary chưa hiển thị nội dung:
 
-- Lazy-loading component code with [`lazy`](/reference/react/lazy).
-- Reading a Promise with [`use`](/reference/react/use), including data streamed from [Server Components](/reference/rsc/server-components) or loaded through a [Suspense-enabled framework](#suspense-enabled-frameworks).
-- Loading a stylesheet rendered with [`<link rel="stylesheet">` and a `precedence` prop.](/reference/react-dom/components/link#special-rendering-behavior) React blocks the boundary until the stylesheet loads, up to a timeout. [See an example below.](#waiting-for-a-stylesheet-to-load)
-- Waiting for a large boundary's HTML to arrive during streaming server rendering. Sending HTML takes time, so a boundary with enough content activates even when nothing in it suspends. React reveals the content as the HTML arrives.
-- Loading fonts. Suspense doesn't wait for fonts by default, but a [`<ViewTransition>`](/reference/react/ViewTransition) update waits for new fonts to load, up to a timeout, so text doesn't flash with a fallback font. [See an example below.](#waiting-for-a-font-to-load)
-- Loading images. Suspense doesn't wait for images by default, but during a [`<ViewTransition>`](/reference/react/ViewTransition) update, React blocks the boundary until the image loads, up to a timeout. Adding an `onLoad` handler opts a specific image out. [See an example below.](#waiting-for-an-image-to-load)
-- <ExperimentalBadge /> Performing CPU-bound render work inside a [`<Suspense defer>`](#props) boundary.
+- Lazy-load code của component bằng [`lazy`](/reference/react/lazy).
+- Đọc Promise bằng [`use`](/reference/react/use), bao gồm dữ liệu được stream từ [Server Components](/reference/rsc/server-components) hoặc được tải thông qua [Suspense-enabled framework](#suspense-enabled-frameworks).
+- Tải stylesheet được render bằng [`<link rel="stylesheet">` và prop `precedence`. ](/reference/react-dom/components/link#special-rendering-behavior) React sẽ chặn boundary cho đến khi stylesheet tải xong, tối đa trong một khoảng thời gian chờ. [Xem ví dụ bên dưới.](#waiting-for-a-stylesheet-to-load)
+- Chờ HTML của một boundary lớn xuất hiện trong quá trình streaming server rendering. Việc gửi HTML cần thời gian, vì vậy một boundary có đủ nội dung sẽ kích hoạt ngay cả khi không có gì bên trong nó tạm dừng. React hiển thị nội dung khi HTML xuất hiện.
+- Tải font. Theo mặc định, Suspense không chờ font, nhưng một update [`<ViewTransition>`](/reference/react/ViewTransition) sẽ chờ font mới tải xong, tối đa trong một khoảng thời gian chờ, để văn bản không bị nhấp nháy với font dự phòng. [Xem ví dụ bên dưới.](#waiting-for-a-font-to-load)
+- Tải image. Theo mặc định, Suspense không chờ image, nhưng trong một update [`<ViewTransition>`](/reference/react/ViewTransition), React sẽ chặn boundary cho đến khi image tải xong, tối đa trong một khoảng thời gian chờ. Thêm handler `onLoad` sẽ loại một image cụ thể khỏi cơ chế này. [Xem ví dụ bên dưới.](#waiting-for-an-image-to-load)
+- <ExperimentalBadge /> Thực hiện công việc render bị giới hạn bởi CPU bên trong một [`<Suspense defer>`](#props) boundary.
 
 <Note>
 
 #### Suspense-enabled frameworks {/*suspense-enabled-frameworks*/}
 
-A *Suspense-enabled framework* gives you a way to read data in your component in a way that activates the closest Suspense boundary. The exact way you load your data depends on your framework, and you'll find the details in its documentation. Under the hood, a Suspense-enabled framework maintains a cache of Promises and calls [`use`](/reference/react/use) to suspend on a Promise.
+Một *Suspense-enabled framework* cung cấp cho bạn cách đọc dữ liệu trong component theo cách kích hoạt Suspense boundary gần nhất. Cách chính xác để tải dữ liệu phụ thuộc vào framework của bạn; bạn có thể tìm thông tin chi tiết trong tài liệu của framework đó. Ở bên dưới, một Suspense-enabled framework duy trì cache của các Promise và gọi [`use`](/reference/react/use) để tạm dừng trên một Promise.
 
-Without a framework, you can read a Promise with `use` directly, as long as the Promise is [cached so the same instance is reused across renders.](/reference/react/use#caching-promises-for-client-components)
+Không có framework, bạn có thể đọc Promise trực tiếp bằng `use`, miễn là Promise đó được [cache để cùng một instance được tái sử dụng giữa các lần render.](/reference/react/use#caching-promises-for-client-components)
 
 </Note>
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Displaying a fallback while content is loading {/*displaying-a-fallback-while-content-is-loading*/}
+### Hiển thị fallback trong khi nội dung đang tải {/*displaying-a-fallback-while-content-is-loading*/}
 
-You can wrap any part of your application with a Suspense boundary:
+Bạn có thể bọc bất kỳ phần nào của ứng dụng bằng Suspense boundary:
 
 ```js [[1, 1, "<Loading />"], [2, 2, "<Albums />"]]
 <Suspense fallback={<Loading />}>
@@ -75,9 +75,9 @@ You can wrap any part of your application with a Suspense boundary:
 </Suspense>
 ```
 
-React will display your <CodeStep step={1}>loading fallback</CodeStep> until all the code and data needed by <CodeStep step={2}>the children</CodeStep> has been loaded.
+React sẽ hiển thị <CodeStep step={1}>loading fallback</CodeStep> cho đến khi toàn bộ code và dữ liệu cần thiết cho <CodeStep step={2}>các phần tử con</CodeStep> được tải xong.
 
-In the example below, the `Albums` component *suspends* while fetching the list of albums. Until it's ready to render, React switches the closest Suspense boundary above to show the fallback--your `Loading` component. Then, when the data loads, React hides the `Loading` fallback and renders the `Albums` component with data.
+Trong ví dụ bên dưới, component `Albums` *tạm dừng* trong khi fetch danh sách album. Cho đến khi component sẵn sàng để render, React chuyển Suspense boundary gần nhất ở phía trên sang hiển thị fallback—component `Loading` của bạn. Sau đó, khi dữ liệu tải xong, React ẩn fallback `Loading` và render component `Albums` cùng dữ liệu.
 
 <Sandpack>
 
@@ -230,7 +230,7 @@ async function getAlbums() {
 
 </Sandpack>
 
-By contrast, code that fetches data outside of `use`, such as inside an Effect, does not activate the boundary:
+Ngược lại, code fetch dữ liệu bên ngoài `use`, chẳng hạn như bên trong một Effect, sẽ không kích hoạt boundary:
 
 <Sandpack>
 
@@ -398,7 +398,7 @@ async function getAlbums() {
 
 </Sandpack>
 
-During streaming server rendering, a boundary also activates while its HTML is still streaming in. With any streaming server rendering API, React sends [the shell](/reference/react-dom/server/renderToPipeableStream#specifying-what-goes-into-the-shell) with the `fallback` first, then streams in each boundary's HTML and swaps out its `fallback` as that content arrives. Press "Render the page" to watch the page stream in:
+Trong quá trình streaming server rendering, một boundary cũng kích hoạt khi HTML của boundary vẫn đang được stream. Với bất kỳ API streaming server rendering nào, React trước tiên gửi [shell](/reference/react-dom/server/renderToPipeableStream#specifying-what-goes-into-the-shell) cùng với `fallback`, sau đó stream HTML của từng boundary và thay `fallback` bằng nội dung đó khi nội dung xuất hiện. Nhấn "Render the page" để xem trang được stream:
 
 <Sandpack>
 
@@ -491,9 +491,9 @@ export async function flushReadableStreamToFrame(readable, frame) {
 
 ---
 
-### Revealing content together at once {/*revealing-content-together-at-once*/}
+### Hiển thị toàn bộ nội dung cùng lúc {/*revealing-content-together-at-once*/}
 
-By default, the whole tree inside Suspense is treated as a single unit. For example, even if *only one* of these components suspends waiting for some data, *all* of them together will be replaced by the loading indicator:
+Theo mặc định, toàn bộ tree bên trong Suspense được xem là một đơn vị duy nhất. Ví dụ, ngay cả khi *chỉ một* trong các component này tạm dừng để chờ dữ liệu, tất cả chúng sẽ cùng bị thay thế bằng loading indicator:
 
 ```js {2-5}
 <Suspense fallback={<Loading />}>
@@ -504,9 +504,9 @@ By default, the whole tree inside Suspense is treated as a single unit. For exam
 </Suspense>
 ```
 
-Then, after all of them are ready to be displayed, they will all appear together at once.
+Sau đó, khi tất cả đã sẵn sàng để hiển thị, chúng sẽ cùng xuất hiện một lúc.
 
-In the example below, both `Biography` and `Albums` fetch some data. However, because they are grouped under a single Suspense boundary, these components always "pop in" together at the same time.
+Trong ví dụ bên dưới, cả `Biography` và `Albums` đều fetch một số dữ liệu. Tuy nhiên, vì chúng được nhóm dưới cùng một Suspense boundary, các component này luôn “xuất hiện” cùng lúc.
 
 <Sandpack>
 
@@ -713,7 +713,7 @@ async function getAlbums() {
 
 </Sandpack>
 
-Components that load data don't have to be direct children of the Suspense boundary. For example, you can move `Biography` and `Albums` into a new `Details` component. This doesn't change the behavior. `Biography` and `Albums` share the same closest parent Suspense boundary, so their reveal is coordinated together.
+Các component tải dữ liệu không nhất thiết phải là phần tử con trực tiếp của Suspense boundary. Ví dụ, bạn có thể chuyển `Biography` và `Albums` vào một component `Details` mới. Điều này không thay đổi hành vi. `Biography` và `Albums` dùng chung Suspense boundary gần nhất ở cấp cha, vì vậy việc hiển thị của chúng được điều phối cùng nhau.
 
 ```js {2,8-11}
 <Suspense fallback={<Loading />}>
@@ -734,9 +734,9 @@ function Details({ artistId }) {
 
 ---
 
-### Revealing nested content as it loads {/*revealing-nested-content-as-it-loads*/}
+### Hiển thị nội dung lồng nhau khi nội dung tải xong {/*revealing-nested-content-as-it-loads*/}
 
-When a component suspends, the closest parent Suspense component shows the fallback. This lets you nest multiple Suspense components to create a loading sequence. Each Suspense boundary's fallback will be filled in as the next level of content becomes available. For example, you can give the album list its own fallback:
+Khi một component bị suspend, component Suspense cha gần nhất sẽ hiển thị fallback. Điều này cho phép bạn lồng nhiều component Suspense để tạo ra một chuỗi tải. Fallback của mỗi Suspense boundary sẽ được điền vào khi cấp nội dung tiếp theo trở nên khả dụng. Ví dụ: bạn có thể cung cấp fallback riêng cho danh sách album:
 
 ```js {3,7}
 <Suspense fallback={<BigSpinner />}>
@@ -749,14 +749,14 @@ When a component suspends, the closest parent Suspense component shows the fallb
 </Suspense>
 ```
 
-With this change, displaying the `Biography` doesn't need to "wait" for the `Albums` to load.
+Với thay đổi này, việc hiển thị `Biography` không cần phải “chờ” `Albums` tải xong.
 
-The sequence will be:
+Trình tự sẽ là:
 
-1. If `Biography` hasn't loaded yet, `BigSpinner` is shown in place of the entire content area.
-2. Once `Biography` finishes loading, `BigSpinner` is replaced by the content.
-3. If `Albums` hasn't loaded yet, `AlbumsGlimmer` is shown in place of `Albums` and its parent `Panel`.
-4. Finally, once `Albums` finishes loading, it replaces `AlbumsGlimmer`.
+1. Nếu `Biography` chưa tải xong, `BigSpinner` sẽ được hiển thị thay cho toàn bộ vùng nội dung.
+2. Khi `Biography` tải xong, `BigSpinner` sẽ được thay thế bằng nội dung.
+3. Nếu `Albums` chưa tải xong, `AlbumsGlimmer` sẽ được hiển thị thay cho `Albums` và `Panel` cha của nó.
+4. Cuối cùng, khi `Albums` tải xong, nó sẽ thay thế `AlbumsGlimmer`.
 
 <Sandpack>
 
@@ -992,15 +992,15 @@ async function getAlbums() {
 
 </Sandpack>
 
-Suspense boundaries let you coordinate which parts of your UI should always "pop in" together at the same time, and which parts should progressively reveal more content in a sequence of loading states. You can add, move, or delete Suspense boundaries in any place in the tree without affecting the rest of your app's behavior.
+Suspense boundary cho phép bạn điều phối những phần nào trong UI luôn phải “xuất hiện cùng lúc”, cũng như những phần nào sẽ dần dần hiển thị thêm nội dung theo một chuỗi trạng thái tải. Bạn có thể thêm, di chuyển hoặc xóa Suspense boundary ở bất kỳ vị trí nào trong cây mà không ảnh hưởng đến hành vi của phần còn lại trong ứng dụng.
 
-Don't put a Suspense boundary around every component. Suspense boundaries should not be more granular than the loading sequence that you want the user to experience. If you work with a designer, ask them where the loading states should be placed--it's likely that they've already included them in their design wireframes.
+Đừng đặt một Suspense boundary quanh mọi component. Suspense boundary không nên chi tiết hơn chuỗi tải mà bạn muốn người dùng trải nghiệm. Nếu bạn làm việc với designer, hãy hỏi họ nên đặt các trạng thái tải ở đâu--có khả năng họ đã đưa chúng vào wireframe thiết kế.
 
 ---
 
-### Showing stale content while fresh content is loading {/*showing-stale-content-while-fresh-content-is-loading*/}
+### Hiển thị nội dung cũ trong khi nội dung mới đang tải {/*showing-stale-content-while-fresh-content-is-loading*/}
 
-In this example, the `SearchResults` component suspends while fetching the search results. Type `"a"`, wait for the results, and then edit it to `"ab"`. The results for `"a"` will get replaced by the loading fallback.
+Trong ví dụ này, component `SearchResults` bị suspend trong khi lấy kết quả tìm kiếm. Nhập `"a"`, chờ kết quả, rồi chỉnh sửa thành `"ab"`. Kết quả cho `"a"` sẽ được thay thế bằng loading fallback.
 
 <Sandpack>
 
@@ -1147,7 +1147,7 @@ input { margin: 10px; }
 
 </Sandpack>
 
-A common alternative UI pattern is to *defer* updating the list and to keep showing the previous results until the new results are ready. The [`useDeferredValue`](/reference/react/useDeferredValue) Hook lets you pass a deferred version of the query down:
+Một UI pattern phổ biến khác là *defer* việc cập nhật danh sách và tiếp tục hiển thị kết quả trước đó cho đến khi kết quả mới sẵn sàng. Hook [`useDeferredValue`](/reference/react/useDeferredValue) cho phép bạn truyền một phiên bản trì hoãn của query xuống:
 
 ```js {3,11}
 export default function App() {
@@ -1167,9 +1167,9 @@ export default function App() {
 }
 ```
 
-The `query` will update immediately, so the input will display the new value. However, the `deferredQuery` will keep its previous value until the data has loaded, so `SearchResults` will show the stale results for a bit.
+`query` sẽ cập nhật ngay lập tức, vì vậy input sẽ hiển thị giá trị mới. Tuy nhiên, `deferredQuery` sẽ giữ giá trị trước đó cho đến khi dữ liệu được tải xong, nên `SearchResults` sẽ hiển thị kết quả cũ trong một khoảng thời gian ngắn.
 
-To make it more obvious to the user, you can add a visual indication when the stale result list is displayed:
+Để người dùng dễ nhận biết hơn, bạn có thể thêm một chỉ báo trực quan khi danh sách kết quả cũ đang được hiển thị:
 
 ```js {2}
 <div style={{
@@ -1179,8 +1179,7 @@ To make it more obvious to the user, you can add a visual indication when the st
 </div>
 ```
 
-Enter `"a"` in the example below, wait for the results to load, and then edit the input to `"ab"`. Notice how instead of the Suspense fallback, you now see the dimmed stale result list until the new results have loaded:
-
+Nhập `"a"` vào ví dụ bên dưới, chờ kết quả tải xong, rồi chỉnh sửa input thành `"ab"`. Hãy chú ý rằng thay vì Suspense fallback, giờ đây bạn sẽ thấy danh sách kết quả cũ bị làm mờ cho đến khi kết quả mới tải xong:
 
 <Sandpack>
 
@@ -1333,15 +1332,15 @@ input { margin: 10px; }
 
 <Note>
 
-Both deferred values and [Transitions](#preventing-already-revealed-content-from-hiding) let you avoid showing Suspense fallback in favor of inline indicators. Transitions mark the whole update as non-urgent so they are typically used by frameworks and router libraries for navigation. Deferred values, on the other hand, are mostly useful in application code where you want to mark a part of UI as non-urgent and let it "lag behind" the rest of the UI.
+Cả các giá trị được trì hoãn và [Transitions](#preventing-already-revealed-content-from-hiding) đều cho phép bạn tránh hiển thị Suspense fallback bằng cách sử dụng các chỉ báo inline. Transitions đánh dấu toàn bộ bản cập nhật là không khẩn cấp, vì vậy chúng thường được frameworks và router libraries sử dụng cho việc điều hướng. Ngược lại, các giá trị được trì hoãn chủ yếu hữu ích trong application code, khi bạn muốn đánh dấu một phần UI là không khẩn cấp và cho phép phần đó “chậm hơn” phần còn lại của UI.
 
 </Note>
 
 ---
 
-### Preventing already revealed content from hiding {/*preventing-already-revealed-content-from-hiding*/}
+### Ngăn nội dung đã hiển thị bị ẩn đi {/*preventing-already-revealed-content-from-hiding*/}
 
-When a component suspends, the closest parent Suspense boundary switches to showing the fallback. This can lead to a jarring user experience if it was already displaying some content. Try pressing this button:
+Khi một component bị suspend, Suspense boundary cha gần nhất sẽ chuyển sang hiển thị fallback. Điều này có thể khiến trải nghiệm người dùng bị gián đoạn nếu trước đó boundary đang hiển thị một phần nội dung. Hãy thử nhấn nút này:
 
 <Sandpack>
 
@@ -1635,9 +1634,9 @@ main {
 
 </Sandpack>
 
-When you pressed the button, the `Router` component rendered `ArtistPage` instead of `IndexPage`. A component inside `ArtistPage` suspended, so the closest Suspense boundary started showing the fallback. The closest Suspense boundary was near the root, so the whole site layout got replaced by `BigSpinner`.
+Khi bạn nhấn nút, component `Router` đã render `ArtistPage` thay vì `IndexPage`. Một component bên trong `ArtistPage` bị suspend, nên Suspense boundary gần nhất bắt đầu hiển thị fallback. Suspense boundary gần nhất nằm gần root, vì vậy toàn bộ layout của trang bị thay thế bởi `BigSpinner`.
 
-To prevent this, you can mark the navigation state update as a *Transition* with [`startTransition`:](/reference/react/startTransition)
+Để ngăn điều này, bạn có thể đánh dấu bản cập nhật trạng thái điều hướng là một *Transition* bằng [`startTransition`:](/reference/react/startTransition)
 
 ```js {5,7}
 function Router() {
@@ -1651,7 +1650,7 @@ function Router() {
   // ...
 ```
 
-This tells React that the state transition is not urgent, and it's better to keep showing the previous page instead of hiding any already revealed content. Now clicking the button "waits" for the `Biography` to load:
+Điều này cho React biết rằng state transition không khẩn cấp và tốt hơn hết là tiếp tục hiển thị trang trước đó thay vì ẩn nội dung đã hiển thị. Giờ đây, khi nhấn nút, React sẽ “chờ” `Biography` tải xong:
 
 <Sandpack>
 
@@ -1947,19 +1946,19 @@ main {
 
 </Sandpack>
 
-A Transition doesn't wait for *all* content to load. It only waits long enough to avoid hiding already revealed content. For example, the website `Layout` was already revealed, so it would be bad to hide it behind a loading spinner. However, the nested `Suspense` boundary around `Albums` is new, so the Transition doesn't wait for it.
+Một Transition không chờ *toàn bộ* nội dung tải xong. Nó chỉ chờ đủ lâu để tránh ẩn nội dung đã hiển thị. Ví dụ, website `Layout` đã được hiển thị, nên việc ẩn nó sau một loading spinner sẽ không phù hợp. Tuy nhiên, boundary `Suspense` lồng bên trong, bao quanh `Albums`, là boundary mới, nên Transition không chờ boundary này.
 
 <Note>
 
-Suspense-enabled routers are expected to wrap the navigation updates into Transitions by default.
+Các router hỗ trợ Suspense được kỳ vọng sẽ mặc định bọc những bản cập nhật điều hướng trong Transitions.
 
 </Note>
 
 ---
 
-### Indicating that a Transition is happening {/*indicating-that-a-transition-is-happening*/}
+### Cho biết một Transition đang diễn ra {/*indicating-that-a-transition-is-happening*/}
 
-In the above example, once you click the button, there is no visual indication that a navigation is in progress. To add an indicator, you can replace [`startTransition`](/reference/react/startTransition) with [`useTransition`](/reference/react/useTransition) which gives you a boolean `isPending` value. In the example below, it's used to change the website header styling while a Transition is happening:
+Trong ví dụ trên, sau khi bạn nhấn nút, không có chỉ báo trực quan nào cho biết quá trình điều hướng đang diễn ra. Để thêm chỉ báo, bạn có thể thay [`startTransition`](/reference/react/startTransition) bằng [`useTransition`](/reference/react/useTransition), hàm này cung cấp cho bạn một giá trị boolean `isPending`. Trong ví dụ bên dưới, giá trị này được dùng để thay đổi styling của header website trong khi Transition đang diễn ra:
 
 <Sandpack>
 
@@ -2260,17 +2259,17 @@ main {
 
 ---
 
-### Resetting Suspense boundaries on navigation {/*resetting-suspense-boundaries-on-navigation*/}
+### Reset Suspense boundary khi điều hướng {/*resetting-suspense-boundaries-on-navigation*/}
 
-During a Transition, React avoids hiding already revealed content. However, when you navigate to *different* content, such as another user's profile, you'll want the boundary to show the fallback instead of the previous content. You can express this with a `key`:
+Trong một Transition, React tránh ẩn nội dung đã hiển thị. Tuy nhiên, khi bạn điều hướng đến *nội dung khác*, chẳng hạn hồ sơ của người dùng khác, bạn sẽ muốn boundary hiển thị fallback thay vì nội dung trước đó. Bạn có thể thể hiện điều này bằng một `key`:
 
 ```js
 <ProfilePage key={queryParams.id} />
 ```
 
-With a different `key`, React treats the profiles as different content and resets the Suspense boundary during navigation. The `key` can go on the boundary itself or on a component above it. Suspense-integrated routers should do this automatically.
+Với `key` khác, React xem các hồ sơ là nội dung khác nhau và reset Suspense boundary trong quá trình điều hướng. `key` có thể được đặt trên chính boundary hoặc trên một component nằm phía trên boundary. Các router tích hợp Suspense nên tự động thực hiện việc này.
 
-In the example below, opening the profile page loads the first profile. Pressing "Bob" navigates to a different profile, and the `key` resets the boundary, so the fallback shows instead of the previous user's bio. Try removing the `key`: the previous bio stays visible while the next one loads:
+Trong ví dụ bên dưới, khi mở trang hồ sơ, hồ sơ đầu tiên sẽ được tải. Nhấn “Bob” để điều hướng đến một hồ sơ khác; `key` sẽ reset boundary, vì vậy fallback sẽ được hiển thị thay cho tiểu sử của người dùng trước đó. Hãy thử xóa `key`: tiểu sử trước đó vẫn hiển thị trong khi tiểu sử tiếp theo đang tải:
 
 <Sandpack>
 
@@ -2357,13 +2356,13 @@ button {
 
 ---
 
-### Providing a fallback for server errors and client-only content {/*providing-a-fallback-for-server-errors-and-client-only-content*/}
+### Cung cấp fallback cho lỗi server và nội dung chỉ dành cho client {/*providing-a-fallback-for-server-errors-and-client-only-content*/}
 
-If you use one of the [streaming server rendering APIs](/reference/react-dom/server) (or a framework that relies on them), React will also use your `<Suspense>` boundaries to handle errors on the server. If a component throws an error on the server, React will not abort the server render. Instead, it will find the closest `<Suspense>` component above it and include its fallback (such as a spinner) into the generated server HTML. The user will see a spinner at first.
+Nếu bạn sử dụng một trong các [streaming server rendering APIs](/reference/react-dom/server) (hoặc một framework dựa trên các API này), React cũng sẽ sử dụng các `<Suspense>` boundary của bạn để xử lý lỗi trên server. Nếu một component gây ra lỗi trên server, React sẽ không hủy quá trình server render. Thay vào đó, nó sẽ tìm component `<Suspense>` gần nhất bên trên component đó và đưa fallback của component này (chẳng hạn spinner) vào server HTML được tạo ra. Ban đầu, người dùng sẽ nhìn thấy spinner.
 
-On the client, React will attempt to render the same component again. If it errors on the client too, React will throw the error and display the closest [Error Boundary.](/reference/react/Component#static-getderivedstatefromerror) However, if it does not error on the client, React will not display the error to the user since the content was eventually displayed successfully.
+Trên client, React sẽ cố gắng render lại chính component đó. Nếu component cũng gây ra lỗi trên client, React sẽ throw lỗi và hiển thị [Error Boundary.](/reference/react/Component#static-getderivedstatefromerror) gần nhất. Tuy nhiên, nếu component không gây ra lỗi trên client, React sẽ không hiển thị lỗi cho người dùng vì cuối cùng nội dung đã được hiển thị thành công.
 
-You can use this to opt out some components from rendering on the server. To do this, throw an error in the server environment and then wrap them in a `<Suspense>` boundary to replace their HTML with fallbacks:
+Bạn có thể sử dụng cơ chế này để loại một số component khỏi quá trình render trên server. Để làm vậy, hãy throw một lỗi trong môi trường server, sau đó bọc chúng trong một `<Suspense>` boundary để thay thế HTML của chúng bằng fallback:
 
 ```js
 <Suspense fallback={<Loading />}>
@@ -2378,15 +2377,15 @@ function Chat() {
 }
 ```
 
-The server HTML will include the loading indicator. It will be replaced by the `Chat` component on the client.
+Server HTML sẽ bao gồm loading indicator. Trên client, indicator này sẽ được thay thế bằng component `Chat`.
 
 ---
 
-### Providing a fallback for browser-only content {/*providing-a-fallback-for-browser-only-content*/}
+### Cung cấp nội dung dự phòng cho nội dung chỉ dành cho trình duyệt {/*providing-a-fallback-for-browser-only-content*/}
 
-A Suspense boundary can provide a fallback for a browser-only component. Wrap the component in `<Suspense>` and call [`use(browser())`](/reference/react/use#use-browser) inside it.
+Một Suspense boundary có thể cung cấp nội dung dự phòng cho một component chỉ dành cho trình duyệt. Bọc component trong `<Suspense>` và gọi [`use(browser())`](/reference/react/use#use-browser) bên trong đó.
 
-Click **Reload** to see the loading fallback in the initial HTML. After hydration, React displays the draft loaded from `localStorage`.
+Nhấp vào **Reload** để xem nội dung dự phòng đang tải trong HTML ban đầu. Sau khi hydration, React hiển thị bản nháp được tải từ `localStorage`.
 
 <Sandpack>
 
@@ -2530,17 +2529,17 @@ iframe {
 
 </Sandpack>
 
-During server rendering, React includes the Suspense boundary's fallback in the HTML. In the browser, React replaces the fallback with the saved draft.
+Trong quá trình server rendering, React đưa nội dung dự phòng của Suspense boundary vào HTML. Trong trình duyệt, React thay thế nội dung dự phòng bằng bản nháp đã lưu.
 
 ---
 
-### Waiting for a stylesheet to load {/*waiting-for-a-stylesheet-to-load*/}
+### Chờ stylesheet tải {/*waiting-for-a-stylesheet-to-load*/}
 
-A stylesheet rendered with [`<link rel="stylesheet">` and a `precedence` prop](/reference/react-dom/components/link#special-rendering-behavior) blocks the Suspense boundary until the stylesheet loads, up to a timeout, so the content doesn't appear unstyled.
+Một stylesheet được render bằng [`<link rel="stylesheet">` cùng với prop `precedence`](/reference/react-dom/components/link#special-rendering-behavior) sẽ chặn Suspense boundary cho đến khi stylesheet tải xong, tối đa trong một khoảng thời gian chờ, để nội dung không xuất hiện khi chưa được áp dụng style.
 
-In the example below, the `Card` component renders a stylesheet with `precedence`. Press "Show card": React shows the fallback until the stylesheet has loaded, and then reveals the card with its styles applied.
+Trong ví dụ dưới đây, component `Card` render một stylesheet với `precedence`. Nhấn "Show card": React hiển thị nội dung dự phòng cho đến khi stylesheet tải xong, sau đó hiển thị card với các style đã được áp dụng.
 
-For comparison, the second button performs the same update without React, in a separate document. Nothing waits for the stylesheet, so the card's text appears in a fallback font first and then switches:
+Để so sánh, nút thứ hai thực hiện cùng một update nhưng không dùng React, trong một document riêng biệt. Không có gì chờ stylesheet, vì vậy văn bản của card ban đầu xuất hiện bằng font dự phòng rồi sau đó chuyển đổi:
 
 <Sandpack>
 
@@ -2661,9 +2660,9 @@ hr {
 
 ---
 
-### Animating from Suspense content {/*animating-from-suspense-content*/}
+### Tạo hiệu ứng chuyển động từ nội dung Suspense {/*animating-from-suspense-content*/}
 
-Suspense composes with [`<ViewTransition>`](/reference/react/ViewTransition) to animate the swap from the fallback to the content. Wrap the boundary in a `<ViewTransition>`, and React treats the swap as an update, cross-fading between the fallback and the content by default:
+Suspense kết hợp với [`<ViewTransition>`](/reference/react/ViewTransition) để tạo hiệu ứng chuyển đổi từ nội dung dự phòng sang nội dung chính. Bọc boundary trong một `<ViewTransition>`, và React sẽ xử lý quá trình chuyển đổi như một update, mặc định tạo hiệu ứng cross-fade giữa nội dung dự phòng và nội dung chính:
 
 <Sandpack>
 
@@ -2891,21 +2890,21 @@ button:hover {
 
 <Note>
 
-Where you place the `<ViewTransition>` relative to the boundary determines whether the fallback and content cross-fade as one update or animate as separate exit and enter animations. You can also [customize the animation](/reference/react/ViewTransition#customizing-animations) with View Transition classes.
+Vị trí bạn đặt `<ViewTransition>` so với boundary sẽ quyết định nội dung dự phòng và nội dung chính được cross-fade như một update hay được tạo hiệu ứng riêng biệt khi thoát và khi xuất hiện. Bạn cũng có thể [tùy chỉnh hiệu ứng chuyển động](/reference/react/ViewTransition#customizing-animations) bằng các class của View Transition.
 
-[Learn more about animating from Suspense content.](/reference/react/ViewTransition#animating-from-suspense-content)
+[Tìm hiểu thêm về việc tạo hiệu ứng chuyển động từ nội dung Suspense.](/reference/react/ViewTransition#animating-from-suspense-content)
 
 </Note>
 
 ---
 
-### Waiting for a font to load {/*waiting-for-a-font-to-load*/}
+### Chờ font tải {/*waiting-for-a-font-to-load*/}
 
-When a [`<ViewTransition>`](/reference/react/ViewTransition) animates a Suspense boundary's reveal, React waits for new fonts the content introduces, up to a timeout, so the text doesn't flash with a fallback font. This only happens during a `<ViewTransition>` update.
+Khi một [`<ViewTransition>`](/reference/react/ViewTransition) tạo hiệu ứng cho việc hiển thị Suspense boundary, React sẽ chờ các font mới mà nội dung giới thiệu tải xong, tối đa trong một khoảng thời gian chờ, để văn bản không nhấp nháy với font dự phòng. Điều này chỉ xảy ra trong một update `<ViewTransition>`.
 
-In the example below, the Suspense boundary is wrapped in a `<ViewTransition>`, and the `Quote` component suspends while its data loads. Rendering the quote starts its font download. React keeps the fallback visible until the font has loaded, so the quote appears already in its font.
+Trong ví dụ dưới đây, Suspense boundary được bọc trong một `<ViewTransition>`, và component `Quote` chuyển sang trạng thái suspend trong khi dữ liệu tải. Việc render câu trích dẫn bắt đầu quá trình tải font. React giữ nội dung dự phòng hiển thị cho đến khi font tải xong, vì vậy câu trích dẫn xuất hiện ngay với font của nó.
 
-For comparison, the second button performs the same update without React. Nothing waits for the font, so the text appears in a fallback font first and then switches:
+Để so sánh, nút thứ hai thực hiện cùng một update nhưng không dùng React. Không có gì chờ font, vì vậy văn bản ban đầu xuất hiện bằng font dự phòng rồi sau đó chuyển đổi:
 
 <Sandpack>
 
@@ -3049,13 +3048,13 @@ hr {
 
 ---
 
-### Waiting for an image to load {/*waiting-for-an-image-to-load*/}
+### Chờ hình ảnh tải {/*waiting-for-an-image-to-load*/}
 
-When a [`<ViewTransition>`](/reference/react/ViewTransition) animates a Suspense boundary's reveal, React waits for visible images to load, up to a timeout, so the animation doesn't start with a half-loaded image. This only happens during a `<ViewTransition>` update. Adding an `onLoad` handler opts a specific image out, even inside a `<ViewTransition>`.
+Khi một [`<ViewTransition>`](/reference/react/ViewTransition) tạo hiệu ứng cho việc hiển thị Suspense boundary, React sẽ chờ các hình ảnh hiển thị tải xong, tối đa trong một khoảng thời gian chờ, để hiệu ứng không bắt đầu khi hình ảnh mới chỉ tải một phần. Điều này chỉ xảy ra trong một update `<ViewTransition>`. Việc thêm một handler `onLoad` sẽ loại trừ một hình ảnh cụ thể, ngay cả khi hình ảnh đó nằm trong một `<ViewTransition>`.
 
-In the example below, the Suspense boundary is wrapped in a `<ViewTransition>` and shows a profile skeleton until the portrait has loaded.
+Trong ví dụ dưới đây, Suspense boundary được bọc trong một `<ViewTransition>` và hiển thị skeleton hồ sơ cho đến khi ảnh chân dung tải xong.
 
-For comparison, the second button performs the same update without React. Nothing waits for the image, so the card appears immediately and the image pops in when it loads:
+Để so sánh, nút thứ hai thực hiện cùng một update nhưng không dùng React. Không có gì chờ hình ảnh, vì vậy card xuất hiện ngay lập tức và hình ảnh xuất hiện sau khi tải xong:
 
 <Sandpack>
 
@@ -3182,11 +3181,11 @@ hr {
 
 ---
 
-### Coordinating fonts, images, and stylesheets {/*coordinating-fonts-images-and-stylesheets*/}
+### Phối hợp font, hình ảnh và stylesheet {/*coordinating-fonts-images-and-stylesheets*/}
 
-A Suspense boundary can wait for data, stylesheets, fonts, and images at once. Waiting for fonts and images only happens during a [`<ViewTransition>`](/reference/react/ViewTransition) update. In the example below, the `ProfileCard` component suspends while its data loads, and renders a stylesheet with `precedence`, text in a new font, and a portrait. React keeps the skeleton visible while the data and the stylesheet load. The `<ViewTransition>` reveal then waits for the font and the image, so the card appears complete.
+Một Suspense boundary có thể chờ dữ liệu, stylesheet, font và hình ảnh cùng lúc. Việc chờ font và hình ảnh chỉ xảy ra trong một update [`<ViewTransition>`](/reference/react/ViewTransition). Trong ví dụ dưới đây, component `ProfileCard` chuyển sang trạng thái suspend trong khi dữ liệu tải, đồng thời render một stylesheet với `precedence`, văn bản bằng một font mới và một ảnh chân dung. React giữ skeleton hiển thị trong khi dữ liệu và stylesheet tải. Sau đó, quá trình reveal của `<ViewTransition>` sẽ chờ font và hình ảnh, để card xuất hiện hoàn chỉnh.
 
-For comparison, the version without React loads the same data and shows every resource arriving on its own schedule:
+Để so sánh, phiên bản không dùng React tải cùng dữ liệu và hiển thị từng tài nguyên theo lịch tải riêng:
 
 <Sandpack>
 
@@ -3399,13 +3398,13 @@ hr {
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Xử lý sự cố {/*troubleshooting*/}
 
-### How do I prevent the UI from being replaced by a fallback during an update? {/*preventing-unwanted-fallbacks*/}
+### Làm thế nào để ngăn UI bị thay thế bằng nội dung dự phòng trong quá trình update? {/*preventing-unwanted-fallbacks*/}
 
-Replacing visible UI with a fallback creates a jarring user experience. This can happen when an update causes a component to suspend, and the nearest Suspense boundary is already showing content to the user.
+Việc thay thế UI đang hiển thị bằng nội dung dự phòng tạo ra trải nghiệm người dùng khó chịu. Điều này có thể xảy ra khi một update khiến component chuyển sang trạng thái suspend, trong khi Suspense boundary gần nhất đã hiển thị nội dung cho người dùng.
 
-To prevent this from happening, [mark the update as non-urgent using `startTransition`](#preventing-already-revealed-content-from-hiding). During a Transition, React will wait until enough data has loaded to prevent an unwanted fallback from appearing:
+Để ngăn điều này xảy ra, [đánh dấu update là không khẩn cấp bằng `startTransition`](#preventing-already-revealed-content-from-hiding). Trong một Transition, React sẽ chờ cho đến khi đủ dữ liệu được tải để ngăn nội dung dự phòng không mong muốn xuất hiện:
 
 ```js {2-3,5}
 function handleNextPageClick() {
@@ -3416,8 +3415,8 @@ function handleNextPageClick() {
 }
 ```
 
-This will avoid hiding existing content. However, any newly rendered `Suspense` boundaries will still immediately display fallbacks to avoid blocking the UI and let the user see the content as it becomes available.
+Cách này sẽ tránh ẩn nội dung hiện có. Tuy nhiên, mọi `Suspense` boundary mới được render vẫn sẽ ngay lập tức hiển thị nội dung dự phòng để tránh chặn UI và cho phép người dùng xem nội dung khi nội dung đó sẵn sàng.
 
-**React will only prevent unwanted fallbacks during non-urgent updates**. It will not delay a render if it's the result of an urgent update. You must opt in with an API like [`startTransition`](/reference/react/startTransition) or [`useDeferredValue`](/reference/react/useDeferredValue).
+**React chỉ ngăn nội dung dự phòng không mong muốn trong các update không khẩn cấp**. React sẽ không trì hoãn quá trình render nếu quá trình đó là kết quả của một update khẩn cấp. Bạn phải chủ động sử dụng một API như [`startTransition`](/reference/react/startTransition) hoặc [`useDeferredValue`](/reference/react/useDeferredValue).
 
-If your router is integrated with Suspense, it should wrap its updates into [`startTransition`](/reference/react/startTransition) automatically.
+Nếu router của bạn được tích hợp với Suspense, router sẽ tự động bọc các update của mình trong [`startTransition`](/reference/react/startTransition).

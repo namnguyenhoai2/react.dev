@@ -1,35 +1,35 @@
 ---
-title: "Legacy React APIs"
+title: "Các API React cũ"
 ---
 
 <Intro>
 
-These APIs are exported from the `react` package, but they are not recommended for use in newly written code. See the linked individual API pages for the suggested alternatives.
+Các API này được export từ package `react`, nhưng không được khuyến nghị sử dụng trong code mới viết. Hãy xem các trang API riêng lẻ được liên kết để biết các lựa chọn thay thế được đề xuất.
 
 </Intro>
 
 ---
 
-## Legacy APIs {/*legacy-apis*/}
+## Các API cũ {/*legacy-apis*/}
 
-* [`Children`](/reference/react/Children) lets you manipulate and transform the JSX received as the `children` prop. [See alternatives.](/reference/react/Children#alternatives)
-* [`cloneElement`](/reference/react/cloneElement) lets you create a React element using another element as a starting point. [See alternatives.](/reference/react/cloneElement#alternatives)
-* [`Component`](/reference/react/Component) lets you define a React component as a JavaScript class. [See alternatives.](/reference/react/Component#alternatives)
-* [`createElement`](/reference/react/createElement) lets you create a React element. Typically, you'll use JSX instead.
-* [`createRef`](/reference/react/createRef) creates a ref object which can contain arbitrary value. [See alternatives.](/reference/react/createRef#alternatives)
-* [`forwardRef`](/reference/react/forwardRef) lets your component expose a DOM node to parent component with a [ref.](/learn/manipulating-the-dom-with-refs)
-* [`isValidElement`](/reference/react/isValidElement) checks whether a value is a React element. Typically used with [`cloneElement`.](/reference/react/cloneElement)
-* [`PureComponent`](/reference/react/PureComponent) is similar to [`Component`,](/reference/react/Component) but it skip re-renders with same props. [See alternatives.](/reference/react/PureComponent#alternatives)
+* [`Children`](/reference/react/Children) cho phép bạn thao tác và biến đổi JSX nhận được dưới dạng prop `children`. [Xem các lựa chọn thay thế.](/reference/react/Children#alternatives)
+* [`cloneElement`](/reference/react/cloneElement) cho phép bạn tạo một phần tử React bằng cách sử dụng một phần tử khác làm điểm bắt đầu. [Xem các lựa chọn thay thế.](/reference/react/cloneElement#alternatives)
+* [`Component`](/reference/react/Component) cho phép bạn định nghĩa một component React dưới dạng một class JavaScript. [Xem các lựa chọn thay thế.](/reference/react/Component#alternatives)
+* [`createElement`](/reference/react/createElement) cho phép bạn tạo một phần tử React. Thông thường, bạn sẽ sử dụng JSX thay thế.
+* [`createRef`](/reference/react/createRef) tạo một đối tượng ref có thể chứa giá trị tùy ý. [Xem các lựa chọn thay thế.](/reference/react/createRef#alternatives)
+* [`forwardRef`](/reference/react/forwardRef) cho phép component của bạn expose một node DOM cho component cha bằng một [ref.](/learn/manipulating-the-dom-with-refs)
+* [`isValidElement`](/reference/react/isValidElement) kiểm tra xem một giá trị có phải là phần tử React hay không. Thường được sử dụng cùng với [`cloneElement`.](/reference/react/cloneElement)
+* [`PureComponent`](/reference/react/PureComponent) tương tự như [`Component`,](/reference/react/Component) nhưng bỏ qua việc re-render khi props không đổi. [Xem các lựa chọn thay thế.](/reference/react/PureComponent#alternatives)
 
 ---
 
-## Removed APIs {/*removed-apis*/}
+## Các API đã bị loại bỏ {/*removed-apis*/}
 
-These APIs were removed in React 19:
+Các API này đã bị loại bỏ trong React 19:
 
-* [`createFactory`](https://18.react.dev/reference/react/createFactory): use JSX instead.
-* Class Components: [`static contextTypes`](https://18.react.dev//reference/react/Component#static-contexttypes): use [`static contextType`](#static-contexttype) instead.
-* Class Components: [`static childContextTypes`](https://18.react.dev//reference/react/Component#static-childcontexttypes): use [`static contextType`](#static-contexttype) instead.
-* Class Components: [`static getChildContext`](https://18.react.dev//reference/react/Component#getchildcontext): use [`Context`](/reference/react/createContext#provider) instead.
-* Class Components: [`static propTypes`](https://18.react.dev//reference/react/Component#static-proptypes): use a type system like [TypeScript](https://www.typescriptlang.org/) instead.
-* Class Components: [`this.refs`](https://18.react.dev//reference/react/Component#refs): use [`createRef`](/reference/react/createRef) instead.
+* [`createFactory`](https://18.react.dev/reference/react/createFactory): thay vào đó, hãy sử dụng JSX.
+* Class Components: [`static contextTypes`](https://18.react.dev//reference/react/Component#static-contexttypes): thay vào đó, hãy sử dụng [`static contextType`](#static-contexttype).
+* Class Components: [`static childContextTypes`](https://18.react.dev//reference/react/Component#static-childcontexttypes): thay vào đó, hãy sử dụng [`static contextType`](#static-contexttype).
+* Class Components: [`static getChildContext`](https://18.react.dev//reference/react/Component#getchildcontext): thay vào đó, hãy sử dụng [`Context`](/reference/react/createContext#provider).
+* Class Components: [`static propTypes`](https://18.react.dev//reference/react/Component#static-proptypes): thay vào đó, hãy sử dụng một type system như [TypeScript](https://www.typescriptlang.org/).
+* Class Components: [`this.refs`](https://18.react.dev//reference/react/Component#refs): thay vào đó, hãy sử dụng [`createRef`](/reference/react/createRef).

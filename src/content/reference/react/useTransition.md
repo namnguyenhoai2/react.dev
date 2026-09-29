@@ -4,7 +4,7 @@ title: useTransition
 
 <Intro>
 
-`useTransition` is a React Hook that lets you render a part of the UI in the background.
+`useTransition` là một React Hook cho phép bạn render một phần UI ở background.
 
 ```js
 const [isPending, startTransition] = useTransition()
@@ -16,11 +16,11 @@ const [isPending, startTransition] = useTransition()
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `useTransition()` {/*usetransition*/}
 
-Call `useTransition` at the top level of your component to mark some state updates as Transitions.
+Gọi `useTransition` ở cấp cao nhất của component để đánh dấu một số state update là Transitions.
 
 ```js
 import { useTransition } from 'react';
@@ -31,24 +31,24 @@ function TabContainer() {
 }
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-`useTransition` does not take any parameters.
+`useTransition` không nhận tham số nào.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`useTransition` returns an array with exactly two items:
+`useTransition` trả về một array có chính xác hai phần tử:
 
-1. The `isPending` flag that tells you whether there is a pending Transition.
-2. The [`startTransition` function](#starttransition) that lets you mark updates as a Transition.
+1. Cờ `isPending` cho biết có Transition nào đang chờ xử lý hay không.
+2. Hàm [`startTransition` function](#starttransition) cho phép bạn đánh dấu các update là Transition.
 
 ---
 
 ### `startTransition(action)` {/*starttransition*/}
 
-The `startTransition` function returned by `useTransition` lets you mark an update as a Transition.
+Hàm `startTransition` được `useTransition` trả về cho phép bạn đánh dấu một update là Transition.
 
 ```js {6,8}
 function TabContainer() {
@@ -65,9 +65,9 @@ function TabContainer() {
 ```
 
 <Note>
-#### Functions called in `startTransition` are called "Actions". {/*functions-called-in-starttransition-are-called-actions*/}
+#### Các function được gọi trong `startTransition` được gọi là “Actions”. {/*functions-called-in-starttransition-are-called-actions*/}
 
-The function passed to `startTransition` is called an "Action". By convention, any callback called inside `startTransition` (such as a callback prop) should be named `action` or include the "Action" suffix:
+Function được truyền vào `startTransition` được gọi là một “Action”. Theo quy ước, mọi callback được gọi bên trong `startTransition` (chẳng hạn như một callback prop) nên có tên là `action` hoặc bao gồm hậu tố “Action”:
 
 ```js {1,9}
 function SubmitButton({ submitAction }) {
@@ -91,39 +91,37 @@ function SubmitButton({ submitAction }) {
 
 </Note>
 
+#### Tham số {/*starttransition-parameters*/}
 
+* `action`: Một function cập nhật một số state bằng cách gọi một hoặc nhiều function [`set` functions](/reference/react/useState#setstate). React gọi `action` ngay lập tức mà không truyền tham số nào, đồng thời đánh dấu mọi state update được lên lịch một cách đồng bộ trong lúc gọi function `action` là Transitions. Mọi lời gọi async được await trong `action` sẽ được đưa vào Transition, nhưng hiện tại yêu cầu bọc mọi function `set` sau `await` trong một `startTransition` bổ sung (xem [Khắc phục sự cố](#react-doesnt-treat-my-state-update-after-await-as-a-transition)). Các state update được đánh dấu là Transitions sẽ [không chặn](#perform-non-blocking-updates-with-actions) và [sẽ không hiển thị các loading indicator không mong muốn](#preventing-unwanted-loading-indicators).
 
-#### Parameters {/*starttransition-parameters*/}
+#### Giá trị trả về {/*starttransition-returns*/}
 
-* `action`: A function that updates some state by calling one or more [`set` functions](/reference/react/useState#setstate). React calls `action` immediately with no parameters and marks all state updates scheduled synchronously during the `action` function call as Transitions. Any async calls that are awaited in the `action` will be included in the Transition, but currently require wrapping any `set` functions after the `await` in an additional `startTransition` (see [Troubleshooting](#react-doesnt-treat-my-state-update-after-await-as-a-transition)). State updates marked as Transitions will be [non-blocking](#perform-non-blocking-updates-with-actions) and [will not display unwanted loading indicators](#preventing-unwanted-loading-indicators).
+`startTransition` không trả về giá trị nào.
 
-#### Returns {/*starttransition-returns*/}
+#### Lưu ý {/*starttransition-caveats*/}
 
-`startTransition` does not return anything.
+* `useTransition` là một Hook, vì vậy chỉ có thể được gọi bên trong các component hoặc custom Hook. Nếu cần bắt đầu một Transition ở nơi khác (ví dụ: từ một data library), hãy gọi [`startTransition`](/reference/react/startTransition) độc lập thay thế.
 
-#### Caveats {/*starttransition-caveats*/}
+* Bạn chỉ có thể bọc một update vào Transition nếu có quyền truy cập vào function `set` của state đó. Nếu muốn bắt đầu một Transition để phản hồi với một prop hoặc giá trị từ custom Hook, hãy thử [`useDeferredValue`](/reference/react/useDeferredValue) thay thế.
 
-* `useTransition` is a Hook, so it can only be called inside components or custom Hooks. If you need to start a Transition somewhere else (for example, from a data library), call the standalone [`startTransition`](/reference/react/startTransition) instead.
+* Function bạn truyền vào `startTransition` được gọi ngay lập tức, đánh dấu mọi state update xảy ra trong khi function đó thực thi là Transitions. Nếu cố thực hiện state update trong một `setTimeout`, chẳng hạn như vậy, chúng sẽ không được đánh dấu là Transitions.
 
-* You can wrap an update into a Transition only if you have access to the `set` function of that state. If you want to start a Transition in response to some prop or a custom Hook value, try [`useDeferredValue`](/reference/react/useDeferredValue) instead.
+* Bạn phải bọc mọi state update sau các async request trong một `startTransition` khác để đánh dấu chúng là Transitions. Đây là một hạn chế đã biết và chúng tôi sẽ khắc phục trong tương lai (xem [Khắc phục sự cố](#react-doesnt-treat-my-state-update-after-await-as-a-transition)).
 
-* The function you pass to `startTransition` is called immediately, marking all state updates that happen while it executes as Transitions. If you try to perform state updates in a `setTimeout`, for example, they won't be marked as Transitions.
+* Function `startTransition` có identity ổn định, vì vậy bạn thường thấy nó được bỏ qua khỏi các dependency của Effect, nhưng việc đưa nó vào sẽ không khiến Effect chạy lại. Nếu linter cho phép bạn bỏ qua một dependency mà không báo lỗi thì việc đó là an toàn. [Tìm hiểu thêm về cách loại bỏ các dependency của Effect.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
 
-* You must wrap any state updates after any async requests in another `startTransition` to mark them as Transitions. This is a known limitation that we will fix in the future (see [Troubleshooting](#react-doesnt-treat-my-state-update-after-await-as-a-transition)).
+* Một state update được đánh dấu là Transition sẽ bị gián đoạn bởi các state update khác. Ví dụ: nếu bạn update một chart component bên trong một Transition, nhưng sau đó bắt đầu nhập vào một input trong khi chart đang re-render, React sẽ khởi động lại công việc render trên chart component sau khi xử lý input update.
 
-* The `startTransition` function has a stable identity, so you will often see it omitted from Effect dependencies, but including it will not cause the Effect to fire. If the linter lets you omit a dependency without errors, it is safe to do. [Learn more about removing Effect dependencies.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
+* Không thể dùng các Transition update để điều khiển text input.
 
-* A state update marked as a Transition will be interrupted by other state updates. For example, if you update a chart component inside a Transition, but then start typing into an input while the chart is in the middle of a re-render, React will restart the rendering work on the chart component after handling the input update.
+* Nếu có nhiều Transition đang diễn ra, hiện tại React sẽ batch chúng lại với nhau. Đây là một hạn chế có thể được loại bỏ trong bản phát hành tương lai.
 
-* Transition updates can't be used to control text inputs.
+## Cách sử dụng {/*usage*/}
 
-* If there are multiple ongoing Transitions, React currently batches them together. This is a limitation that may be removed in a future release.
+### Thực hiện các update không chặn bằng Actions {/*perform-non-blocking-updates-with-actions*/}
 
-## Usage {/*usage*/}
-
-### Perform non-blocking updates with Actions {/*perform-non-blocking-updates-with-actions*/}
-
-Call `useTransition` at the top of your component to create Actions, and access the pending state:
+Gọi `useTransition` ở cấp cao nhất của component để tạo Actions và truy cập pending state:
 
 ```js [[1, 4, "isPending"], [2, 4, "startTransition"]]
 import {useState, useTransition} from 'react';
@@ -134,12 +132,12 @@ function CheckoutForm() {
 }
 ```
 
-`useTransition` returns an array with exactly two items:
+`useTransition` trả về một array có chính xác hai phần tử:
 
-1. The <CodeStep step={1}>`isPending` flag</CodeStep> that tells you whether there is a pending Transition.
-2. The <CodeStep step={2}>`startTransition` function</CodeStep> that lets you create an Action.
+1. Cờ <CodeStep step={1}>`isPending` flag</CodeStep> cho biết có Transition nào đang chờ xử lý hay không.
+2. Hàm <CodeStep step={2}>`startTransition` function</CodeStep> cho phép bạn tạo một Action.
 
-To start a Transition, pass a function to `startTransition` like this:
+Để bắt đầu một Transition, hãy truyền một function vào `startTransition` như sau:
 
 ```js
 import {useState, useTransition} from 'react';
@@ -161,17 +159,17 @@ function CheckoutForm() {
 }
 ```
 
-The function passed to `startTransition` is called the "Action". You can update state and (optionally) perform side effects within an Action, and the work will be done in the background without blocking user interactions on the page. A Transition can include multiple Actions, and while a Transition is in progress, your UI stays responsive. For example, if the user clicks a tab but then changes their mind and clicks another tab, the second click will be immediately handled without waiting for the first update to finish.
+Function được truyền vào `startTransition` được gọi là “Action”. Bạn có thể update state và (tùy chọn) thực hiện side effect bên trong một Action; công việc sẽ được thực hiện ở background mà không chặn các tương tác của người dùng trên trang. Một Transition có thể bao gồm nhiều Action, và trong khi Transition đang diễn ra, UI của bạn vẫn phản hồi. Ví dụ: nếu người dùng nhấp vào một tab nhưng sau đó đổi ý và nhấp vào một tab khác, lần nhấp thứ hai sẽ được xử lý ngay lập tức mà không cần chờ update đầu tiên hoàn tất.
 
-To give the user feedback about in-progress Transitions, the `isPending` state switches to `true` at the first call to `startTransition`, and stays `true` until all Actions complete and the final state is shown to the user. Transitions ensure side effects in Actions to complete in order to [prevent unwanted loading indicators](#preventing-unwanted-loading-indicators), and you can provide immediate feedback while the Transition is in progress with `useOptimistic`.
+Để cung cấp phản hồi cho người dùng về các Transition đang diễn ra, state `isPending` chuyển sang `true` ở lần gọi đầu tiên đến `startTransition`, và duy trì ở trạng thái `true` cho đến khi tất cả các Action hoàn tất và state cuối cùng được hiển thị cho người dùng. Transitions đảm bảo các side effect trong Actions hoàn tất theo đúng thứ tự nhằm [ngăn các loading indicator không mong muốn](#preventing-unwanted-loading-indicators), đồng thời bạn có thể cung cấp phản hồi ngay lập tức trong khi Transition đang diễn ra bằng `useOptimistic`.
 
 <Recipes titleText="The difference between Actions and regular event handling">
 
-#### Updating the quantity in an Action {/*updating-the-quantity-in-an-action*/}
+#### Update quantity trong một Action {/*updating-the-quantity-in-an-action*/}
 
-In this example, the `updateQuantity` function simulates a request to the server to update the item's quantity in the cart. This function is *artificially slowed down* so that it takes at least a second to complete the request.
+Trong ví dụ này, function `updateQuantity` mô phỏng một request đến server để update quantity của item trong cart. Function này được *cố tình làm chậm* để request mất ít nhất một giây mới hoàn tất.
 
-Update the quantity multiple times quickly. Notice that the pending "Total" state is shown while any requests are in progress, and the "Total" updates only after the final request is complete. Because the update is in an Action, the "quantity" can continue to be updated while the request is in progress.
+Hãy update quantity nhiều lần liên tiếp thật nhanh. Lưu ý rằng state “Total” đang chờ xử lý được hiển thị trong khi bất kỳ request nào còn đang diễn ra, và “Total” chỉ được update sau khi request cuối cùng hoàn tất. Vì update nằm trong một Action, “quantity” vẫn có thể tiếp tục được update trong khi request đang diễn ra.
 
 <Sandpack>
 
@@ -305,22 +303,22 @@ export async function updateQuantity(newQuantity) {
 
 </Sandpack>
 
-This is a basic example to demonstrate how Actions work, but this example does not handle requests completing out of order. When updating the quantity multiple times, it's possible for the previous requests to finish after later requests causing the quantity to update out of order. This is a known limitation that we will fix in the future (see [Troubleshooting](#my-state-updates-in-transitions-are-out-of-order) below).
+Đây là một ví dụ cơ bản để minh họa cách Actions hoạt động, nhưng ví dụ này không xử lý trường hợp các request hoàn tất không theo thứ tự. Khi update quantity nhiều lần, các request trước đó có thể hoàn tất sau các request đến sau, khiến quantity được update không theo thứ tự. Đây là một hạn chế đã biết và chúng tôi sẽ khắc phục trong tương lai (xem [Khắc phục sự cố](#my-state-updates-in-transitions-are-out-of-order) bên dưới).
 
-For common use cases, React provides built-in abstractions such as:
+Đối với các trường hợp sử dụng phổ biến, React cung cấp các abstraction tích hợp sẵn như:
 - [`useActionState`](/reference/react/useActionState)
 - [`<form>` actions](/reference/react-dom/components/form)
 - [Server Functions](/reference/rsc/server-functions)
 
-These solutions handle request ordering for you. When using Transitions to build your own custom hooks or libraries that manage async state transitions, you have greater control over the request ordering, but you must handle it yourself.
+Các giải pháp này tự xử lý thứ tự request cho bạn. Khi dùng Transitions để xây dựng các custom hook hoặc library của riêng mình nhằm quản lý các async state transition, bạn có nhiều quyền kiểm soát hơn đối với thứ tự request, nhưng phải tự xử lý việc đó.
 
 <Solution />
 
-#### Updating the quantity without an Action {/*updating-the-users-name-without-an-action*/}
+#### Update quantity không dùng Action {/*updating-the-users-name-without-an-action*/}
 
-In this example, the `updateQuantity` function also simulates a request to the server to update the item's quantity in the cart. This function is *artificially slowed down* so that it takes at least a second to complete the request.
+Trong ví dụ này, function `updateQuantity` cũng mô phỏng một request đến server để update quantity của item trong cart. Function này được *cố tình làm chậm* để request mất ít nhất một giây mới hoàn tất.
 
-Update the quantity multiple times quickly. Notice that the pending "Total" state is shown while any requests is in progress, but the "Total" updates multiple times for each time the "quantity" was clicked:
+Hãy update quantity nhiều lần liên tiếp thật nhanh. Lưu ý rằng state “Total” đang chờ xử lý được hiển thị trong khi bất kỳ request nào còn đang diễn ra, nhưng “Total” được update nhiều lần tương ứng với mỗi lần “quantity” được nhấp:
 
 <Sandpack>
 
@@ -447,7 +445,7 @@ export async function updateQuantity(newQuantity) {
 
 </Sandpack>
 
-A common solution to this problem is to prevent the user from making changes while the quantity is updating:
+Một giải pháp phổ biến cho vấn đề này là ngăn người dùng thực hiện thay đổi trong khi quantity đang được update:
 
 <Sandpack>
 
@@ -573,7 +571,7 @@ export async function updateQuantity(newQuantity) {
 
 </Sandpack>
 
-This solution makes the app feel slow, because the user must wait each time they update the quantity. It's possible to add more complex handling manually to allow the user to interact with the UI while the quantity is updating, but Actions handle this case with a straight-forward built-in API.
+Giải pháp này khiến ứng dụng có cảm giác chậm, vì người dùng phải chờ mỗi lần cập nhật số lượng. Có thể tự thêm cách xử lý phức tạp hơn để cho phép người dùng tương tác với UI trong khi số lượng đang được cập nhật, nhưng Actions xử lý trường hợp này bằng một API tích hợp sẵn đơn giản.
 
 <Solution />
 
@@ -583,9 +581,9 @@ This solution makes the app feel slow, because the user must wait each time they
 
 ### Exposing `action` prop from components {/*exposing-action-props-from-components*/}
 
-You can expose an `action` prop from a component to allow a parent to call an Action.
+Bạn có thể expose một prop `action` từ một component để cho phép component cha gọi một Action.
 
-For example, this `TabButton` component wraps its `onClick` logic in an `action` prop:
+Ví dụ, component `TabButton` này bọc logic `onClick` của nó trong một prop `action`:
 
 ```js {8-12}
 export default function TabButton({ action, children, isActive }) {
@@ -607,7 +605,7 @@ export default function TabButton({ action, children, isActive }) {
 }
 ```
 
-Because the parent component updates its state inside the `action`, that state update gets marked as a Transition. This means you can click on "Posts" and then immediately click "Contact" and it does not block user interactions:
+Vì component cha cập nhật state bên trong `action`, nên state update đó được đánh dấu là một Transition. Điều này có nghĩa là bạn có thể nhấp vào "Posts" rồi ngay lập tức nhấp vào "Contact" mà không chặn các tương tác của người dùng:
 
 <Sandpack>
 
@@ -746,17 +744,17 @@ b { display: inline-block; margin-right: 10px; }
 
 <Note>
 
-When exposing an `action` prop from a component, you should `await` it inside the transition.
+Khi expose một prop `action` từ một component, bạn nên `await` nó bên trong transition.
 
-This allows the `action` callback to be either synchronous or asynchronous without requiring an additional `startTransition` to wrap the `await` in the action.
+Điều này cho phép callback `action` có thể là synchronous hoặc asynchronous mà không cần thêm một `startTransition` để bọc `await` trong action.
 
 </Note>
 
 ---
 
-### Displaying a pending visual state {/*displaying-a-pending-visual-state*/}
+### Hiển thị trạng thái trực quan đang chờ {/*displaying-a-pending-visual-state*/}
 
-You can use the `isPending` boolean value returned by `useTransition` to indicate to the user that a Transition is in progress. For example, the tab button can have a special "pending" visual state:
+Bạn có thể sử dụng giá trị boolean `isPending` được `useTransition` trả về để cho người dùng biết rằng một Transition đang diễn ra. Ví dụ, nút tab có thể có một trạng thái trực quan đặc biệt là "pending":
 
 ```js {4-6}
 function TabButton({ action, children, isActive }) {
@@ -768,7 +766,7 @@ function TabButton({ action, children, isActive }) {
   // ...
 ```
 
-Notice how clicking "Posts" now feels more responsive because the tab button itself updates right away:
+Lưu ý rằng việc nhấp vào "Posts" giờ đây có cảm giác phản hồi nhanh hơn vì chính nút tab được cập nhật ngay lập tức:
 
 <Sandpack>
 
@@ -905,9 +903,9 @@ b { display: inline-block; margin-right: 10px; }
 
 ---
 
-### Preventing unwanted loading indicators {/*preventing-unwanted-loading-indicators*/}
+### Ngăn các loading indicator không mong muốn {/*preventing-unwanted-loading-indicators*/}
 
-In this example, the `PostsTab` component fetches some data using [use](/reference/react/use). When you click the "Posts" tab, the `PostsTab` component *suspends*, causing the closest loading fallback to appear:
+Trong ví dụ này, component `PostsTab` fetch một số dữ liệu bằng [use](/reference/react/use). Khi bạn nhấp vào tab "Posts", component `PostsTab` *suspend*, khiến loading fallback gần nhất xuất hiện:
 
 <Sandpack>
 
@@ -1061,9 +1059,9 @@ b { display: inline-block; margin-right: 10px; }
 
 </Sandpack>
 
-Hiding the entire tab container to show a loading indicator leads to a jarring user experience. If you add `useTransition` to `TabButton`, you can instead display the pending state in the tab button instead.
+Ẩn toàn bộ container tab để hiển thị loading indicator tạo ra trải nghiệm người dùng giật cục. Nếu bạn thêm `useTransition` vào `TabButton`, thay vào đó bạn có thể hiển thị trạng thái đang chờ trong nút tab.
 
-Notice that clicking "Posts" no longer replaces the entire tab container with a spinner:
+Lưu ý rằng việc nhấp vào "Posts" giờ đây không còn thay thế toàn bộ container tab bằng spinner:
 
 <Sandpack>
 
@@ -1225,19 +1223,19 @@ b { display: inline-block; margin-right: 10px; }
 
 </Sandpack>
 
-[Read more about using Transitions with Suspense.](/reference/react/Suspense#preventing-already-revealed-content-from-hiding)
+[Đọc thêm về cách sử dụng Transitions với Suspense.](/reference/react/Suspense#preventing-already-revealed-content-from-hiding)
 
 <Note>
 
-Transitions only "wait" long enough to avoid hiding *already revealed* content (like the tab container). If the Posts tab had a [nested `<Suspense>` boundary,](/reference/react/Suspense#revealing-nested-content-as-it-loads) the Transition would not "wait" for it.
+Transitions chỉ "chờ" đủ lâu để tránh ẩn nội dung *đã được hiển thị* (chẳng hạn như container tab). Nếu tab Posts có một boundary [nested `<Suspense>`,](/reference/react/Suspense#revealing-nested-content-as-it-loads) Transition sẽ không "chờ" boundary đó.
 
 </Note>
 
 ---
 
-### Building a Suspense-enabled router {/*building-a-suspense-enabled-router*/}
+### Xây dựng router hỗ trợ Suspense {/*building-a-suspense-enabled-router*/}
 
-If you're building a React framework or a router, we recommend marking page navigations as Transitions.
+Nếu bạn đang xây dựng một React framework hoặc một router, chúng tôi khuyến nghị đánh dấu việc điều hướng trang là Transitions.
 
 ```js {3,6,8}
 function Router() {
@@ -1252,13 +1250,13 @@ function Router() {
   // ...
 ```
 
-This is recommended for three reasons:
+Điều này được khuyến nghị vì ba lý do:
 
-- [Transitions are interruptible,](#perform-non-blocking-updates-with-actions) which lets the user click away without waiting for the re-render to complete.
-- [Transitions prevent unwanted loading indicators,](#preventing-unwanted-loading-indicators) which lets the user avoid jarring jumps on navigation.
-- [Transitions wait for all pending actions](#perform-non-blocking-updates-with-actions) which lets the user wait for side effects to complete before the new page is shown.
+- [Transitions có thể bị gián đoạn,](#perform-non-blocking-updates-with-actions) cho phép người dùng nhấp sang nơi khác mà không phải chờ re-render hoàn tất.
+- [Transitions ngăn các loading indicator không mong muốn,](#preventing-unwanted-loading-indicators) cho phép người dùng tránh những thay đổi đột ngột khi điều hướng.
+- [Transitions chờ tất cả các action đang chờ xử lý](#perform-non-blocking-updates-with-actions) cho phép người dùng chờ các side effect hoàn tất trước khi trang mới được hiển thị.
 
-Here is a simplified router example using Transitions for navigations.
+Dưới đây là một ví dụ đơn giản hóa về router sử dụng Transitions cho việc điều hướng.
 
 <Sandpack>
 
@@ -1559,15 +1557,15 @@ main {
 
 <Note>
 
-[Suspense-enabled](/reference/react/Suspense) routers are expected to wrap the navigation updates into Transitions by default.
+Các router [Suspense-enabled](/reference/react/Suspense) được kỳ vọng sẽ bọc các navigation update trong Transitions theo mặc định.
 
 </Note>
 
 ---
 
-### Displaying an error to users with an error boundary {/*displaying-an-error-to-users-with-error-boundary*/}
+### Hiển thị lỗi cho người dùng bằng error boundary {/*displaying-an-error-to-users-with-error-boundary*/}
 
-If a function passed to `startTransition` throws an error or returns a rejected Promise, you can display an error to your user with an [error boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary). To use an error boundary, wrap the component where you are calling the `useTransition` in an error boundary. Once the function passed to `startTransition` errors, the fallback for the error boundary will be displayed.
+Nếu một function được truyền vào `startTransition` ném ra lỗi hoặc trả về một Promise bị reject, bạn có thể hiển thị lỗi cho người dùng bằng một [error boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary). Để sử dụng error boundary, hãy bọc component nơi bạn gọi `useTransition` trong một error boundary. Khi function được truyền vào `startTransition` gặp lỗi, fallback của error boundary sẽ được hiển thị.
 
 <Sandpack>
 
@@ -1647,11 +1645,11 @@ root.render(
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Updating an input in a Transition doesn't work {/*updating-an-input-in-a-transition-doesnt-work*/}
+### Cập nhật input trong một Transition không hoạt động {/*updating-an-input-in-a-transition-doesnt-work*/}
 
-You can't use a Transition for a state variable that controls an input:
+Bạn không thể sử dụng Transition cho một state variable điều khiển input:
 
 ```js {4,10}
 const [text, setText] = useState('');
@@ -1666,16 +1664,16 @@ function handleChange(e) {
 return <input value={text} onChange={handleChange} />;
 ```
 
-This is because Transitions are non-blocking, but updating an input in response to the change event should happen synchronously. If you want to run a Transition in response to typing, you have two options:
+Điều này là vì Transitions không chặn, nhưng việc cập nhật input để phản hồi change event phải diễn ra synchronous. Nếu bạn muốn chạy một Transition để phản hồi việc nhập liệu, có hai lựa chọn:
 
-1. You can declare two separate state variables: one for the input state (which always updates synchronously), and one that you will update in a Transition. This lets you control the input using the synchronous state, and pass the Transition state variable (which will "lag behind" the input) to the rest of your rendering logic.
-2. Alternatively, you can have one state variable, and add [`useDeferredValue`](/reference/react/useDeferredValue) which will "lag behind" the real value. It will trigger non-blocking re-renders to "catch up" with the new value automatically.
+1. Bạn có thể khai báo hai state variable riêng biệt: một biến cho state của input (luôn được cập nhật synchronous), và một biến sẽ được cập nhật trong một Transition. Điều này cho phép bạn điều khiển input bằng state synchronous, đồng thời truyền state variable của Transition (sẽ "chậm hơn" input) cho phần logic rendering còn lại.
+2. Ngoài ra, bạn có thể dùng một state variable và thêm [`useDeferredValue`](/reference/react/useDeferredValue), giá trị này sẽ "chậm hơn" giá trị thực. Nó sẽ tự động trigger các lần re-render không chặn để "bắt kịp" giá trị mới.
 
 ---
 
-### React doesn't treat my state update as a Transition {/*react-doesnt-treat-my-state-update-as-a-transition*/}
+### React không coi state update của tôi là một Transition {/*react-doesnt-treat-my-state-update-as-a-transition*/}
 
-When you wrap a state update in a Transition, make sure that it happens *during* the `startTransition` call:
+Khi bọc một state update trong một Transition, hãy đảm bảo rằng nó diễn ra *trong khi* thực hiện lời gọi `startTransition`:
 
 ```js
 startTransition(() => {
@@ -1684,7 +1682,7 @@ startTransition(() => {
 });
 ```
 
-The function you pass to `startTransition` must be synchronous. You can't mark an update as a Transition like this:
+Function bạn truyền vào `startTransition` phải là synchronous. Bạn không thể đánh dấu một update là Transition như sau:
 
 ```js
 startTransition(() => {
@@ -1695,7 +1693,7 @@ startTransition(() => {
 });
 ```
 
-Instead, you could do this:
+Thay vào đó, bạn có thể làm như sau:
 
 ```js
 setTimeout(() => {
@@ -1708,9 +1706,9 @@ setTimeout(() => {
 
 ---
 
-### React doesn't treat my state update after `await` as a Transition {/*react-doesnt-treat-my-state-update-after-await-as-a-transition*/}
+### React không coi state update của tôi sau `await` là một Transition {/*react-doesnt-treat-my-state-update-after-await-as-a-transition*/}
 
-When you use `await` inside a `startTransition` function, the state updates that happen after the `await` are not marked as Transitions. You must wrap state updates after each `await` in a `startTransition` call:
+Khi bạn sử dụng `await` bên trong một function `startTransition`, các state update diễn ra sau `await` sẽ không được đánh dấu là Transitions. Bạn phải bọc các state update sau mỗi `await` trong một lời gọi `startTransition`:
 
 ```js
 startTransition(async () => {
@@ -1720,7 +1718,7 @@ startTransition(async () => {
 });
 ```
 
-However, this works instead:
+Tuy nhiên, cách này sẽ hoạt động:
 
 ```js
 startTransition(async () => {
@@ -1732,23 +1730,19 @@ startTransition(async () => {
 });
 ```
 
-This is a JavaScript limitation due to React losing the scope of the async context. In the future, when [AsyncContext](https://github.com/tc39/proposal-async-context) is available, this limitation will be removed.
+Đây là một giới hạn của JavaScript do React mất scope của async context. Trong tương lai, khi [AsyncContext](https://github.com/tc39/proposal-async-context) khả dụng, giới hạn này sẽ được loại bỏ.
 
 ---
 
-### I want to call `useTransition` from outside a component {/*i-want-to-call-usetransition-from-outside-a-component*/}
+### Tôi muốn gọi `useTransition` từ bên ngoài component {/*i-want-to-call-usetransition-from-outside-a-component*/}
 
-You can't call `useTransition` outside a component because it's a Hook. In this
-case, the standalone [`startTransition`](/reference/react/startTransition)
-function can mark state updates as Transitions. It does not provide the
-`isPending` flag. Because the standalone function is not associated with a
-component, an Error Boundary cannot handle errors from its Transition.
+Bạn không thể gọi `useTransition` bên ngoài một component vì nó là một Hook. Trong trường hợp này, function độc lập [`startTransition`](/reference/react/startTransition) có thể đánh dấu các state update là Transitions. Function này không cung cấp flag `isPending`. Vì function độc lập không liên kết với một component, Error Boundary không thể xử lý các lỗi từ Transition của nó.
 
 ---
 
-### The function I pass to `startTransition` executes immediately {/*the-function-i-pass-to-starttransition-executes-immediately*/}
+### Function tôi truyền vào `startTransition` được thực thi ngay lập tức {/*the-function-i-pass-to-starttransition-executes-immediately*/}
 
-If you run this code, it will print 1, 2, 3:
+Nếu chạy code này, nó sẽ in ra 1, 2, 3:
 
 ```js {1,3,6}
 console.log(1);
@@ -1759,7 +1753,7 @@ startTransition(() => {
 console.log(3);
 ```
 
-**It is expected to print 1, 2, 3.** The function you pass to `startTransition` does not get delayed. Unlike with the browser `setTimeout`, it does not run the callback later. React executes your function immediately, but any state updates scheduled *while it is running* are marked as Transitions. You can imagine that it works like this:
+**Việc in ra 1, 2, 3 là đúng như dự kiến.** Function bạn truyền vào `startTransition` không bị trì hoãn. Không giống browser `setTimeout`, nó không chạy callback sau đó. React thực thi function của bạn ngay lập tức, nhưng mọi state update được schedule *trong khi function đang chạy* đều được đánh dấu là Transitions. Bạn có thể hình dung nó hoạt động như sau:
 
 ```js
 // A simplified version of how React works
@@ -1781,13 +1775,13 @@ function setState() {
 }
 ```
 
-### My state updates in Transitions are out of order {/*my-state-updates-in-transitions-are-out-of-order*/}
+### Các state update trong Transitions của tôi không đúng thứ tự {/*my-state-updates-in-transitions-are-out-of-order*/}
 
-If you `await` inside `startTransition`, you might see the updates happen out of order.
+Nếu bạn `await` bên trong `startTransition`, bạn có thể thấy các update diễn ra không đúng thứ tự.
 
-In this example, the `updateQuantity` function simulates a request to the server to update the item's quantity in the cart. This function *artificially returns every other request after the previous* to simulate race conditions for network requests.
+Trong ví dụ này, function `updateQuantity` mô phỏng một request đến server để cập nhật số lượng của item trong cart. Function này *cố ý trả về mọi request khác sau request trước đó* để mô phỏng các race condition đối với network request.
 
-Try updating the quantity once, then update it quickly multiple times. You might see the incorrect total:
+Hãy thử cập nhật số lượng một lần, sau đó nhanh chóng cập nhật nhiều lần. Bạn có thể thấy tổng số không chính xác:
 
 <Sandpack>
 
@@ -1955,12 +1949,12 @@ export async function updateQuantity(newName) {
 </Sandpack>
 
 
-When clicking multiple times, it's possible for previous requests to finish after later requests. When this happens, React currently has no way to know the intended order. This is because the updates are scheduled asynchronously, and React loses context of the order across the async boundary.
+Khi nhấp nhiều lần, các request trước đó có thể hoàn tất sau các request được gửi sau. Khi điều này xảy ra, hiện tại React không có cách nào biết được thứ tự mong muốn. Nguyên nhân là các bản cập nhật được lập lịch không đồng bộ, và React mất ngữ cảnh về thứ tự khi đi qua ranh giới bất đồng bộ.
 
-This is expected, because Actions within a Transition do not guarantee execution order. For common use cases, React provides higher-level abstractions like [`useActionState`](/reference/react/useActionState) and [`<form>` actions](/reference/react-dom/components/form) that handle ordering for you. For advanced use cases, you'll need to implement your own queuing and abort logic to handle this.
+Điều này là có thể dự đoán, vì các Actions trong một Transition không đảm bảo thứ tự thực thi. Đối với các trường hợp sử dụng phổ biến, React cung cấp các abstraction cấp cao hơn như [`useActionState`](/reference/react/useActionState) và các action [`<form>` actions](/reference/react-dom/components/form) để xử lý thứ tự giúp bạn. Đối với các trường hợp sử dụng nâng cao, bạn sẽ cần tự triển khai logic xếp hàng và hủy để xử lý việc này.
 
 
-Example of `useActionState` handling execution order:
+Ví dụ về cách `useActionState` xử lý thứ tự thực thi:
 
 <Sandpack>
 

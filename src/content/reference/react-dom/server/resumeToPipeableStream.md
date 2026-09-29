@@ -4,7 +4,7 @@ title: resumeToPipeableStream
 
 <Intro>
 
-`resumeToPipeableStream` streams a pre-rendered React tree  to a pipeable [Node.js Stream.](https://nodejs.org/api/stream.html)
+`resumeToPipeableStream` stream một cây React đã được pre-render  tới một [Node.js Stream.](https://nodejs.org/api/stream.html)
 
 ```js
 const {pipe, abort} = await resumeToPipeableStream(reactNode, postponedState, options?)
@@ -16,17 +16,17 @@ const {pipe, abort} = await resumeToPipeableStream(reactNode, postponedState, op
 
 <Note>
 
-This API is specific to Node.js. Environments with [Web Streams,](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) like Deno and modern edge runtimes, should use [`resume`](/reference/react-dom/server/renderToReadableStream) instead.
+API này dành riêng cho Node.js. Các môi trường có [Web Streams,](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) như Deno và các edge runtime hiện đại nên sử dụng [`resume`](/reference/react-dom/server/renderToReadableStream) thay thế.
 
 </Note>
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `resumeToPipeableStream(node, postponed, options?)` {/*resume-to-pipeable-stream*/}
 
-Call `resumeToPipeableStream` to resume rendering a pre-rendered React tree as HTML into a [Node.js Stream.](https://nodejs.org/api/stream.html#writable-streams)
+Gọi `resumeToPipeableStream` để tiếp tục render một cây React đã được pre-render dưới dạng HTML vào một [Node.js Stream.](https://nodejs.org/api/stream.html#writable-streams)
 
 ```js
 import { resumeToPipeableStream } from 'react-dom/server';
@@ -42,38 +42,38 @@ async function handler(request, response) {
 }
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `reactNode`: The React node you called `prerender` with. For example, a JSX element like `<App />`. It is expected to represent the entire document, so the `App` component should render the `<html>` tag.
-* `postponedState`: The opaque `postpone` object returned from a [prerender API](/reference/react-dom/static/index), loaded from wherever you stored it (e.g. redis, a file, or S3).
-* **optional** `options`: An object with streaming options.
-  * **optional** `nonce`: A [`nonce`](http://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#nonce) string to allow scripts for [`script-src` Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src).
-  * **optional** `onAllReady`: A callback that fires when all rendering is complete, including both the shell and all additional content. You can call `pipe` here instead of in `onShellReady` for crawlers and static generation. The stream will contain the final HTML.
-  * **optional** `onBrowserBailout`: A callback React calls when it recovers from [`browser()`](/reference/react-dom/browser) by leaving a Suspense fallback for the browser to replace. It receives an `Error` describing the browser-only render and an `errorInfo` object containing the `componentStack`. If a reason was passed to `browser`, it is available as `error.cause`. By default, React does nothing. [See how to report browser-only rendering.](/reference/react-dom/browser#reporting-browser-only-rendering-on-the-server)
-  * **optional** `onError`: A callback that fires whenever there is a server error, whether [recoverable](/reference/react-dom/server/renderToReadableStream#recovering-from-errors-outside-the-shell) or [not.](/reference/react-dom/server/renderToReadableStream#recovering-from-errors-inside-the-shell) By default, this only calls `console.error`. If you override it to [log crash reports,](/reference/react-dom/server/renderToReadableStream#logging-crashes-on-the-server) make sure that you still call `console.error`.
-  * **optional** `onShellReady`: A callback that fires right after the [shell](#specifying-what-goes-into-the-shell) has finished. You can call `pipe` here to start streaming. React will [stream the additional content](#streaming-more-content-as-it-loads) after the shell along with the inline `<script>` tags that replace the HTML loading fallbacks with the content.
-  * **optional** `onShellError`: A callback that fires if there was an error rendering the shell. It receives the error as an argument. No bytes were emitted from the stream yet, and neither `onShellReady` nor `onAllReady` will get called, so you can [output a fallback HTML shell](#recovering-from-errors-inside-the-shell) or use the prelude.
+* `reactNode`: React node mà bạn đã gọi `prerender` với nó. Ví dụ: một phần tử JSX như `<App />`. Node này được kỳ vọng đại diện cho toàn bộ document, vì vậy component `App` phải render tag `<html>`.
+* `postponedState`: Đối tượng `postpone` opaque được trả về từ một [prerender API](/reference/react-dom/static/index), được tải từ nơi bạn đã lưu nó (ví dụ: redis, một file hoặc S3).
+* **tùy chọn** `options`: Một object chứa các tùy chọn streaming.
+  * **tùy chọn** `nonce`: Một chuỗi [`nonce`](http://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#nonce) cho phép các script dùng cho [`script-src` Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src).
+  * **tùy chọn** `onAllReady`: Một callback được gọi khi toàn bộ quá trình render hoàn tất, bao gồm cả shell và tất cả nội dung bổ sung. Bạn có thể gọi `pipe` tại đây thay vì trong `onShellReady` cho crawler và việc static generation. Stream sẽ chứa HTML cuối cùng.
+  * **tùy chọn** `onBrowserBailout`: Một callback được React gọi khi khôi phục từ [`browser()`](/reference/react-dom/browser) bằng cách để lại một Suspense fallback để browser thay thế. Callback nhận một `Error` mô tả việc render chỉ dành cho browser và một object `errorInfo` chứa `componentStack`. Nếu một lý do được truyền cho `browser`, lý do đó sẽ có sẵn dưới dạng `error.cause`. Theo mặc định, React không làm gì cả. [Xem cách báo cáo việc render chỉ dành cho browser.](/reference/react-dom/browser#reporting-browser-only-rendering-on-the-server)
+  * **tùy chọn** `onError`: Một callback được gọi mỗi khi có lỗi phía server, bất kể lỗi đó có thể [khôi phục](/reference/react-dom/server/renderToReadableStream#recovering-from-errors-outside-the-shell) hay [không.](/reference/react-dom/server/renderToReadableStream#recovering-from-errors-inside-the-shell) Theo mặc định, callback này chỉ gọi `console.error`. Nếu bạn ghi đè callback để [ghi log các báo cáo sự cố,](/reference/react-dom/server/renderToReadableStream#logging-crashes-on-the-server) hãy đảm bảo rằng bạn vẫn gọi `console.error`.
+  * **tùy chọn** `onShellReady`: Một callback được gọi ngay sau khi [shell](#specifying-what-goes-into-the-shell) hoàn tất. Bạn có thể gọi `pipe` tại đây để bắt đầu streaming. React sẽ [stream nội dung bổ sung](#streaming-more-content-as-it-loads) sau shell cùng với các tag `<script>` inline để thay thế các fallback HTML đang tải bằng nội dung.
+  * **tùy chọn** `onShellError`: Một callback được gọi nếu xảy ra lỗi khi render shell. Callback nhận lỗi làm đối số. Chưa có byte nào được phát ra từ stream, đồng thời cả `onShellReady` lẫn `onAllReady` đều sẽ không được gọi, vì vậy bạn có thể [xuất một shell HTML fallback](#recovering-from-errors-inside-the-shell) hoặc sử dụng prelude.
 
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`resumeToPipeableStream` returns an object with two methods:
+`resumeToPipeableStream` trả về một object với hai method:
 
-* `pipe` outputs the HTML into the provided [Writable Node.js Stream.](https://nodejs.org/api/stream.html#writable-streams) Call `pipe` in `onShellReady` if you want to enable streaming, or in `onAllReady` for crawlers and static generation.
-* `abort` lets you [abort server rendering](#aborting-server-rendering) and render the rest on the client.
+* `pipe` xuất HTML vào [Writable Node.js Stream](https://nodejs.org/api/stream.html#writable-streams) được cung cấp. Gọi `pipe` trong `onShellReady` nếu bạn muốn bật streaming, hoặc trong `onAllReady` cho crawler và việc static generation.
+* `abort` cho phép bạn [hủy việc render phía server](#aborting-server-rendering) và render phần còn lại trên client.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- `resumeToPipeableStream` does not accept options for `bootstrapScripts`, `bootstrapScriptContent`, or `bootstrapModules`. Instead, you need to pass these options to the `prerender` call that generates the `postponedState`. You can also inject bootstrap content into the writable stream manually.
-- `resumeToPipeableStream` does not accept `identifierPrefix` since the prefix needs to be the same in both `prerender` and `resumeToPipeableStream`.
-- Since `nonce` cannot be provided to prerender, you should only provide `nonce` to `resumeToPipeableStream` if you're not providing scripts to prerender.
-- `resumeToPipeableStream` re-renders from the root until it finds a component that was not fully pre-rendered. Only fully prerendered Components (the Component and its children finished prerendering) are skipped entirely.
+- `resumeToPipeableStream` không chấp nhận các tùy chọn cho `bootstrapScripts`, `bootstrapScriptContent` hoặc `bootstrapModules`. Thay vào đó, bạn cần truyền các tùy chọn này vào lời gọi `prerender` tạo ra `postponedState`. Bạn cũng có thể tự chèn nội dung bootstrap vào writable stream.
+- `resumeToPipeableStream` không chấp nhận `identifierPrefix` vì prefix cần giống nhau trong cả `prerender` và `resumeToPipeableStream`.
+- Vì không thể cung cấp `nonce` cho prerender, bạn chỉ nên cung cấp `nonce` cho `resumeToPipeableStream` nếu bạn không cung cấp script cho prerender.
+- `resumeToPipeableStream` re-render từ root cho đến khi tìm thấy một component chưa được pre-render hoàn toàn. Chỉ các Component được prerender hoàn toàn (Component và các component con của nó đã hoàn tất việc prerender) mới được bỏ qua hoàn toàn.
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Further reading {/*further-reading*/}
+### Đọc thêm {/*further-reading*/}
 
-Resuming behaves like `renderToReadableStream`. For more examples, check out the [usage section of `renderToReadableStream`](/reference/react-dom/server/renderToReadableStream#usage).
-The [usage section of `prerender`](/reference/react-dom/static/prerender#usage) includes examples of how to use `prerenderToNodeStream` specifically.
+Việc tiếp tục hoạt động giống như `renderToReadableStream`. Để xem thêm ví dụ, hãy xem phần [cách sử dụng của `renderToReadableStream`](/reference/react-dom/server/renderToReadableStream#usage).
+Phần [cách sử dụng của `prerender`](/reference/react-dom/static/prerender#usage) bao gồm các ví dụ về cách sử dụng cụ thể `prerenderToNodeStream`.

@@ -1,35 +1,35 @@
 ---
-title: "Built-in React APIs"
+title: "Các API React tích hợp sẵn"
 ---
 
 <Intro>
 
-In addition to [Hooks](/reference/react/hooks) and [Components](/reference/react/components), the `react` package exports a few other APIs that are useful for defining components. This page lists all the remaining modern React APIs.
+Ngoài [Hooks](/reference/react/hooks) và [Components](/reference/react/components), package `react` export một số API khác hữu ích để định nghĩa component. Trang này liệt kê tất cả các API React hiện đại còn lại.
 
 </Intro>
 
 ---
 
-* [`createContext`](/reference/react/createContext) lets you define and provide context to the child components. Used with [`useContext`.](/reference/react/useContext)
-* [`lazy`](/reference/react/lazy) lets you defer loading a component's code until it's rendered for the first time.
-* [`memo`](/reference/react/memo) lets your component skip re-renders with same props. Used with [`useMemo`](/reference/react/useMemo) and [`useCallback`.](/reference/react/useCallback)
-* [`startTransition`](/reference/react/startTransition) lets you mark a state update as non-urgent. Similar to [`useTransition`.](/reference/react/useTransition)
-* [`act`](/reference/react/act) lets you wrap renders and interactions in tests to ensure updates have processed before making assertions.
-* [`cache`](/reference/react/cache) lets you cache the result of a data fetch or computation.
-* [`cacheSignal`](/reference/react/cacheSignal) lets you know when the `cache()` lifetime is over.
-* [`captureOwnerStack`](/reference/react/captureOwnerStack) reads the current Owner Stack in development and returns it as a string if available.
+* [`createContext`](/reference/react/createContext) cho phép bạn định nghĩa và cung cấp context cho các component con. Được dùng cùng với [`useContext`.](/reference/react/useContext)
+* [`lazy`](/reference/react/lazy) cho phép bạn trì hoãn việc tải code của một component cho đến khi component đó được render lần đầu.
+* [`memo`](/reference/react/memo) cho phép component của bạn bỏ qua việc re-render khi nhận cùng props. Được dùng cùng với [`useMemo`](/reference/react/useMemo) và [`useCallback`.](/reference/react/useCallback)
+* [`startTransition`](/reference/react/startTransition) cho phép bạn đánh dấu một lần cập nhật state là không khẩn cấp. Tương tự như [`useTransition`.](/reference/react/useTransition)
+* [`act`](/reference/react/act) cho phép bạn bao bọc các lần render và tương tác trong test để đảm bảo các bản cập nhật đã được xử lý trước khi đưa ra các assertion.
+* [`cache`](/reference/react/cache) cho phép bạn cache kết quả của một lần fetch dữ liệu hoặc phép tính.
+* [`cacheSignal`](/reference/react/cacheSignal) cho phép bạn biết khi vòng đời của `cache()` kết thúc.
+* [`captureOwnerStack`](/reference/react/captureOwnerStack) đọc Owner Stack hiện tại trong môi trường development và trả về dưới dạng chuỗi nếu có.
 
 ---
 
-## Resource APIs {/*resource-apis*/}
+## Các API Resource {/*resource-apis*/}
 
-*Resources* can be accessed by a component without having them as part of their state. For example, a component can read a message from a Promise or read styling information from a context.
+*Resource* có thể được component truy cập mà không cần là một phần trong state của component đó. Ví dụ: một component có thể đọc một message từ Promise hoặc đọc thông tin styling từ context.
 
-You can pass these types of resources to [`use`](/reference/react/use):
+Bạn có thể truyền các loại resource này cho [`use`](/reference/react/use):
 
-* A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to read its resolved value.
-* A [context](/learn/passing-data-deeply-with-context) to read its value.
-* The value returned by [`browser`](/reference/react-dom/browser) to mark a component as browser-only during server rendering.
+* Một [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) để đọc giá trị đã được resolve.
+* Một [context](/learn/passing-data-deeply-with-context) để đọc giá trị của nó.
+* Giá trị được trả về bởi [`browser`](/reference/react-dom/browser) để đánh dấu một component chỉ dành cho trình duyệt trong quá trình server rendering.
 
 ```js
 function MessageComponent({ messagePromise }) {

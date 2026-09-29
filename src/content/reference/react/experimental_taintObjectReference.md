@@ -1,34 +1,35 @@
 ---
-title: experimental_taintObjectReference
+title: experimental_taintObjectReference  
+
 version: experimental
 ---
 
 <Experimental>
 
-**This API is experimental and is not available in a stable version of React yet.**
+**API này đang trong giai đoạn experimental và chưa có trong phiên bản React ổn định.**
 
-You can try it by upgrading React packages to the most recent experimental version:
+Bạn có thể dùng thử bằng cách nâng cấp các package React lên phiên bản experimental mới nhất:
 
 - `react@experimental`
 - `react-dom@experimental`
 - `eslint-plugin-react-hooks@experimental`
 
-Experimental versions of React may contain bugs. Don't use them in production.
+Các phiên bản experimental của React có thể chứa lỗi. Không sử dụng chúng trong production.
 
-This API is only available inside React Server Components.
+API này chỉ khả dụng bên trong React Server Components.
 
 </Experimental>
 
 
 <Intro>
 
-`taintObjectReference` lets you prevent a specific object instance from being passed to a Client Component like a `user` object.
+`taintObjectReference` cho phép bạn ngăn một instance cụ thể của object được truyền đến Client Component, chẳng hạn như một object `user`.
 
 ```js
 experimental_taintObjectReference(message, object);
 ```
 
-To prevent passing a key, hash or token, see [`taintUniqueValue`](/reference/react/experimental_taintUniqueValue).
+Để ngăn việc truyền một key, hash hoặc token, hãy xem [`taintUniqueValue`](/reference/react/experimental_taintUniqueValue).
 
 </Intro>
 
@@ -36,11 +37,11 @@ To prevent passing a key, hash or token, see [`taintUniqueValue`](/reference/rea
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `taintObjectReference(message, object)` {/*taintobjectreference*/}
 
-Call `taintObjectReference` with an object to register it with React as something that should not be allowed to be passed to the Client as is:
+Gọi `taintObjectReference` với một object để đăng ký object đó với React là không được phép truyền nguyên trạng đến Client:
 
 ```js
 import {experimental_taintObjectReference} from 'react';
@@ -51,35 +52,35 @@ experimental_taintObjectReference(
 );
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `message`: The message you want to display if the object gets passed to a Client Component. This message will be displayed as a part of the Error that will be thrown if the object gets passed to a Client Component.
+* `message`: Thông báo bạn muốn hiển thị nếu object được truyền đến một Client Component. Thông báo này sẽ được hiển thị như một phần của Error được ném ra nếu object được truyền đến một Client Component.
 
-* `object`: The object to be tainted. Functions and class instances can be passed to `taintObjectReference` as `object`. Functions and classes are already blocked from being passed to Client Components but the React's default error message will be replaced by what you defined in `message`. When a specific instance of a Typed Array is passed to `taintObjectReference` as `object`, any other copies of the Typed Array will not be tainted.
+* `object`: Object cần được taint. Có thể truyền các function và class instance vào `taintObjectReference` dưới dạng `object`. Function và class vốn đã bị chặn không cho truyền đến Client Component, nhưng thông báo lỗi mặc định của React sẽ được thay thế bằng nội dung bạn định nghĩa trong `message`. Khi một instance cụ thể của Typed Array được truyền vào `taintObjectReference` dưới dạng `object`, mọi bản sao khác của Typed Array đó sẽ không bị taint.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`experimental_taintObjectReference` returns `undefined`.
+`experimental_taintObjectReference` trả về `undefined`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- Recreating or cloning a tainted object creates a new untainted object which may contain sensitive data. For example, if you have a tainted `user` object, `const userInfo = {name: user.name, ssn: user.ssn}` or `{...user}` will create new objects which are not tainted. `taintObjectReference` only protects against simple mistakes when the object is passed through to a Client Component unchanged.
+- Việc tạo lại hoặc clone một object đã bị taint sẽ tạo ra một object mới không bị taint, object này có thể chứa dữ liệu nhạy cảm. Ví dụ: nếu bạn có một object `user` đã bị taint, `const userInfo = {name: user.name, ssn: user.ssn}` hoặc `{...user}` sẽ tạo ra các object mới không bị taint. `taintObjectReference` chỉ bảo vệ khỏi những lỗi đơn giản khi object được truyền nguyên trạng qua một Client Component.
 
 <Pitfall>
 
-**Do not rely on just tainting for security.** Tainting an object doesn't prevent leaking of every possible derived value. For example, the clone of a tainted object will create a new untainted object. Using data from a tainted object (e.g. `{secret: taintedObj.secret}`) will create a new value or object that is not tainted. Tainting is a layer of protection; a secure app will have multiple layers of protection, well designed APIs, and isolation patterns.
+**Đừng chỉ dựa vào việc taint để đảm bảo bảo mật.** Việc taint một object không ngăn được mọi giá trị dẫn xuất có thể bị rò rỉ. Ví dụ: clone một object đã bị taint sẽ tạo ra một object mới không bị taint. Việc sử dụng dữ liệu từ một object đã bị taint (ví dụ: `{secret: taintedObj.secret}`) sẽ tạo ra một giá trị hoặc object mới không bị taint. Taint là một lớp bảo vệ; một ứng dụng an toàn sẽ có nhiều lớp bảo vệ, các API được thiết kế tốt và các mô hình cô lập.
 
 </Pitfall>
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Prevent user data from unintentionally reaching the client {/*prevent-user-data-from-unintentionally-reaching-the-client*/}
+### Ngăn dữ liệu người dùng vô tình được truyền đến client {/*prevent-user-data-from-unintentionally-reaching-the-client*/}
 
-A Client Component should never accept objects that carry sensitive data. Ideally, the data fetching functions should not expose data that the current user should not have access to. Sometimes mistakes happen during refactoring. To protect against these mistakes happening down the line we can "taint" the user object in our data API.
+Một Client Component không bao giờ nên nhận các object chứa dữ liệu nhạy cảm. Lý tưởng nhất là các function lấy dữ liệu không nên cung cấp dữ liệu mà người dùng hiện tại không được phép truy cập. Đôi khi có thể xảy ra sai sót trong quá trình refactor. Để bảo vệ khỏi những sai sót có thể xảy ra về sau, chúng ta có thể “taint” object người dùng trong data API.
 
 ```js
 import {experimental_taintObjectReference} from 'react';
@@ -95,13 +96,13 @@ export async function getUser(id) {
 }
 ```
 
-Now whenever anyone tries to pass this object to a Client Component, an error will be thrown with the passed in error message instead.
+Giờ đây, bất cứ khi nào có người cố truyền object này đến một Client Component, một Error sẽ được ném ra với thông báo lỗi đã truyền vào.
 
 <DeepDive>
 
-#### Protecting against leaks in data fetching {/*protecting-against-leaks-in-data-fetching*/}
+#### Bảo vệ khỏi rò rỉ trong quá trình lấy dữ liệu {/*protecting-against-leaks-in-data-fetching*/}
 
-If you're running a Server Components environment that has access to sensitive data, you have to be careful not to pass objects straight through:
+Nếu bạn đang chạy một môi trường Server Components có quyền truy cập vào dữ liệu nhạy cảm, bạn phải cẩn thận không truyền thẳng các object:
 
 ```js
 // api.js
@@ -131,7 +132,7 @@ export async function InfoCard({ user }) {
 }
 ```
 
-Ideally, the `getUser` should not expose data that the current user should not have access to. To prevent passing the `user` object to a Client Component down the line we can "taint" the user object:
+Lý tưởng nhất là `getUser` không nên cung cấp dữ liệu mà người dùng hiện tại không được phép truy cập. Để ngăn việc truyền object `user` đến một Client Component ở bước sau, chúng ta có thể “taint” object người dùng:
 
 
 ```js
@@ -149,6 +150,6 @@ export async function getUser(id) {
 }
 ```
 
-Now if anyone tries to pass the `user` object to a Client Component, an error will be thrown with the passed in error message.
+Giờ đây, nếu có người cố truyền object `user` đến một Client Component, một Error sẽ được ném ra với thông báo lỗi đã truyền vào.
 
 </DeepDive>

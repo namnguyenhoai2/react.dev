@@ -1,10 +1,10 @@
 ---
-title: gating
+title: cơ chế gating
 ---
 
 <Intro>
 
-The `gating` option enables conditional compilation, allowing you to control when optimized code is used at runtime.
+Tùy chọn `gating` bật conditional compilation, cho phép bạn kiểm soát thời điểm code đã được tối ưu hóa được sử dụng trong runtime.
 
 </Intro>
 
@@ -21,13 +21,13 @@ The `gating` option enables conditional compilation, allowing you to control whe
 
 ---
 
-## Reference {/*reference*/}
+## Tham khảo {/*reference*/}
 
 ### `gating` {/*gating*/}
 
-Configures runtime feature flag gating for compiled functions.
+Cấu hình cơ chế gating của feature flag trong runtime cho các function đã được compile.
 
-#### Type {/*type*/}
+#### Kiểu {/*type*/}
 
 ```
 {
@@ -36,28 +36,28 @@ Configures runtime feature flag gating for compiled functions.
 } | null
 ```
 
-#### Default value {/*default-value*/}
+#### Giá trị mặc định {/*default-value*/}
 
 `null`
 
-#### Properties {/*properties*/}
+#### Thuộc tính {/*properties*/}
 
-- **`source`**: Module path to import the feature flag from
-- **`importSpecifierName`**: Name of the exported function to import
+- **`source`**: Đường dẫn module để import feature flag từ đó
+- **`importSpecifierName`**: Tên của function được export cần import
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- The gating function must return a boolean
-- Both compiled and original versions increase bundle size
-- The import is added to every file with compiled functions
+- Function gating phải trả về một giá trị boolean
+- Cả phiên bản đã compile và phiên bản gốc đều làm tăng kích thước bundle
+- Import được thêm vào mọi file có các function đã compile
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Basic feature flag setup {/*basic-setup*/}
+### Thiết lập feature flag cơ bản {/*basic-setup*/}
 
-1. Create a feature flag module:
+1. Tạo một module feature flag:
 
 ```js
 // src/utils/feature-flags.js
@@ -67,7 +67,7 @@ export function shouldUseCompiler() {
 }
 ```
 
-2. Configure the compiler:
+2. Cấu hình compiler:
 
 ```js
 {
@@ -78,7 +78,7 @@ export function shouldUseCompiler() {
 }
 ```
 
-3. The compiler generates gated code:
+3. Compiler tạo ra code có gating:
 
 ```js
 // Input
@@ -94,15 +94,15 @@ const Button = shouldUseCompiler()
   : function Button_original(props) { /* original version */ };
 ```
 
-Note that the gating function is evaluated once at module time, so once the JS bundle has been parsed and evaluated the choice of component stays static for the rest of the browser session.
+Lưu ý rằng function gating được đánh giá một lần tại thời điểm module được tải, vì vậy sau khi JS bundle được phân tích cú pháp và đánh giá, lựa chọn component sẽ giữ nguyên trong suốt phần còn lại của phiên trình duyệt.
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Feature flag not working {/*flag-not-working*/}
+### Feature flag không hoạt động {/*flag-not-working*/}
 
-Verify your flag module exports the correct function:
+Xác minh rằng module flag của bạn export đúng function:
 
 ```js
 // ❌ Wrong: Default export
@@ -116,9 +116,9 @@ export function shouldUseCompiler() {
 }
 ```
 
-### Import errors {/*import-errors*/}
+### Lỗi import {/*import-errors*/}
 
-Ensure the source path is correct:
+Đảm bảo source path là chính xác:
 
 ```js
 // ❌ Wrong: Relative to babel.config.js

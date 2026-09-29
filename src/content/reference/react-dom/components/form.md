@@ -4,7 +4,7 @@ title: "<form>"
 
 <Intro>
 
-The [built-in browser `<form>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) lets you create interactive controls for submitting information.
+[component `<form>`tích hợp sẵn trong trình duyệt](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) cho phép bạn tạo các control tương tác để gửi thông tin.
 
 ```js
 <form action={search}>
@@ -19,11 +19,11 @@ The [built-in browser `<form>` component](https://developer.mozilla.org/en-US/do
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `<form>` {/*form*/}
 
-To create interactive controls for submitting information, render the [built-in browser `<form>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form).
+Để tạo các control tương tác nhằm gửi thông tin, hãy render [component `<form>`tích hợp sẵn trong trình duyệt](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form).
 
 ```js
 <form action={search}>
@@ -32,27 +32,27 @@ To create interactive controls for submitting information, render the [built-in 
 </form>
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
 #### Props {/*props*/}
 
-`<form>` supports all [common element props.](/reference/react-dom/components/common#common-props)
+`<form>` hỗ trợ tất cả [props phần tử thông dụng.](/reference/react-dom/components/common#common-props)
 
-[`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action): a URL or function. When a URL is passed to `action` the form will behave like the HTML form component. When a function is passed to `action` the function will handle the form submission in a Transition following [the Action prop pattern](/reference/react/useTransition#exposing-action-props-from-components). The function passed to `action` may be async and will be called with a single argument containing the [form data](https://developer.mozilla.org/en-US/docs/Web/API/FormData) of the submitted form. The `action` prop can be overridden by a `formAction` attribute on a `<button>`, `<input type="submit">`, or `<input type="image">` component.
+[`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action): một URL hoặc function. Khi truyền URL vào `action`, form sẽ hoạt động giống component form HTML. Khi truyền function vào `action`, function đó sẽ xử lý việc gửi form trong một Transition theo [mẫu Action prop](/reference/react/useTransition#exposing-action-props-from-components). Function được truyền vào `action` có thể là async và sẽ được gọi với một đối số duy nhất chứa [dữ liệu form](https://developer.mozilla.org/en-US/docs/Web/API/FormData) của form đã gửi. Có thể ghi đè prop `action` bằng thuộc tính `formAction` trên component `<button>`, `<input type="submit">` hoặc `<input type="image">`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* When a function is passed to `action` or `formAction` the HTTP method will be POST regardless of value of the `method` prop.
+* Khi truyền function vào `action` hoặc `formAction`, HTTP method sẽ luôn là POST bất kể giá trị của prop `method`.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Handle form submission with an event handler {/*handle-form-submission-with-an-event-handler*/}
+### Xử lý việc gửi form bằng event handler {/*handle-form-submission-with-an-event-handler*/}
 
-Pass a function to the `onSubmit` event handler to run code when the form is submitted. By default, the browser sends the form data to the current URL and refreshes the page, so call [`e.preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) to override that behavior.
+Truyền một function vào event handler `onSubmit` để chạy code khi form được gửi. Theo mặc định, trình duyệt gửi dữ liệu form đến URL hiện tại và refresh trang, vì vậy hãy gọi [`e.preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) để ghi đè hành vi đó.
 
-This example reads the submitted values with [`new FormData(e.target)`](https://developer.mozilla.org/en-US/docs/Web/API/FormData), which collects every field by its `name`. This keeps the inputs [uncontrolled](/reference/react-dom/components/input#reading-the-input-values-when-submitting-a-form). If you instead [control an input with state](/reference/react-dom/components/input#controlling-an-input-with-a-state-variable), read from that state on submit rather than from `FormData`.
+Ví dụ này đọc các giá trị đã gửi bằng [`new FormData(e.target)`](https://developer.mozilla.org/en-US/docs/Web/API/FormData), phương thức này thu thập mọi field theo `name`. Điều này giữ cho các input ở trạng thái [uncontrolled](/reference/react-dom/components/input#reading-the-input-values-when-submitting-a-form). Nếu thay vào đó bạn [điều khiển một input bằng state](/reference/react-dom/components/input#controlling-an-input-with-a-state-variable), hãy đọc state đó khi submit thay vì đọc từ `FormData`.
 
 <Sandpack>
 
@@ -82,13 +82,13 @@ export default function Search() {
 
 <Note>
 
-Reading form data with `onSubmit` works in every version of React and gives you direct access to the [submit event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event), so you can call `e.preventDefault()` and read the data yourself. Passing the function to the `action` prop instead runs the submission in a [Transition](/reference/react/useTransition). React then tracks the pending state, sends thrown errors to the nearest error boundary, and lets the form work with [`useActionState`](/reference/react/useActionState) and [`useOptimistic`](/reference/react/useOptimistic). An `action` can also be a [Server Function](/reference/rsc/server-functions), which `onSubmit` does not support.
+Đọc dữ liệu form bằng `onSubmit` hoạt động trong mọi phiên bản React và cho phép bạn truy cập trực tiếp vào [submit event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event), nhờ đó bạn có thể gọi `e.preventDefault()` và tự đọc dữ liệu. Việc truyền function vào prop `action` sẽ chạy quá trình gửi trong một [Transition](/reference/react/useTransition). Sau đó, React sẽ theo dõi trạng thái đang chờ, gửi các lỗi được throw đến error boundary gần nhất, đồng thời cho phép form hoạt động với [`useActionState`](/reference/react/useActionState) và [`useOptimistic`](/reference/react/useOptimistic). Một `action` cũng có thể là một [Server Function](/reference/rsc/server-functions), điều mà `onSubmit` không hỗ trợ.
 
 </Note>
 
-### Handle form submission with an action prop {/*handle-form-submission-with-an-action-prop*/}
+### Xử lý việc gửi form bằng action prop {/*handle-form-submission-with-an-action-prop*/}
 
-Pass a function to the `action` prop of form to run the function when the form is submitted. [`formData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) will be passed to the function as an argument so you can access the data submitted by the form. This differs from the conventional [HTML action](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action), which only accepts URLs. Unlike `onSubmit`, an `action` runs in a [Transition](/reference/react/useTransition) and calling `e.preventDefault()` isn't needed. After the `action` function succeeds, all uncontrolled field elements in the form are reset.
+Truyền một function vào prop `action` của form để chạy function đó khi form được gửi. [`formData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) sẽ được truyền vào function dưới dạng đối số, để bạn có thể truy cập dữ liệu được form gửi đi. Điều này khác với [HTML action](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action) thông thường, vốn chỉ chấp nhận URL. Không giống `onSubmit`, một `action` chạy trong một [Transition](/reference/react/useTransition) và không cần gọi `e.preventDefault()`. Sau khi function `action` chạy thành công, mọi field element uncontrolled trong form sẽ được reset.
 
 <Sandpack>
 
@@ -109,13 +109,13 @@ export default function Search() {
 
 </Sandpack>
 
-### Handle form submission with a Server Function {/*handle-form-submission-with-a-server-function*/}
+### Xử lý việc gửi form bằng Server Function {/*handle-form-submission-with-a-server-function*/}
 
-Render a `<form>` with an input and submit button. Pass a Server Function (a function marked with [`'use server'`](/reference/rsc/use-server)) to the `action` prop of form to run the function when the form is submitted.
+Render một `<form>` cùng với input và nút submit. Truyền một Server Function (function được đánh dấu bằng [`'use server'`](/reference/rsc/use-server)) vào prop `action` của form để chạy function đó khi form được gửi.
 
-Passing a Server Function to `<form action>` allow users to submit forms without JavaScript enabled or before the code has loaded. This is beneficial to users who have a slow connection, device, or have JavaScript disabled and is similar to the way forms work when a URL is passed to the `action` prop.
+Việc truyền Server Function vào `<form action>` cho phép người dùng gửi form mà không cần bật JavaScript hoặc trước khi code được tải xong. Điều này hữu ích cho người dùng có kết nối hoặc thiết bị chậm, hoặc đã tắt JavaScript, và tương tự cách form hoạt động khi truyền URL vào prop `action`.
 
-You can use hidden form fields to provide data to the `<form>`'s action. The Server Function will be called with the hidden form field data as an instance of [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+Bạn có thể sử dụng các field form ẩn để cung cấp dữ liệu cho action của `<form>`. Server Function sẽ được gọi với dữ liệu từ field form ẩn dưới dạng một instance của [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 ```jsx
 import { updateCart } from './lib.js';
@@ -136,7 +136,7 @@ function AddToCart({productId}) {
 }
 ```
 
-In lieu of using hidden form fields to provide data to the `<form>`'s action, you can call the <CodeStep step={1}>`bind`</CodeStep> method to supply it with extra arguments. This will bind a new argument (<CodeStep step={2}>`productId`</CodeStep>) to the function in addition to the <CodeStep step={3}>`formData`</CodeStep> that is passed as an argument to the function.
+Thay vì sử dụng field form ẩn để cung cấp dữ liệu cho action của `<form>`, bạn có thể gọi method <CodeStep step={1}>`bind`</CodeStep> để cung cấp thêm các đối số. Method này sẽ bind một đối số mới (<CodeStep step={2}>`productId`</CodeStep>) vào function, ngoài <CodeStep step={3}>`formData`</CodeStep> được truyền làm đối số cho function.
 
 ```jsx [[1, 8, "bind"], [2,8, "productId"], [2,4, "productId"], [3,4, "formData"]]
 import { updateCart } from './lib.js';
@@ -155,12 +155,13 @@ function AddToCart({productId}) {
 }
 ```
 
-When `<form>` is rendered by a [Server Component](/reference/rsc/use-client), and a [Server Function](/reference/rsc/server-functions) is passed to the `<form>`'s `action` prop, the form is [progressively enhanced](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
+Khi `<form>` được render bởi một [Server Component](/reference/rsc/use-client), và một [Server Function](/reference/rsc/server-functions) được truyền vào prop `action` của `<form>`, form sẽ được [progressively enhanced](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement).
 
-### Display a pending state during form submission {/*display-a-pending-state-during-form-submission*/}
-To display a pending state when a form is being submitted, you can call the `useFormStatus` Hook in a component rendered in a `<form>` and read the `pending` property returned.
+### Hiển thị trạng thái đang chờ trong khi gửi form {/*display-a-pending-state-during-form-submission*/}
 
-Here, we use the `pending` property to indicate the form is submitting.
+Để hiển thị trạng thái đang chờ khi form đang được gửi, bạn có thể gọi Hook `useFormStatus` trong một component được render bên trong `<form>` và đọc thuộc tính `pending` được trả về.
+
+Ở đây, chúng ta sử dụng thuộc tính `pending` để cho biết form đang được gửi.
 
 <Sandpack>
 
@@ -198,12 +199,13 @@ export async function submitForm(query) {
 
 </Sandpack>
 
-To learn more about the `useFormStatus` Hook see the [reference documentation](/reference/react-dom/hooks/useFormStatus).
+Để tìm hiểu thêm về Hook `useFormStatus`, hãy xem [tài liệu tham chiếu](/reference/react-dom/hooks/useFormStatus).
 
-### Optimistically updating form data {/*optimistically-updating-form-data*/}
-The `useOptimistic` Hook provides a way to optimistically update the user interface before a background operation, like a network request, completes. In the context of forms, this technique helps to make apps feel more responsive. When a user submits a form, instead of waiting for the server's response to reflect the changes, the interface is immediately updated with the expected outcome.
+### Cập nhật dữ liệu form theo hướng lạc quan {/*optimistically-updating-form-data*/}
 
-For example, when a user types a message into the form and hits the "Send" button, the `useOptimistic` Hook allows the message to immediately appear in the list with a "Sending..." label, even before the message is actually sent to a server. This "optimistic" approach gives the impression of speed and responsiveness. The form then attempts to truly send the message in the background. Once the server confirms the message has been received, the "Sending..." label is removed.
+Hook `useOptimistic` cung cấp một cách để cập nhật giao diện người dùng theo hướng lạc quan trước khi một thao tác chạy nền, chẳng hạn như network request, hoàn tất. Trong ngữ cảnh form, kỹ thuật này giúp ứng dụng có cảm giác phản hồi nhanh hơn. Khi người dùng gửi form, thay vì chờ response từ server để phản ánh các thay đổi, giao diện sẽ được cập nhật ngay với kết quả dự kiến.
+
+Ví dụ, khi người dùng nhập tin nhắn vào form và nhấn nút "Send", Hook `useOptimistic` cho phép tin nhắn xuất hiện ngay trong danh sách với nhãn "Sending...", ngay cả trước khi tin nhắn thực sự được gửi đến server. Cách tiếp cận "optimistic" này tạo cảm giác nhanh chóng và phản hồi tức thì. Sau đó, form sẽ cố gắng gửi tin nhắn thực sự ở chế độ nền. Khi server xác nhận đã nhận được tin nhắn, nhãn "Sending..." sẽ bị xóa.
 
 <Sandpack>
 
@@ -267,12 +269,12 @@ export async function deliverMessage(message) {
 
 </Sandpack>
 
-[//]: # 'Uncomment the next line, and delete this line after the `useOptimistic` reference documentation page is published'
-[//]: # 'To learn more about the `useOptimistic` Hook see the [reference documentation](/reference/react/useOptimistic).'
+[//]: # 'Bỏ comment dòng tiếp theo và xóa dòng này sau khi trang tài liệu tham chiếu `useOptimistic` được phát hành'
+[//]: # 'Để tìm hiểu thêm về Hook `useOptimistic`, hãy xem [tài liệu tham chiếu](/reference/react/useOptimistic).'
 
-### Handling form submission errors {/*handling-form-submission-errors*/}
+### Xử lý lỗi khi gửi form {/*handling-form-submission-errors*/}
 
-In some cases the function called by a `<form>`'s `action` prop throws an error. You can handle these errors by wrapping `<form>` in an Error Boundary. If the function called by a `<form>`'s `action` prop throws an error, the fallback for the error boundary will be displayed.
+Trong một số trường hợp, function được gọi bởi prop `action` của `<form>` sẽ throw một error. Bạn có thể xử lý các error này bằng cách bọc `<form>` trong một Error Boundary. Nếu function được gọi bởi prop `action` của `<form>` throw một error, fallback của error boundary sẽ được hiển thị.
 
 <Sandpack>
 
@@ -312,15 +314,15 @@ export default function Search() {
 
 </Sandpack>
 
-### Display a form submission error without JavaScript {/*display-a-form-submission-error-without-javascript*/}
+### Hiển thị lỗi khi gửi form mà không cần JavaScript {/*display-a-form-submission-error-without-javascript*/}
 
-Displaying a form submission error message before the JavaScript bundle loads for progressive enhancement requires that:
+Việc hiển thị thông báo lỗi khi gửi form trước khi bundle JavaScript được tải để progressive enhancement yêu cầu:
 
-1. `<form>` be rendered by a [Client Component](/reference/rsc/use-client)
-1. the function passed to the `<form>`'s `action` prop be a [Server Function](/reference/rsc/server-functions)
-1. the `useActionState` Hook be used to display the error message
+1. `<form>` được render bởi một [Client Component](/reference/rsc/use-client)
+1. hàm được truyền vào prop `action` của `<form>` phải là một [Server Function](/reference/rsc/server-functions)
+1. sử dụng Hook `useActionState` để hiển thị thông báo lỗi
 
-`useActionState` takes two parameters: a [Server Function](/reference/rsc/server-functions) and an initial state. `useActionState` returns two values, a state variable and an action. The action returned by `useActionState` should be passed to the `action` prop of the form. The state variable returned by `useActionState` can be used to display an error message. The value returned by the Server Function passed to `useActionState` will be used to update the state variable.
+`useActionState` nhận hai tham số: một [Server Function](/reference/rsc/server-functions) và một state ban đầu. `useActionState` trả về hai giá trị: một biến state và một action. Action được `useActionState` trả về nên được truyền vào prop `action` của form. Biến state được `useActionState` trả về có thể được dùng để hiển thị thông báo lỗi. Giá trị được Server Function truyền vào `useActionState` trả về sẽ được dùng để cập nhật biến state.
 
 <Sandpack>
 
@@ -368,13 +370,13 @@ export async function signUpNewUser(newEmail) {
 
 </Sandpack>
 
-Learn more about updating state from a form action with the [`useActionState`](/reference/react/useActionState) docs
+Tìm hiểu thêm về cách cập nhật state từ một form action trong tài liệu [`useActionState`](/reference/react/useActionState)
 
-### Handling multiple submission types {/*handling-multiple-submission-types*/}
+### Xử lý nhiều kiểu gửi {/*handling-multiple-submission-types*/}
 
-Forms can be designed to handle multiple submission actions based on the button pressed by the user. Each button inside a form can be associated with a distinct action or behavior by setting the `formAction` prop.
+Có thể thiết kế form để xử lý nhiều action gửi khác nhau dựa trên nút mà người dùng nhấn. Mỗi nút bên trong form có thể được liên kết với một action hoặc hành vi riêng bằng cách thiết lập prop `formAction`.
 
-When a user taps a specific button, the form is submitted, and a corresponding action, defined by that button's attributes and action, is executed. For instance, a form might submit an article for review by default but have a separate button with `formAction` set to save the article as a draft.
+Khi người dùng nhấn một nút cụ thể, form được gửi và action tương ứng, được xác định bởi các thuộc tính và action của nút đó, sẽ được thực thi. Ví dụ, một form có thể gửi bài viết để duyệt theo mặc định nhưng có một nút riêng với `formAction` được thiết lập để lưu bài viết dưới dạng bản nháp.
 
 <Sandpack>
 

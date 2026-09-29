@@ -4,7 +4,7 @@ title: useActionState
 
 <Intro>
 
-`useActionState` is a React Hook that lets you update state with side effects using [Actions](/reference/react/useTransition#functions-called-in-starttransition-are-called-actions).
+`useActionState` là một React Hook cho phép bạn cập nhật state với các side effect bằng cách sử dụng [Actions](/reference/react/useTransition#functions-called-in-starttransition-are-called-actions).
 
 ```js
 const [state, dispatchAction, isPending] = useActionState(reducerAction, initialState, permalink?);
@@ -16,11 +16,11 @@ const [state, dispatchAction, isPending] = useActionState(reducerAction, initial
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `useActionState(reducerAction, initialState, permalink?)` {/*useactionstate*/}
 
-Call `useActionState` at the top level of your component to create state for the result of an Action.
+Gọi `useActionState` ở cấp cao nhất của component để tạo state cho kết quả của một Action.
 
 ```js
 import { useActionState } from 'react';
@@ -35,49 +35,49 @@ function MyCart({initialState}) {
 }
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `reducerAction`: The function to be called when the Action is triggered. When called, it receives the previous state (initially the `initialState` you provided, then its previous return value) as its first argument, followed by the `actionPayload` passed to `dispatchAction`.
-* `initialState`: The value you want the state to be initially. React ignores this argument after `dispatchAction` is invoked for the first time.
-* **optional** `permalink`: A string containing the unique page URL that this form modifies.
-  * For use on pages with [React Server Components](/reference/rsc/server-components) with progressive enhancement.
-  * If `reducerAction` is a [Server Function](/reference/rsc/server-functions) and the form is submitted before the JavaScript bundle loads, the browser will navigate to the specified permalink URL rather than the current page's URL.
+* `reducerAction`: Hàm sẽ được gọi khi Action được kích hoạt. Khi được gọi, hàm nhận state trước đó (ban đầu là `initialState` mà bạn đã cung cấp, sau đó là giá trị trả về trước đó) làm đối số đầu tiên, tiếp theo là `actionPayload` được truyền vào `dispatchAction`.
+* `initialState`: Giá trị bạn muốn state có ban đầu. React sẽ bỏ qua đối số này sau khi `dispatchAction` được gọi lần đầu.
+* **tùy chọn** `permalink`: Một chuỗi chứa URL duy nhất của trang mà form này sửa đổi.
+  * Dùng cho các trang có [React Server Components](/reference/rsc/server-components) với progressive enhancement.
+  * Nếu `reducerAction` là một [Server Function](/reference/rsc/server-functions) và form được submit trước khi JavaScript bundle tải xong, trình duyệt sẽ điều hướng đến URL permalink được chỉ định thay vì URL của trang hiện tại.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`useActionState` returns an array with exactly three values:
+`useActionState` trả về một mảng có chính xác ba giá trị:
 
-1. The current state. During the first render, it will match the `initialState` you passed. After `dispatchAction` is invoked, it will match the value returned by the `reducerAction`.
-2. A `dispatchAction` function that you call inside [Actions](/reference/react/useTransition#functions-called-in-starttransition-are-called-actions).
-3. The `isPending` flag that tells you if any dispatched Actions for this Hook are pending.
+1. State hiện tại. Trong lần render đầu tiên, state này sẽ khớp với `initialState` mà bạn đã truyền vào. Sau khi `dispatchAction` được gọi, state này sẽ khớp với giá trị mà `reducerAction` trả về.
+2. Một hàm `dispatchAction` mà bạn gọi bên trong [Actions](/reference/react/useTransition#functions-called-in-starttransition-are-called-actions).
+3. Cờ `isPending` cho biết liệu có Action nào được dispatch cho Hook này đang ở trạng thái pending hay không.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* `useActionState` is a Hook, so you can only call it **at the top level of your component** or your own Hooks. You can't call it inside loops or conditions. If you need that, extract a new component and move the state into it.
-* React queues and executes multiple calls to `dispatchAction` sequentially. Each call to `reducerAction` receives the result of the previous call.
-* The `dispatchAction` function has a stable identity, so you will often see it omitted from Effect dependencies, but including it will not cause the Effect to fire. If the linter lets you omit a dependency without errors, it is safe to do. [Learn more about removing Effect dependencies.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
-* When using the `permalink` option, ensure the same form component is rendered on the destination page (including the same `reducerAction` and `permalink`) so React knows how to pass the state through. Once the page becomes interactive, this parameter has no effect.
-* When using Server Functions, `initialState` needs to be [serializable](/reference/rsc/use-server#serializable-parameters-and-return-values) (values like plain objects, arrays, strings, and numbers).
-* If `dispatchAction` throws an error, React cancels all queued actions and shows the nearest [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary).
-* If there are multiple ongoing Actions, React batches them together. This is a limitation that may be removed in a future release.
+* `useActionState` là một Hook, vì vậy bạn chỉ có thể gọi nó **ở cấp cao nhất của component** hoặc trong các Hook của riêng bạn. Bạn không thể gọi nó bên trong vòng lặp hoặc điều kiện. Nếu cần làm vậy, hãy tách thành một component mới và chuyển state vào đó.
+* React xếp hàng và thực thi tuần tự nhiều lần gọi `dispatchAction`. Mỗi lần gọi `reducerAction` sẽ nhận kết quả của lần gọi trước đó.
+* Hàm `dispatchAction` có identity ổn định, vì vậy bạn thường thấy nó được bỏ qua trong các dependency của Effect, nhưng việc đưa nó vào sẽ không khiến Effect chạy. Nếu linter cho phép bạn bỏ qua một dependency mà không báo lỗi thì bạn có thể an toàn làm vậy. [Tìm hiểu thêm về cách loại bỏ các dependency của Effect.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
+* Khi sử dụng tùy chọn `permalink`, hãy đảm bảo cùng một form component được render trên trang đích (bao gồm cùng `reducerAction` và `permalink`) để React biết cách truyền state qua. Khi trang trở nên interactive, tham số này không còn tác dụng.
+* Khi sử dụng Server Functions, `initialState` cần phải [serializable](/reference/rsc/use-server#serializable-parameters-and-return-values) (các giá trị như object thuần, array, string và number).
+* Nếu `dispatchAction` throw error, React sẽ hủy tất cả các action đang xếp hàng và hiển thị [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gần nhất.
+* Nếu có nhiều Action đang diễn ra, React sẽ batch chúng lại với nhau. Đây là một hạn chế có thể được loại bỏ trong bản phát hành tương lai.
 
 <Note>
 
-`dispatchAction` must be called from an Action.
+`dispatchAction` phải được gọi từ một Action.
 
-You can wrap it in [`startTransition`](/reference/react/startTransition), or pass it to an [Action prop](/reference/react/useTransition#exposing-action-props-from-components). Calls outside that scope won’t be treated as part of the Transition and [log an error](#async-function-outside-transition) on development mode.
+Bạn có thể bọc nó trong [`startTransition`](/reference/react/startTransition), hoặc truyền nó vào một [Action prop](/reference/react/useTransition#exposing-action-props-from-components). Các lần gọi nằm ngoài phạm vi đó sẽ không được xem là một phần của Transition và [ghi log một lỗi](#async-function-outside-transition) trong development mode.
 
 </Note>
 
 ---
 
-### `reducerAction` function {/*reduceraction*/}
+### Hàm `reducerAction` {/*reduceraction*/}
 
-The `reducerAction` function passed to `useActionState` receives the previous state and returns a new state.
+Hàm `reducerAction` được truyền vào `useActionState` sẽ nhận state trước đó và trả về state mới.
 
-Unlike reducers in `useReducer`, the `reducerAction` can be async and perform side effects:
+Không giống như các reducer trong `useReducer`, `reducerAction` có thể là async và thực hiện side effect:
 
 ```js
 async function reducerAction(previousState, actionPayload) {
@@ -86,46 +86,46 @@ async function reducerAction(previousState, actionPayload) {
 }
 ```
 
-Each time you call `dispatchAction`, React calls the `reducerAction` with the `actionPayload`. The reducer will perform side effects such as posting data, and return the new state. If `dispatchAction` is called multiple times, React queues and executes them in order so the result of the previous call is passed as `previousState` for the current call.
+Mỗi lần bạn gọi `dispatchAction`, React sẽ gọi `reducerAction` với `actionPayload`. Reducer sẽ thực hiện các side effect như gửi dữ liệu và trả về state mới. Nếu `dispatchAction` được gọi nhiều lần, React sẽ xếp hàng và thực thi chúng theo thứ tự, để kết quả của lần gọi trước đó được truyền làm `previousState` cho lần gọi hiện tại.
 
-#### Parameters {/*reduceraction-parameters*/}
+#### Tham số {/*reduceraction-parameters*/}
 
-* `previousState`: The last state. Initially this is equal to the `initialState`. After the first call to `dispatchAction`, it's equal to the last state returned.
+* `previousState`: State cuối cùng. Ban đầu, giá trị này bằng `initialState`. Sau lần gọi đầu tiên đến `dispatchAction`, giá trị này bằng state cuối cùng được trả về.
 
-* **optional** `actionPayload`: The argument passed to `dispatchAction`. It can be a value of any type. Similar to `useReducer` conventions, it is usually an object with a `type` property identifying it and, optionally, other properties with additional information.
+* **tùy chọn** `actionPayload`: Đối số được truyền vào `dispatchAction`. Đối số này có thể là giá trị thuộc bất kỳ kiểu nào. Tương tự các quy ước của `useReducer`, thông thường đây là một object có thuộc tính `type` để định danh object đó và, tùy chọn, các thuộc tính khác chứa thông tin bổ sung.
 
-#### Returns {/*reduceraction-returns*/}
+#### Giá trị trả về {/*reduceraction-returns*/}
 
-`reducerAction` returns the new state, and triggers a Transition to re-render with that state.
+`reducerAction` trả về state mới và kích hoạt một Transition để render lại với state đó.
 
-#### Caveats {/*reduceraction-caveats*/}
+#### Lưu ý {/*reduceraction-caveats*/}
 
-* `reducerAction` can be sync or async. It can perform sync actions like showing a notification, or async actions like posting updates to a server.
-* `reducerAction` is not invoked twice in `<StrictMode>` since `reducerAction` is designed to allow side effects.
-* The return type of `reducerAction` must match the type of `initialState`. If TypeScript infers a mismatch, you may need to explicitly annotate your state type.
-* If you set state after `await` in the `reducerAction` you currently need to wrap the state update in an additional `startTransition`. See the [startTransition](/reference/react/useTransition#react-doesnt-treat-my-state-update-after-await-as-a-transition) docs for more info.
-* When using Server Functions, `actionPayload` needs to be [serializable](/reference/rsc/use-server#serializable-parameters-and-return-values) (values like plain objects, arrays, strings, and numbers).
+* `reducerAction` có thể là sync hoặc async. Nó có thể thực hiện các action sync như hiển thị notification hoặc các action async như gửi bản cập nhật đến server.
+* `reducerAction` không được gọi hai lần trong `<StrictMode>` vì `reducerAction` được thiết kế để cho phép các side effect.
+* Kiểu trả về của `reducerAction` phải khớp với kiểu của `initialState`. Nếu TypeScript suy luận ra sự không khớp, bạn có thể cần chỉ rõ kiểu state.
+* Nếu bạn set state sau `await` trong `reducerAction`, hiện tại bạn cần bọc state update trong một `startTransition` bổ sung. Xem tài liệu [startTransition](/reference/react/useTransition#react-doesnt-treat-my-state-update-after-await-as-a-transition) để biết thêm thông tin.
+* Khi sử dụng Server Functions, `actionPayload` cần phải [serializable](/reference/rsc/use-server#serializable-parameters-and-return-values) (các giá trị như object thuần, array, string và number).
 
 <DeepDive>
 
-#### Why is it called `reducerAction`? {/*why-is-it-called-reduceraction*/}
+#### Tại sao được gọi là `reducerAction`? {/*why-is-it-called-reduceraction*/}
 
-The function passed to `useActionState` is called a *reducer action* because:
+Hàm được truyền vào `useActionState` được gọi là *reducer action* vì:
 
-- It *reduces* the previous state into a new state, like `useReducer`.
-- It's an *Action* because it's called inside a Transition and can perform side effects.
+- Nó *reduce* state trước đó thành state mới, giống như `useReducer`.
+- Đây là một *Action* vì nó được gọi bên trong một Transition và có thể thực hiện các side effect.
 
-Conceptually, `useActionState` is like `useReducer`, but you can do side effects in the reducer.
+Về mặt khái niệm, `useActionState` giống `useReducer`, nhưng bạn có thể thực hiện side effect trong reducer.
 
 </DeepDive>
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Adding state to an Action {/*adding-state-to-an-action*/}
+### Thêm state vào một Action {/*adding-state-to-an-action*/}
 
-Call `useActionState` at the top level of your component to create state for the result of an Action.
+Gọi `useActionState` ở cấp cao nhất của component để tạo state cho kết quả của một Action.
 
 ```js [[1, 7, "count"], [2, 7, "dispatchAction"], [3, 7, "isPending"]]
 import { useActionState } from 'react';
@@ -140,13 +140,13 @@ function Counter() {
 }
 ```
 
-`useActionState` returns an array with exactly three items:
+`useActionState` trả về một mảng có chính xác ba phần tử:
 
-1. The <CodeStep step={1}>current state</CodeStep>, initially set to the initial state you provided.
-2. The <CodeStep step={2}>action dispatcher</CodeStep> that lets you trigger `reducerAction`.
-3. A <CodeStep step={3}>pending state</CodeStep> that tells you whether the Action is in progress.
+1. <CodeStep step={1}>State hiện tại</CodeStep>, ban đầu được đặt thành state ban đầu mà bạn đã cung cấp.
+2. <CodeStep step={2}>Action dispatcher</CodeStep> cho phép bạn kích hoạt `reducerAction`.
+3. <CodeStep step={3}>Pending state</CodeStep> cho biết Action có đang diễn ra hay không.
 
-To call `addToCartAction`, call the <CodeStep step={2}>action dispatcher</CodeStep>. React will queue calls to `addToCartAction` with the previous count.
+Để gọi `addToCartAction`, hãy gọi <CodeStep step={2}>action dispatcher</CodeStep>. React sẽ xếp hàng các lần gọi đến `addToCartAction` cùng với count trước đó.
 
 <Sandpack>
 
@@ -257,29 +257,29 @@ button {
 
 </Sandpack>
 
-Every time you click "Add Ticket," React queues a call to `addToCartAction`. React shows the pending state until all the tickets are added, and then re-renders with the final state.
+Mỗi lần bạn nhấp vào "Add Ticket", React sẽ xếp hàng một lần gọi đến `addToCartAction`. React hiển thị pending state cho đến khi tất cả ticket được thêm, sau đó render lại với state cuối cùng.
 
 <DeepDive>
 
-#### How `useActionState` queuing works {/*how-useactionstate-queuing-works*/}
+#### Cách hoạt động của việc xếp hàng `useActionState` {/*how-useactionstate-queuing-works*/}
 
-Try clicking "Add Ticket" multiple times. Every time you click, a new `addToCartAction` is queued. Since there's an artificial 1 second delay, that means 4 clicks will take ~4 seconds to complete.
+Hãy thử nhấp vào "Add Ticket" nhiều lần. Mỗi lần bạn nhấp, một `addToCartAction` mới sẽ được xếp hàng. Vì có độ trễ nhân tạo 1 giây, 4 lần nhấp sẽ mất khoảng 4 giây để hoàn tất.
 
-**This is intentional in the design of `useActionState`.**
+**Đây là chủ ý trong thiết kế của `useActionState`.**
 
-We have to wait for the previous result of `addToCartAction` in order to pass the `prevCount` to the next call to `addToCartAction`. That means React has to wait for the previous Action to finish before calling the next Action.
+Chúng ta phải chờ kết quả trước đó của `addToCartAction` để truyền `prevCount` vào lần gọi tiếp theo đến `addToCartAction`. Điều đó có nghĩa là React phải chờ Action trước đó hoàn tất rồi mới gọi Action tiếp theo.
 
-You can typically solve this by [using with useOptimistic](/reference/react/useActionState#using-with-useoptimistic) but for more complex cases you may want to consider [cancelling queued actions](#cancelling-queued-actions) or not using `useActionState`.
+Thông thường, bạn có thể giải quyết vấn đề này bằng cách [using with useOptimistic](/reference/react/useActionState#using-with-useoptimistic), nhưng với các trường hợp phức tạp hơn, bạn có thể cân nhắc [hủy các action đang xếp hàng](#cancelling-queued-actions) hoặc không sử dụng `useActionState`.
 
 </DeepDive>
 
 ---
 
-### Using multiple Action types {/*using-multiple-action-types*/}
+### Sử dụng nhiều loại Action {/*using-multiple-action-types*/}
 
-To handle multiple types, you can pass an argument to `dispatchAction`.
+Để xử lý nhiều loại, bạn có thể truyền một đối số vào `dispatchAction`.
 
-By convention, it is common to write it as a switch statement. For each case in the switch, calculate and return some next state. The argument can have any shape, but it is common to pass objects with a `type` property identifying the action.
+Theo quy ước, cách viết phổ biến là sử dụng câu lệnh switch. Với mỗi case trong switch, hãy tính toán và trả về một state tiếp theo. Đối số có thể có bất kỳ hình dạng nào, nhưng thông thường người ta truyền các object có thuộc tính `type` để xác định action.
 
 <Sandpack>
 
@@ -428,29 +428,29 @@ hr {
 
 </Sandpack>
 
-When you click to increase or decrease the quantity, an `"ADD"` or `"REMOVE"` is dispatched. In the `reducerAction`, different APIs are called to update the quantity.
+Khi bạn nhấp để tăng hoặc giảm số lượng, một `"ADD"` hoặc `"REMOVE"` sẽ được dispatch. Trong `reducerAction`, các API khác nhau được gọi để cập nhật số lượng.
 
-In this example, we use the pending state of the Actions to replace both the quantity and the total. If you want to provide immediate feedback, such as immediately updating the quantity, you can use `useOptimistic`.
+Trong ví dụ này, chúng ta sử dụng pending state của Actions để thay thế cả số lượng và tổng. Nếu muốn cung cấp phản hồi tức thì, chẳng hạn như cập nhật số lượng ngay lập tức, bạn có thể sử dụng `useOptimistic`.
 
 <DeepDive>
 
-#### How is `useActionState` different from `useReducer`? {/*useactionstate-vs-usereducer*/}
+#### `useActionState` khác `useReducer` như thế nào? {/*useactionstate-vs-usereducer*/}
 
-You might notice this example looks a lot like `useReducer`, but they serve different purposes:
+Bạn có thể nhận thấy ví dụ này trông rất giống `useReducer`, nhưng chúng phục vụ các mục đích khác nhau:
 
-- **Use `useReducer`** to manage state of your UI. The reducer must be pure.
+- **Sử dụng `useReducer`** để quản lý state của UI. Reducer phải là pure.
 
-- **Use `useActionState`** to manage state of your Actions. The reducer can perform side effects.
+- **Sử dụng `useActionState`** để quản lý state của Actions. Reducer có thể thực hiện side effect.
 
-You can think of `useActionState` as `useReducer` for side effects from user Actions. Since it computes the next Action to take based on the previous Action, it has to [order the calls sequentially](/reference/react/useActionState#how-useactionstate-queuing-works). If you want to perform Actions in parallel, use `useState` and `useTransition` directly.
+Bạn có thể xem `useActionState` như `useReducer` dành cho các side effect từ Actions của người dùng. Vì nó tính toán Action tiếp theo cần thực hiện dựa trên Action trước đó, nên nó phải [sắp xếp các lệnh gọi theo thứ tự](/reference/react/useActionState#how-useactionstate-queuing-works). Nếu muốn thực hiện Actions song song, hãy sử dụng trực tiếp `useState` và `useTransition`.
 
 </DeepDive>
 
 ---
 
-### Using with `useOptimistic` {/*using-with-useoptimistic*/}
+### Sử dụng với `useOptimistic` {/*using-with-useoptimistic*/}
 
-You can combine `useActionState` with [`useOptimistic`](/reference/react/useOptimistic) to show immediate UI feedback:
+Bạn có thể kết hợp `useActionState` với [`useOptimistic`](/reference/react/useOptimistic) để hiển thị phản hồi UI tức thì:
 
 
 <Sandpack>
@@ -605,16 +605,16 @@ hr {
 </Sandpack>
 
 
-`setOptimisticCount` immediately updates the quantity, and `dispatchAction()` queues the `updateCartAction`. A pending indicator appears on both the quantity and total to give the user feedback that their update is still being applied.
+`setOptimisticCount` cập nhật số lượng ngay lập tức, còn `dispatchAction()` đưa `updateCartAction` vào hàng đợi. Một chỉ báo pending xuất hiện trên cả số lượng và tổng, để cho người dùng biết rằng bản cập nhật của họ vẫn đang được áp dụng.
 
 ---
 
 
-### Using with Action props {/*using-with-action-props*/}
+### Sử dụng với các prop Action {/*using-with-action-props*/}
 
-When you pass the `dispatchAction` function to a component that exposes an [Action prop](/reference/react/useTransition#exposing-action-props-from-components), you don't need to call `startTransition` or `useOptimistic` yourself.
+Khi bạn truyền hàm `dispatchAction` cho một component cung cấp prop [Action](/reference/react/useTransition#exposing-action-props-from-components), bạn không cần tự gọi `startTransition` hoặc `useOptimistic`.
 
-This example shows using the `increaseAction` and `decreaseAction` props of a QuantityStepper component:
+Ví dụ này minh họa cách sử dụng các prop `increaseAction` và `decreaseAction` của một component QuantityStepper:
 
 <Sandpack>
 
@@ -791,13 +791,13 @@ hr {
 
 </Sandpack>
 
-Since `<QuantityStepper>` has built-in support for transitions, pending state, and optimistically updating the count, you just need to tell the Action _what_ to change, and _how_ to change it is handled for you.
+Vì `<QuantityStepper>` có sẵn hỗ trợ cho transitions, pending state và việc cập nhật count một cách lạc quan, bạn chỉ cần cho Action biết cần thay đổi _điều gì_, còn _cách_ thay đổi sẽ được xử lý thay cho bạn.
 
 ---
 
-### Cancelling queued Actions {/*cancelling-queued-actions*/}
+### Hủy các Actions đang xếp hàng {/*cancelling-queued-actions*/}
 
-You can use an `AbortController` to cancel pending Actions:
+Bạn có thể sử dụng `AbortController` để hủy các Actions đang chờ:
 
 <Sandpack>
 
@@ -1016,23 +1016,23 @@ hr {
 
 </Sandpack>
 
-Try clicking increase or decrease multiple times, and notice that the total updates within 1 second no matter how many times you click. This works because it uses an `AbortController` to "complete" the previous Action so the next Action can proceed.
+Hãy thử nhấp nhiều lần vào nút tăng hoặc giảm và lưu ý rằng tổng sẽ cập nhật trong vòng 1 giây, bất kể bạn nhấp bao nhiêu lần. Điều này hoạt động vì nó sử dụng một `AbortController` để “hoàn tất” Action trước đó, nhờ đó Action tiếp theo có thể tiếp tục.
 
 <Pitfall>
 
-Aborting an Action isn't always safe.
+Việc abort một Action không phải lúc nào cũng an toàn.
 
-For example, if the Action performs a mutation (like writing to a database), aborting the network request doesn't undo the server-side change. This is why `useActionState` doesn't abort by default. It's only safe when you know the side effect can be safely ignored or retried.
+Ví dụ, nếu Action thực hiện một mutation (chẳng hạn như ghi vào database), việc abort network request không hoàn tác thay đổi phía server. Đây là lý do `useActionState` không abort theo mặc định. Cách này chỉ an toàn khi bạn biết side effect có thể được bỏ qua hoặc retry một cách an toàn.
 
 </Pitfall>
 
 ---
 
-### Using with `<form>` Action props {/*use-with-a-form*/}
+### Sử dụng với các prop Action của `<form>` {/*use-with-a-form*/}
 
-You can pass the `dispatchAction` function as the `action` prop to a `<form>`.
+Bạn có thể truyền hàm `dispatchAction` làm prop `action` cho một `<form>`.
 
-When used this way, React automatically wraps the submission in a Transition, so you don't need to call `startTransition` yourself. The `reducerAction` receives the previous state and the submitted `FormData`:
+Khi được sử dụng theo cách này, React tự động bọc việc submit trong một Transition, nên bạn không cần tự gọi `startTransition`. `reducerAction` nhận state trước đó và `FormData` đã submit:
 
 <Sandpack>
 
@@ -1182,25 +1182,25 @@ hr {
 
 </Sandpack>
 
-In this example, when the user clicks the stepper arrows, the button submits the form and `useActionState` calls `updateCartAction` with the form data. The example uses `useOptimistic` to immediately show the new quantity while the server confirms the update.
+Trong ví dụ này, khi người dùng nhấp vào các mũi tên của stepper, button sẽ submit form và `useActionState` gọi `updateCartAction` với dữ liệu form. Ví dụ sử dụng `useOptimistic` để hiển thị ngay số lượng mới trong khi server xác nhận bản cập nhật.
 
 <RSC>
 
-When used with a [Server Function](/reference/rsc/server-functions), `useActionState` allows the server's response to be shown before hydration (when React attaches to server-rendered HTML) completes. You can also use the optional `permalink` parameter for progressive enhancement (allowing the form to work before JavaScript loads) on pages with dynamic content. This is typically handled by your framework for you.
+Khi được sử dụng với một [Server Function](/reference/rsc/server-functions), `useActionState` cho phép hiển thị phản hồi của server trước khi quá trình hydration (khi React gắn vào HTML được server render) hoàn tất. Bạn cũng có thể sử dụng tham số tùy chọn `permalink` để progressive enhancement (cho phép form hoạt động trước khi JavaScript tải) trên các trang có nội dung động. Framework của bạn thường sẽ tự xử lý việc này.
 
 </RSC>
 
-See the [`<form>`](/reference/react-dom/components/form#handle-form-submission-with-a-server-function) docs for more information on using Actions with forms.
+Xem tài liệu [`<form>`](/reference/react-dom/components/form#handle-form-submission-with-a-server-function) để biết thêm thông tin về việc sử dụng Actions với forms.
 
 ---
 
-### Handling errors {/*handling-errors*/}
+### Xử lý lỗi {/*handling-errors*/}
 
-There are two ways to handle errors with `useActionState`.
+Có hai cách để xử lý lỗi với `useActionState`.
 
-For known errors, such as "quantity not available" validation errors from your backend, you can return it as part of your `reducerAction` state and display it in the UI.
+Đối với các lỗi đã biết, chẳng hạn như lỗi validation “quantity not available” từ backend, bạn có thể trả về lỗi đó trong `reducerAction` state và hiển thị nó trong UI.
 
-For unknown errors, such as `undefined is not a function`, you can throw an error. React will cancel all queued Actions and shows the nearest [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) by rethrowing the error from the `useActionState` hook.
+Đối với các lỗi chưa biết, chẳng hạn như `undefined is not a function`, bạn có thể throw một error. React sẽ hủy tất cả Actions đang xếp hàng và hiển thị [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gần nhất bằng cách throw lại error từ hook `useActionState`.
 
 <Sandpack>
 
@@ -1373,16 +1373,16 @@ button {
 
 </Sandpack>
 
-In this example, "Add 10" simulates an API that returns a validation error, which `updateCartAction` stores in state and displays inline. "Add NaN" results in an invalid count, so `updateCartAction` throws, which propagates through `useActionState` to the `ErrorBoundary` and shows a reset UI.
+Trong ví dụ này, “Add 10” mô phỏng một API trả về lỗi validation, lỗi này được `updateCartAction` lưu vào state và hiển thị inline. “Add NaN” tạo ra một count không hợp lệ, vì vậy `updateCartAction` throw, lỗi này truyền qua `useActionState` đến `ErrorBoundary` và hiển thị UI reset.
 
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### My `isPending` flag is not updating {/*ispending-not-updating*/}
+### Flag `isPending` của tôi không cập nhật {/*ispending-not-updating*/}
 
-If you're calling `dispatchAction` manually (not through an Action prop), make sure you wrap the call in [`startTransition`](/reference/react/startTransition):
+Nếu bạn gọi `dispatchAction` thủ công (không thông qua prop Action), hãy đảm bảo bọc lệnh gọi trong [`startTransition`](/reference/react/startTransition):
 
 ```js
 import { useActionState, startTransition } from 'react';
@@ -1401,13 +1401,13 @@ function MyComponent() {
 }
 ```
 
-When `dispatchAction` is passed to an Action prop, React automatically wraps it in a Transition.
+Khi `dispatchAction` được truyền vào prop Action, React sẽ tự động bọc nó trong một Transition.
 
 ---
 
-### My Action cannot read form data {/*action-cannot-read-form-data*/}
+### Action của tôi không thể đọc dữ liệu form {/*action-cannot-read-form-data*/}
 
-When you use `useActionState`, the `reducerAction` receives an extra argument as its first argument: the previous or initial state. The submitted form data is therefore its second argument instead of its first.
+Khi sử dụng `useActionState`, `reducerAction` nhận thêm một đối số ở vị trí đầu tiên: state trước đó hoặc state ban đầu. Vì vậy, dữ liệu form đã submit là đối số thứ hai thay vì đối số thứ nhất.
 
 ```js {2,7}
 // Without useActionState
@@ -1423,13 +1423,13 @@ function action(prevState, formData) {
 
 ---
 
-### My actions are being skipped {/*actions-skipped*/}
+### Các action của tôi đang bị bỏ qua {/*actions-skipped*/}
 
-If you call `dispatchAction` multiple times and some of them don't run, it may be because an earlier `dispatchAction` call threw an error.
+Nếu bạn gọi `dispatchAction` nhiều lần và một số lần gọi không chạy, có thể là do một lệnh gọi `dispatchAction` trước đó đã throw một error.
 
-When a `reducerAction` throws, React skips all subsequently queued `dispatchAction` calls.
+Khi `reducerAction` throw, React sẽ bỏ qua tất cả các lệnh gọi `dispatchAction` được xếp hàng sau đó.
 
-To handle this, catch errors within your `reducerAction` and return an error state instead of throwing:
+Để xử lý vấn đề này, hãy catch các error bên trong `reducerAction` và trả về một error state thay vì throw:
 
 ```js
 async function myReducerAction(prevState, data) {
@@ -1445,9 +1445,9 @@ async function myReducerAction(prevState, data) {
 
 ---
 
-### My state doesn't reset {/*reset-state*/}
+### State của tôi không reset {/*reset-state*/}
 
-`useActionState` doesn't provide a built-in reset function. To reset the state, you can design your `reducerAction` to handle a reset signal:
+`useActionState` không cung cấp hàm reset tích hợp sẵn. Để reset state, bạn có thể thiết kế `reducerAction` để xử lý một tín hiệu reset:
 
 ```js
 const initialState = { name: '', error: null };
@@ -1475,13 +1475,13 @@ function MyComponent() {
 }
 ```
 
-Alternatively, you can add a `key` prop to the component using `useActionState` to force it to remount with fresh state, or a `<form>` `action` prop, which resets automatically after submission.
+Ngoài ra, bạn có thể thêm một prop `key` vào component sử dụng `useActionState` để buộc component remount với state mới, hoặc một prop `<form>` `action`, prop này sẽ tự động reset sau khi submit.
 
 ---
 
-### I'm getting an error: "An async function with useActionState was called outside of a transition." {/*async-function-outside-transition*/}
+### Tôi gặp lỗi: “An async function with useActionState was called outside of a transition.” {/*async-function-outside-transition*/}
 
-A common mistake is to forget to call `dispatchAction` from inside a Transition:
+Một lỗi thường gặp là quên gọi `dispatchAction` bên trong một Transition:
 
 <ConsoleBlockMulti>
 <ConsoleLogLine level="error">
@@ -1492,7 +1492,7 @@ An async function with useActionState was called outside of a transition. This i
 </ConsoleBlockMulti>
 
 
-This error happens because `dispatchAction` must run inside a Transition:
+Lỗi này xảy ra vì `dispatchAction` phải chạy bên trong một Transition:
 
 ```js
 function MyComponent() {
@@ -1507,7 +1507,7 @@ function MyComponent() {
 }
 ```
 
-To fix, either wrap the call in [`startTransition`](/reference/react/startTransition):
+Để khắc phục, hãy bọc lệnh gọi trong [`startTransition`](/reference/react/startTransition):
 
 ```js
 import { useActionState, startTransition } from 'react';
@@ -1526,7 +1526,7 @@ function MyComponent() {
 }
 ```
 
-Or pass `dispatchAction` to an Action prop, is call in a Transition:
+Hoặc truyền `dispatchAction` vào một prop Action; prop này gọi nó trong một Transition:
 
 ```js
 function MyComponent() {
@@ -1539,17 +1539,17 @@ function MyComponent() {
 
 ---
 
-### I'm getting an error: "Cannot update action state while rendering" {/*cannot-update-during-render*/}
+### Tôi gặp lỗi: “Cannot update action state while rendering” {/*cannot-update-during-render*/}
 
-You cannot call `dispatchAction` during render:
+Bạn không thể gọi `dispatchAction` trong lúc render:
 
 <ConsoleBlock level="error">
 
-Cannot update action state while rendering.
+Không thể cập nhật trạng thái action trong khi đang render.
 
 </ConsoleBlock>
 
-This causes an infinite loop because calling `dispatchAction` schedules a state update, which triggers a re-render, which calls `dispatchAction` again.
+Điều này gây ra một vòng lặp vô hạn vì việc gọi `dispatchAction` sẽ lên lịch cập nhật state, từ đó kích hoạt render lại và lại gọi `dispatchAction`.
 
 ```js
 function MyComponent() {
@@ -1562,4 +1562,4 @@ function MyComponent() {
 }
 ```
 
-To fix, only call `dispatchAction` in response to user events (like form submissions or button clicks).
+Để khắc phục, chỉ gọi `dispatchAction` để phản hồi các sự kiện của người dùng (chẳng hạn như gửi biểu mẫu hoặc nhấp vào nút).

@@ -4,7 +4,7 @@ title: logger
 
 <Intro>
 
-The `logger` option provides custom logging for React Compiler events during compilation.
+Tùy chọn `logger` cung cấp tính năng ghi log tùy chỉnh cho các sự kiện của React Compiler trong quá trình biên dịch.
 
 </Intro>
 
@@ -22,13 +22,13 @@ The `logger` option provides custom logging for React Compiler events during com
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `logger` {/*logger*/}
 
-Configures custom logging to track compiler behavior and debug issues.
+Cấu hình tính năng ghi log tùy chỉnh để theo dõi hoạt động của compiler và gỡ lỗi.
 
-#### Type {/*type*/}
+#### Kiểu {/*type*/}
 
 ```
 {
@@ -36,35 +36,35 @@ Configures custom logging to track compiler behavior and debug issues.
 } | null
 ```
 
-#### Default value {/*default-value*/}
+#### Giá trị mặc định {/*default-value*/}
 
 `null`
 
-#### Methods {/*methods*/}
+#### Các phương thức {/*methods*/}
 
-- **`logEvent`**: Called for each compiler event with the filename and event details
+- **`logEvent`**: Được gọi cho mỗi sự kiện của compiler cùng với tên tệp và thông tin chi tiết về sự kiện
 
-#### Event types {/*event-types*/}
+#### Các kiểu sự kiện {/*event-types*/}
 
-- **`CompileSuccess`**: Function successfully compiled
-- **`CompileError`**: Function skipped due to errors
-- **`CompileDiagnostic`**: Non-fatal diagnostic information
-- **`CompileSkip`**: Function skipped for other reasons
-- **`PipelineError`**: Unexpected compilation error
-- **`Timing`**: Performance timing information
+- **`CompileSuccess`**: Function được biên dịch thành công
+- **`CompileError`**: Function bị bỏ qua do có lỗi
+- **`CompileDiagnostic`**: Thông tin chẩn đoán không nghiêm trọng
+- **`CompileSkip`**: Function bị bỏ qua vì các lý do khác
+- **`PipelineError`**: Lỗi biên dịch không mong đợi
+- **`Timing`**: Thông tin về thời gian thực thi
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- Event structure may change between versions
-- Large codebases generate many log entries
+- Cấu trúc sự kiện có thể thay đổi giữa các phiên bản
+- Các codebase lớn tạo ra nhiều mục nhập log
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Basic logging {/*basic-logging*/}
+### Ghi log cơ bản {/*basic-logging*/}
 
-Track compilation success and failures:
+Theo dõi các lần biên dịch thành công và thất bại:
 
 ```js
 {
@@ -86,9 +86,9 @@ Track compilation success and failures:
 }
 ```
 
-### Detailed error logging {/*detailed-error-logging*/}
+### Ghi log lỗi chi tiết {/*detailed-error-logging*/}
 
-Get specific information about compilation failures:
+Nhận thông tin cụ thể về các lần biên dịch thất bại:
 
 ```js
 {
@@ -115,4 +115,3 @@ Get specific information about compilation failures:
   }
 }
 ```
-

@@ -4,7 +4,7 @@ meta: "<meta>"
 
 <Intro>
 
-The [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) lets you add metadata to the document.
+Component [built-in của trình duyệt `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) cho phép bạn thêm metadata vào tài liệu.
 
 ```js
 <meta name="keywords" content="React, JavaScript, semantic markup, html" />
@@ -16,43 +16,43 @@ The [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/do
 
 ---
 
-## Reference {/*reference*/}
+## Tham khảo {/*reference*/}
 
 ### `<meta>` {/*meta*/}
 
-To add document metadata, render the [built-in browser `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta). You can render `<meta>` from any component and React will always place the corresponding DOM element in the document head.
+Để thêm metadata cho tài liệu, hãy render component [built-in của trình duyệt `<meta>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta). Bạn có thể render `<meta>` từ bất kỳ component nào và React sẽ luôn đặt phần tử DOM tương ứng vào phần head của tài liệu.
 
 ```js
 <meta name="keywords" content="React, JavaScript, semantic markup, html" />
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
 #### Props {/*props*/}
 
-`<meta>` supports all [common element props.](/reference/react-dom/components/common#common-props)
+`<meta>` hỗ trợ tất cả [props phổ biến của element.](/reference/react-dom/components/common#common-props)
 
-It should have *exactly one* of the following props: `name`, `httpEquiv`, `charset`, `itemProp`. The `<meta>` component does something different depending on which of these props is specified.
+Nó phải có *chính xác một* trong các prop sau: `name`, `httpEquiv`, `charset`, `itemProp`. Component `<meta>` thực hiện các tác vụ khác nhau tùy thuộc vào prop nào trong số này được chỉ định.
 
-* `name`: a string. Specifies the [kind of metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name) to be attached to the document.
-* `charset`: a string. Specifies the character set used by the document. The only valid value is `"utf-8"`.
-* `httpEquiv`: a string. Specifies a directive for processing the document.
-* `itemProp`: a string. Specifies metadata about a particular item within the document rather than the document as a whole.
-* `content`: a string. Specifies the metadata to be attached when used with the `name` or `itemProp` props or the behavior of the directive when used with the `httpEquiv` prop.
+* `name`: một chuỗi. Chỉ định [loại metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name) sẽ được đính kèm vào tài liệu.
+* `charset`: một chuỗi. Chỉ định bộ ký tự được tài liệu sử dụng. Giá trị hợp lệ duy nhất là `"utf-8"`.
+* `httpEquiv`: một chuỗi. Chỉ định một chỉ thị để xử lý tài liệu.
+* `itemProp`: một chuỗi. Chỉ định metadata về một mục cụ thể trong tài liệu thay vì toàn bộ tài liệu.
+* `content`: một chuỗi. Chỉ định metadata sẽ được đính kèm khi được dùng cùng với prop `name` hoặc `itemProp`, hoặc chỉ định hành vi của chỉ thị khi được dùng cùng với prop `httpEquiv`.
 
-#### Special rendering behavior {/*special-rendering-behavior*/}
+#### Hành vi render đặc biệt {/*special-rendering-behavior*/}
 
-React will always place the DOM element corresponding to the `<meta>` component within the document’s `<head>`, regardless of where in the React tree it is rendered. The `<head>` is the only valid place for `<meta>` to exist within the DOM, yet it’s convenient and keeps things composable if a component representing a specific page can render `<meta>` components itself.
+React sẽ luôn đặt phần tử DOM tương ứng với component `<meta>` bên trong `<head>` của tài liệu, bất kể component đó được render ở đâu trong cây React. `<head>` là nơi hợp lệ duy nhất để `<meta>` tồn tại trong DOM, tuy nhiên sẽ thuận tiện và giúp các component có khả năng kết hợp với nhau hơn nếu một component đại diện cho một trang cụ thể có thể tự render các component `<meta>`.
 
-There is one exception to this: if `<meta>` has an [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop) prop, there is no special behavior, because in this case it doesn’t represent metadata about the document but rather metadata about a specific part of the page.
+Có một ngoại lệ: nếu `<meta>` có prop [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop), thì không có hành vi đặc biệt nào, vì trong trường hợp này nó không đại diện cho metadata của tài liệu mà là metadata của một phần cụ thể trên trang.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Annotating the document with metadata {/*annotating-the-document-with-metadata*/}
+### Gắn metadata cho tài liệu {/*annotating-the-document-with-metadata*/}
 
-You can annotate the document with metadata such as keywords, a summary, or the author’s name. React will place this metadata within the document `<head>` regardless of where in the React tree it is rendered.
+Bạn có thể chú thích tài liệu bằng metadata như từ khóa, bản tóm tắt hoặc tên tác giả. React sẽ đặt metadata này trong `<head>` của tài liệu, bất kể nó được render ở đâu trong cây React.
 
 ```html
 <meta name="author" content="John Smith" />
@@ -60,7 +60,7 @@ You can annotate the document with metadata such as keywords, a summary, or the 
 <meta name="description" content="API reference for the <meta> component in React DOM" />
 ```
 
-You can render the `<meta>` component from any component. React will put a `<meta>` DOM node in the document `<head>`.
+Bạn có thể render component `<meta>` từ bất kỳ component nào. React sẽ đặt một node DOM `<meta>` trong `<head>` của tài liệu.
 
 <SandpackWithHTMLOutput>
 
@@ -81,9 +81,9 @@ export default function SiteMapPage() {
 
 </SandpackWithHTMLOutput>
 
-### Annotating specific items within the document with metadata {/*annotating-specific-items-within-the-document-with-metadata*/}
+### Gắn metadata cho các mục cụ thể trong tài liệu {/*annotating-specific-items-within-the-document-with-metadata*/}
 
-You can use the `<meta>` component with the `itemProp` prop to annotate specific items within the document with metadata. In this case, React will *not* place these annotations within the document `<head>` but will place them like any other React component.
+Bạn có thể sử dụng component `<meta>` cùng với prop `itemProp` để chú thích các mục cụ thể trong tài liệu bằng metadata. Trong trường hợp này, React sẽ *không* đặt các chú thích này trong `<head>` của tài liệu mà sẽ đặt chúng giống như bất kỳ component React nào khác.
 
 ```js
 <section itemScope>

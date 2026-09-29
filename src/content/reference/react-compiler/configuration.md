@@ -1,16 +1,16 @@
 ---
-title: Configuration
+title: Cấu hình
 ---
 
 <Intro>
 
-This page lists all configuration options available in React Compiler.
+Trang này liệt kê tất cả tùy chọn cấu hình có trong React Compiler.
 
 </Intro>
 
 <Note>
 
-For most apps, the default options should work out of the box. If you have a special need, you can use these advanced options.
+Đối với hầu hết ứng dụng, các tùy chọn mặc định sẽ hoạt động ngay mà không cần cấu hình thêm. Nếu bạn có nhu cầu đặc biệt, bạn có thể sử dụng các tùy chọn nâng cao này.
 
 </Note>
 
@@ -29,11 +29,11 @@ module.exports = {
 
 ---
 
-## Compilation Control {/*compilation-control*/}
+## Kiểm soát biên dịch {/*compilation-control*/}
 
-These options control *what* the compiler optimizes and *how* it selects components and hooks to compile.
+Các tùy chọn này kiểm soát *những gì* compiler tối ưu hóa và *cách* compiler chọn các component và hook để biên dịch.
 
-* [`compilationMode`](/reference/react-compiler/compilationMode) controls the strategy for selecting functions to compile (e.g., all functions, only annotated ones, or intelligent detection).
+* [`compilationMode`](/reference/react-compiler/compilationMode) kiểm soát chiến lược chọn các function để biên dịch (ví dụ: tất cả function, chỉ những function được chú thích hoặc tự động phát hiện thông minh).
 
 ```js
 {
@@ -43,11 +43,11 @@ These options control *what* the compiler optimizes and *how* it selects compone
 
 ---
 
-## Version Compatibility {/*version-compatibility*/}
+## Khả năng tương thích phiên bản {/*version-compatibility*/}
 
-React version configuration ensures the compiler generates code compatible with your React version.
+Cấu hình phiên bản React đảm bảo compiler tạo ra code tương thích với phiên bản React của bạn.
 
-[`target`](/reference/react-compiler/target) specifies which React version you're using (17, 18, or 19).
+[`target`](/reference/react-compiler/target) chỉ định phiên bản React bạn đang sử dụng (17, 18 hoặc 19).
 
 ```js
 // For React 18 projects
@@ -58,11 +58,11 @@ React version configuration ensures the compiler generates code compatible with 
 
 ---
 
-## Error Handling {/*error-handling*/}
+## Xử lý lỗi {/*error-handling*/}
 
-These options control how the compiler responds to code that doesn't follow the [Rules of React](/reference/rules).
+Các tùy chọn này kiểm soát cách compiler phản hồi với code không tuân theo [Rules of React](/reference/rules).
 
-[`panicThreshold`](/reference/react-compiler/panicThreshold) determines whether to fail the build or skip problematic components.
+[`panicThreshold`](/reference/react-compiler/panicThreshold) xác định việc build sẽ thất bại hay bỏ qua các component có vấn đề.
 
 ```js
 // Recommended for production
@@ -73,11 +73,11 @@ These options control how the compiler responds to code that doesn't follow the 
 
 ---
 
-## Debugging {/*debugging*/}
+## Gỡ lỗi {/*debugging*/}
 
-Logging and analysis options help you understand what the compiler is doing.
+Các tùy chọn logging và phân tích giúp bạn hiểu compiler đang thực hiện những gì.
 
-[`logger`](/reference/react-compiler/logger) provides custom logging for compilation events.
+[`logger`](/reference/react-compiler/logger) cung cấp logging tùy chỉnh cho các sự kiện biên dịch.
 
 ```js
 {
@@ -93,11 +93,11 @@ Logging and analysis options help you understand what the compiler is doing.
 
 ---
 
-## Feature Flags {/*feature-flags*/}
+## Cờ tính năng {/*feature-flags*/}
 
-Conditional compilation lets you control when optimized code is used.
+Biên dịch có điều kiện cho phép bạn kiểm soát thời điểm sử dụng code đã được tối ưu hóa.
 
-[`gating`](/reference/react-compiler/gating) enables runtime feature flags for A/B testing or gradual rollouts.
+[`gating`](/reference/react-compiler/gating) bật các cờ tính năng runtime để A/B testing hoặc rollout dần dần.
 
 ```js
 {
@@ -110,11 +110,11 @@ Conditional compilation lets you control when optimized code is used.
 
 ---
 
-## Common Configuration Patterns {/*common-patterns*/}
+## Các mẫu cấu hình phổ biến {/*common-patterns*/}
 
-### Default configuration {/*default-configuration*/}
+### Cấu hình mặc định {/*default-configuration*/}
 
-For most React 19 applications, the compiler works without configuration:
+Đối với hầu hết ứng dụng React 19, compiler hoạt động mà không cần cấu hình:
 
 ```js
 // babel.config.js
@@ -125,9 +125,9 @@ module.exports = {
 };
 ```
 
-### React 17/18 projects {/*react-17-18*/}
+### Dự án React 17/18 {/*react-17-18*/}
 
-Older React versions need the runtime package and target configuration:
+Các phiên bản React cũ hơn cần runtime package và target configuration:
 
 ```bash
 npm install react-compiler-runtime@latest
@@ -139,13 +139,12 @@ npm install react-compiler-runtime@latest
 }
 ```
 
-### Incremental adoption {/*incremental-adoption*/}
+### Áp dụng từng bước {/*incremental-adoption*/}
 
-Start with specific directories and expand gradually:
+Bắt đầu với các thư mục cụ thể rồi dần mở rộng:
 
 ```js
 {
   compilationMode: 'annotation' // Only compile "use memo" functions
 }
 ```
-

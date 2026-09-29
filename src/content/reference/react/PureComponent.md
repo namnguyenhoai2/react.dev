@@ -4,13 +4,13 @@ title: PureComponent
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#alternatives)
+Chúng tôi khuyến nghị định nghĩa component dưới dạng function thay vì class. [Xem cách migrate.](#alternatives)
 
 </Pitfall>
 
 <Intro>
 
-`PureComponent` is similar to [`Component`](/reference/react/Component) but it skips re-renders for same props and state. Class components are still supported by React, but we don't recommend using them in new code.
+`PureComponent` tương tự như [`Component`](/reference/react/Component) nhưng bỏ qua việc re-render khi props và state không thay đổi. React vẫn hỗ trợ class component, nhưng chúng tôi không khuyến nghị sử dụng chúng trong code mới.
 
 ```js
 class Greeting extends PureComponent {
@@ -26,11 +26,11 @@ class Greeting extends PureComponent {
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `PureComponent` {/*purecomponent*/}
 
-To skip re-rendering a class component for same props and state, extend `PureComponent` instead of [`Component`:](/reference/react/Component)
+Để bỏ qua việc re-render một class component khi props và state không thay đổi, hãy kế thừa `PureComponent` thay vì [`Component`:](/reference/react/Component)
 
 ```js
 import { PureComponent } from 'react';
@@ -42,18 +42,18 @@ class Greeting extends PureComponent {
 }
 ```
 
-`PureComponent` is a subclass of `Component` and supports [all the `Component` APIs.](/reference/react/Component#reference) Extending `PureComponent` is equivalent to defining a custom [`shouldComponentUpdate`](/reference/react/Component#shouldcomponentupdate) method that shallowly compares props and state.
+`PureComponent` là một subclass của `Component` và hỗ trợ [tất cả các API của `Component`.](/reference/react/Component#reference) Việc kế thừa `PureComponent` tương đương với việc định nghĩa một phương thức [`shouldComponentUpdate`](/reference/react/Component#shouldcomponentupdate) tùy chỉnh, trong đó so sánh nông (shallow comparison) props và state.
 
 
-[See more examples below.](#usage)
+[Xem thêm ví dụ bên dưới.](#usage)
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Skipping unnecessary re-renders for class components {/*skipping-unnecessary-re-renders-for-class-components*/}
+### Bỏ qua các lần re-render không cần thiết cho class component {/*skipping-unnecessary-re-renders-for-class-components*/}
 
-React normally re-renders a component whenever its parent re-renders. As an optimization, you can create a component that React will not re-render when its parent re-renders so long as its new props and state are the same as the old props and state. [Class components](/reference/react/Component) can opt into this behavior by extending `PureComponent`:
+Thông thường, React re-render một component mỗi khi component cha của nó re-render. Để tối ưu hóa, bạn có thể tạo một component mà React sẽ không re-render khi component cha re-render, miễn là props và state mới của nó giống với props và state cũ. [Class component](/reference/react/Component) có thể bật hành vi này bằng cách kế thừa `PureComponent`:
 
 ```js {1}
 class Greeting extends PureComponent {
@@ -63,9 +63,9 @@ class Greeting extends PureComponent {
 }
 ```
 
-A React component should always have [pure rendering logic.](/learn/keeping-components-pure) This means that it must return the same output if its props, state, and context haven't changed. By using `PureComponent`, you are telling React that your component complies with this requirement, so React doesn't need to re-render as long as its props and state haven't changed. However, your component will still re-render if a context that it's using changes.
+Một React component luôn phải có [logic rendering thuần.](/learn/keeping-components-pure) Điều này có nghĩa là nó phải trả về cùng một output nếu props, state và context của nó không thay đổi. Khi sử dụng `PureComponent`, bạn cho React biết rằng component của mình đáp ứng yêu cầu này, vì vậy React không cần re-render miễn là props và state của nó không thay đổi. Tuy nhiên, component của bạn vẫn sẽ re-render nếu một context mà nó đang sử dụng thay đổi.
 
-In this example, notice that the `Greeting` component re-renders whenever `name` is changed (because that's one of its props), but not when `address` is changed (because it's not passed to `Greeting` as a prop):
+Trong ví dụ này, hãy chú ý rằng component `Greeting` re-render mỗi khi `name` thay đổi (vì đó là một trong các prop của nó), nhưng không re-render khi `address` thay đổi (vì nó không được truyền cho `Greeting` dưới dạng prop):
 
 <Sandpack>
 
@@ -109,17 +109,17 @@ label {
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#alternatives)
+Chúng tôi khuyến nghị định nghĩa component dưới dạng function thay vì class. [Xem cách migrate.](#alternatives)
 
 </Pitfall>
 
 ---
 
-## Alternatives {/*alternatives*/}
+## Các lựa chọn thay thế {/*alternatives*/}
 
-### Migrating from a `PureComponent` class component to a function {/*migrating-from-a-purecomponent-class-component-to-a-function*/}
+### Chuyển từ class component `PureComponent` sang function {/*migrating-from-a-purecomponent-class-component-to-a-function*/}
 
-We recommend using function components instead of [class components](/reference/react/Component) in new code. If you have some existing class components using `PureComponent`, here is how you can convert them. This is the original code:
+Chúng tôi khuyến nghị sử dụng function component thay vì [class component](/reference/react/Component) trong code mới. Nếu bạn có một số class component hiện có đang sử dụng `PureComponent`, dưới đây là cách chuyển đổi chúng. Đây là code ban đầu:
 
 <Sandpack>
 
@@ -161,7 +161,7 @@ label {
 
 </Sandpack>
 
-When you [convert this component from a class to a function,](/reference/react/Component#alternatives) wrap it in [`memo`:](/reference/react/memo)
+Khi bạn [chuyển component này từ class sang function,](/reference/react/Component#alternatives) hãy bọc nó trong [`memo`:](/reference/react/memo)
 
 <Sandpack>
 
@@ -203,6 +203,6 @@ label {
 
 <Note>
 
-Unlike `PureComponent`, [`memo`](/reference/react/memo) does not compare the new and the old state. In function components, calling the [`set` function](/reference/react/useState#setstate) with the same state [already prevents re-renders by default,](/reference/react/memo#updating-a-memoized-component-using-state) even without `memo`.
+Không giống như `PureComponent`, [`memo`](/reference/react/memo) không so sánh state mới và state cũ. Trong function component, việc gọi hàm [`set` function](/reference/react/useState#setstate) với cùng state [đã mặc định ngăn việc re-render,](/reference/react/memo#updating-a-memoized-component-using-state) ngay cả khi không có `memo`.
 
 </Note>

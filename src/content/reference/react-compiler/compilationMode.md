@@ -4,7 +4,7 @@ title: compilationMode
 
 <Intro>
 
-The `compilationMode` option controls how the React Compiler selects which functions to compile.
+Tùy chọn `compilationMode` kiểm soát cách React Compiler lựa chọn các hàm cần biên dịch.
 
 </Intro>
 
@@ -18,48 +18,48 @@ The `compilationMode` option controls how the React Compiler selects which funct
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `compilationMode` {/*compilationmode*/}
 
-Controls the strategy for determining which functions the React Compiler will optimize.
+Kiểm soát chiến lược xác định các hàm mà React Compiler sẽ tối ưu hóa.
 
-#### Type {/*type*/}
+#### Kiểu {/*type*/}
 
 ```
 'infer' | 'syntax' | 'annotation' | 'all'
 ```
 
-#### Default value {/*default-value*/}
+#### Giá trị mặc định {/*default-value*/}
 
 `'infer'`
 
-#### Options {/*options*/}
+#### Các tùy chọn {/*options*/}
 
-- **`'infer'`** (default): The compiler uses intelligent heuristics to identify React components and hooks:
-  - Functions explicitly annotated with `"use memo"` directive
-  - Functions that are named like components (PascalCase) or hooks (`use` prefix) AND create JSX and/or call other hooks
+- **`'infer'`** (mặc định): Compiler sử dụng các heuristic thông minh để xác định các React component và hook:
+  - Các hàm được chú thích rõ ràng bằng directive `"use memo"`
+  - Các hàm được đặt tên giống component (PascalCase) hoặc hook (tiền tố `use`) VÀ tạo JSX và/hoặc gọi các hook khác
 
-- **`'annotation'`**: Only compile functions explicitly marked with the `"use memo"` directive. Ideal for incremental adoption.
+- **`'annotation'`**: Chỉ biên dịch các hàm được đánh dấu rõ ràng bằng directive `"use memo"`. Phù hợp để áp dụng dần.
 
-- **`'syntax'`**: Only compile components and hooks that use Flow's [component](https://flow.org/en/docs/react/component-syntax/) and [hook](https://flow.org/en/docs/react/hook-syntax/) syntax.
+- **`'syntax'`**: Chỉ biên dịch các component và hook sử dụng cú pháp [component](https://flow.org/en/docs/react/component-syntax/) và [hook](https://flow.org/en/docs/react/hook-syntax/) của Flow.
 
-- **`'all'`**: Compile all top-level functions. Not recommended as it may compile non-React functions.
+- **`'all'`**: Biên dịch tất cả các hàm cấp cao nhất. Không được khuyến nghị vì có thể biên dịch các hàm không liên quan đến React.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-- The `'infer'` mode requires functions to follow React naming conventions to be detected
-- Using `'all'` mode may negatively impact performance by compiling utility functions
-- The `'syntax'` mode requires Flow and won't work with TypeScript
-- Regardless of mode, functions with `"use no memo"` directive are always skipped
+- Chế độ `'infer'` yêu cầu các hàm tuân theo quy ước đặt tên của React để được phát hiện
+- Việc sử dụng chế độ `'all'` có thể ảnh hưởng tiêu cực đến hiệu năng do biên dịch các hàm tiện ích
+- Chế độ `'syntax'` yêu cầu Flow và sẽ không hoạt động với TypeScript
+- Bất kể chế độ nào, các hàm có directive `"use no memo"` luôn bị bỏ qua
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Default inference mode {/*default-inference-mode*/}
+### Chế độ suy luận mặc định {/*default-inference-mode*/}
 
-The default `'infer'` mode works well for most codebases that follow React conventions:
+Chế độ `'infer'` mặc định hoạt động tốt với hầu hết các codebase tuân theo quy ước của React:
 
 ```js
 {
@@ -67,7 +67,7 @@ The default `'infer'` mode works well for most codebases that follow React conve
 }
 ```
 
-With this mode, these functions will be compiled:
+Với chế độ này, các hàm sau sẽ được biên dịch:
 
 ```js
 // ✅ Compiled: Named like a component + returns JSX
@@ -93,9 +93,9 @@ function calculateTotal(items) {
 }
 ```
 
-### Incremental adoption with annotation mode {/*incremental-adoption*/}
+### Áp dụng dần với chế độ chú thích {/*incremental-adoption*/}
 
-For gradual migration, use `'annotation'` mode to only compile marked functions:
+Để di chuyển dần, hãy sử dụng chế độ `'annotation'` nhằm chỉ biên dịch các hàm được đánh dấu:
 
 ```js
 {
@@ -103,7 +103,7 @@ For gradual migration, use `'annotation'` mode to only compile marked functions:
 }
 ```
 
-Then explicitly mark functions to compile:
+Sau đó, đánh dấu rõ ràng các hàm cần biên dịch:
 
 ```js
 // Only this function will be compiled
@@ -124,9 +124,9 @@ function NormalComponent(props) {
 }
 ```
 
-### Using Flow syntax mode {/*flow-syntax-mode*/}
+### Sử dụng chế độ cú pháp Flow {/*flow-syntax-mode*/}
 
-If your codebase uses Flow instead of TypeScript:
+Nếu codebase của bạn sử dụng Flow thay vì TypeScript:
 
 ```js
 {
@@ -134,7 +134,7 @@ If your codebase uses Flow instead of TypeScript:
 }
 ```
 
-Then use Flow's component syntax:
+Sau đó, sử dụng cú pháp component của Flow:
 
 ```js
 // Compiled: Flow component syntax
@@ -154,9 +154,9 @@ function helper(data) {
 }
 ```
 
-### Opting out specific functions {/*opting-out*/}
+### Loại trừ các hàm cụ thể {/*opting-out*/}
 
-Regardless of compilation mode, use `"use no memo"` to skip compilation:
+Bất kể chế độ biên dịch nào, hãy sử dụng `"use no memo"` để bỏ qua việc biên dịch:
 
 ```js
 function ComponentWithSideEffects() {
@@ -171,11 +171,11 @@ function ComponentWithSideEffects() {
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Component not being compiled in infer mode {/*component-not-compiled-infer*/}
+### Component không được biên dịch trong chế độ suy luận {/*component-not-compiled-infer*/}
 
-In `'infer'` mode, ensure your component follows React conventions:
+Trong chế độ `'infer'`, hãy đảm bảo component của bạn tuân theo các quy ước của React:
 
 ```js
 // ❌ Won't be compiled: lowercase name

@@ -1,11 +1,11 @@
 ---
 title: "use no memo"
-titleForTitleTag: "'use no memo' directive"
+titleForTitleTag: Chỉ thị "'use no memo'"
 ---
 
 <Intro>
 
-`"use no memo"` prevents a function from being optimized by React Compiler.
+`"use no memo"` ngăn một hàm được tối ưu hóa bởi React Compiler.
 
 </Intro>
 
@@ -13,11 +13,11 @@ titleForTitleTag: "'use no memo' directive"
 
 ---
 
-## Reference {/*reference*/}
+## Tham khảo {/*reference*/}
 
 ### `"use no memo"` {/*use-no-memo*/}
 
-Add `"use no memo"` at the beginning of a function to prevent React Compiler optimization.
+Thêm `"use no memo"` ở đầu một hàm để ngăn React Compiler tối ưu hóa hàm đó.
 
 ```js {1}
 function MyComponent() {
@@ -26,32 +26,32 @@ function MyComponent() {
 }
 ```
 
-When a function contains `"use no memo"`, the React Compiler will skip it entirely during optimization. This is useful as a temporary escape hatch when debugging or when dealing with code that doesn't work correctly with the compiler.
+Khi một hàm chứa `"use no memo"`, React Compiler sẽ hoàn toàn bỏ qua hàm đó trong quá trình tối ưu hóa. Điều này hữu ích như một cách tạm thời để vô hiệu hóa tính năng khi debug hoặc khi xử lý code không hoạt động chính xác với compiler.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* `"use no memo"` must be at the very beginning of a function body, before any imports or other code (comments are OK).
-* The directive must be written with double or single quotes, not backticks.
-* The directive must exactly match `"use no memo"` or its alias `"use no forget"`.
-* This directive takes precedence over all compilation modes and other directives.
-* It's intended as a temporary debugging tool, not a permanent solution.
+* `"use no memo"` phải nằm ở vị trí đầu tiên trong thân hàm, trước mọi import hoặc code khác (comment được phép).
+* Chỉ thị phải được viết bằng dấu ngoặc kép hoặc dấu ngoặc đơn, không dùng backtick.
+* Chỉ thị phải khớp chính xác với `"use no memo"` hoặc alias `"use no forget"` của nó.
+* Chỉ thị này được ưu tiên hơn tất cả chế độ compilation và các chỉ thị khác.
+* Chỉ thị này được thiết kế như một công cụ debug tạm thời, không phải giải pháp lâu dài.
 
-### How `"use no memo"` opts-out of optimization {/*how-use-no-memo-opts-out*/}
+### Cách `"use no memo"` loại khỏi quá trình tối ưu hóa {/*how-use-no-memo-opts-out*/}
 
-React Compiler analyzes your code at build time to apply optimizations. `"use no memo"` creates an explicit boundary that tells the compiler to skip a function entirely.
+React Compiler phân tích code của bạn tại thời điểm build để áp dụng các tối ưu hóa. `"use no memo"` tạo ra một ranh giới rõ ràng, yêu cầu compiler hoàn toàn bỏ qua một hàm.
 
-This directive takes precedence over all other settings:
-* In `all` mode: The function is skipped despite the global setting
-* In `infer` mode: The function is skipped even if heuristics would optimize it
+Chỉ thị này được ưu tiên hơn mọi cài đặt khác:
+* Ở chế độ `all`: Hàm bị bỏ qua bất kể cài đặt toàn cục
+* Ở chế độ `infer`: Hàm bị bỏ qua ngay cả khi heuristic cho rằng nên tối ưu hóa hàm đó
 
-The compiler treats these functions as if the React Compiler wasn't enabled, leaving them exactly as written.
+Compiler xử lý các hàm này như thể React Compiler chưa được bật, giữ nguyên chúng đúng như cách bạn đã viết.
 
-### When to use `"use no memo"` {/*when-to-use*/}
+### Khi nào nên sử dụng `"use no memo"` {/*when-to-use*/}
 
-`"use no memo"` should be used sparingly and temporarily. Common scenarios include:
+Nên sử dụng `"use no memo"` một cách có chọn lọc và tạm thời. Các trường hợp phổ biến gồm:
 
-#### Debugging compiler issues {/*debugging-compiler*/}
-When you suspect the compiler is causing issues, temporarily disable optimization to isolate the problem:
+#### Debug sự cố với compiler {/*debugging-compiler*/}
+Khi nghi ngờ compiler đang gây ra sự cố, hãy tạm thời vô hiệu hóa tính năng tối ưu hóa để cô lập vấn đề:
 
 ```js
 function ProblematicComponent({ data }) {
@@ -62,8 +62,8 @@ function ProblematicComponent({ data }) {
 }
 ```
 
-#### Third-party library integration {/*third-party*/}
-When integrating with libraries that might not be compatible with the compiler:
+#### Tích hợp thư viện bên thứ ba {/*third-party*/}
+Khi tích hợp với các thư viện có thể không tương thích với compiler:
 
 ```js
 function ThirdPartyWrapper() {
@@ -76,9 +76,9 @@ function ThirdPartyWrapper() {
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-The `"use no memo"` directive is placed at the beginning of a function body to prevent React Compiler from optimizing that function:
+Chỉ thị `"use no memo"` được đặt ở đầu thân hàm để ngăn React Compiler tối ưu hóa hàm đó:
 
 ```js
 function MyComponent() {
@@ -87,7 +87,7 @@ function MyComponent() {
 }
 ```
 
-The directive can also be placed at the top of a file to affect all functions in that module:
+Chỉ thị này cũng có thể được đặt ở đầu file để áp dụng cho tất cả các hàm trong module đó:
 
 ```js
 "use no memo";
@@ -95,15 +95,15 @@ The directive can also be placed at the top of a file to affect all functions in
 // All functions in this file will be skipped by the compiler
 ```
 
-`"use no memo"` at the function level overrides the module level directive.
+`"use no memo"` ở cấp độ hàm sẽ ghi đè chỉ thị ở cấp độ module.
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### Directive not preventing compilation {/*not-preventing*/}
+### Chỉ thị không ngăn compilation {/*not-preventing*/}
 
-If `"use no memo"` isn't working:
+Nếu `"use no memo"` không hoạt động:
 
 ```js
 // ❌ Wrong - directive after code
@@ -119,13 +119,13 @@ function Component() {
 }
 ```
 
-Also check:
-* Spelling - must be exactly `"use no memo"`
-* Quotes - must use single or double quotes, not backticks
+Ngoài ra, hãy kiểm tra:
+* Chính tả - phải chính xác là `"use no memo"`
+* Dấu ngoặc - phải sử dụng dấu ngoặc đơn hoặc dấu ngoặc kép, không dùng backtick
 
-### Best practices {/*best-practices*/}
+### Phương pháp tốt nhất {/*best-practices*/}
 
-**Always document why** you're disabling optimization:
+**Luôn ghi lại lý do** bạn vô hiệu hóa tính năng tối ưu hóa:
 
 ```js
 // ✅ Good - clear explanation and tracking
@@ -141,7 +141,7 @@ function Mystery() {
 }
 ```
 
-### See also {/*see-also*/}
+### Xem thêm {/*see-also*/}
 
-* [`"use memo"`](/reference/react-compiler/directives/use-memo) - Opt into compilation
-* [React Compiler](/learn/react-compiler) - Getting started guide
+* [`"use memo"`](/reference/react-compiler/directives/use-memo) - Bật compilation
+* [React Compiler](/learn/react-compiler) - Hướng dẫn bắt đầu

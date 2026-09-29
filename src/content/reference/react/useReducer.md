@@ -4,7 +4,7 @@ title: useReducer
 
 <Intro>
 
-`useReducer` is a React Hook that lets you add a [reducer](/learn/extracting-state-logic-into-a-reducer) to your component.
+`useReducer` là một React Hook cho phép bạn thêm một [reducer](/learn/extracting-state-logic-into-a-reducer) vào component của mình.
 
 ```js
 const [state, dispatch] = useReducer(reducer, initialArg, init?)
@@ -16,11 +16,11 @@ const [state, dispatch] = useReducer(reducer, initialArg, init?)
 
 ---
 
-## Reference {/*reference*/}
+## Tham khảo {/*reference*/}
 
 ### `useReducer(reducer, initialArg, init?)` {/*usereducer*/}
 
-Call `useReducer` at the top level of your component to manage its state with a [reducer.](/learn/extracting-state-logic-into-a-reducer)
+Gọi `useReducer` ở cấp cao nhất của component để quản lý state bằng một [reducer.](/learn/extracting-state-logic-into-a-reducer)
 
 ```js
 import { useReducer } from 'react';
@@ -34,32 +34,32 @@ function MyComponent() {
   // ...
 ```
 
-[See more examples below.](#usage)
+[Xem thêm ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `reducer`: The reducer function that specifies how the state gets updated. It must be pure, should take the state and action as arguments, and should return the next state. State and action can be of any types.
-* `initialArg`: The value from which the initial state is calculated. It can be a value of any type. How the initial state is calculated from it depends on the next `init` argument.
-* **optional** `init`: The initializer function that should return the initial state. If it's not specified, the initial state is set to `initialArg`. Otherwise, the initial state is set to the result of calling `init(initialArg)`.
+* `reducer`: Hàm reducer xác định cách state được cập nhật. Hàm này phải là pure, nên nhận state và action làm các đối số, đồng thời trả về state tiếp theo. State và action có thể thuộc bất kỳ kiểu nào.
+* `initialArg`: Giá trị được dùng để tính toán state ban đầu. Giá trị này có thể thuộc bất kỳ kiểu nào. Cách tính state ban đầu từ giá trị đó phụ thuộc vào đối số `init` tiếp theo.
+* **tùy chọn** `init`: Hàm initializer phải trả về state ban đầu. Nếu không được chỉ định, state ban đầu sẽ được đặt thành `initialArg`. Nếu không, state ban đầu sẽ được đặt thành kết quả của việc gọi `init(initialArg)`.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`useReducer` returns an array with exactly two values:
+`useReducer` trả về một mảng có chính xác hai giá trị:
 
-1. The current state. During the first render, it's set to `init(initialArg)` or `initialArg` (if there's no `init`).
-2. The [`dispatch` function](#dispatch) that lets you update the state to a different value and trigger a re-render.
+1. State hiện tại. Trong lần render đầu tiên, state được đặt thành `init(initialArg)` hoặc `initialArg` (nếu không có `init`).
+2. Hàm [`dispatch` function](#dispatch) cho phép bạn cập nhật state thành một giá trị khác và kích hoạt việc render lại.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* `useReducer` is a Hook, so you can only call it **at the top level of your component** or your own Hooks. You can't call it inside loops or conditions. If you need that, extract a new component and move the state into it.
-* The `dispatch` function has a stable identity, so you will often see it omitted from Effect dependencies, but including it will not cause the Effect to fire. If the linter lets you omit a dependency without errors, it is safe to do. [Learn more about removing Effect dependencies.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
-* In Strict Mode, React will **call your reducer and initializer twice** in order to [help you find accidental impurities.](#my-reducer-or-initializer-function-runs-twice) This is development-only behavior and does not affect production. If your reducer and initializer are pure (as they should be), this should not affect your logic. The result from one of the calls is ignored.
+* `useReducer` là một Hook, vì vậy bạn chỉ có thể gọi nó **ở cấp cao nhất của component** hoặc trong các Hook của riêng bạn. Bạn không thể gọi nó bên trong vòng lặp hoặc điều kiện. Nếu cần làm vậy, hãy tách thành một component mới và chuyển state vào đó.
+* Hàm `dispatch` có identity ổn định, vì vậy bạn thường thấy nó được bỏ qua khỏi các dependency của Effect, nhưng việc bao gồm nó sẽ không khiến Effect chạy. Nếu linter cho phép bạn bỏ qua một dependency mà không báo lỗi thì bạn có thể an toàn làm vậy. [Tìm hiểu thêm về cách loại bỏ các dependency của Effect.](/learn/removing-effect-dependencies#move-dynamic-objects-and-functions-inside-your-effect)
+* Trong Strict Mode, React sẽ **gọi reducer và initializer của bạn hai lần** để [giúp bạn phát hiện các tính không thuần khiết vô tình.](#my-reducer-or-initializer-function-runs-twice) Đây là hành vi chỉ có trong môi trường development và không ảnh hưởng đến production. Nếu reducer và initializer của bạn là pure (như yêu cầu), điều này sẽ không ảnh hưởng đến logic của bạn. Kết quả từ một trong các lần gọi sẽ bị bỏ qua.
 
 ---
 
-### `dispatch` function {/*dispatch*/}
+### Hàm `dispatch` {/*dispatch*/}
 
-The `dispatch` function returned by `useReducer` lets you update the state to a different value and trigger a re-render. You need to pass the action as the only argument to the `dispatch` function:
+Hàm `dispatch` được `useReducer` trả về cho phép bạn cập nhật state thành một giá trị khác và kích hoạt việc render lại. Bạn cần truyền action làm đối số duy nhất cho hàm `dispatch`:
 
 ```js
 const [state, dispatch] = useReducer(reducer, { age: 42 });
@@ -69,31 +69,31 @@ function handleClick() {
   // ...
 ```
 
-React will set the next state to the result of calling the `reducer` function you've provided with the current `state` and the action you've passed to `dispatch`.
+React sẽ đặt state tiếp theo thành kết quả của việc gọi hàm `reducer` mà bạn đã cung cấp với `state` hiện tại và action bạn đã truyền vào `dispatch`.
 
-#### Parameters {/*dispatch-parameters*/}
+#### Tham số {/*dispatch-parameters*/}
 
-* `action`: The action performed by the user. It can be a value of any type. By convention, an action is usually an object with a `type` property identifying it and, optionally, other properties with additional information.
+* `action`: Action được người dùng thực hiện. Action có thể thuộc bất kỳ kiểu nào. Theo quy ước, action thường là một object có thuộc tính `type` xác định action đó và tùy chọn thêm các thuộc tính khác chứa thông tin bổ sung.
 
-#### Returns {/*dispatch-returns*/}
+#### Giá trị trả về {/*dispatch-returns*/}
 
-`dispatch` functions do not have a return value.
+Các hàm `dispatch` không có giá trị trả về.
 
-#### Caveats {/*setstate-caveats*/}
+#### Lưu ý {/*setstate-caveats*/}
 
-* The `dispatch` function **only updates the state variable for the *next* render**. If you read the state variable after calling the `dispatch` function, [you will still get the old value](#ive-dispatched-an-action-but-logging-gives-me-the-old-state-value) that was on the screen before your call.
+* Hàm `dispatch` **chỉ cập nhật biến state cho lần render *tiếp theo***. Nếu bạn đọc biến state sau khi gọi hàm `dispatch`, [bạn vẫn sẽ nhận được giá trị cũ](#ive-dispatched-an-action-but-logging-gives-me-the-old-state-value) đang hiển thị trên màn hình trước khi bạn gọi hàm.
 
-* If the new value you provide is identical to the current `state`, as determined by an [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) comparison, React will **skip re-rendering the component and its children.** This is an optimization. React may still need to call your component before ignoring the result, but it shouldn't affect your code.
+* Nếu giá trị mới bạn cung cấp giống hệt với `state` hiện tại, theo xác định của phép so sánh [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is), React sẽ **bỏ qua việc render lại component và các component con của nó.** Đây là một tối ưu hóa. React vẫn có thể cần gọi component của bạn trước khi bỏ qua kết quả, nhưng điều này không nên ảnh hưởng đến code của bạn.
 
-* React [batches state updates.](/learn/queueing-a-series-of-state-updates) It updates the screen **after all the event handlers have run** and have called their `set` functions. This prevents multiple re-renders during a single event. In the rare case that you need to force React to update the screen earlier, for example to access the DOM, you can use [`flushSync`.](/reference/react-dom/flushSync)
+* React [gộp các lần cập nhật state.](/learn/queueing-a-series-of-state-updates) React cập nhật màn hình **sau khi tất cả các event handler đã chạy** và đã gọi các hàm `set` của chúng. Điều này ngăn nhiều lần render lại trong cùng một event. Trong trường hợp hiếm khi bạn cần buộc React cập nhật màn hình sớm hơn, chẳng hạn để truy cập DOM, bạn có thể sử dụng [`flushSync`.](/reference/react-dom/flushSync)
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Adding a reducer to a component {/*adding-a-reducer-to-a-component*/}
+### Thêm reducer vào component {/*adding-a-reducer-to-a-component*/}
 
-Call `useReducer` at the top level of your component to manage state with a [reducer.](/learn/extracting-state-logic-into-a-reducer)
+Gọi `useReducer` ở cấp cao nhất của component để quản lý state bằng một [reducer.](/learn/extracting-state-logic-into-a-reducer)
 
 ```js [[1, 8, "state"], [2, 8, "dispatch"], [4, 8, "reducer"], [3, 8, "{ age: 42 }"]]
 import { useReducer } from 'react';
@@ -107,12 +107,12 @@ function MyComponent() {
   // ...
 ```
 
-`useReducer` returns an array with exactly two items:
+`useReducer` trả về một mảng có chính xác hai phần tử:
 
-1. The <CodeStep step={1}>current state</CodeStep> of this state variable, initially set to the <CodeStep step={3}>initial state</CodeStep> you provided.
-2. The <CodeStep step={2}>`dispatch` function</CodeStep> that lets you change it in response to interaction.
+1. <CodeStep step={1}>State hiện tại</CodeStep> của biến state này, ban đầu được đặt thành <CodeStep step={3}>state ban đầu</CodeStep> mà bạn đã cung cấp.
+2. Hàm <CodeStep step={2}>`dispatch` function</CodeStep> cho phép bạn thay đổi state để phản hồi tương tác.
 
-To update what's on the screen, call <CodeStep step={2}>`dispatch`</CodeStep> with an object representing what the user did, called an *action*:
+Để cập nhật nội dung trên màn hình, hãy gọi <CodeStep step={2}>`dispatch`</CodeStep> với một object biểu thị điều người dùng đã thực hiện, được gọi là một *action*:
 
 ```js [[2, 2, "dispatch"]]
 function handleClick() {
@@ -120,7 +120,7 @@ function handleClick() {
 }
 ```
 
-React will pass the current state and the action to your <CodeStep step={4}>reducer function</CodeStep>. Your reducer will calculate and return the next state. React will store that next state, render your component with it, and update the UI.
+React sẽ truyền state hiện tại và action vào <CodeStep step={4}>hàm reducer</CodeStep> của bạn. Reducer sẽ tính toán và trả về state tiếp theo. React sẽ lưu state tiếp theo đó, render component với state này và cập nhật UI.
 
 <Sandpack>
 
@@ -158,13 +158,13 @@ button { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-`useReducer` is very similar to [`useState`](/reference/react/useState), but it lets you move the state update logic from event handlers into a single function outside of your component. Read more about [choosing between `useState` and `useReducer`.](/learn/extracting-state-logic-into-a-reducer#comparing-usestate-and-usereducer)
+`useReducer` rất giống với [`useState`](/reference/react/useState), nhưng cho phép bạn chuyển logic cập nhật state từ các event handler vào một hàm duy nhất bên ngoài component. Đọc thêm về [việc lựa chọn giữa `useState` và `useReducer`.](/learn/extracting-state-logic-into-a-reducer#comparing-usestate-and-usereducer)
 
 ---
 
-### Writing the reducer function {/*writing-the-reducer-function*/}
+### Viết hàm reducer {/*writing-the-reducer-function*/}
 
-A reducer function is declared like this:
+Hàm reducer được khai báo như sau:
 
 ```js
 function reducer(state, action) {
@@ -172,7 +172,7 @@ function reducer(state, action) {
 }
 ```
 
-Then you need to fill in the code that will calculate and return the next state. By convention, it is common to write it as a [`switch` statement.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) For each `case` in the `switch`, calculate and return some next state.
+Sau đó, bạn cần điền code để tính toán và trả về state tiếp theo. Theo quy ước, cách thường dùng là viết hàm này dưới dạng một câu lệnh [`switch` .](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) Với mỗi `case` trong `switch`, hãy tính toán và trả về một state tiếp theo nào đó.
 
 ```js {4-7,10-13}
 function reducer(state, action) {
@@ -194,7 +194,7 @@ function reducer(state, action) {
 }
 ```
 
-Actions can have any shape. By convention, it's common to pass objects with a `type` property identifying the action. It should include the minimal necessary information that the reducer needs to compute the next state.
+Action có thể có bất kỳ hình dạng nào. Theo quy ước, cách thường dùng là truyền các object có thuộc tính `type` xác định action. Object này nên bao gồm thông tin tối thiểu cần thiết mà reducer cần để tính toán state tiếp theo.
 
 ```js {5,9-12}
 function Form() {
@@ -213,13 +213,13 @@ function Form() {
   // ...
 ```
 
-The action type names are local to your component. [Each action describes a single interaction, even if that leads to multiple changes in data.](/learn/extracting-state-logic-into-a-reducer#writing-reducers-well) The shape of the state is arbitrary, but usually it'll be an object or an array.
+Tên các action có phạm vi cục bộ trong component của bạn. [Mỗi action mô tả một tương tác đơn lẻ, ngay cả khi tương tác đó dẫn đến nhiều thay đổi trong dữ liệu.](/learn/extracting-state-logic-into-a-reducer#writing-reducers-well) Hình dạng của state là tùy ý, nhưng thường sẽ là một object hoặc một mảng.
 
-Read [extracting state logic into a reducer](/learn/extracting-state-logic-into-a-reducer) to learn more.
+Đọc [tách logic state vào một reducer](/learn/extracting-state-logic-into-a-reducer) để tìm hiểu thêm.
 
 <Pitfall>
 
-State is read-only. Don't modify any objects or arrays in state:
+State chỉ được đọc. Đừng sửa đổi bất kỳ object hoặc mảng nào trong state:
 
 ```js {4,5}
 function reducer(state, action) {
@@ -231,7 +231,7 @@ function reducer(state, action) {
     }
 ```
 
-Instead, always return new objects from your reducer:
+Thay vào đó, hãy luôn trả về các object mới từ reducer:
 
 ```js {4-8}
 function reducer(state, action) {
@@ -245,7 +245,7 @@ function reducer(state, action) {
     }
 ```
 
-Read [updating objects in state](/learn/updating-objects-in-state) and [updating arrays in state](/learn/updating-arrays-in-state) to learn more.
+Đọc [cập nhật object trong state](/learn/updating-objects-in-state) và [cập nhật mảng trong state](/learn/updating-arrays-in-state) để tìm hiểu thêm.
 
 </Pitfall>
 
@@ -253,7 +253,7 @@ Read [updating objects in state](/learn/updating-objects-in-state) and [updating
 
 #### Form (object) {/*form-object*/}
 
-In this example, the reducer manages a state object with two fields: `name` and `age`.
+Trong ví dụ này, reducer quản lý một object state có hai trường: `name` và `age`.
 
 <Sandpack>
 
@@ -317,9 +317,9 @@ button { display: block; margin-top: 10px; }
 
 <Solution />
 
-#### Todo list (array) {/*todo-list-array*/}
+#### Danh sách Todo (mảng) {/*todo-list-array*/}
 
-In this example, the reducer manages an array of tasks. The array needs to be updated [without mutation.](/learn/updating-arrays-in-state)
+Trong ví dụ này, reducer quản lý một mảng các task. Mảng này cần được cập nhật [mà không mutation.](/learn/updating-arrays-in-state)
 
 <Sandpack>
 
@@ -510,9 +510,9 @@ ul, li { margin: 0; padding: 0; }
 
 <Solution />
 
-#### Writing concise update logic with Immer {/*writing-concise-update-logic-with-immer*/}
+#### Viết logic cập nhật ngắn gọn với Immer {/*writing-concise-update-logic-with-immer*/}
 
-If updating arrays and objects without mutation feels tedious, you can use a library like [Immer](https://github.com/immerjs/use-immer#useimmerreducer) to reduce repetitive code. Immer lets you write concise code as if you were mutating objects, but under the hood it performs immutable updates:
+Nếu việc cập nhật các array và object mà không mutation khiến bạn cảm thấy tẻ nhạt, bạn có thể sử dụng một thư viện như [Immer](https://github.com/immerjs/use-immer#useimmerreducer) để giảm bớt code lặp lại. Immer cho phép bạn viết code ngắn gọn như thể đang mutation các object, nhưng bên dưới nó thực hiện các cập nhật immutable:
 
 <Sandpack>
 
@@ -724,9 +724,9 @@ ul, li { margin: 0; padding: 0; }
 
 ---
 
-### Avoiding recreating the initial state {/*avoiding-recreating-the-initial-state*/}
+### Tránh tạo lại state ban đầu {/*avoiding-recreating-the-initial-state*/}
 
-React saves the initial state once and ignores it on the next renders.
+React lưu state ban đầu một lần và bỏ qua nó trong các lần render tiếp theo.
 
 ```js
 function createInitialState(username) {
@@ -738,9 +738,9 @@ function TodoList({ username }) {
   // ...
 ```
 
-Although the result of `createInitialState(username)` is only used for the initial render, you're still calling this function on every render. This can be wasteful if it's creating large arrays or performing expensive calculations.
+Mặc dù kết quả của `createInitialState(username)` chỉ được sử dụng cho lần render đầu tiên, bạn vẫn đang gọi hàm này trong mỗi lần render. Điều này có thể gây lãng phí nếu nó tạo các array lớn hoặc thực hiện các phép tính tốn kém.
 
-To solve this, you may **pass it as an _initializer_ function** to `useReducer` as the third argument instead:
+Để giải quyết vấn đề này, thay vào đó, bạn có thể **truyền nó dưới dạng hàm _initializer_** cho `useReducer` làm đối số thứ ba:
 
 ```js {6}
 function createInitialState(username) {
@@ -752,15 +752,15 @@ function TodoList({ username }) {
   // ...
 ```
 
-Notice that you’re passing `createInitialState`, which is the *function itself*, and not `createInitialState()`, which is the result of calling it. This way, the initial state does not get re-created after initialization.
+Lưu ý rằng bạn đang truyền `createInitialState`, tức là *bản thân hàm*, chứ không phải `createInitialState()`, tức là kết quả của việc gọi hàm. Nhờ vậy, state ban đầu sẽ không được tạo lại sau khi khởi tạo.
 
-In the above example, `createInitialState` takes a `username` argument. If your initializer doesn't need any information to compute the initial state, you may pass `null` as the second argument to `useReducer`.
+Trong ví dụ trên, `createInitialState` nhận một đối số `username`. Nếu initializer của bạn không cần bất kỳ thông tin nào để tính toán state ban đầu, bạn có thể truyền `null` làm đối số thứ hai cho `useReducer`.
 
 <Recipes titleText="The difference between passing an initializer and passing the initial state directly" titleId="examples-initializer">
 
-#### Passing the initializer function {/*passing-the-initializer-function*/}
+#### Truyền hàm initializer {/*passing-the-initializer-function*/}
 
-This example passes the initializer function, so the `createInitialState` function only runs during initialization. It does not run when component re-renders, such as when you type into the input.
+Ví dụ này truyền hàm initializer, vì vậy hàm `createInitialState` chỉ chạy trong quá trình khởi tạo. Hàm này không chạy khi component re-render, chẳng hạn như khi bạn nhập vào input.
 
 <Sandpack>
 
@@ -846,9 +846,9 @@ export default function TodoList({ username }) {
 
 <Solution />
 
-#### Passing the initial state directly {/*passing-the-initial-state-directly*/}
+#### Truyền trực tiếp state ban đầu {/*passing-the-initial-state-directly*/}
 
-This example **does not** pass the initializer function, so the `createInitialState` function runs on every render, such as when you type into the input. There is no observable difference in behavior, but this code is less efficient.
+Ví dụ này **không** truyền hàm initializer, vì vậy hàm `createInitialState` chạy trong mỗi lần render, chẳng hạn như khi bạn nhập vào input. Không có khác biệt quan sát được về hành vi, nhưng code này kém hiệu quả hơn.
 
 <Sandpack>
 
@@ -937,11 +937,11 @@ export default function TodoList({ username }) {
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I've dispatched an action, but logging gives me the old state value {/*ive-dispatched-an-action-but-logging-gives-me-the-old-state-value*/}
+### Tôi đã dispatch một action, nhưng việc logging lại cho giá trị state cũ {/*ive-dispatched-an-action-but-logging-gives-me-the-old-state-value*/}
 
-Calling the `dispatch` function **does not change state in the running code**:
+Việc gọi hàm `dispatch` **không thay đổi state trong code đang chạy**:
 
 ```js {4,5,8}
 function handleClick() {
@@ -956,9 +956,9 @@ function handleClick() {
 }
 ```
 
-This is because [states behaves like a snapshot.](/learn/state-as-a-snapshot) Updating state requests another render with the new state value, but does not affect the `state` JavaScript variable in your already-running event handler.
+Đó là vì [state hoạt động như một snapshot.](/learn/state-as-a-snapshot) Việc cập nhật state yêu cầu một lần render khác với giá trị state mới, nhưng không ảnh hưởng đến biến JavaScript `state` trong event handler đang chạy hiện tại.
 
-If you need to guess the next state value, you can calculate it manually by calling the reducer yourself:
+Nếu cần dự đoán giá trị state tiếp theo, bạn có thể tự tính toán bằng cách gọi reducer:
 
 ```js
 const action = { type: 'incremented_age' };
@@ -971,9 +971,9 @@ console.log(nextState); // { age: 43 }
 
 ---
 
-### I've dispatched an action, but the screen doesn't update {/*ive-dispatched-an-action-but-the-screen-doesnt-update*/}
+### Tôi đã dispatch một action, nhưng màn hình không cập nhật {/*ive-dispatched-an-action-but-the-screen-doesnt-update*/}
 
-React will **ignore your update if the next state is equal to the previous state,** as determined by an [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) comparison. This usually happens when you change an object or an array in state directly:
+React sẽ **bỏ qua bản cập nhật của bạn nếu state tiếp theo bằng state trước đó,** theo xác định của phép so sánh [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is). Điều này thường xảy ra khi bạn thay đổi trực tiếp một object hoặc array trong state:
 
 ```js {4-5,9-10}
 function reducer(state, action) {
@@ -993,7 +993,7 @@ function reducer(state, action) {
 }
 ```
 
-You mutated an existing `state` object and returned it, so React ignored the update. To fix this, you need to ensure that you're always [updating objects in state](/learn/updating-objects-in-state) and [updating arrays in state](/learn/updating-arrays-in-state) instead of mutating them:
+Bạn đã mutate một object `state` hiện có và trả về nó, nên React bỏ qua bản cập nhật. Để khắc phục, bạn cần đảm bảo luôn [cập nhật các object trong state](/learn/updating-objects-in-state) và [cập nhật các array trong state](/learn/updating-arrays-in-state) thay vì mutate chúng:
 
 ```js {4-8,11-15}
 function reducer(state, action) {
@@ -1019,9 +1019,9 @@ function reducer(state, action) {
 
 ---
 
-### A part of my reducer state becomes undefined after dispatching {/*a-part-of-my-reducer-state-becomes-undefined-after-dispatching*/}
+### Một phần state của reducer trở thành undefined sau khi dispatch {/*a-part-of-my-reducer-state-becomes-undefined-after-dispatching*/}
 
-Make sure that every `case` branch **copies all of the existing fields** when returning the new state:
+Đảm bảo mọi nhánh `case` đều **sao chép tất cả các field hiện có** khi trả về state mới:
 
 ```js {5}
 function reducer(state, action) {
@@ -1035,13 +1035,13 @@ function reducer(state, action) {
     // ...
 ```
 
-Without `...state` above, the returned next state would only contain the `age` field and nothing else.
+Nếu không có `...state` ở trên, state tiếp theo được trả về sẽ chỉ chứa field `age` và không có gì khác.
 
 ---
 
-### My entire reducer state becomes undefined after dispatching {/*my-entire-reducer-state-becomes-undefined-after-dispatching*/}
+### Toàn bộ state của reducer trở thành undefined sau khi dispatch {/*my-entire-reducer-state-becomes-undefined-after-dispatching*/}
 
-If your state unexpectedly becomes `undefined`, you're likely forgetting to `return` state in one of the cases, or your action type doesn't match any of the `case` statements. To find why, throw an error outside the `switch`:
+Nếu state bất ngờ trở thành `undefined`, có thể bạn đã quên `return` state trong một trong các case, hoặc type của action không khớp với bất kỳ câu lệnh `case` nào. Để tìm nguyên nhân, hãy throw một error bên ngoài `switch`:
 
 ```js {10}
 function reducer(state, action) {
@@ -1057,13 +1057,13 @@ function reducer(state, action) {
 }
 ```
 
-You can also use a static type checker like TypeScript to catch such mistakes.
+Bạn cũng có thể sử dụng static type checker như TypeScript để phát hiện những lỗi này.
 
 ---
 
-### I'm getting an error: "Too many re-renders" {/*im-getting-an-error-too-many-re-renders*/}
+### Tôi gặp lỗi: "Too many re-renders" {/*im-getting-an-error-too-many-re-renders*/}
 
-You might get an error that says: `Too many re-renders. React limits the number of renders to prevent an infinite loop.` Typically, this means that you're unconditionally dispatching an action *during render*, so your component enters a loop: render, dispatch (which causes a render), render, dispatch (which causes a render), and so on. Very often, this is caused by a mistake in specifying an event handler:
+Bạn có thể gặp lỗi với nội dung: `Too many re-renders. React limits the number of renders to prevent an infinite loop.` Thông thường, điều này có nghĩa là bạn đang vô điều kiện dispatch một action *trong lúc render*, khiến component của bạn rơi vào vòng lặp: render, dispatch (gây ra một lần render), render, dispatch (gây ra một lần render), và cứ tiếp tục như vậy. Rất thường xuyên, nguyên nhân là do chỉ định event handler không đúng:
 
 ```js {1-2}
 // 🚩 Wrong: calls the handler during render
@@ -1076,17 +1076,17 @@ return <button onClick={handleClick}>Click me</button>
 return <button onClick={(e) => handleClick(e)}>Click me</button>
 ```
 
-If you can't find the cause of this error, click on the arrow next to the error in the console and look through the JavaScript stack to find the specific `dispatch` function call responsible for the error.
+Nếu không thể tìm ra nguyên nhân của lỗi này, hãy nhấp vào mũi tên bên cạnh lỗi trong console và xem JavaScript stack để tìm lời gọi hàm `dispatch` cụ thể chịu trách nhiệm cho lỗi.
 
 ---
 
-### My reducer or initializer function runs twice {/*my-reducer-or-initializer-function-runs-twice*/}
+### Hàm reducer hoặc initializer của tôi chạy hai lần {/*my-reducer-or-initializer-function-runs-twice*/}
 
-In [Strict Mode](/reference/react/StrictMode), React will call your reducer and initializer functions twice. This shouldn't break your code.
+Trong [Strict Mode](/reference/react/StrictMode), React sẽ gọi các hàm reducer và initializer của bạn hai lần. Điều này không nên làm hỏng code của bạn.
 
-This **development-only** behavior helps you [keep components pure.](/learn/keeping-components-pure) React uses the result of one of the calls, and ignores the result of the other call. As long as your component, initializer, and reducer functions are pure, this shouldn't affect your logic. However, if they are accidentally impure, this helps you notice the mistakes.
+Hành vi **chỉ xảy ra trong development** này giúp bạn [giữ cho các component pure.](/learn/keeping-components-pure) React sử dụng kết quả của một trong các lần gọi và bỏ qua kết quả của lần gọi còn lại. Miễn là component, initializer và reducer của bạn là pure, điều này sẽ không ảnh hưởng đến logic của bạn. Tuy nhiên, nếu chúng vô tình không pure, điều này sẽ giúp bạn nhận ra các lỗi.
 
-For example, this impure reducer function mutates an array in state:
+Ví dụ, hàm reducer không pure này mutate một array trong state:
 
 ```js {4-6}
 function reducer(state, action) {
@@ -1101,7 +1101,7 @@ function reducer(state, action) {
 }
 ```
 
-Because React calls your reducer function twice, you'll see the todo was added twice, so you'll know that there is a mistake. In this example, you can fix the mistake by [replacing the array instead of mutating it](/learn/updating-arrays-in-state#adding-to-an-array):
+Vì React gọi hàm reducer của bạn hai lần, bạn sẽ thấy todo được thêm hai lần, từ đó biết rằng có lỗi. Trong ví dụ này, bạn có thể sửa lỗi bằng cách [thay array thay vì mutate nó](/learn/updating-arrays-in-state#adding-to-an-array):
 
 ```js {4-11}
 function reducer(state, action) {
@@ -1121,6 +1121,6 @@ function reducer(state, action) {
 }
 ```
 
-Now that this reducer function is pure, calling it an extra time doesn't make a difference in behavior. This is why React calling it twice helps you find mistakes. **Only component, initializer, and reducer functions need to be pure.** Event handlers don't need to be pure, so React will never call your event handlers twice.
+Bây giờ hàm reducer này đã pure, nên việc gọi nó thêm một lần không tạo ra khác biệt về hành vi. Đây là lý do việc React gọi hàm này hai lần giúp bạn tìm ra lỗi. **Chỉ các hàm component, initializer và reducer cần pure.** Event handler không cần pure, nên React sẽ không bao giờ gọi event handler của bạn hai lần.
 
-Read [keeping components pure](/learn/keeping-components-pure) to learn more.
+Đọc [giữ cho các component pure](/learn/keeping-components-pure) để tìm hiểu thêm.

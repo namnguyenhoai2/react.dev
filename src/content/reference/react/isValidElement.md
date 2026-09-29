@@ -4,7 +4,7 @@ title: isValidElement
 
 <Intro>
 
-`isValidElement` checks whether a value is a React element.
+`isValidElement` kiểm tra xem một giá trị có phải là một React element hay không.
 
 ```js
 const isElement = isValidElement(value)
@@ -16,11 +16,11 @@ const isElement = isValidElement(value)
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `isValidElement(value)` {/*isvalidelement*/}
 
-Call `isValidElement(value)` to check whether `value` is a React element.
+Gọi `isValidElement(value)` để kiểm tra xem `value` có phải là một React element hay không.
 
 ```js
 import { isValidElement, createElement } from 'react';
@@ -35,34 +35,34 @@ console.log(isValidElement('Hello')); // false
 console.log(isValidElement({ age: 42 })); // false
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `value`: The `value` you want to check. It can be any a value of any type.
+* `value`: `value` mà bạn muốn kiểm tra. Đây có thể là một giá trị thuộc bất kỳ kiểu nào.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`isValidElement` returns `true` if the `value` is a React element. Otherwise, it returns `false`.
+`isValidElement` trả về `true` nếu `value` là một React element. Nếu không, nó trả về `false`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* **Only [JSX tags](/learn/writing-markup-with-jsx) and objects returned by [`createElement`](/reference/react/createElement) are considered to be React elements.** For example, even though a number like `42` is a valid React *node* (and can be returned from a component), it is not a valid React element. Arrays and portals created with [`createPortal`](/reference/react-dom/createPortal) are also *not* considered to be React elements.
+* **Chỉ [JSX tags](/learn/writing-markup-with-jsx) và các object được trả về bởi [`createElement`](/reference/react/createElement) mới được xem là React element.** Ví dụ, mặc dù một số như `42` là một React *node* hợp lệ (và có thể được trả về từ một component), nó không phải là một React element hợp lệ. Các array và portal được tạo bằng [`createPortal`](/reference/react-dom/createPortal) cũng *không* được xem là React element.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Checking if something is a React element {/*checking-if-something-is-a-react-element*/}
+### Kiểm tra xem một giá trị có phải là React element hay không {/*checking-if-something-is-a-react-element*/}
 
-Call `isValidElement` to check if some value is a *React element.*
+Gọi `isValidElement` để kiểm tra xem một giá trị có phải là một *React element* hay không.
 
-React elements are:
+React element là:
 
-- Values produced by writing a [JSX tag](/learn/writing-markup-with-jsx)
-- Values produced by calling [`createElement`](/reference/react/createElement)
+- Các giá trị được tạo bằng cách viết một [JSX tag](/learn/writing-markup-with-jsx)
+- Các giá trị được tạo bằng cách gọi [`createElement`](/reference/react/createElement)
 
-For React elements, `isValidElement` returns `true`:
+Đối với React element, `isValidElement` trả về `true`:
 
 ```js
 import { isValidElement, createElement } from 'react';
@@ -76,9 +76,9 @@ console.log(isValidElement(createElement('p'))); // true
 console.log(isValidElement(createElement(MyComponent))); // true
 ```
 
-Any other values, such as strings, numbers, or arbitrary objects and arrays, are not React elements.
+Mọi giá trị khác, chẳng hạn như string, number hoặc object và array bất kỳ, đều không phải là React element.
 
-For them, `isValidElement` returns `false`:
+Đối với các giá trị đó, `isValidElement` trả về `false`:
 
 ```js
 // ❌ These are *not* React elements
@@ -90,15 +90,15 @@ console.log(isValidElement([<div />, <div />])); // false
 console.log(isValidElement(MyComponent)); // false
 ```
 
-It is very uncommon to need `isValidElement`. It's mostly useful if you're calling another API that *only* accepts elements (like [`cloneElement`](/reference/react/cloneElement) does) and you want to avoid an error when your argument is not a React element.
+Rất hiếm khi bạn cần dùng `isValidElement`. Nó chủ yếu hữu ích khi bạn gọi một API khác *chỉ* chấp nhận element (như [`cloneElement`](/reference/react/cloneElement)) và muốn tránh lỗi khi đối số của bạn không phải là React element.
 
-Unless you have some very specific reason to add an `isValidElement` check, you probably don't need it.
+Trừ khi bạn có một lý do rất cụ thể để thêm một kiểm tra `isValidElement`, có lẽ bạn không cần dùng nó.
 
 <DeepDive>
 
-#### React elements vs React nodes {/*react-elements-vs-react-nodes*/}
+#### React element và React node {/*react-elements-vs-react-nodes*/}
 
-When you write a component, you can return any kind of *React node* from it:
+Khi viết một component, bạn có thể trả về bất kỳ loại *React node* nào từ component đó:
 
 ```js
 function MyComponent() {
@@ -106,16 +106,16 @@ function MyComponent() {
 }
 ```
 
-A React node can be:
+Một React node có thể là:
 
-- A React element created like `<div />` or `createElement('div')`
-- A portal created with [`createPortal`](/reference/react-dom/createPortal)
-- A string
-- A number
-- `true`, `false`, `null`, or `undefined` (which are not displayed)
-- An array of other React nodes
+- Một React element được tạo như `<div />` hoặc `createElement('div')`
+- Một portal được tạo bằng [`createPortal`](/reference/react-dom/createPortal)
+- Một string
+- Một number
+- `true`, `false`, `null` hoặc `undefined` (những giá trị này không được hiển thị)
+- Một array gồm các React node khác
 
-**Note `isValidElement` checks whether the argument is a *React element,* not whether it's a React node.** For example, `42` is not a valid React element. However, it is a perfectly valid React node:
+**Lưu ý: `isValidElement` kiểm tra xem đối số có phải là một *React element* hay không, chứ không kiểm tra xem nó có phải là một React node hay không.** Ví dụ, `42` không phải là một React element hợp lệ. Tuy nhiên, nó hoàn toàn là một React node hợp lệ:
 
 ```js
 function MyComponent() {
@@ -123,6 +123,6 @@ function MyComponent() {
 }
 ```
 
-This is why you shouldn't use `isValidElement` as a way to check whether something can be rendered.
+Đây là lý do bạn không nên dùng `isValidElement` để kiểm tra xem một giá trị có thể được render hay không.
 
 </DeepDive>

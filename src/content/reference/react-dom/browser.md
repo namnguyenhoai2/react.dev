@@ -1,10 +1,10 @@
 ---
-title: browser
+title: trình duyệt
 ---
 
 <Intro>
 
-`browser` lets you mark a component as browser-only during server rendering.
+`browser` cho phép bạn đánh dấu một component chỉ dành cho trình duyệt trong quá trình render phía server.
 
 ```js
 use(browser(reason?))
@@ -16,11 +16,11 @@ use(browser(reason?))
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `browser(reason?)` {/*browser*/}
 
-Call `browser` inside [`use`](/reference/react/use) to mark a component as browser-only during server rendering:
+Gọi `browser` bên trong [`use`](/reference/react/use) để đánh dấu một component chỉ dành cho trình duyệt trong quá trình render phía server:
 
 ```js
 import { use } from 'react';
@@ -32,35 +32,35 @@ function BrowserOnly() {
 }
 ```
 
-During server rendering, `use(browser())` stops rendering the component and leaves the closest [`<Suspense>`](/reference/react/Suspense) boundary's fallback in its place. In the browser, `use(browser())` returns `undefined`, so the component renders normally.
+Trong quá trình render phía server, `use(browser())` dừng việc render component và để fallback của boundary [`<Suspense>`](/reference/react/Suspense) gần nhất thay vào đó. Trong trình duyệt, `use(browser())` trả về `undefined`, vì vậy component được render bình thường.
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* **optional** `reason`: A string or function that explains why the content needs to render in the browser. The string or the function's return value becomes the `cause` of the `Error` passed to [`onBrowserBailout`](#reporting-browser-only-rendering-on-the-server). React calls a reason function each time a server renderer encounters the value returned by `browser`, but does not call it in the browser. If creating the reason is expensive, pass a function such as `() => new Error(...)`.
+* **tùy chọn** `reason`: Một chuỗi hoặc function giải thích lý do nội dung cần được render trong trình duyệt. Chuỗi hoặc giá trị trả về của function sẽ trở thành `cause` của `Error` được truyền đến [`onBrowserBailout`](#reporting-browser-only-rendering-on-the-server). React gọi function lý do mỗi khi server renderer gặp giá trị do `browser` trả về, nhưng không gọi function này trong trình duyệt. Nếu việc tạo lý do tốn kém, hãy truyền một function như `() => new Error(...)`.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`browser` returns an opaque value that you can pass to `use` in a component or use as the reason when [aborting a server render](#aborting-pending-server-rendering-for-the-browser). In the browser, passing this value to `use` returns `undefined`.
+`browser` trả về một giá trị opaque mà bạn có thể truyền vào `use` trong một component hoặc dùng làm lý do khi [hủy một lần render phía server](#aborting-pending-server-rendering-for-the-browser). Trong trình duyệt, việc truyền giá trị này vào `use` sẽ trả về `undefined`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* `use(browser())` must be inside a `<Suspense>` boundary during server rendering. Without one, the server render fails.
-* `use(browser())` must be called from a [Client Component](/reference/rsc/use-client), not a [Server Component](/reference/rsc/server-components).
-* Calling `browser()` by itself has no effect. To mark a component as browser-only, pass the value returned by `browser` to `use`. Do not throw it.
+* `use(browser())` phải nằm bên trong một boundary `<Suspense>` trong quá trình render phía server. Nếu không có boundary này, quá trình render phía server sẽ thất bại.
+* `use(browser())` phải được gọi từ một [Client Component](/reference/rsc/use-client), không phải một [Server Component](/reference/rsc/server-components).
+* Việc tự gọi `browser()` không có tác dụng. Để đánh dấu một component chỉ dành cho trình duyệt, hãy truyền giá trị do `browser` trả về vào `use`. Không được throw giá trị đó.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Rendering content only in the browser {/*rendering-content-only-in-the-browser*/}
+### Chỉ render nội dung trong trình duyệt {/*rendering-content-only-in-the-browser*/}
 
-Call `browser` inside `use` in a component that should only render in the browser:
+Gọi `browser` bên trong `use` trong một component chỉ nên được render trong trình duyệt:
 
-You can use this instead of checking `typeof window`, waiting for an [`Effect`](/reference/react/useEffect) to set mounted state, or using a framework option to disable server rendering.
+Bạn có thể dùng cách này thay cho việc kiểm tra `typeof window`, chờ một [`Effect`](/reference/react/useEffect) để thiết lập trạng thái đã mount, hoặc dùng một tùy chọn của framework để tắt server rendering.
 
-Click **Reload** to see the loading fallback in the initial HTML. After hydration, React displays the draft loaded from `localStorage`.
+Nhấp vào **Reload** để xem fallback loading trong HTML ban đầu. Sau hydration, React hiển thị bản nháp được tải từ `localStorage`.
 
 <Sandpack>
 
@@ -206,7 +206,7 @@ iframe {
 
 <Note>
 
-`use(browser())` must be called from a Client Component. If your framework uses Server Components by default, add the [`'use client'`](/reference/rsc/use-client) directive to that file or move the call to a child Client Component:
+`use(browser())` phải được gọi từ một Client Component. Nếu framework của bạn mặc định sử dụng Server Components, hãy thêm directive [`'use client'`](/reference/rsc/use-client) vào file đó hoặc chuyển lời gọi sang một Client Component con:
 
 ```js {1}
 'use client';
@@ -225,13 +225,13 @@ export default function SavedDraft() {
 
 ---
 
-### Conditionally rendering on the server {/*conditionally-rendering-on-the-server*/}
+### Render có điều kiện trên server {/*conditionally-rendering-on-the-server*/}
 
-Like other calls to [`use`](/reference/react/use), `use(browser())` can be called inside a conditional statement or after an early return. This lets a Component or custom Hook opt out of server rendering based on a condition, such as the value of a prop.
+Giống như các lời gọi khác đến [`use`](/reference/react/use), `use(browser())` có thể được gọi bên trong một câu lệnh điều kiện hoặc sau một early return. Điều này cho phép một Component hoặc custom Hook chọn không render phía server dựa trên một điều kiện, chẳng hạn như giá trị của một prop.
 
-For example, this `useTimeZone` Hook accepts an optional default value. When provided, React renders the default value in the initial HTML and in the browser. Without a default value, the Component suspends during server rendering and shows the device's local time zone in the browser.
+Ví dụ, `useTimeZone` Hook này chấp nhận một giá trị mặc định tùy chọn. Khi được cung cấp, React sẽ render giá trị mặc định trong HTML ban đầu và trong trình duyệt. Nếu không có giá trị mặc định, Component sẽ suspend trong quá trình render phía server và hiển thị múi giờ cục bộ của thiết bị trong trình duyệt.
 
-Click **Reload** to see the loading fallback before the user's time zone appears.
+Nhấp vào **Reload** để xem fallback loading trước khi múi giờ của người dùng xuất hiện.
 
 <Sandpack>
 
@@ -371,7 +371,7 @@ iframe {
 
 </Sandpack>
 
-You can apply a similar pattern to conditionally avoid server rendering when using a Suspense-enabled data-fetching library:
+Bạn có thể áp dụng pattern tương tự để có điều kiện tránh render phía server khi sử dụng thư viện data-fetching hỗ trợ Suspense:
 
 ```js {3}
 function useBrowserQuery(query, options) {
@@ -391,13 +391,13 @@ function ProductDetails({ productId, initialData }) {
 }
 ```
 
-With `initialData`, React renders the Component to HTML on the server. Without it, React leaves the closest [`<Suspense>`](/reference/react/Suspense) boundary's fallback in the HTML. In the browser, `useQuery` can fetch the data or read it from its client cache as usual.
+Với `initialData`, React render Component thành HTML trên server. Nếu không có nó, React để fallback của boundary [`<Suspense>`](/reference/react/Suspense) gần nhất trong HTML. Trong trình duyệt, `useQuery` có thể fetch dữ liệu hoặc đọc dữ liệu từ client cache như bình thường.
 
 ---
 
-### Reporting browser-only rendering on the server {/*reporting-browser-only-rendering-on-the-server*/}
+### Báo cáo việc render chỉ dành cho trình duyệt trên server {/*reporting-browser-only-rendering-on-the-server*/}
 
-Pass an `onBrowserBailout` callback to the server renderer to report browser-only rendering. When React leaves a Suspense fallback for the browser, it does not call the server renderer's `onError` callback or [`hydrateRoot`'s `onRecoverableError`](/reference/react-dom/client/hydrateRoot#error-logging-in-production) callback. This example also passes a reason, which is available as the reported error's `cause`:
+Truyền một callback `onBrowserBailout` cho server renderer để báo cáo việc render chỉ dành cho trình duyệt. Khi React để lại một Suspense fallback cho trình duyệt, nó không gọi callback `onError` của server renderer hoặc callback [`hydrateRoot` `onRecoverableError`](/reference/react-dom/client/hydrateRoot#error-logging-in-production). Ví dụ này cũng truyền một lý do, có sẵn trong `cause` của lỗi được báo cáo:
 
 ```js
 import { Suspense, use, useState } from 'react';
@@ -428,20 +428,20 @@ const { pipe } = renderToPipeableStream(<App />, {
 });
 ```
 
-`onBrowserBailout` receives two arguments:
+`onBrowserBailout` nhận hai đối số:
 
-1. An `Error` describing the browser-only render. If you passed a reason to `browser`, it is available as the error's `cause`.
-2. An `errorInfo` object with a `componentStack` showing where browser-only rendering occurred.
+1. Một `Error` mô tả việc render chỉ dành cho trình duyệt. Nếu bạn truyền một lý do vào `browser`, lý do đó có sẵn trong `cause` của lỗi.
+2. Một object `errorInfo` có `componentStack` cho biết nơi xảy ra việc render chỉ dành cho trình duyệt.
 
-The reason function can return any value. Return a new `Error` to give the cause its own stack without creating the `Error` in the browser. React does not serialize the reason into the HTML.
+Function lý do có thể trả về bất kỳ giá trị nào. Hãy trả về một `Error` mới để nguyên nhân có stack riêng mà không tạo `Error` trong trình duyệt. React không serialize lý do vào HTML.
 
-If there is no Suspense boundary to provide a fallback, the server render fails. React reports the failure through the renderer's usual error callbacks instead of `onBrowserBailout`.
+Nếu không có Suspense boundary để cung cấp fallback, quá trình render phía server sẽ thất bại. React báo cáo lỗi thông qua các callback lỗi thông thường của renderer thay vì `onBrowserBailout`.
 
 ---
 
-### Aborting pending server rendering for the browser {/*aborting-pending-server-rendering-for-the-browser*/}
+### Hủy quá trình render phía server đang chờ để trình duyệt tiếp tục {/*aborting-pending-server-rendering-for-the-browser*/}
 
-If you call a server rendering API directly, you can stop waiting for pending content and let the browser finish rendering it. Pass the value returned by `browser` as the reason when aborting the server render. React then leaves pending Suspense boundaries in their fallback state and renders their content in the browser:
+Nếu bạn gọi trực tiếp một API render phía server, bạn có thể dừng chờ nội dung đang chờ xử lý và để trình duyệt hoàn tất việc render. Truyền giá trị do `browser` trả về làm lý do khi hủy quá trình render phía server. Sau đó React để các Suspense boundary đang chờ ở trạng thái fallback và render nội dung của chúng trong trình duyệt:
 
 ```js {1,8}
 import { browser } from 'react-dom';
@@ -457,6 +457,6 @@ const { pipe, abort } = renderToPipeableStream(<App />, {
 });
 ```
 
-A `browser` abort reason does not trigger the server renderer's `onError` callback or `hydrateRoot`'s `onRecoverableError` callback. Instead, the server renderer reports each recovered Suspense boundary to `onBrowserBailout`.
+Một lý do hủy `browser` không kích hoạt callback `onError` của server renderer hoặc callback `hydrateRoot` của `onRecoverableError`. Thay vào đó, server renderer báo cáo từng Suspense boundary đã được khôi phục cho `onBrowserBailout`.
 
-For server rendering APIs that accept an [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal), pass `browser()` as the reason to [`AbortController.abort`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort).
+Đối với các API render phía server chấp nhận một [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal), hãy truyền `browser()` làm lý do cho [`AbortController.abort`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort).

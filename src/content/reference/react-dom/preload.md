@@ -4,13 +4,13 @@ title: preload
 
 <Note>
 
-[React-based frameworks](/learn/creating-a-react-app) frequently handle resource loading for you, so you might not have to call this API yourself. Consult your framework's documentation for details.
+[các framework dựa trên React](/learn/creating-a-react-app) thường xử lý việc tải tài nguyên giúp bạn, vì vậy bạn có thể không cần tự gọi API này. Hãy tham khảo tài liệu của framework để biết thêm chi tiết.
 
 </Note>
 
 <Intro>
 
-`preload` lets you eagerly fetch a resource such as a stylesheet, font, or external script that you expect to use.
+`preload` cho phép bạn eager fetch một tài nguyên, chẳng hạn như stylesheet, font hoặc external script mà bạn dự kiến sẽ sử dụng.
 
 ```js
 preload("https://example.com/font.woff2", {as: "font"});
@@ -22,11 +22,11 @@ preload("https://example.com/font.woff2", {as: "font"});
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `preload(href, options)` {/*preload*/}
 
-To preload a resource, call the `preload` function from `react-dom`.
+Để preload một tài nguyên, hãy gọi hàm `preload` từ `react-dom`.
 
 ```js
 import { preload } from 'react-dom';
@@ -38,47 +38,47 @@ function AppRoot() {
 
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-The `preload` function provides the browser with a hint that it should start downloading the given resource, which can save time.
+Hàm `preload` cung cấp cho trình duyệt một gợi ý rằng trình duyệt nên bắt đầu tải xuống tài nguyên được chỉ định, nhờ đó có thể tiết kiệm thời gian.
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `href`: a string. The URL of the resource you want to download.
-* `options`: an object. It contains the following properties:
-  *  `as`: a required string. The type of resource. Its [possible values](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#as) are `audio`, `document`, `embed`, `fetch`, `font`, `image`, `object`, `script`, `style`, `track`, `video`, `worker`.
-  *  `crossOrigin`: a string. The [CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) to use. Its possible values are `anonymous` and `use-credentials`. It is required when `as` is set to `"fetch"`.
-  *  `referrerPolicy`: a string. The [Referrer header](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#referrerpolicy) to send when fetching. Its possible values are `no-referrer-when-downgrade` (the default), `no-referrer`, `origin`, `origin-when-cross-origin`, and `unsafe-url`.
-  *  `integrity`: a string. A cryptographic hash of the resource, to [verify its authenticity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
-  *  `type`: a string. The MIME type of the resource.
-  *  `nonce`: a string. A cryptographic [nonce to allow the resource](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) when using a strict Content Security Policy.
-  *  `fetchPriority`: a string. Suggests a relative priority for fetching the resource. The possible values are `auto` (the default), `high`, and `low`.
-  *  `imageSrcSet`: a string. For use only with `as: "image"`. Specifies the [source set of the image](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
-  *  `imageSizes`: a string. For use only with `as: "image"`. Specifies the [sizes of the image](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+* `href`: một chuỗi. URL của tài nguyên bạn muốn tải xuống.
+* `options`: một object. Object này chứa các thuộc tính sau:
+  *  `as`: một chuỗi bắt buộc. Loại tài nguyên. Các [giá trị có thể có](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#as) của thuộc tính này là `audio`, `document`, `embed`, `fetch`, `font`, `image`, `object`, `script`, `style`, `track`, `video`, `worker`.
+  *  `crossOrigin`: một chuỗi. [CORS policy](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) cần sử dụng. Các giá trị có thể có là `anonymous` và `use-credentials`. Thuộc tính này bắt buộc khi `as` được đặt thành `"fetch"`.
+  *  `referrerPolicy`: một chuỗi. [Referrer header](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#referrerpolicy) cần gửi khi fetch. Các giá trị có thể có là `no-referrer-when-downgrade` (mặc định), `no-referrer`, `origin`, `origin-when-cross-origin` và `unsafe-url`.
+  *  `integrity`: một chuỗi. Hàm băm mật mã của tài nguyên, dùng để [xác minh tính xác thực của tài nguyên](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
+  *  `type`: một chuỗi. MIME type của tài nguyên.
+  *  `nonce`: một chuỗi. Một [nonce mật mã cho phép tài nguyên](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) khi sử dụng Content Security Policy nghiêm ngặt.
+  *  `fetchPriority`: một chuỗi. Đề xuất mức độ ưu tiên tương đối khi fetch tài nguyên. Các giá trị có thể có là `auto` (mặc định), `high` và `low`.
+  *  `imageSrcSet`: một chuỗi. Chỉ sử dụng với `as: "image"`. Chỉ định [source set của hình ảnh](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+  *  `imageSizes`: một chuỗi. Chỉ sử dụng với `as: "image"`. Chỉ định [kích thước của hình ảnh](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`preload` returns nothing.
+`preload` không trả về gì.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* Multiple equivalent calls to `preload` have the same effect as a single call. Calls to `preload` are considered equivalent according to the following rules:
-  * Two calls are equivalent if they have the same `href`, except:
-  * If `as` is set to `image`, two calls are equivalent if they have the same `href`, `imageSrcSet`, and `imageSizes`.
-* In the browser, you can call `preload` in any situation: while rendering a component, in an Effect, in an event handler, and so on.
-* In server-side rendering or when rendering Server Components, `preload` only has an effect if you call it while rendering a component or in an async context originating from rendering a component. Any other calls will be ignored.
+* Nhiều lần gọi tương đương đến `preload` có cùng tác dụng như một lần gọi. Các lần gọi đến `preload` được xem là tương đương theo các quy tắc sau:
+  * Hai lần gọi tương đương nếu chúng có cùng `href`, ngoại trừ:
+  * Nếu `as` được đặt thành `image`, hai lần gọi tương đương nếu chúng có cùng `href`, `imageSrcSet` và `imageSizes`.
+* Trong trình duyệt, bạn có thể gọi `preload` trong mọi tình huống: khi render component, trong Effect, trong event handler, v.v.
+* Khi server-side rendering hoặc render Server Components, `preload` chỉ có tác dụng nếu bạn gọi nó trong khi render một component hoặc trong một async context bắt nguồn từ việc render một component. Mọi lần gọi khác sẽ bị bỏ qua.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Preloading when rendering {/*preloading-when-rendering*/}
+### Preload khi render {/*preloading-when-rendering*/}
 
-Call `preload` when rendering a component if you know that it or its children will use a specific resource.
+Gọi `preload` khi render một component nếu bạn biết component đó hoặc các component con của nó sẽ sử dụng một tài nguyên cụ thể.
 
 <Recipes titleText="Examples of preloading">
 
-#### Preloading an external script {/*preloading-an-external-script*/}
+#### Preload external script {/*preloading-an-external-script*/}
 
 ```js
 import { preload } from 'react-dom';
@@ -89,11 +89,11 @@ function AppRoot() {
 }
 ```
 
-If you want the browser to start executing the script immediately (rather than just downloading it), use [`preinit`](/reference/react-dom/preinit) instead. If you want to load an ESM module, use [`preloadModule`](/reference/react-dom/preloadModule).
+Nếu muốn trình duyệt bắt đầu thực thi script ngay lập tức (thay vì chỉ tải xuống), hãy sử dụng [`preinit`](/reference/react-dom/preinit) thay thế. Nếu muốn load một ESM module, hãy sử dụng [`preloadModule`](/reference/react-dom/preloadModule).
 
 <Solution />
 
-#### Preloading a stylesheet {/*preloading-a-stylesheet*/}
+#### Preload stylesheet {/*preloading-a-stylesheet*/}
 
 ```js
 import { preload } from 'react-dom';
@@ -104,11 +104,11 @@ function AppRoot() {
 }
 ```
 
-If you want the stylesheet to be inserted into the document immediately (which means the browser will start parsing it immediately rather than just downloading it), use [`preinit`](/reference/react-dom/preinit) instead.
+Nếu muốn stylesheet được chèn ngay vào document (nghĩa là trình duyệt sẽ bắt đầu parse stylesheet ngay lập tức thay vì chỉ tải xuống), hãy sử dụng [`preinit`](/reference/react-dom/preinit) thay thế.
 
 <Solution />
 
-#### Preloading a font {/*preloading-a-font*/}
+#### Preload font {/*preloading-a-font*/}
 
 ```js
 import { preload } from 'react-dom';
@@ -120,11 +120,11 @@ function AppRoot() {
 }
 ```
 
-If you preload a stylesheet, it's smart to also preload any fonts that the stylesheet refers to. That way, the browser can start downloading the font before it's downloaded and parsed the stylesheet.
+Nếu preload một stylesheet, bạn cũng nên preload mọi font mà stylesheet đó tham chiếu. Nhờ vậy, trình duyệt có thể bắt đầu tải xuống font trước khi stylesheet được tải xuống và parse.
 
 <Solution />
 
-#### Preloading an image {/*preloading-an-image*/}
+#### Preload hình ảnh {/*preloading-an-image*/}
 
 ```js
 import { preload } from 'react-dom';
@@ -139,15 +139,15 @@ function AppRoot() {
 }
 ```
 
-When preloading an image, the `imageSrcSet` and `imageSizes` options help the browser [fetch the correctly sized image for the size of the screen](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+Khi preload một hình ảnh, các tùy chọn `imageSrcSet` và `imageSizes` giúp trình duyệt [fetch hình ảnh có kích thước phù hợp với kích thước màn hình](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 <Solution />
 
 </Recipes>
 
-### Preloading in an event handler {/*preloading-in-an-event-handler*/}
+### Preload trong event handler {/*preloading-in-an-event-handler*/}
 
-Call `preload` in an event handler before transitioning to a page or state where external resources will be needed. This gets the process started earlier than if you call it during the rendering of the new page or state.
+Gọi `preload` trong một event handler trước khi chuyển sang trang hoặc state nơi cần các tài nguyên bên ngoài. Việc này bắt đầu quá trình sớm hơn so với khi bạn gọi nó trong lúc render trang hoặc state mới.
 
 ```js
 import { preload } from 'react-dom';

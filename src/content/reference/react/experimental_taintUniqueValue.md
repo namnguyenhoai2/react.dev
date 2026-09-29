@@ -1,34 +1,35 @@
 ---
 title: experimental_taintUniqueValue
+
 version: experimental
 ---
 
 <Experimental>
 
-**This API is experimental and is not available in a stable version of React yet.**
+**API này đang ở trạng thái thử nghiệm và chưa có trong phiên bản React ổn định.**
 
-You can try it by upgrading React packages to the most recent experimental version:
+Bạn có thể dùng thử bằng cách nâng cấp các package React lên phiên bản thử nghiệm mới nhất:
 
 - `react@experimental`
 - `react-dom@experimental`
 - `eslint-plugin-react-hooks@experimental`
 
-Experimental versions of React may contain bugs. Don't use them in production.
+Các phiên bản thử nghiệm của React có thể chứa lỗi. Không sử dụng chúng trong môi trường production.
 
-This API is only available inside [React Server Components](/reference/rsc/use-client).
+API này chỉ khả dụng bên trong [React Server Components](/reference/rsc/use-client).
 
 </Experimental>
 
 
 <Intro>
 
-`taintUniqueValue` lets you prevent unique values from being passed to Client Components like passwords, keys, or tokens.
+`taintUniqueValue` cho phép bạn ngăn không cho các giá trị duy nhất được truyền đến Client Components, chẳng hạn như mật khẩu, key hoặc token.
 
 ```js
 taintUniqueValue(errMessage, lifetime, value)
 ```
 
-To prevent passing an object containing sensitive data, see [`taintObjectReference`](/reference/react/experimental_taintObjectReference).
+Để ngăn việc truyền một object chứa dữ liệu nhạy cảm, hãy xem [`taintObjectReference`](/reference/react/experimental_taintObjectReference).
 
 </Intro>
 
@@ -36,11 +37,11 @@ To prevent passing an object containing sensitive data, see [`taintObjectReferen
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `taintUniqueValue(message, lifetime, value)` {/*taintuniquevalue*/}
 
-Call `taintUniqueValue` with a password, token, key or hash to register it with React as something that should not be allowed to be passed to the Client as is:
+Gọi `taintUniqueValue` với mật khẩu, token, key hoặc hash để đăng ký giá trị đó với React là một giá trị không được phép truyền nguyên trạng đến Client:
 
 ```js
 import {experimental_taintUniqueValue} from 'react';
@@ -52,34 +53,34 @@ experimental_taintUniqueValue(
 );
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `message`: The message you want to display if `value` is passed to a Client Component. This message will be displayed as a part of the Error that will be thrown if `value` is passed to a Client Component.
+* `message`: Thông báo bạn muốn hiển thị nếu `value` được truyền đến Client Component. Thông báo này sẽ được hiển thị như một phần của Error được throw nếu `value` được truyền đến Client Component.
 
-* `lifetime`: Any object that indicates how long `value` should be tainted. `value` will be blocked from being sent to any Client Component while this object still exists. For example, passing `globalThis` blocks the value for the lifetime of an app. `lifetime` is typically an object whose properties contains `value`.
+* `lifetime`: Bất kỳ object nào cho biết thời gian `value` cần bị taint. `value` sẽ bị chặn không cho gửi đến bất kỳ Client Component nào trong khi object này vẫn còn tồn tại. Ví dụ, truyền `globalThis` sẽ chặn giá trị trong suốt vòng đời của app. `lifetime` thường là một object có các property chứa `value`.
 
-* `value`: A string, bigint or TypedArray. `value` must be a unique sequence of characters or bytes with high entropy such as a cryptographic token, private key, hash, or a long password. `value` will be blocked from being sent to any Client Component.
+* `value`: Một string, bigint hoặc TypedArray. `value` phải là một chuỗi ký tự hoặc byte duy nhất có entropy cao, chẳng hạn như cryptographic token, private key, hash hoặc mật khẩu dài. `value` sẽ bị chặn không cho gửi đến bất kỳ Client Component nào.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`experimental_taintUniqueValue` returns `undefined`.
+`experimental_taintUniqueValue` trả về `undefined`.
 
-#### Caveats {/*caveats*/}
+#### Lưu ý {/*caveats*/}
 
-* Deriving new values from tainted values can compromise tainting protection. New values created by uppercasing tainted values, concatenating tainted string values into a larger string, converting tainted values to base64, substringing tainted values, and other similar transformations are not tainted unless you explicitly call `taintUniqueValue` on these newly created values.
-* Do not use `taintUniqueValue` to protect low-entropy values such as PIN codes or phone numbers. If any value in a request is controlled by an attacker, they could infer which value is tainted by enumerating all possible values of the secret.
+* Việc tạo các giá trị mới từ các giá trị đã bị taint có thể làm ảnh hưởng đến cơ chế bảo vệ taint. Các giá trị mới được tạo bằng cách chuyển các giá trị đã bị taint sang chữ hoa, nối các giá trị string đã bị taint thành một string lớn hơn, chuyển các giá trị đã bị taint sang base64, lấy substring từ các giá trị đã bị taint và các phép biến đổi tương tự khác sẽ không bị taint, trừ khi bạn gọi `taintUniqueValue` một cách rõ ràng trên các giá trị mới được tạo này.
+* Không sử dụng `taintUniqueValue` để bảo vệ các giá trị có entropy thấp, chẳng hạn như mã PIN hoặc số điện thoại. Nếu bất kỳ giá trị nào trong request do kẻ tấn công kiểm soát, họ có thể suy ra giá trị nào bị taint bằng cách liệt kê tất cả các giá trị bí mật có thể có.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Prevent a token from being passed to Client Components {/*prevent-a-token-from-being-passed-to-client-components*/}
+### Ngăn token được truyền đến Client Components {/*prevent-a-token-from-being-passed-to-client-components*/}
 
-To ensure that sensitive information such as passwords, session tokens, or other unique values do not inadvertently get passed to Client Components, the `taintUniqueValue` function provides a layer of protection. When a value is tainted, any attempt to pass it to a Client Component will result in an error.
+Để đảm bảo thông tin nhạy cảm như mật khẩu, session token hoặc các giá trị duy nhất khác không vô tình được truyền đến Client Components, function `taintUniqueValue` cung cấp một lớp bảo vệ. Khi một giá trị bị taint, mọi nỗ lực truyền giá trị đó đến Client Component sẽ dẫn đến một lỗi.
 
-The `lifetime` argument defines the duration for which the value remains tainted. For values that should remain tainted indefinitely, objects like [`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis) or `process` can serve as the `lifetime` argument. These objects have a lifespan that spans the entire duration of your app's execution.
+Đối số `lifetime` xác định khoảng thời gian giá trị vẫn bị taint. Với các giá trị cần duy trì trạng thái taint vô thời hạn, những object như [`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis) hoặc `process` có thể được dùng làm đối số `lifetime`. Các object này có vòng đời kéo dài trong toàn bộ thời gian app của bạn thực thi.
 
 ```js
 import {experimental_taintUniqueValue} from 'react';
@@ -91,7 +92,7 @@ experimental_taintUniqueValue(
 );
 ```
 
-If the tainted value's lifespan is tied to a object, the `lifetime` should be the object that encapsulates the value. This ensures the tainted value remains protected for the lifetime of the encapsulating object.
+Nếu vòng đời của giá trị bị taint gắn với một object, `lifetime` phải là object bao bọc giá trị đó. Điều này đảm bảo giá trị bị taint vẫn được bảo vệ trong suốt vòng đời của object bao bọc.
 
 ```js
 import {experimental_taintUniqueValue} from 'react';
@@ -107,11 +108,11 @@ export async function getUser(id) {
 }
 ```
 
-In this example, the `user` object serves as the `lifetime` argument. If this object gets stored in a global cache or is accessible by another request, the session token remains tainted.
+Trong ví dụ này, object `user` đóng vai trò là đối số `lifetime`. Nếu object này được lưu trong global cache hoặc có thể được request khác truy cập, session token vẫn bị taint.
 
 <Pitfall>
 
-**Do not rely solely on tainting for security.** Tainting a value doesn't block every possible derived value. For example, creating a new value by upper casing a tainted string will not taint the new value.
+**Không chỉ dựa vào taint để đảm bảo security.** Việc taint một giá trị không chặn mọi giá trị có thể được tạo ra từ giá trị đó. Ví dụ, việc tạo một giá trị mới bằng cách chuyển một string đã bị taint sang chữ hoa sẽ không khiến giá trị mới bị taint.
 
 
 ```js
@@ -128,19 +129,19 @@ experimental_taintUniqueValue(
 const uppercasePassword = password.toUpperCase() // `uppercasePassword` is not tainted
 ```
 
-In this example, the constant `password` is tainted. Then `password` is used to create a new value `uppercasePassword` by calling the `toUpperCase` method on `password`. The newly created `uppercasePassword` is not tainted.
+Trong ví dụ này, hằng số `password` bị taint. Sau đó, `password` được dùng để tạo một giá trị mới `uppercasePassword` bằng cách gọi method `toUpperCase` trên `password`. `uppercasePassword` mới được tạo không bị taint.
 
-Other similar ways of deriving new values from tainted values like concatenating it into a larger string, converting it to base64, or returning a substring create untained values.
+Các cách tương tự khác để tạo giá trị mới từ các giá trị đã bị taint, như nối giá trị đó vào một string lớn hơn, chuyển giá trị đó sang base64 hoặc trả về một substring, đều tạo ra các giá trị không bị taint.
 
-Tainting only protects against simple mistakes like explicitly passing secret values to the client. Mistakes in calling the `taintUniqueValue` like using a global store outside of React, without the corresponding lifetime object, can cause the tainted value to become untainted. Tainting is a layer of protection; a secure app will have multiple layers of protection, well designed APIs, and isolation patterns.
+Taint chỉ bảo vệ khỏi những lỗi đơn giản như truyền rõ ràng các giá trị bí mật đến client. Những lỗi khi gọi `taintUniqueValue`, chẳng hạn như sử dụng global store bên ngoài React mà không có object tương ứng để xác định vòng đời, có thể khiến giá trị bị taint trở thành không bị taint. Taint là một lớp bảo vệ; một app bảo mật sẽ có nhiều lớp bảo vệ, các API được thiết kế tốt và các pattern isolation.
 
 </Pitfall>
 
 <DeepDive>
 
-#### Using `server-only` and `taintUniqueValue` to prevent leaking secrets {/*using-server-only-and-taintuniquevalue-to-prevent-leaking-secrets*/}
+#### Sử dụng `server-only` và `taintUniqueValue` để ngăn rò rỉ secret {/*using-server-only-and-taintuniquevalue-to-prevent-leaking-secrets*/}
 
-If you're running a Server Components environment that has access to private keys or passwords such as database passwords, you have to be careful not to pass that to a Client Component.
+Nếu bạn đang chạy một môi trường Server Components có quyền truy cập vào private key hoặc mật khẩu, chẳng hạn như mật khẩu database, bạn phải cẩn thận không truyền chúng đến Client Component.
 
 ```js
 export async function Dashboard(props) {
@@ -163,11 +164,11 @@ export async function Overview({ password }) {
 }
 ```
 
-This example would leak the secret API token to the client. If this API token can be used to access data this particular user shouldn't have access to, it could lead to a data breach.
+Ví dụ này sẽ làm lộ secret API token cho client. Nếu API token này có thể được dùng để truy cập dữ liệu mà user cụ thể này không được phép truy cập, điều đó có thể dẫn đến data breach.
 
-[comment]: <> (TODO: Link to `server-only` docs once they are written)
+[comment]: <> (TODO: Liên kết đến tài liệu `server-only` sau khi tài liệu này được viết)
 
-Ideally, secrets like this are abstracted into a single helper file that can only be imported by trusted data utilities on the server. The helper can even be tagged with [`server-only`](https://www.npmjs.com/package/server-only) to ensure that this file isn't imported on the client.
+Lý tưởng nhất là các secret như vậy được tách vào một helper file duy nhất, file này chỉ có thể được các data utility đáng tin cậy trên server import. Helper này thậm chí có thể được gắn [`server-only`](https://www.npmjs.com/package/server-only) để đảm bảo file này không được import trên client.
 
 ```js
 import "server-only";
@@ -178,8 +179,8 @@ export function fetchAPI(url) {
 }
 ```
 
-Sometimes mistakes happen during refactoring and not all of your colleagues might know about this.
-To protect against this mistakes happening down the line we can "taint" the actual password:
+Đôi khi lỗi xảy ra trong quá trình refactor và không phải đồng nghiệp nào của bạn cũng biết về điều đó.
+Để ngăn những lỗi này xảy ra về sau, chúng ta có thể "taint" chính mật khẩu đó:
 
 ```js
 import "server-only";
@@ -193,7 +194,7 @@ experimental_taintUniqueValue(
 );
 ```
 
-Now whenever anyone tries to pass this password to a Client Component, or send the password to a Client Component with a Server Function, an error will be thrown with message you defined when you called `taintUniqueValue`.
+Bây giờ, bất cứ khi nào ai đó cố truyền mật khẩu này đến Client Component hoặc gửi mật khẩu đến Client Component bằng Server Function, một error sẽ được throw với message bạn đã định nghĩa khi gọi `taintUniqueValue`.
 
 </DeepDive>
 

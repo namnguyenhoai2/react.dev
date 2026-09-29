@@ -1,20 +1,20 @@
 ---
-title: "Built-in React DOM Hooks"
+title: "Các Hook DOM tích hợp sẵn của React"
 ---
 
 <Intro>
 
-The `react-dom` package contains Hooks that are only supported for web applications (which run in the browser DOM environment). These Hooks are not supported in non-browser environments like iOS, Android, or Windows applications. If you are looking for Hooks that are supported in web browsers *and other environments* see [the React Hooks page](/reference/react/hooks). This page lists all the Hooks in the `react-dom` package.
+Gói `react-dom` chứa các Hook chỉ được hỗ trợ cho các ứng dụng web (chạy trong môi trường DOM của trình duyệt). Các Hook này không được hỗ trợ trong những môi trường không phải trình duyệt như ứng dụng iOS, Android hoặc Windows. Nếu bạn đang tìm các Hook được hỗ trợ trong trình duyệt web *và các môi trường khác*, hãy xem [trang React Hooks](/reference/react/hooks). Trang này liệt kê tất cả các Hook trong gói `react-dom`.
 
 </Intro>
 
 ---
 
-## Form Hooks {/*form-hooks*/}
+## Hook cho form {/*form-hooks*/}
 
-*Forms* let you create interactive controls for submitting information.  To manage forms in your components, use one of these Hooks:
+*Form* cho phép bạn tạo các control tương tác để gửi thông tin. Để quản lý form trong các component, hãy sử dụng một trong các Hook sau:
 
-* [`useFormStatus`](/reference/react-dom/hooks/useFormStatus) allows you to make updates to the UI based on the status of a form.
+* [`useFormStatus`](/reference/react-dom/hooks/useFormStatus) cho phép bạn cập nhật UI dựa trên trạng thái của một form.
 
 ```js
 function Form({ action }) {

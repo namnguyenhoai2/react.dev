@@ -4,7 +4,7 @@ title: createContext
 
 <Intro>
 
-`createContext` lets you create a [context](/learn/passing-data-deeply-with-context) that components can provide or read.
+`createContext` cho phép bạn tạo một [context](/learn/passing-data-deeply-with-context) mà các component có thể cung cấp hoặc đọc.
 
 ```js
 const SomeContext = createContext(defaultValue)
@@ -16,11 +16,11 @@ const SomeContext = createContext(defaultValue)
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `createContext(defaultValue)` {/*createcontext*/}
 
-Call `createContext` outside of any components to create a context.
+Gọi `createContext` bên ngoài mọi component để tạo một context.
 
 ```js
 import { createContext } from 'react';
@@ -28,27 +28,27 @@ import { createContext } from 'react';
 const ThemeContext = createContext('light');
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
-#### Parameters {/*parameters*/}
+#### Tham số {/*parameters*/}
 
-* `defaultValue`: The value that you want the context to have when there is no matching context provider in the tree above the component that reads context. If you don't have any meaningful default value, specify `null`. The default value is meant as a "last resort" fallback. It is static and never changes over time.
+* `defaultValue`: Giá trị mà bạn muốn context có khi không có context provider tương ứng nào trong cây phía trên component đọc context. Nếu bạn không có giá trị mặc định có ý nghĩa, hãy chỉ định `null`. Giá trị mặc định được dùng như một phương án dự phòng "cuối cùng". Giá trị này là tĩnh và không bao giờ thay đổi theo thời gian.
 
-#### Returns {/*returns*/}
+#### Giá trị trả về {/*returns*/}
 
-`createContext` returns a context object.
+`createContext` trả về một đối tượng context.
 
-**The context object itself does not hold any information.** It represents _which_ context other components read or provide. Typically, you will use [`SomeContext`](#provider) in components above to specify the context value, and call [`useContext(SomeContext)`](/reference/react/useContext) in components below to read it. The context object has a few properties:
+**Bản thân đối tượng context không chứa bất kỳ thông tin nào.** Nó đại diện cho việc các component khác đọc hoặc cung cấp context nào. Thông thường, bạn sẽ dùng [`SomeContext`](#provider) trong các component phía trên để chỉ định giá trị context, và gọi [`useContext(SomeContext)`](/reference/react/useContext) trong các component phía dưới để đọc giá trị đó. Đối tượng context có một vài thuộc tính:
 
-* `SomeContext` lets you provide the context value to components.
-* `SomeContext.Consumer` is an alternative and rarely used way to read the context value.
-* `SomeContext.Provider` is a legacy way to provide the context value before React 19.
+* `SomeContext` cho phép bạn cung cấp giá trị context cho các component.
+* `SomeContext.Consumer` là một cách thay thế và hiếm khi được dùng để đọc giá trị context.
+* `SomeContext.Provider` là cách cũ để cung cấp giá trị context trước React 19.
 
 ---
 
 ### `SomeContext` Provider {/*provider*/}
 
-Wrap your components into a context provider to specify the value of this context for all components inside:
+Bọc các component của bạn trong một context provider để chỉ định giá trị của context này cho tất cả component bên trong:
 
 ```js
 function App() {
@@ -64,21 +64,21 @@ function App() {
 
 <Note>
 
-Starting in React 19, you can render `<SomeContext>` as a provider.
+Bắt đầu từ React 19, bạn có thể render `<SomeContext>` dưới dạng provider.
 
-In older versions of React, use `<SomeContext.Provider>`.
+Trong các phiên bản React cũ hơn, hãy dùng `<SomeContext.Provider>`.
 
 </Note>
 
 #### Props {/*provider-props*/}
 
-* `value`: The value that you want to pass to all the components reading this context inside this provider, no matter how deep. The context value can be of any type. A component calling [`useContext(SomeContext)`](/reference/react/useContext) inside of the provider receives the `value` of the innermost corresponding context provider above it.
+* `value`: Giá trị mà bạn muốn truyền cho tất cả component đọc context này bên trong provider, bất kể chúng nằm sâu đến đâu. Giá trị context có thể thuộc bất kỳ kiểu nào. Một component gọi [`useContext(SomeContext)`](/reference/react/useContext) bên trong provider sẽ nhận được `value` của context provider tương ứng gần nhất ở phía trên.
 
 ---
 
 ### `SomeContext.Consumer` {/*consumer*/}
 
-Before `useContext` existed, there was an older way to read context:
+Trước khi `useContext` tồn tại, có một cách cũ hơn để đọc context:
 
 ```js
 function Button() {
@@ -93,7 +93,7 @@ function Button() {
 }
 ```
 
-Although this older way still works, **newly written code should read context with [`useContext()`](/reference/react/useContext) instead:**
+Mặc dù cách cũ này vẫn hoạt động, **code mới nên đọc context bằng [`useContext()`](/reference/react/useContext) thay vào đó:**
 
 ```js
 function Button() {
@@ -105,17 +105,17 @@ function Button() {
 
 #### Props {/*consumer-props*/}
 
-* `children`: A function. React will call the function you pass with the current context value determined by the same algorithm as [`useContext()`](/reference/react/useContext) does, and render the result you return from this function. React will also re-run this function and update the UI whenever the context from the parent components changes.
+* `children`: Một hàm. React sẽ gọi hàm bạn truyền vào với giá trị context hiện tại được xác định bằng cùng thuật toán mà [`useContext()`](/reference/react/useContext) sử dụng, rồi render kết quả bạn trả về từ hàm này. React cũng sẽ chạy lại hàm này và cập nhật UI bất cứ khi nào context từ các component cha thay đổi.
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Creating context {/*creating-context*/}
+### Tạo context {/*creating-context*/}
 
-Context lets components [pass information deep down](/learn/passing-data-deeply-with-context) without explicitly passing props.
+Context cho phép các component [truyền thông tin xuống sâu](/learn/passing-data-deeply-with-context) mà không cần truyền props một cách tường minh.
 
-Call `createContext` outside any components to create one or more contexts.
+Gọi `createContext` bên ngoài mọi component để tạo một hoặc nhiều context.
 
 ```js [[1, 3, "ThemeContext"], [1, 4, "AuthContext"], [3, 3, "'light'"], [3, 4, "null"]]
 import { createContext } from 'react';
@@ -124,7 +124,7 @@ const ThemeContext = createContext('light');
 const AuthContext = createContext(null);
 ```
 
-`createContext` returns a <CodeStep step={1}>context object</CodeStep>. Components can read context by passing it to [`useContext()`](/reference/react/useContext):
+`createContext` trả về một <CodeStep step={1}>đối tượng context</CodeStep>. Các component có thể đọc context bằng cách truyền nó vào [`useContext()`](/reference/react/useContext):
 
 ```js [[1, 2, "ThemeContext"], [1, 7, "AuthContext"]]
 function Button() {
@@ -138,9 +138,9 @@ function Profile() {
 }
 ```
 
-By default, the values they receive will be the <CodeStep step={3}>default values</CodeStep> you have specified when creating the contexts. However, by itself this isn't useful because the default values never change.
+Theo mặc định, các giá trị mà chúng nhận được sẽ là <CodeStep step={3}>giá trị mặc định</CodeStep> mà bạn đã chỉ định khi tạo context. Tuy nhiên, riêng điều này không hữu ích vì các giá trị mặc định không bao giờ thay đổi.
 
-Context is useful because you can **provide other, dynamic values from your components:**
+Context hữu ích vì bạn có thể **cung cấp các giá trị động khác từ các component của mình:**
 
 ```js {8-9,11-12}
 function App() {
@@ -159,15 +159,15 @@ function App() {
 }
 ```
 
-Now the `Page` component and any components inside it, no matter how deep, will "see" the passed context values. If the passed context values change, React will re-render the components reading the context as well.
+Giờ đây, component `Page` và mọi component bên trong nó, bất kể nằm sâu đến đâu, sẽ "nhìn thấy" các giá trị context đã truyền. Nếu các giá trị context đã truyền thay đổi, React cũng sẽ re-render các component đang đọc context.
 
-[Read more about reading and providing context and see examples.](/reference/react/useContext)
+[Đọc thêm về cách đọc và cung cấp context, đồng thời xem các ví dụ.](/reference/react/useContext)
 
 ---
 
-### Importing and exporting context from a file {/*importing-and-exporting-context-from-a-file*/}
+### Import và export context từ một file {/*importing-and-exporting-context-from-a-file*/}
 
-Often, components in different files will need access to the same context. This is why it's common to declare contexts in a separate file. Then you can use the [`export` statement](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) to make context available for other files:
+Thông thường, các component trong những file khác nhau sẽ cần truy cập cùng một context. Vì vậy, việc khai báo context trong một file riêng là rất phổ biến. Sau đó, bạn có thể dùng câu lệnh [`export` để cung cấp context cho các file khác:](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
 
 ```js {4-5}
 // Contexts.js
@@ -177,7 +177,7 @@ export const ThemeContext = createContext('light');
 export const AuthContext = createContext(null);
 ```
 
-Components declared in other files can then use the [`import`](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/import) statement to read or provide this context:
+Các component được khai báo trong những file khác sau đó có thể dùng câu lệnh [`import`](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/import) để đọc hoặc cung cấp context này:
 
 ```js {2}
 // Button.js
@@ -205,21 +205,21 @@ function App() {
 }
 ```
 
-This works similar to [importing and exporting components.](/learn/importing-and-exporting-components)
+Điều này hoạt động tương tự như [import và export component.](/learn/importing-and-exporting-components)
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I can't find a way to change the context value {/*i-cant-find-a-way-to-change-the-context-value*/}
+### Tôi không tìm thấy cách thay đổi giá trị context {/*i-cant-find-a-way-to-change-the-context-value*/}
 
 
-Code like this specifies the *default* context value:
+Code như sau chỉ định giá trị context *mặc định*:
 
 ```js
 const ThemeContext = createContext('light');
 ```
 
-This value never changes. React only uses this value as a fallback if it can't find a matching provider above.
+Giá trị này không bao giờ thay đổi. React chỉ dùng giá trị này làm phương án dự phòng nếu không tìm thấy provider tương ứng ở phía trên.
 
-To make context change over time, [add state and wrap components in a context provider.](/reference/react/useContext#updating-data-passed-via-context)
+Để context thay đổi theo thời gian, [hãy thêm state và bọc các component trong một context provider.](/reference/react/useContext#updating-data-passed-via-context)

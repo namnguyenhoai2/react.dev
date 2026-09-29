@@ -4,7 +4,7 @@ title: use
 
 <Intro>
 
-`use` is a React API that lets you read a resource during rendering, such as a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) or [context](/learn/passing-data-deeply-with-context).
+`use` là một React API cho phép bạn đọc một resource trong quá trình rendering, chẳng hạn như một [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) hoặc [context](/learn/passing-data-deeply-with-context).
 
 ```js
 const value = use(resource);
@@ -16,11 +16,11 @@ const value = use(resource);
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `use(context)` {/*use-context*/}
 
-Call `use` with a [context](/learn/passing-data-deeply-with-context) to read its value. Unlike [`useContext`](/reference/react/useContext), `use` can be called within loops and conditional statements like `if`.
+Gọi `use` với một [context](/learn/passing-data-deeply-with-context) để đọc giá trị của nó. Không giống như [`useContext`](/reference/react/useContext), `use` có thể được gọi bên trong các vòng lặp và câu lệnh điều kiện như `if`.
 
 ```js
 import { use } from 'react';
@@ -30,26 +30,26 @@ function Button() {
   // ...
 ```
 
-[See more examples below.](#usage-context)
+[Xem thêm ví dụ bên dưới.](#usage-context)
 
-#### Parameters {/*context-parameters*/}
+#### Tham số {/*context-parameters*/}
 
-* `context`: A [context](/learn/passing-data-deeply-with-context) created with [`createContext`](/reference/react/createContext).
+* `context`: Một [context](/learn/passing-data-deeply-with-context) được tạo bằng [`createContext`](/reference/react/createContext).
 
-#### Returns {/*context-returns*/}
+#### Giá trị trả về {/*context-returns*/}
 
-The context value for the passed context, determined by the closest context provider above the calling component. If there is no provider, the returned value is the `defaultValue` passed to [`createContext`](/reference/react/createContext).
+Giá trị context của context được truyền vào, được xác định bởi context provider gần nhất phía trên component đang gọi. Nếu không có provider, giá trị trả về là `defaultValue` được truyền vào [`createContext`](/reference/react/createContext).
 
-#### Caveats {/*context-caveats*/}
+#### Lưu ý {/*context-caveats*/}
 
-* `use` must be called inside a Component or a Hook.
-* Reading context with `use` is not supported in [Server Components](/reference/rsc/server-components).
+* `use` phải được gọi bên trong một Component hoặc một Hook.
+* Việc đọc context bằng `use` không được hỗ trợ trong [Server Components](/reference/rsc/server-components).
 
 ---
 
 ### `use(promise)` {/*use-promise*/}
 
-Call `use` with a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to read its resolved value. The component calling `use` *suspends* while the Promise is pending. Despite its name, `use` is not a Hook. Unlike Hooks, it can be called inside loops and conditional statements like `if`.
+Gọi `use` với một [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) để đọc giá trị đã được resolve của nó. Component gọi `use` sẽ *tạm dừng* trong khi Promise đang chờ xử lý. Mặc dù tên gọi như vậy, `use` không phải là một Hook. Không giống như Hook, nó có thể được gọi bên trong các vòng lặp và câu lệnh điều kiện như `if`.
 
 ```js
 import { use } from 'react';
@@ -59,30 +59,30 @@ function MessageComponent({ messagePromise }) {
   // ...
 ```
 
-If the component that calls `use` is wrapped in a [Suspense](/reference/react/Suspense) boundary, the fallback will be displayed while the Promise is pending. Once the Promise is resolved, the Suspense fallback is replaced by the rendered components using the data returned by `use`. If the Promise is rejected, the fallback of the nearest [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) will be displayed.
+Nếu component gọi `use` được bọc trong một boundary [Suspense](/reference/react/Suspense), fallback sẽ được hiển thị trong khi Promise đang chờ xử lý. Khi Promise được resolve, fallback của Suspense sẽ được thay thế bằng các component đã render, sử dụng dữ liệu do `use` trả về. Nếu Promise bị reject, fallback của [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gần nhất sẽ được hiển thị.
 
-[See more examples below.](#usage-promises)
+[Xem thêm ví dụ bên dưới.](#usage-promises)
 
-#### Parameters {/*promise-parameters*/}
+#### Tham số {/*promise-parameters*/}
 
-* `promise`: A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) whose resolved value you want to read. The Promise must be [cached](#caching-promises-for-client-components) so that the same instance is reused across re-renders.
+* `promise`: Một [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) có giá trị đã được resolve mà bạn muốn đọc. Promise phải được [cached](#caching-promises-for-client-components) để cùng một instance được sử dụng lại qua các lần re-render.
 
-#### Returns {/*promise-returns*/}
+#### Giá trị trả về {/*promise-returns*/}
 
-The resolved value of the Promise.
+Giá trị đã được resolve của Promise.
 
-#### Caveats {/*promise-caveats*/}
+#### Lưu ý {/*promise-caveats*/}
 
-* `use` must be called inside a Component or a Hook.
-* `use` cannot be called inside a try-catch block. Instead, wrap your component in an [Error Boundary](#displaying-an-error-with-an-error-boundary) to catch the error and display a fallback.
-* Promises passed to `use` must be cached so the same Promise instance is reused across re-renders. [See caching Promises below.](#caching-promises-for-client-components)
-* When passing a Promise from a Server Component to a Client Component, its resolved value must be [serializable](/reference/rsc/use-client#serializable-types).
+* `use` phải được gọi bên trong một Component hoặc một Hook.
+* `use` không thể được gọi bên trong khối try-catch. Thay vào đó, hãy bọc component của bạn trong một [Error Boundary](#displaying-an-error-with-an-error-boundary) để bắt lỗi và hiển thị fallback.
+* Các Promise được truyền vào `use` phải được cached để cùng một instance Promise được sử dụng lại qua các lần re-render. [Xem Caching Promises bên dưới.](#caching-promises-for-client-components)
+* Khi truyền một Promise từ Server Component sang Client Component, giá trị đã được resolve của nó phải [serializable](/reference/rsc/use-client#serializable-types).
 
 ---
 
 ### `use(browser())` {/*use-browser*/}
 
-Call `use` with the value returned by [`browser`](/reference/react-dom/browser) in a component that should only render in the browser:
+Gọi `use` với giá trị do [`browser`](/reference/react-dom/browser) trả về trong một component chỉ nên được render trên browser:
 
 ```js
 import { use } from 'react';
@@ -94,30 +94,30 @@ function BrowserOnly() {
 }
 ```
 
-During server rendering, the component calling `use(browser())` suspends and React includes the closest [`<Suspense>`](/reference/react/Suspense) boundary's fallback in the HTML. In the browser, `use(browser())` returns `undefined`, so the component renders normally.
+Trong quá trình server rendering, component gọi `use(browser())` sẽ suspend và React đưa fallback của boundary [`<Suspense>`](/reference/react/Suspense) gần nhất vào HTML. Trên browser, `use(browser())` trả về `undefined`, vì vậy component được render bình thường.
 
-[See an example below.](#rendering-a-component-only-in-the-browser)
+[Xem ví dụ bên dưới.](#rendering-a-component-only-in-the-browser)
 
-#### Parameters {/*browser-parameters*/}
+#### Tham số {/*browser-parameters*/}
 
-* `browserValue`: The value returned by [`browser`](/reference/react-dom/browser).
+* `browserValue`: Giá trị do [`browser`](/reference/react-dom/browser) trả về.
 
-#### Returns {/*browser-returns*/}
+#### Giá trị trả về {/*browser-returns*/}
 
-`use(browser())` returns `undefined` in the browser.
+`use(browser())` trả về `undefined` trên browser.
 
-#### Caveats {/*browser-caveats*/}
+#### Lưu ý {/*browser-caveats*/}
 
-* The component calling `use(browser())` must be inside a `<Suspense>` boundary during server rendering. Without one, server rendering fails.
-* In a React Server Components app, `use(browser())` must be called from a [Client Component](/reference/rsc/use-client), not a [Server Component](/reference/rsc/server-components).
+* Component gọi `use(browser())` phải nằm bên trong một boundary `<Suspense>` trong quá trình server rendering. Nếu không có boundary, server rendering sẽ thất bại.
+* Trong ứng dụng React Server Components, `use(browser())` phải được gọi từ một [Client Component](/reference/rsc/use-client), không phải từ một [Server Component](/reference/rsc/server-components).
 
 ---
 
-## Usage (Context) {/*usage-context*/}
+## Cách sử dụng (Context) {/*usage-context*/}
 
-### Reading context with `use` {/*reading-context-with-use*/}
+### Đọc context bằng `use` {/*reading-context-with-use*/}
 
-When a [context](/learn/passing-data-deeply-with-context) is passed to `use`, it works similarly to [`useContext`](/reference/react/useContext). While `useContext` must be called at the top level of your component, `use` can be called inside conditionals like `if` and loops like `for`.
+Khi một [context](/learn/passing-data-deeply-with-context) được truyền vào `use`, nó hoạt động tương tự như [`useContext`](/reference/react/useContext). Trong khi `useContext` phải được gọi ở cấp cao nhất của component, `use` có thể được gọi bên trong các điều kiện như `if` và các vòng lặp như `for`.
 
 ```js [[2, 4, "theme"], [1, 4, "ThemeContext"]]
 import { use } from 'react';
@@ -127,9 +127,9 @@ function Button() {
   // ...
 ```
 
-`use` returns the <CodeStep step={2}>context value</CodeStep> for the <CodeStep step={1}>context</CodeStep> you passed. To determine the context value, React searches the component tree and finds **the closest context provider above** for that particular context.
+`use` trả về <CodeStep step={2}>giá trị context</CodeStep> của <CodeStep step={1}>context</CodeStep> mà bạn đã truyền vào. Để xác định giá trị context, React tìm trong cây component và tìm **context provider gần nhất phía trên** của context cụ thể đó.
 
-To pass context to a `Button`, wrap it or one of its parent components into the corresponding context provider.
+Để truyền context vào một `Button`, hãy bọc nó hoặc một trong các component cha của nó bằng context provider tương ứng.
 
 ```js [[1, 3, "ThemeContext"], [2, 3, "\\"dark\\""], [1, 5, "ThemeContext"]]
 function MyPage() {
@@ -145,9 +145,9 @@ function Form() {
 }
 ```
 
-It doesn't matter how many layers of components there are between the provider and the `Button`. When a `Button` *anywhere* inside of `Form` calls `use(ThemeContext)`, it will receive `"dark"` as the value.
+Số lượng lớp component nằm giữa provider và `Button` không quan trọng. Khi một `Button` *ở bất kỳ đâu* bên trong `Form` gọi `use(ThemeContext)`, nó sẽ nhận `"dark"` làm giá trị.
 
-Unlike [`useContext`](/reference/react/useContext), <CodeStep step={2}>`use`</CodeStep> can be called in conditionals and loops like <CodeStep step={1}>`if`</CodeStep>.
+Không giống như [`useContext`](/reference/react/useContext), <CodeStep step={2}>`use`</CodeStep> có thể được gọi trong các điều kiện và vòng lặp như <CodeStep step={1}>`if`</CodeStep>.
 
 ```js [[1, 2, "if"], [2, 3, "use"]]
 function HorizontalRule({ show }) {
@@ -159,11 +159,11 @@ function HorizontalRule({ show }) {
 }
 ```
 
-<CodeStep step={2}>`use`</CodeStep> is called from inside a <CodeStep step={1}>`if`</CodeStep> statement, allowing you to conditionally read values from a Context.
+<CodeStep step={2}>`use`</CodeStep> được gọi bên trong một câu lệnh <CodeStep step={1}>`if`</CodeStep>, cho phép bạn đọc có điều kiện các giá trị từ một Context.
 
 <Pitfall>
 
-Like `useContext`, `use(context)` always looks for the closest context provider *above* the component that calls it. It searches upwards and **does not** consider context providers in the component from which you're calling `use(context)`.
+Giống như `useContext`, `use(context)` luôn tìm context provider gần nhất *phía trên* component gọi nó. Nó tìm ngược lên trên và **không** xem xét các context provider trong component mà từ đó bạn đang gọi `use(context)`.
 
 </Pitfall>
 
@@ -254,9 +254,9 @@ function Button({ show, children }) {
 
 </Sandpack>
 
-### Reading a Promise from context {/*reading-a-promise-from-context*/}
+### Đọc Promise từ context {/*reading-a-promise-from-context*/}
 
-To share asynchronous data without prop drilling, set a Promise as a context value, then read it with `use(context)` and resolve it with `use(promise)`:
+Để chia sẻ dữ liệu bất đồng bộ mà không cần prop drilling, hãy đặt một Promise làm giá trị context, sau đó đọc nó bằng `use(context)` và resolve nó bằng `use(promise)`:
 
 ```js
 import { use } from 'react';
@@ -269,23 +269,23 @@ function Profile() {
 }
 ```
 
-Reading the value requires two `use` calls because the context value itself isn't awaited. See [Before you use context](/learn/passing-data-deeply-with-context#before-you-use-context) for alternatives to consider before reaching for context.
+Việc đọc giá trị cần hai lần gọi `use` vì bản thân giá trị context không được await. Xem [Trước khi sử dụng context](/learn/passing-data-deeply-with-context#before-you-use-context) để biết các phương án thay thế cần cân nhắc trước khi sử dụng context.
 
-Wrap the components that read the Promise in a [Suspense](/reference/react/Suspense) boundary so only that subtree suspends while the Promise is pending. See [Usage (Promises)](#usage-promises) below for more on reading Promises with `use`.
+Hãy bọc các component đọc Promise trong một boundary [Suspense](/reference/react/Suspense) để chỉ subtree đó suspend trong khi Promise đang chờ xử lý. Xem [Cách sử dụng (Promises)](#usage-promises) bên dưới để biết thêm về việc đọc Promise bằng `use`.
 
 <Pitfall>
 
-When this pattern is used with [Server Components](/reference/rsc/server-components), refetching the Promise requires refetching the Server Component that sets the Promise in context. Avoid setting the Promise in context high in the tree, since that would refetch large parts of the app unnecessarily.
+Khi sử dụng mẫu này với [Server Components](/reference/rsc/server-components), việc fetch lại Promise yêu cầu fetch lại Server Component đã thiết lập Promise trong context. Tránh thiết lập Promise trong context ở vị trí quá cao trong cây, vì điều đó sẽ khiến những phần lớn của ứng dụng bị fetch lại một cách không cần thiết.
 
 </Pitfall>
 
 ---
 
-## Usage (Promises) {/*usage-promises*/}
+## Cách sử dụng (Promises) {/*usage-promises*/}
 
-### Reading a Promise with `use` {/*reading-a-promise-with-use*/}
+### Đọc một Promise với `use` {/*reading-a-promise-with-use*/}
 
-Call `use` with a Promise to read its resolved value. The component will [suspend](/reference/react/Suspense) while the Promise is pending.
+Gọi `use` với một Promise để đọc giá trị đã được resolve của nó. Component sẽ [suspend](/reference/react/Suspense) trong khi Promise đang chờ xử lý.
 
 ```js [[1, 4, "use(albumsPromise)"]]
 import { use } from 'react';
@@ -304,13 +304,13 @@ function Albums({ albumsPromise }) {
 }
 ```
 
-Wrap the component that calls <CodeStep step={1}>`use`</CodeStep> in a [Suspense](/reference/react/Suspense) boundary so React can show a fallback while the Promise is pending. The closest Suspense boundary above the suspending component shows its fallback. Once the Promise resolves, React reads the value with `use` and replaces the fallback with the rendered component.
+Bọc component gọi <CodeStep step={1}>`use`</CodeStep> trong một boundary [Suspense](/reference/react/Suspense) để React có thể hiển thị fallback trong khi Promise đang chờ xử lý. Boundary Suspense gần component bị suspend nhất ở phía trên sẽ hiển thị fallback của nó. Khi Promise được resolve, React đọc giá trị bằng `use` và thay thế fallback bằng component đã render.
 
 <Recipes titleText="Reading a Promise with use vs fetching in an Effect" titleId="examples-promise">
 
-#### Fetching data with `use` {/*fetching-data-with-use*/}
+#### Fetching dữ liệu với `use` {/*fetching-data-with-use*/}
 
-In this example, `Albums` calls `use` with a cached Promise. The component suspends while the Promise is pending, and React displays the nearest Suspense fallback. Rejected Promises propagate to the nearest [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary).
+Trong ví dụ này, `Albums` gọi `use` với một Promise đã được cache. Component sẽ suspend trong khi Promise đang chờ xử lý, còn React hiển thị fallback Suspense gần nhất. Các Promise bị reject sẽ được truyền đến [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gần nhất.
 
 <Sandpack>
 
@@ -411,9 +411,9 @@ async function getAlbums() {
 
 <Solution />
 
-#### Fetching data with `useEffect` {/*fetching-data-with-useeffect*/}
+#### Fetching dữ liệu với `useEffect` {/*fetching-data-with-useeffect*/}
 
-Before `use`, a common approach was to fetch data in an Effect and update state when the data arrives. Compared to `use`, this approach requires managing loading and error states manually. For more details on why fetching in an Effect is discouraged, see [You Might Not Need an Effect](/learn/you-might-not-need-an-effect#fetching-data).
+Trước `use`, một cách tiếp cận phổ biến là fetch dữ liệu trong một Effect và cập nhật state khi dữ liệu về. So với `use`, cách tiếp cận này yêu cầu tự quản lý trạng thái loading và lỗi. Để biết thêm chi tiết về lý do không nên fetch trong một Effect, hãy xem [You Might Not Need an Effect](/learn/you-might-not-need-an-effect#fetching-data).
 
 <Sandpack>
 
@@ -493,9 +493,9 @@ export async function fetchAlbums() {
 
 <Pitfall>
 
-##### Promises passed to `use` must be cached {/*promises-must-cached*/}
+##### Các Promise truyền vào `use` phải được cache {/*promises-must-cached*/}
 
-Promises created during render are recreated on every render, which causes React to show the Suspense fallback repeatedly and prevents content from appearing.
+Các Promise được tạo trong quá trình render sẽ được tạo lại ở mỗi lần render, khiến React liên tục hiển thị fallback Suspense và ngăn nội dung xuất hiện.
 
 ```js
 function Albums() {
@@ -505,7 +505,7 @@ function Albums() {
 }
 ```
 
-Instead, pass a Promise from a cache, a [Suspense-enabled framework](/reference/react/Suspense#suspense-enabled-frameworks), or a Server Component:
+Thay vào đó, hãy truyền một Promise từ cache, một [Suspense-enabled framework](/reference/react/Suspense#suspense-enabled-frameworks), hoặc một Server Component:
 
 ```js
 // ✅ fetchData reads the Promise from a cache.
@@ -516,11 +516,11 @@ const albums = use(fetchData('/albums'));
 
 <DeepDive>
 
-#### Why are Promises recreated on every render? {/*why-promises-recreated*/}
+#### Tại sao Promise lại được tạo lại ở mỗi lần render? {/*why-promises-recreated*/}
 
-[React doesn't preserve state for renders that suspended before mounting](/reference/react/Suspense#caveats). After each suspension, React retries rendering from scratch, so any Promise created during render is recreated.
+[React không giữ lại state cho những lần render bị suspend trước khi mount](/reference/react/Suspense#caveats). Sau mỗi lần suspend, React thử render lại từ đầu, nên mọi Promise được tạo trong quá trình render đều bị tạo lại.
 
-Common ways a Promise can be unintentionally recreated during render:
+Các cách phổ biến khiến Promise vô tình bị tạo lại trong quá trình render:
 
 ```js
 function Albums() {
@@ -540,7 +540,7 @@ function Albums() {
 }
 ```
 
-Ideally, Promises are created before rendering, such as in an event handler, a route loader, or a Server Component, and passed to the component that calls `use`. Fetching lazily in render delays network requests and can create waterfalls.
+Lý tưởng nhất là tạo Promise trước khi render, chẳng hạn trong event handler, route loader hoặc Server Component, rồi truyền nó vào component gọi `use`. Việc fetch một cách lazy trong quá trình render sẽ trì hoãn các request mạng và có thể tạo ra các waterfall.
 
 ```js
 // ✅ fetchData reads the Promise from a cache.
@@ -551,9 +551,9 @@ const albums = use(fetchData('/albums'));
 
 ---
 
-### Caching Promises for Client Components {/*caching-promises-for-client-components*/}
+### Cache Promise cho Client Component {/*caching-promises-for-client-components*/}
 
-Promises passed to `use` in Client Components must be cached so the same Promise instance is reused across re-renders. If a new Promise is created directly in render, React will display the Suspense fallback on every re-render.
+Các Promise truyền vào `use` trong Client Component phải được cache để cùng một instance Promise được sử dụng lại qua các lần re-render. Nếu một Promise mới được tạo trực tiếp trong quá trình render, React sẽ hiển thị fallback Suspense ở mỗi lần re-render.
 
 ```js
 // ✅ Cache the Promise so the same one is reused across renders
@@ -567,15 +567,15 @@ export function fetchData(url) {
 }
 ```
 
-The `fetchData` function returns the same Promise each time it's called with the same URL. When `use` receives the same Promise on a re-render, it reads the already-resolved value synchronously without suspending.
+Hàm `fetchData` trả về cùng một Promise mỗi khi được gọi với cùng một URL. Khi `use` nhận cùng một Promise trong lần re-render, nó sẽ đọc giá trị đã được resolve một cách đồng bộ mà không suspend.
 
 <Note>
 
-The way you cache Promises depends on the framework you use with Suspense. Frameworks typically provide built-in caching mechanisms. If you don't use a framework, you can use a simple module-level cache like the one above, or a [Suspense-enabled data source](/reference/react/Suspense#what-activates-a-suspense-boundary).
+Cách bạn cache Promise phụ thuộc vào framework sử dụng cùng Suspense. Các framework thường cung cấp cơ chế caching tích hợp sẵn. Nếu không sử dụng framework, bạn có thể dùng một cache đơn giản ở cấp module như ví dụ trên, hoặc một [Suspense-enabled data source](/reference/react/Suspense#what-activates-a-suspense-boundary).
 
 </Note>
 
-In the example below, clicking "Re-render" updates state in `App` and triggers a re-render. Because `fetchData` returns the same cached Promise, `Albums` reads the value synchronously instead of showing the Suspense fallback again.
+Trong ví dụ dưới đây, việc nhấp vào "Re-render" sẽ cập nhật state trong `App` và kích hoạt re-render. Vì `fetchData` trả về cùng một Promise đã được cache, `Albums` sẽ đọc giá trị một cách đồng bộ thay vì hiển thị lại fallback Suspense.
 
 <Sandpack>
 
@@ -660,9 +660,9 @@ async function getAlbums() {
 
 <DeepDive>
 
-#### How to implement a promise cache {/*how-to-implement-a-promise-cache*/}
+#### Cách triển khai cache cho Promise {/*how-to-implement-a-promise-cache*/}
 
-A basic cache stores the Promise keyed by URL so the same instance is reused across renders. To also avoid unnecessary Suspense fallbacks when data is already available, you can set `status` and `value` (or `reason`) fields on the Promise. React checks these fields when `use` is called: if `status` is `'fulfilled'`, it reads `value` synchronously without suspending. If `status` is `'rejected'`, it throws `reason`. If the field is missing or `'pending'`, it suspends.
+Một cache cơ bản lưu Promise với khóa là URL để cùng một instance được sử dụng lại qua các lần render. Để đồng thời tránh các fallback Suspense không cần thiết khi dữ liệu đã có sẵn, bạn có thể thiết lập các trường `status` và `value` (hoặc `reason`) trên Promise. React kiểm tra các trường này khi `use` được gọi: nếu `status` là `'fulfilled'`, nó sẽ đọc `value` một cách đồng bộ mà không suspend. Nếu `status` là `'rejected'`, nó sẽ throw `reason`. Nếu trường này bị thiếu hoặc là `'pending'`, nó sẽ suspend.
 
 ```js
 let cache = new Map();
@@ -687,18 +687,17 @@ function fetchData(url) {
 }
 ```
 
-This is primarily useful for library authors building Suspense-compatible data layers. React will set the `status` field itself on Promises that don't have it, but setting it yourself avoids an extra render when the data is already available.
+Điều này chủ yếu hữu ích cho các tác giả thư viện đang xây dựng data layer tương thích với Suspense. React sẽ tự đặt trường `status` trên những Promise chưa có trường này, nhưng tự thiết lập trường này sẽ tránh một lần render bổ sung khi dữ liệu đã có sẵn.
 
-This cache pattern is the foundation for [re-fetching data](#re-fetching-data-in-client-components) (where changing the cache key triggers a new fetch) and [preloading data on hover](#preloading-data-on-hover) (where calling `fetchData` early means the Promise may already be resolved by the time `use` reads it).
+Mẫu cache này là nền tảng cho việc [re-fetching data](#re-fetching-data-in-client-components) (trong đó việc thay đổi cache key sẽ kích hoạt một fetch mới) và [preloading data on hover](#preloading-data-on-hover) (trong đó việc gọi `fetchData` sớm có nghĩa là Promise có thể đã được resolve vào thời điểm `use` đọc nó).
 
 </DeepDive>
 
 <Pitfall>
 
-##### Don't skip calling `use` based on whether a Promise is already settled. {/*conditional-use*/}
+##### Đừng bỏ qua việc gọi `use` chỉ dựa trên việc Promise đã settle hay chưa. {/*conditional-use*/}
 
-Unlike other hooks, `use` can be called inside conditions and loops — but it must always be called for the Promise itself. Never read `promise.status` or `promise.value` directly to bypass `use`; always pass the Promise to `use` and let React handle it.
-
+Không giống các hook khác, `use` có thể được gọi bên trong các điều kiện và vòng lặp — nhưng luôn phải được gọi cho chính Promise đó. Không bao giờ đọc trực tiếp `promise.status` hoặc `promise.value` để bypass `use`; luôn truyền Promise vào `use` và để React xử lý.
 
 ```js
 // 🔴 Don't bypass `use` by reading promise status directly
@@ -713,15 +712,15 @@ const value = use(promise);
 const value = use(promise);
 ```
 
-Bypassing `use` this way can break React Suspense optimizations and Suspense features for React DevTools. You can `use(promise)` conditionally, but don't conditionally `use(promise)` based on the promise itself.
+Việc bypass `use` theo cách này có thể phá vỡ các tối ưu hóa của React Suspense và các tính năng Suspense dành cho React DevTools. Bạn có thể `use(promise)` theo điều kiện, nhưng đừng `use(promise)` theo điều kiện dựa trên chính Promise.
 
 </Pitfall>
 
 ---
 
-### Re-fetching data in Client Components {/*re-fetching-data-in-client-components*/}
+### Fetch lại dữ liệu trong Client Component {/*re-fetching-data-in-client-components*/}
 
-To refresh data at the same URL (for example, with a "Refresh" button), invalidate the cache entry and start a new fetch inside a [`startTransition`](/reference/react/startTransition). Store the resulting Promise in state to trigger a re-render. While the new Promise is pending, React keeps showing the existing content because the update is inside a Transition.
+Để refresh dữ liệu tại cùng một URL (chẳng hạn bằng nút "Refresh"), hãy invalidate mục cache và bắt đầu một fetch mới bên trong một [`startTransition`](/reference/react/startTransition). Lưu Promise kết quả vào state để kích hoạt re-render. Trong khi Promise mới đang chờ xử lý, React vẫn hiển thị nội dung hiện tại vì quá trình cập nhật nằm bên trong một Transition.
 
 ```js
 function App() {
@@ -737,7 +736,7 @@ function App() {
 }
 ```
 
-`refetchData` clears the old cache entry and starts a new fetch at the same URL. Storing the resulting Promise in state triggers a re-render inside the Transition. On re-render, `Albums` receives the new Promise and `use` suspends on it while React keeps showing the old content.
+`refetchData` xóa mục cache cũ và bắt đầu một fetch mới tại cùng URL. Việc lưu Promise kết quả vào state sẽ kích hoạt re-render bên trong Transition. Trong lần re-render, `Albums` nhận Promise mới và `use` suspend trên Promise đó trong khi React vẫn tiếp tục hiển thị nội dung cũ.
 
 <Sandpack>
 
@@ -858,15 +857,15 @@ button { margin-bottom: 10px; }
 
 <Note>
 
-Frameworks that support Suspense typically provide their own caching and invalidation mechanisms. The custom cache above is useful for understanding the pattern, but in practice prefer your framework's data fetching solution.
+Các framework hỗ trợ Suspense thường cung cấp cơ chế caching và invalidation riêng. Cache tùy chỉnh ở trên hữu ích để hiểu mẫu này, nhưng trong thực tế, hãy ưu tiên giải pháp fetching dữ liệu của framework bạn.
 
 </Note>
 
 ---
 
-### Preloading data on hover {/*preloading-data-on-hover*/}
+### Preload dữ liệu khi hover {/*preloading-data-on-hover*/}
 
-You can start loading data before it's needed by calling `fetchData` during a hover event. Since `fetchData` caches the Promise, the data may already be available by the time the user clicks. If the Promise has resolved by the time `use` reads it, React renders the component immediately without showing a Suspense fallback.
+Bạn có thể bắt đầu tải dữ liệu trước khi cần đến bằng cách gọi `fetchData` trong một sự kiện hover. Vì `fetchData` cache Promise, dữ liệu có thể đã sẵn sàng khi người dùng nhấp vào. Nếu Promise đã được resolve vào thời điểm `use` đọc nó, React sẽ render component ngay lập tức mà không hiển thị fallback Suspense.
 
 ```js
 <button
@@ -879,7 +878,7 @@ You can start loading data before it's needed by calling `fetchData` during a ho
 >
 ```
 
-In this example, hovering over an artist button starts fetching their albums in the background. Without hovering first, clicking shows a loading fallback. Try hovering over a button for a moment before clicking to see the difference.
+Trong ví dụ này, việc di chuột lên nút artist sẽ bắt đầu fetch các album của họ ở chế độ nền. Nếu không hover trước, thao tác nhấp sẽ hiển thị fallback loading. Hãy thử hover lên một nút trong giây lát trước khi nhấp để thấy sự khác biệt.
 
 <Sandpack>
 
@@ -1044,9 +1043,9 @@ button { margin-right: 10px; }
 
 ---
 
-### Streaming data from server to client {/*streaming-data-from-server-to-client*/}
+### Stream dữ liệu từ server đến client {/*streaming-data-from-server-to-client*/}
 
-Data can be streamed from the server to the client by passing a Promise as a prop from a Server Component to a Client Component.
+Dữ liệu có thể được stream từ server đến client bằng cách truyền một Promise dưới dạng prop từ Server Component đến Client Component.
 
 ```js
 import { fetchMessage } from './lib.js';
@@ -1062,7 +1061,7 @@ export default function App() {
 }
 ```
 
-The Client Component then takes the Promise it received as a prop and passes it to the `use` API. This allows the Client Component to read the value from the Promise that was initially created by the Server Component.
+Sau đó, Client Component nhận Promise được truyền dưới dạng prop và truyền nó vào API `use`. Điều này cho phép Client Component đọc giá trị từ Promise ban đầu được tạo bởi Server Component.
 
 ```js
 // message.js
@@ -1075,7 +1074,7 @@ export function Message({ messagePromise }) {
   return <p>Here is the message: {messageContent}</p>;
 }
 ```
-Because `Message` is wrapped in a [Suspense](/reference/react/Suspense) boundary, the fallback will be displayed until the Promise is resolved. When the Promise is resolved, the value will be read by the `use` API and the `Message` component will replace the Suspense fallback.
+Vì `Message` được bao bọc trong boundary [Suspense](/reference/react/Suspense), fallback sẽ được hiển thị cho đến khi Promise được resolve. Khi Promise được resolve, giá trị sẽ được đọc bởi API `use` và component `Message` sẽ thay thế fallback của Suspense.
 
 <Sandpack>
 
@@ -1144,11 +1143,11 @@ root.render(
 
 <DeepDive>
 
-#### Should I resolve a Promise in a Server or Client Component? {/*resolve-promise-in-server-or-client-component*/}
+#### Tôi nên resolve Promise trong Server Component hay Client Component? {/*resolve-promise-in-server-or-client-component*/}
 
-If you have a Promise, at some point you need to unwrap it to read its value. You unwrap it with `await` in a Server Component, and with `use` in a Client Component.
+Nếu có một Promise, đến một thời điểm nào đó bạn cần unwrap nó để đọc giá trị. Bạn unwrap nó bằng `await` trong Server Component và bằng `use` trong Client Component.
 
-Usually, the simplest option is to `await` the Promise where you create it. The Server Component suspends until the data is ready, and everything below it waits too:
+Thông thường, lựa chọn đơn giản nhất là `await` Promise ngay tại nơi bạn tạo nó. Server Component sẽ suspend cho đến khi dữ liệu sẵn sàng, và mọi thứ bên dưới nó cũng sẽ chờ:
 
 ```js
 // Server Component
@@ -1158,9 +1157,9 @@ export default async function App() {
 }
 ```
 
-However, you don't have to unwrap it right away. You can pass the Promise down as a prop, and unwrap it deeper in the tree. The component that reads the Promise still suspends, but only that part of the tree waits for the data. Wrap that component in a [`<Suspense>`](/reference/react/Suspense) boundary to show a fallback while the rest of the page renders immediately.
+Tuy nhiên, bạn không nhất thiết phải unwrap nó ngay lập tức. Bạn có thể truyền Promise xuống dưới dưới dạng prop rồi unwrap nó ở phần sâu hơn trong cây component. Component đọc Promise vẫn sẽ suspend, nhưng chỉ phần đó của cây phải chờ dữ liệu. Hãy bọc component đó trong một boundary [`<Suspense>`](/reference/react/Suspense) để hiển thị fallback trong khi phần còn lại của trang được render ngay lập tức.
 
-For example, a deeper Server Component can `await` the Promise it receives:
+Ví dụ, một Server Component ở sâu hơn có thể `await` Promise mà nó nhận được:
 
 ```js
 import { Suspense } from 'react';
@@ -1182,7 +1181,7 @@ async function Message({ messagePromise }) {
 }
 ```
 
-Or, in a separate file, a Client Component can unwrap the same Promise with `use`:
+Hoặc, trong một file riêng, một Client Component có thể unwrap cùng Promise đó bằng `use`:
 
 ```js
 // Client Component
@@ -1196,19 +1195,19 @@ export function Message({ messagePromise }) {
 }
 ```
 
-Passing the Promise down works the same way in both cases. Both suspend where the Promise is read, and both unblock the UI above. The only difference is that Client Components can't `await` during render, so they unwrap the Promise with `use` instead. A common case is interactive content like popovers and tooltips, where the data is only needed after a hover or click.
+Việc truyền Promise xuống hoạt động giống nhau trong cả hai trường hợp. Cả hai đều suspend tại nơi Promise được đọc và đều bỏ chặn UI ở phía trên. Điểm khác biệt duy nhất là Client Component không thể `await` trong quá trình render, nên chúng unwrap Promise bằng `use` thay thế. Một trường hợp thường gặp là nội dung tương tác như popover và tooltip, trong đó dữ liệu chỉ cần thiết sau khi hover hoặc click.
 
-See [Revealing content together at once](/reference/react/Suspense#revealing-content-together-at-once) for guidance on where to place Suspense boundaries.
+Xem [Revealing content together at once](/reference/react/Suspense#revealing-content-together-at-once) để biết cách đặt các boundary Suspense.
 
 </DeepDive>
 
 ---
 
-### Displaying an error with an Error Boundary {/*displaying-an-error-with-an-error-boundary*/}
+### Hiển thị lỗi bằng Error Boundary {/*displaying-an-error-with-an-error-boundary*/}
 
-If the Promise passed to `use` is rejected, the error propagates to the nearest [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary). Wrap the component that calls `use` in an Error Boundary to display a fallback when the Promise is rejected.
+Nếu Promise được truyền vào `use` bị rejected, lỗi sẽ lan truyền đến [Error Boundary](/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gần nhất. Hãy bọc component gọi `use` trong một Error Boundary để hiển thị fallback khi Promise bị rejected.
 
-In the example below, `fetchData` rejects on the first attempt and succeeds on retry. The Error Boundary catches the rejection and shows a fallback with a "Try again" button.
+Trong ví dụ dưới đây, `fetchData` bị rejected ở lần thử đầu tiên và thành công khi retry. Error Boundary bắt rejection và hiển thị fallback kèm nút "Try again".
 
 <Sandpack>
 
@@ -1326,13 +1325,13 @@ async function getData(url) {
 
 ---
 
-## Usage (Browser) {/*usage-browser*/}
+## Cách sử dụng (Browser) {/*usage-browser*/}
 
-### Rendering a component only in the browser {/*rendering-a-component-only-in-the-browser*/}
+### Chỉ render một component trong browser {/*rendering-a-component-only-in-the-browser*/}
 
-Pass the value returned by [`browser`](/reference/react-dom/browser) to `use` inside a component that should only render in the browser.
+Truyền giá trị được trả về bởi [`browser`](/reference/react-dom/browser) vào `use` bên trong một component chỉ nên được render trong browser.
 
-Click **Reload** to see the loading fallback in the initial HTML. After hydration, React displays the draft loaded from `localStorage`.
+Nhấp vào **Reload** để xem loading fallback trong HTML ban đầu. Sau hydration, React sẽ hiển thị bản nháp được tải từ `localStorage`.
 
 <Sandpack>
 
@@ -1476,15 +1475,15 @@ iframe {
 
 </Sandpack>
 
-During server rendering, `use(browser())` suspends the component and React includes the closest Suspense boundary's fallback in the HTML. In the browser, `use(browser())` returns `undefined` and the saved draft renders normally.
+Trong quá trình server rendering, `use(browser())` sẽ suspend component và React đưa fallback của boundary Suspense gần nhất vào HTML. Trong browser, `use(browser())` trả về `undefined` và bản nháp đã lưu được render bình thường.
 
 ---
 
-## Troubleshooting {/*troubleshooting*/}
+## Khắc phục sự cố {/*troubleshooting*/}
 
-### I'm getting an error: "Suspense Exception: This is not a real error!" {/*suspense-exception-error*/}
+### Tôi gặp lỗi: "Suspense Exception: Đây không phải lỗi thực sự!" {/*suspense-exception-error*/}
 
-You are calling `use` inside a try-catch block. `use` throws internally to integrate with Suspense, so it cannot be wrapped in try-catch. Instead, wrap the component that calls `use` in an [Error Boundary](#displaying-an-error-with-an-error-boundary) to handle errors.
+Bạn đang gọi `use` bên trong một khối try-catch. `use` tự ném exception bên trong để tích hợp với Suspense, nên không thể được bọc trong try-catch. Thay vào đó, hãy bọc component gọi `use` trong một [Error Boundary](#displaying-an-error-with-an-error-boundary) để xử lý lỗi.
 
 ```jsx
 function Albums({ albumsPromise }) {
@@ -1497,7 +1496,7 @@ function Albums({ albumsPromise }) {
   // ...
 ```
 
-Instead, wrap the component in an Error Boundary:
+Thay vào đó, hãy bọc component trong một Error Boundary:
 
 ```jsx
 function Albums({ albumsPromise }) {
@@ -1515,11 +1514,11 @@ function Albums({ albumsPromise }) {
 
 ---
 
-### I'm getting a warning: "A component was suspended by an uncached promise" {/*uncached-promise-error*/}
+### Tôi nhận được cảnh báo: "Một component đã bị suspend bởi một promise chưa được cache" {/*uncached-promise-error*/}
 
-The Promise passed to `use` is not cached, so React cannot reuse it across re-renders.
+Promise được truyền vào `use` chưa được cache, nên React không thể tái sử dụng nó giữa các lần re-render.
 
-This commonly happens when calling `fetch` or an `async` function directly in render:
+Điều này thường xảy ra khi gọi trực tiếp `fetch` hoặc một hàm `async` trong quá trình render:
 
 ```js
 function Albums() {
@@ -1529,11 +1528,11 @@ function Albums() {
 }
 ```
 
-To fix this, cache the Promise so the same instance is reused:
+Để khắc phục, hãy cache Promise để cùng một instance được tái sử dụng:
 
 ```js
 // ✅ fetchData returns the same Promise for the same URL
 const albums = use(fetchData('/albums'));
 ```
 
-See [caching Promises for Client Components](#caching-promises-for-client-components) for more details.
+Xem [caching Promises for Client Components](#caching-promises-for-client-components) để biết thêm chi tiết.

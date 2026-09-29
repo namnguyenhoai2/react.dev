@@ -4,7 +4,7 @@ title: "<title>"
 
 <Intro>
 
-The [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) lets you specify the title of the document.
+Thành phần [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) cho phép bạn chỉ định tiêu đề của tài liệu.
 
 ```js
 <title>My Blog</title>
@@ -16,45 +16,45 @@ The [built-in browser `<title>` component](https://developer.mozilla.org/en-US/d
 
 ---
 
-## Reference {/*reference*/}
+## Tham khảo {/*reference*/}
 
 ### `<title>` {/*title*/}
 
-To specify the title of the document, render the [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title). You can render `<title>` from any component and React will always place the corresponding DOM element in the document head.
+Để chỉ định tiêu đề của tài liệu, hãy render thành phần [built-in browser `<title>` component](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title). Bạn có thể render `<title>` từ bất kỳ component nào và React sẽ luôn đặt phần tử DOM tương ứng trong phần head của tài liệu.
 
 ```js
 <title>My Blog</title>
 ```
 
-[See more examples below.](#usage)
+[Xem thêm các ví dụ bên dưới.](#usage)
 
 #### Props {/*props*/}
 
-`<title>` supports all [common element props.](/reference/react-dom/components/common#common-props)
+`<title>` hỗ trợ tất cả [common element props.](/reference/react-dom/components/common#common-props)
 
-* `children`: `<title>` accepts only text as a child. This text will become the title of the document. You can also pass your own components as long as they only render text.
+* `children`: `<title>` chỉ chấp nhận văn bản làm phần tử con. Văn bản này sẽ trở thành tiêu đề của tài liệu. Bạn cũng có thể truyền các component của riêng mình, miễn là chúng chỉ render văn bản.
 
-#### Special rendering behavior {/*special-rendering-behavior*/}
+#### Hành vi render đặc biệt {/*special-rendering-behavior*/}
 
-React will always place the DOM element corresponding to the `<title>` component within the document’s `<head>`, regardless of where in the React tree it is rendered. The `<head>` is the only valid place for `<title>` to exist within the DOM, yet it’s convenient and keeps things composable if a component representing a specific page can render its `<title>` itself.
+React sẽ luôn đặt phần tử DOM tương ứng với component `<title>` bên trong `<head>` của tài liệu, bất kể nó được render ở đâu trong cây React. `<head>` là vị trí hợp lệ duy nhất để `<title>` tồn tại trong DOM, nhưng việc cho phép một component đại diện cho một trang cụ thể tự render `<title>` sẽ thuận tiện và giúp các thành phần có thể kết hợp với nhau.
 
-There are two exception to this:
-* If `<title>` is within an `<svg>` component, then there is no special behavior, because in this context it doesn’t represent the document’s title but rather is an [accessibility annotation for that SVG graphic](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title).
-* If the `<title>` has an [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop) prop, there is no special behavior, because in this case it doesn’t represent the document’s title but rather metadata about a specific part of the page.
+Có hai ngoại lệ:
+* Nếu `<title>` nằm trong một component `<svg>`, thì không có hành vi đặc biệt nào, vì trong ngữ cảnh này, nó không đại diện cho tiêu đề của tài liệu mà là một [accessibility annotation for that SVG graphic](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title).
+* Nếu `<title>` có prop [`itemProp`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/itemprop), thì không có hành vi đặc biệt nào, vì trong trường hợp này, nó không đại diện cho tiêu đề của tài liệu mà là siêu dữ liệu về một phần cụ thể của trang.
 
 <Pitfall>
 
-Only render a single `<title>` at a time. If more than one component renders a `<title>` tag at the same time, React will place all of those titles in the document head. When this happens, the behavior of browsers and search engines is undefined.
+Chỉ render một `<title>` tại một thời điểm. Nếu có nhiều component cùng render thẻ `<title>`, React sẽ đặt tất cả các tiêu đề đó vào phần head của tài liệu. Khi điều này xảy ra, hành vi của trình duyệt và công cụ tìm kiếm là không xác định.
 
 </Pitfall>
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Set the document title {/*set-the-document-title*/}
+### Đặt tiêu đề tài liệu {/*set-the-document-title*/}
 
-Render the `<title>` component from any component with text as its children. React will put a `<title>` DOM node in the document `<head>`.
+Render component `<title>` từ bất kỳ component nào với văn bản làm các phần tử con của nó. React sẽ đặt một node DOM `<title>` vào `<head>` của tài liệu.
 
 <SandpackWithHTMLOutput>
 
@@ -74,17 +74,16 @@ export default function ContactUsPage() {
 
 </SandpackWithHTMLOutput>
 
-### Use variables in the title {/*use-variables-in-the-title*/}
+### Sử dụng biến trong tiêu đề {/*use-variables-in-the-title*/}
 
-The children of the `<title>` component must be a single string of text. (Or a single number or a single object with a `toString` method.) It might not be obvious, but using JSX curly braces like this:
+Các phần tử con của component `<title>` phải là một chuỗi văn bản duy nhất. (Hoặc một số duy nhất hay một object duy nhất có phương thức `toString`.) Điều này có thể không rõ ràng, nhưng việc sử dụng dấu ngoặc nhọn JSX như sau:
 
 ```js
 <title>Results page {pageNumber}</title> // 🔴 Problem: This is not a single string
 ```
 
-... actually causes the `<title>` component to get a two-element array as its children (the string `"Results page"` and the value of `pageNumber`). This will cause an error. Instead, use string interpolation to pass `<title>` a single string:
+... thực ra khiến component `<title>` nhận một mảng gồm hai phần tử làm các phần tử con (chuỗi `"Results page"` và giá trị của `pageNumber`). Điều này sẽ gây ra lỗi. Thay vào đó, hãy sử dụng string interpolation để truyền cho `<title>` một chuỗi duy nhất:
 
 ```js
 <title>{`Results page ${pageNumber}`}</title>
 ```
-

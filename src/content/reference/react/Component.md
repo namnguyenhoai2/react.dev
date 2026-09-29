@@ -4,13 +4,13 @@ title: Component
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#alternatives)
+Chúng tôi khuyến nghị định nghĩa các component dưới dạng function thay vì class. [Xem cách migrate.](#alternatives)
 
 </Pitfall>
 
 <Intro>
 
-`Component` is the base class for the React components defined as [JavaScript classes.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) Class components are still supported by React, but we don't recommend using them in new code.
+`Component` là base class dành cho các React component được định nghĩa dưới dạng [JavaScript class.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) React vẫn hỗ trợ class component, nhưng chúng tôi không khuyến nghị sử dụng chúng trong code mới.
 
 ```js
 class Greeting extends Component {
@@ -26,11 +26,11 @@ class Greeting extends Component {
 
 ---
 
-## Reference {/*reference*/}
+## Tham chiếu {/*reference*/}
 
 ### `Component` {/*component*/}
 
-To define a React component as a class, extend the built-in `Component` class and define a [`render` method:](#render)
+Để định nghĩa một React component dưới dạng class, hãy mở rộng class tích hợp sẵn `Component` và định nghĩa một phương thức [`render`:](#render)
 
 ```js
 import { Component } from 'react';
@@ -42,17 +42,17 @@ class Greeting extends Component {
 }
 ```
 
-Only the `render` method is required, other methods are optional.
+Chỉ cần có phương thức `render`; các phương thức khác là tùy chọn.
 
-[See more examples below.](#usage)
+[Xem thêm ví dụ bên dưới.](#usage)
 
 ---
 
 ### `context` {/*context*/}
 
-The [context](/learn/passing-data-deeply-with-context) of a class component is available as `this.context`. It is only available if you specify *which* context you want to receive using [`static contextType`](#static-contexttype).
+[context](/learn/passing-data-deeply-with-context) của class component có sẵn dưới dạng `this.context`. Nó chỉ có sẵn nếu bạn chỉ định *context nào* muốn nhận bằng cách sử dụng [`static contextType`](#static-contexttype).
 
-A class component can only read one context at a time.
+Một class component chỉ có thể đọc một context tại một thời điểm.
 
 ```js {2,5}
 class Button extends Component {
@@ -73,9 +73,9 @@ class Button extends Component {
 
 <Note>
 
-Reading `this.context` in class components is equivalent to [`useContext`](/reference/react/useContext) in function components.
+Việc đọc `this.context` trong class component tương đương với việc sử dụng [`useContext`](/reference/react/useContext) trong function component.
 
-[See how to migrate.](#migrating-a-component-with-context-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-context-from-a-class-to-a-function)
 
 </Note>
 
@@ -83,7 +83,7 @@ Reading `this.context` in class components is equivalent to [`useContext`](/refe
 
 ### `props` {/*props*/}
 
-The props passed to a class component are available as `this.props`.
+Các props được truyền vào class component có sẵn dưới dạng `this.props`.
 
 ```js {3}
 class Greeting extends Component {
@@ -97,9 +97,9 @@ class Greeting extends Component {
 
 <Note>
 
-Reading `this.props` in class components is equivalent to [declaring props](/learn/passing-props-to-a-component#step-2-read-props-inside-the-child-component) in function components.
+Việc đọc `this.props` trong class component tương đương với việc [khai báo props](/learn/passing-props-to-a-component#step-2-read-props-inside-the-child-component) trong function component.
 
-[See how to migrate.](#migrating-a-simple-component-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-simple-component-from-a-class-to-a-function)
 
 </Note>
 
@@ -107,7 +107,7 @@ Reading `this.props` in class components is equivalent to [declaring props](/lea
 
 ### `state` {/*state*/}
 
-The state of a class component is available as `this.state`. The `state` field must be an object. Do not mutate the state directly. If you wish to change the state, call `setState` with the new state.
+State của class component có sẵn dưới dạng `this.state`. Trường `state` phải là một object. Không được mutate state trực tiếp. Nếu muốn thay đổi state, hãy gọi `setState` với state mới.
 
 ```js {2-4,7-9,18}
 class Counter extends Component {
@@ -136,9 +136,9 @@ class Counter extends Component {
 
 <Note>
 
-Defining `state` in class components is equivalent to calling [`useState`](/reference/react/useState) in function components.
+Việc định nghĩa `state` trong class component tương đương với việc gọi [`useState`](/reference/react/useState) trong function component.
 
-[See how to migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
 
 </Note>
 
@@ -146,7 +146,7 @@ Defining `state` in class components is equivalent to calling [`useState`](/refe
 
 ### `constructor(props)` {/*constructor*/}
 
-The [constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) runs before your class component *mounts* (gets added to the screen). Typically, a constructor is only used for two purposes in React. It lets you declare state and [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) your class methods to the class instance:
+[constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) chạy trước khi class component của bạn *mount* (được thêm vào màn hình). Thông thường, constructor chỉ được sử dụng cho hai mục đích trong React. Nó cho phép bạn khai báo state và [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) các class method của bạn với class instance:
 
 ```js {2-6}
 class Counter extends Component {
@@ -161,7 +161,7 @@ class Counter extends Component {
   }
 ```
 
-If you use modern JavaScript syntax, constructors are rarely needed. Instead, you can rewrite this code above using the [public class field syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields) which is supported both by modern browsers and tools like [Babel:](https://babeljs.io/)
+Nếu sử dụng cú pháp JavaScript hiện đại, bạn hiếm khi cần constructor. Thay vào đó, bạn có thể viết lại code trên bằng [cú pháp public class field](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Public_class_fields), được hỗ trợ bởi cả trình duyệt hiện đại lẫn các công cụ như [Babel:](https://babeljs.io/)
 
 ```js {2,4}
 class Counter extends Component {
@@ -172,31 +172,31 @@ class Counter extends Component {
   }
 ```
 
-A constructor should not contain any side effects or subscriptions.
+Constructor không nên chứa side effect hoặc subscription nào.
 
-#### Parameters {/*constructor-parameters*/}
+#### Tham số {/*constructor-parameters*/}
 
-* `props`: The component's initial props.
+* `props`: Props ban đầu của component.
 
-#### Returns {/*constructor-returns*/}
+#### Giá trị trả về {/*constructor-returns*/}
 
-`constructor` should not return anything.
+`constructor` không nên trả về bất kỳ giá trị nào.
 
-#### Caveats {/*constructor-caveats*/}
+#### Lưu ý {/*constructor-caveats*/}
 
-* Do not run any side effects or subscriptions in the constructor. Instead, use [`componentDidMount`](#componentdidmount) for that.
+* Không chạy side effect hoặc subscription nào trong constructor. Thay vào đó, hãy sử dụng [`componentDidMount`](#componentdidmount) cho việc đó.
 
-* Inside a constructor, you need to call `super(props)` before any other statement. If you don't do that, `this.props` will be `undefined` while the constructor runs, which can be confusing and cause bugs.
+* Bên trong constructor, bạn cần gọi `super(props)` trước mọi câu lệnh khác. Nếu không làm vậy, `this.props` sẽ là `undefined` trong khi constructor chạy, điều này có thể gây khó hiểu và dẫn đến lỗi.
 
-* Constructor is the only place where you can assign [`this.state`](#state) directly. In all other methods, you need to use [`this.setState()`](#setstate) instead. Do not call `setState` in the constructor.
+* Constructor là nơi duy nhất bạn có thể gán trực tiếp [`this.state`](#state). Trong mọi method khác, bạn cần sử dụng [`this.setState()`](#setstate) thay thế. Không gọi `setState` trong constructor.
 
-* When you use [server rendering,](/reference/react-dom/server) the constructor will run on the server too, followed by the [`render`](#render) method. However, lifecycle methods like `componentDidMount` or `componentWillUnmount` will not run on the server.
+* Khi sử dụng [server rendering,](/reference/react-dom/server), constructor cũng sẽ chạy trên server, sau đó là method [`render`](#render). Tuy nhiên, các lifecycle method như `componentDidMount` hoặc `componentWillUnmount` sẽ không chạy trên server.
 
-* When [Strict Mode](/reference/react/StrictMode) is on, React will call `constructor` twice in development and then throw away one of the instances. This helps you notice the accidental side effects that need to be moved out of the `constructor`.
+* Khi [Strict Mode](/reference/react/StrictMode) được bật, React sẽ gọi `constructor` hai lần trong development rồi loại bỏ một trong các instance. Điều này giúp bạn phát hiện các side effect vô tình cần được chuyển ra ngoài `constructor`.
 
 <Note>
 
-There is no exact equivalent for `constructor` in function components. To declare state in a function component, call [`useState`.](/reference/react/useState) To avoid recalculating the initial state, [pass a function to `useState`.](/reference/react/useState#avoiding-recreating-the-initial-state)
+Không có tương đương chính xác cho `constructor` trong function component. Để khai báo state trong function component, hãy gọi [`useState`.](/reference/react/useState) Để tránh tính toán lại state ban đầu, [hãy truyền một function vào `useState`.](/reference/react/useState#avoiding-recreating-the-initial-state)
 
 </Note>
 
@@ -204,31 +204,31 @@ There is no exact equivalent for `constructor` in function components. To declar
 
 ### `componentDidCatch(error, info)` {/*componentdidcatch*/}
 
-If you define `componentDidCatch`, React will call it when some child component (including distant children) throws an error during rendering. This lets you log that error to an error reporting service in production.
+Nếu bạn định nghĩa `componentDidCatch`, React sẽ gọi nó khi một child component nào đó (bao gồm cả các child ở xa) throw một error trong quá trình rendering. Điều này cho phép bạn ghi log error đó vào một error reporting service trong production.
 
-Typically, it is used together with [`static getDerivedStateFromError`](#static-getderivedstatefromerror) which lets you update state in response to an error and display an error message to the user. A component with these methods is called an *Error Boundary*.
+Thông thường, nó được sử dụng cùng với [`static getDerivedStateFromError`](#static-getderivedstatefromerror), cho phép bạn cập nhật state để phản hồi lỗi và hiển thị thông báo lỗi cho người dùng. Một component có các method này được gọi là *Error Boundary*.
 
-[See an example.](#catching-rendering-errors-with-an-error-boundary)
+[Xem ví dụ.](#catching-rendering-errors-with-an-error-boundary)
 
-#### Parameters {/*componentdidcatch-parameters*/}
+#### Tham số {/*componentdidcatch-parameters*/}
 
-* `error`: The error that was thrown. In practice, it will usually be an instance of [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) but this is not guaranteed because JavaScript allows to [`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) any value, including strings or even `null`.
+* `error`: Error đã được throw. Trên thực tế, nó thường sẽ là một instance của [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error), nhưng điều này không được đảm bảo vì JavaScript cho phép [`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) bất kỳ giá trị nào, kể cả string hoặc thậm chí `null`.
 
-* `info`: An object containing additional information about the error. Its `componentStack` field contains a stack trace with the component that threw, as well as the names and source locations of all its parent components. In production, the component names will be minified. If you set up production error reporting, you can decode the component stack using sourcemaps the same way as you would do for regular JavaScript error stacks.
+* `info`: Một object chứa thông tin bổ sung về error. Trường `componentStack` của nó chứa stack trace với component đã throw error, cùng với tên và vị trí trong source của tất cả component cha. Trong production, tên component sẽ được minify. Nếu thiết lập production error reporting, bạn có thể decode component stack bằng sourcemap giống như cách thực hiện với các JavaScript error stack thông thường.
 
-#### Returns {/*componentdidcatch-returns*/}
+#### Giá trị trả về {/*componentdidcatch-returns*/}
 
-`componentDidCatch` should not return anything.
+`componentDidCatch` không nên trả về bất kỳ giá trị nào.
 
-#### Caveats {/*componentdidcatch-caveats*/}
+#### Lưu ý {/*componentdidcatch-caveats*/}
 
-* In the past, it was common to call `setState` inside `componentDidCatch` in order to update the UI and display the fallback error message. This is deprecated in favor of defining [`static getDerivedStateFromError`.](#static-getderivedstatefromerror)
+* Trước đây, việc gọi `setState` bên trong `componentDidCatch` để cập nhật UI và hiển thị fallback error message là điều phổ biến. Cách này đã deprecated; thay vào đó, hãy định nghĩa [`static getDerivedStateFromError`.](#static-getderivedstatefromerror)
 
-* Production and development builds of React slightly differ in the way `componentDidCatch` handles errors. In development, the errors will bubble up to `window`, which means that any `window.onerror` or `window.addEventListener('error', callback)` will intercept the errors that have been caught by `componentDidCatch`. In production, instead, the errors will not bubble up, which means any ancestor error handler will only receive errors not explicitly caught by `componentDidCatch`.
+* Bản build production và development của React hơi khác nhau trong cách `componentDidCatch` xử lý error. Trong development, error sẽ bubble lên `window`, nghĩa là mọi `window.onerror` hoặc `window.addEventListener('error', callback)` sẽ intercept các error đã được `componentDidCatch` bắt. Trong production, ngược lại, error sẽ không bubble lên, nghĩa là mọi error handler ở component cha chỉ nhận được các error không được `componentDidCatch` bắt một cách rõ ràng.
 
 <Note>
 
-There is no direct equivalent for `componentDidCatch` in function components yet. If you'd like to avoid creating class components, write a single `ErrorBoundary` component like above and use it throughout your app. Alternatively, you can use the [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary) package which does that for you.
+Hiện chưa có tương đương trực tiếp cho `componentDidCatch` trong function component. Nếu muốn tránh tạo class component, hãy viết một component `ErrorBoundary` duy nhất như trên và sử dụng nó trong toàn bộ app. Ngoài ra, bạn có thể sử dụng package [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary), package này sẽ thực hiện việc đó thay bạn.
 
 </Note>
 
@@ -236,9 +236,9 @@ There is no direct equivalent for `componentDidCatch` in function components yet
 
 ### `componentDidMount()` {/*componentdidmount*/}
 
-If you define the `componentDidMount` method, React will call it when your component is added *(mounted)* to the screen. This is a common place to start data fetching, set up subscriptions, or manipulate the DOM nodes.
+Nếu bạn định nghĩa phương thức `componentDidMount`, React sẽ gọi phương thức đó khi component của bạn được thêm *(mounted)* vào màn hình. Đây là nơi thường được dùng để bắt đầu lấy dữ liệu, thiết lập các subscription hoặc thao tác với các node DOM.
 
-If you implement `componentDidMount`, you usually need to implement other lifecycle methods to avoid bugs. For example, if `componentDidMount` reads some state or props, you also have to implement [`componentDidUpdate`](#componentdidupdate) to handle their changes, and [`componentWillUnmount`](#componentwillunmount) to clean up whatever `componentDidMount` was doing.
+Nếu bạn triển khai `componentDidMount`, bạn thường cần triển khai các phương thức lifecycle khác để tránh lỗi. Ví dụ: nếu `componentDidMount` đọc một số state hoặc props, bạn cũng phải triển khai [`componentDidUpdate`](#componentdidupdate) để xử lý các thay đổi của chúng, và [`componentWillUnmount`](#componentwillunmount) để dọn dẹp những gì `componentDidMount` đã thực hiện.
 
 ```js {6-8}
 class ChatRoom extends Component {
@@ -268,27 +268,27 @@ class ChatRoom extends Component {
 }
 ```
 
-[See more examples.](#adding-lifecycle-methods-to-a-class-component)
+[Xem thêm ví dụ.](#adding-lifecycle-methods-to-a-class-component)
 
-#### Parameters {/*componentdidmount-parameters*/}
+#### Tham số {/*componentdidmount-parameters*/}
 
-`componentDidMount` does not take any parameters.
+`componentDidMount` không nhận bất kỳ tham số nào.
 
-#### Returns {/*componentdidmount-returns*/}
+#### Giá trị trả về {/*componentdidmount-returns*/}
 
-`componentDidMount` should not return anything.
+`componentDidMount` không nên trả về bất kỳ giá trị nào.
 
-#### Caveats {/*componentdidmount-caveats*/}
+#### Lưu ý {/*componentdidmount-caveats*/}
 
-- When [Strict Mode](/reference/react/StrictMode) is on, in development React will call `componentDidMount`, then immediately call [`componentWillUnmount`,](#componentwillunmount) and then call `componentDidMount` again. This helps you notice if you forgot to implement `componentWillUnmount` or if its logic doesn't fully "mirror" what `componentDidMount` does.
+- Khi [Strict Mode](/reference/react/StrictMode) được bật, trong môi trường development, React sẽ gọi `componentDidMount`, sau đó ngay lập tức gọi [`componentWillUnmount`,](#componentwillunmount) rồi lại gọi `componentDidMount`. Điều này giúp bạn phát hiện liệu mình có quên triển khai `componentWillUnmount` hay không, hoặc liệu logic của nó có hoàn toàn “đối xứng” với những gì `componentDidMount` thực hiện hay không.
 
-- Although you may call [`setState`](#setstate) immediately in `componentDidMount`, it's best to avoid that when you can. It will trigger an extra rendering, but it will happen before the browser updates the screen. This guarantees that even though the [`render`](#render) will be called twice in this case, the user won't see the intermediate state. Use this pattern with caution because it often causes performance issues. In most cases, you should be able to assign the initial state in the [`constructor`](#constructor) instead. It can, however, be necessary for cases like modals and tooltips when you need to measure a DOM node before rendering something that depends on its size or position.
+- Mặc dù bạn có thể gọi [`setState`](#setstate) ngay lập tức trong `componentDidMount`, tốt nhất là tránh làm vậy khi có thể. Việc này sẽ kích hoạt một lần rendering bổ sung, nhưng nó sẽ diễn ra trước khi trình duyệt cập nhật màn hình. Điều này đảm bảo rằng dù [`render`](#render) được gọi hai lần trong trường hợp này, người dùng sẽ không nhìn thấy state trung gian. Hãy thận trọng khi sử dụng pattern này vì nó thường gây ra các vấn đề về hiệu năng. Trong hầu hết trường hợp, bạn có thể gán state ban đầu trong [`constructor`](#constructor) thay thế. Tuy nhiên, điều này có thể cần thiết trong các trường hợp như modal và tooltip, khi bạn cần đo một node DOM trước khi rendering một thành phần phụ thuộc vào kích thước hoặc vị trí của node đó.
 
 <Note>
 
-For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` together in class components is equivalent to calling [`useEffect`](/reference/react/useEffect) in function components. In the rare cases where it's important for the code to run before browser paint, [`useLayoutEffect`](/reference/react/useLayoutEffect) is a closer match.
+Trong nhiều trường hợp sử dụng, việc định nghĩa `componentDidMount`, `componentDidUpdate` và `componentWillUnmount` cùng nhau trong class component tương đương với việc gọi [`useEffect`](/reference/react/useEffect) trong function component. Trong những trường hợp hiếm hoi mà việc chạy code trước khi trình duyệt paint là quan trọng, [`useLayoutEffect`](/reference/react/useLayoutEffect) là lựa chọn tương đồng hơn.
 
-[See how to migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
 
 </Note>
 
@@ -296,9 +296,9 @@ For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `com
 
 ### `componentDidUpdate(prevProps, prevState, snapshot?)` {/*componentdidupdate*/}
 
-If you define the `componentDidUpdate` method, React will call it immediately after your component has been re-rendered with updated props or state.  This method is not called for the initial render.
+Nếu bạn định nghĩa phương thức `componentDidUpdate`, React sẽ gọi phương thức đó ngay sau khi component của bạn được re-render với props hoặc state đã cập nhật. Phương thức này không được gọi trong lần render ban đầu.
 
-You can use it to manipulate the DOM after an update. This is also a common place to do network requests as long as you compare the current props to previous props (e.g. a network request may not be necessary if the props have not changed). Typically, you'd use it together with [`componentDidMount`](#componentdidmount) and [`componentWillUnmount`:](#componentwillunmount)
+Bạn có thể dùng phương thức này để thao tác với DOM sau một lần update. Đây cũng là nơi thường dùng để thực hiện các network request, miễn là bạn so sánh props hiện tại với props trước đó (ví dụ: có thể không cần thực hiện network request nếu props không thay đổi). Thông thường, bạn sẽ dùng phương thức này cùng với [`componentDidMount`](#componentdidmount) và [`componentWillUnmount`:](#componentwillunmount)
 
 ```js {10-18}
 class ChatRoom extends Component {
@@ -328,34 +328,34 @@ class ChatRoom extends Component {
 }
 ```
 
-[See more examples.](#adding-lifecycle-methods-to-a-class-component)
+[Xem thêm ví dụ.](#adding-lifecycle-methods-to-a-class-component)
 
 
-#### Parameters {/*componentdidupdate-parameters*/}
+#### Tham số {/*componentdidupdate-parameters*/}
 
-* `prevProps`: Props before the update. Compare `prevProps` to [`this.props`](#props) to determine what changed.
+* `prevProps`: Props trước lần update. So sánh `prevProps` với [`this.props`](#props) để xác định điều gì đã thay đổi.
 
-* `prevState`: State before the update. Compare `prevState` to [`this.state`](#state) to determine what changed.
+* `prevState`: State trước lần update. So sánh `prevState` với [`this.state`](#state) để xác định điều gì đã thay đổi.
 
-* `snapshot`: If you implemented [`getSnapshotBeforeUpdate`](#getsnapshotbeforeupdate), `snapshot` will contain the value you returned from that method. Otherwise, it will be `undefined`.
+* `snapshot`: Nếu bạn đã triển khai [`getSnapshotBeforeUpdate`](#getsnapshotbeforeupdate), `snapshot` sẽ chứa giá trị bạn trả về từ phương thức đó. Nếu không, giá trị này sẽ là `undefined`.
 
-#### Returns {/*componentdidupdate-returns*/}
+#### Giá trị trả về {/*componentdidupdate-returns*/}
 
-`componentDidUpdate` should not return anything.
+`componentDidUpdate` không nên trả về bất kỳ giá trị nào.
 
-#### Caveats {/*componentdidupdate-caveats*/}
+#### Lưu ý {/*componentdidupdate-caveats*/}
 
-- `componentDidUpdate` will not get called if [`shouldComponentUpdate`](#shouldcomponentupdate) is defined and returns `false`.
+- `componentDidUpdate` sẽ không được gọi nếu [`shouldComponentUpdate`](#shouldcomponentupdate) được định nghĩa và trả về `false`.
 
-- The logic inside `componentDidUpdate` should usually be wrapped in conditions comparing `this.props` with `prevProps`, and `this.state` with `prevState`. Otherwise, there's a risk of creating infinite loops.
+- Logic bên trong `componentDidUpdate` thường nên được bao bọc trong các điều kiện so sánh `this.props` với `prevProps`, và `this.state` với `prevState`. Nếu không, bạn có nguy cơ tạo ra các vòng lặp vô hạn.
 
-- Although you may call [`setState`](#setstate) immediately in `componentDidUpdate`, it's best to avoid that when you can. It will trigger an extra rendering, but it will happen before the browser updates the screen. This guarantees that even though the [`render`](#render) will be called twice in this case, the user won't see the intermediate state. This pattern often causes performance issues, but it may be necessary for rare cases like modals and tooltips when you need to measure a DOM node before rendering something that depends on its size or position.
+- Mặc dù bạn có thể gọi [`setState`](#setstate) ngay lập tức trong `componentDidUpdate`, tốt nhất là tránh làm vậy khi có thể. Việc này sẽ kích hoạt một lần rendering bổ sung, nhưng nó sẽ diễn ra trước khi trình duyệt cập nhật màn hình. Điều này đảm bảo rằng dù [`render`](#render) được gọi hai lần trong trường hợp này, người dùng sẽ không nhìn thấy state trung gian. Pattern này thường gây ra các vấn đề về hiệu năng, nhưng có thể cần thiết trong những trường hợp hiếm hoi như modal và tooltip, khi bạn cần đo một node DOM trước khi rendering một thành phần phụ thuộc vào kích thước hoặc vị trí của node đó.
 
 <Note>
 
-For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` together in class components is equivalent to calling [`useEffect`](/reference/react/useEffect) in function components. In the rare cases where it's important for the code to run before browser paint, [`useLayoutEffect`](/reference/react/useLayoutEffect) is a closer match.
+Trong nhiều trường hợp sử dụng, việc định nghĩa `componentDidMount`, `componentDidUpdate` và `componentWillUnmount` cùng nhau trong class component tương đương với việc gọi [`useEffect`](/reference/react/useEffect) trong function component. Trong những trường hợp hiếm hoi mà việc chạy code trước khi trình duyệt paint là quan trọng, [`useLayoutEffect`](/reference/react/useLayoutEffect) là lựa chọn tương đồng hơn.
 
-[See how to migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
 
 </Note>
 ---
@@ -364,9 +364,9 @@ For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `com
 
 <Deprecated>
 
-This API has been renamed from `componentWillMount` to [`UNSAFE_componentWillMount`.](#unsafe_componentwillmount) The old name has been deprecated. In a future major version of React, only the new name will work.
+API này đã được đổi tên từ `componentWillMount` thành [`UNSAFE_componentWillMount`.](#unsafe_componentwillmount) Tên cũ đã bị deprecated. Trong một major version tương lai của React, chỉ tên mới sẽ hoạt động.
 
-Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
+Chạy codemod [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) để tự động cập nhật các component của bạn.
 
 </Deprecated>
 
@@ -376,9 +376,9 @@ Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-co
 
 <Deprecated>
 
-This API has been renamed from `componentWillReceiveProps` to [`UNSAFE_componentWillReceiveProps`.](#unsafe_componentwillreceiveprops) The old name has been deprecated. In a future major version of React, only the new name will work.
+API này đã được đổi tên từ `componentWillReceiveProps` thành [`UNSAFE_componentWillReceiveProps`.](#unsafe_componentwillreceiveprops) Tên cũ đã bị deprecated. Trong một major version tương lai của React, chỉ tên mới sẽ hoạt động.
 
-Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
+Chạy codemod [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) để tự động cập nhật các component của bạn.
 
 </Deprecated>
 
@@ -388,9 +388,9 @@ Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-co
 
 <Deprecated>
 
-This API has been renamed from `componentWillUpdate` to [`UNSAFE_componentWillUpdate`.](#unsafe_componentwillupdate) The old name has been deprecated. In a future major version of React, only the new name will work.
+API này đã được đổi tên từ `componentWillUpdate` thành [`UNSAFE_componentWillUpdate`.](#unsafe_componentwillupdate) Tên cũ đã bị deprecated. Trong một major version tương lai của React, chỉ tên mới sẽ hoạt động.
 
-Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
+Chạy codemod [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) để tự động cập nhật các component của bạn.
 
 </Deprecated>
 
@@ -398,9 +398,9 @@ Run the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-co
 
 ### `componentWillUnmount()` {/*componentwillunmount*/}
 
-If you define the `componentWillUnmount` method, React will call it before your component is removed *(unmounted)* from the screen. This is a common place to cancel data fetching or remove subscriptions.
+Nếu bạn định nghĩa phương thức `componentWillUnmount`, React sẽ gọi phương thức đó trước khi component của bạn bị xóa *(unmounted)* khỏi màn hình. Đây là nơi thường dùng để hủy việc lấy dữ liệu hoặc gỡ bỏ các subscription.
 
-The logic inside `componentWillUnmount` should "mirror" the logic inside [`componentDidMount`.](#componentdidmount) For example, if `componentDidMount` sets up a subscription, `componentWillUnmount` should clean up that subscription. If the cleanup logic in your `componentWillUnmount` reads some props or state, you will usually also need to implement [`componentDidUpdate`](#componentdidupdate) to clean up resources (such as subscriptions) corresponding to the old props and state.
+Logic bên trong `componentWillUnmount` nên “đối xứng” với logic bên trong [`componentDidMount`.](#componentdidmount) Ví dụ: nếu `componentDidMount` thiết lập một subscription, `componentWillUnmount` nên dọn dẹp subscription đó. Nếu logic cleanup trong `componentWillUnmount` đọc một số props hoặc state, bạn thường cũng cần triển khai [`componentDidUpdate`](#componentdidupdate) để dọn dẹp các tài nguyên (chẳng hạn như subscription) tương ứng với props và state cũ.
 
 ```js {20-22}
 class ChatRoom extends Component {
@@ -430,25 +430,25 @@ class ChatRoom extends Component {
 }
 ```
 
-[See more examples.](#adding-lifecycle-methods-to-a-class-component)
+[Xem thêm ví dụ.](#adding-lifecycle-methods-to-a-class-component)
 
-#### Parameters {/*componentwillunmount-parameters*/}
+#### Tham số {/*componentwillunmount-parameters*/}
 
-`componentWillUnmount` does not take any parameters.
+`componentWillUnmount` không nhận bất kỳ tham số nào.
 
-#### Returns {/*componentwillunmount-returns*/}
+#### Giá trị trả về {/*componentwillunmount-returns*/}
 
-`componentWillUnmount` should not return anything.
+`componentWillUnmount` không được trả về bất kỳ giá trị nào.
 
-#### Caveats {/*componentwillunmount-caveats*/}
+#### Lưu ý {/*componentwillunmount-caveats*/}
 
-- When [Strict Mode](/reference/react/StrictMode) is on, in development React will call [`componentDidMount`,](#componentdidmount) then immediately call `componentWillUnmount`, and then call `componentDidMount` again. This helps you notice if you forgot to implement `componentWillUnmount` or if its logic doesn't fully "mirror" what `componentDidMount` does.
+- Khi [Strict Mode](/reference/react/StrictMode) được bật, trong môi trường development, React sẽ gọi [`componentDidMount`,](#componentdidmount) rồi ngay lập tức gọi `componentWillUnmount`, sau đó lại gọi `componentDidMount`. Điều này giúp bạn nhận ra nếu quên triển khai `componentWillUnmount` hoặc logic của nó không hoàn toàn “mirror” những gì `componentDidMount` thực hiện.
 
 <Note>
 
-For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` together in class components is equivalent to calling [`useEffect`](/reference/react/useEffect) in function components. In the rare cases where it's important for the code to run before browser paint, [`useLayoutEffect`](/reference/react/useLayoutEffect) is a closer match.
+Trong nhiều trường hợp sử dụng, việc định nghĩa `componentDidMount`, `componentDidUpdate`, và `componentWillUnmount` cùng nhau trong các class component tương đương với việc gọi [`useEffect`](/reference/react/useEffect) trong các function component. Trong những trường hợp hiếm hoi mà việc chạy code trước khi trình duyệt paint là quan trọng, [`useLayoutEffect`](/reference/react/useLayoutEffect) là lựa chọn tương ứng hơn.
 
-[See how to migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
 
 </Note>
 
@@ -456,27 +456,27 @@ For many use cases, defining `componentDidMount`, `componentDidUpdate`, and `com
 
 ### `forceUpdate(callback?)` {/*forceupdate*/}
 
-Forces a component to re-render.
+Buộc một component render lại.
 
-Usually, this is not necessary. If your component's [`render`](#render) method only reads from [`this.props`](#props), [`this.state`](#state), or [`this.context`,](#context) it will re-render automatically when you call [`setState`](#setstate) inside your component or one of its parents. However, if your component's `render` method reads directly from an external data source, you have to tell React to update the user interface when that data source changes. That's what `forceUpdate` lets you do.
+Thông thường, việc này không cần thiết. Nếu method [`render`](#render) của component chỉ đọc từ [`this.props`](#props), [`this.state`](#state), hoặc [`this.context`,](#context) thì component sẽ tự động render lại khi bạn gọi [`setState`](#setstate) bên trong component hoặc một trong các parent của nó. Tuy nhiên, nếu method `render` của component đọc trực tiếp từ một nguồn dữ liệu bên ngoài, bạn phải thông báo cho React cập nhật giao diện người dùng khi nguồn dữ liệu đó thay đổi. Đó là điều `forceUpdate` cho phép bạn thực hiện.
 
-Try to avoid all uses of `forceUpdate` and only read from `this.props` and `this.state` in `render`.
+Cố gắng tránh mọi việc sử dụng `forceUpdate` và chỉ đọc từ `this.props` và `this.state` trong `render`.
 
-#### Parameters {/*forceupdate-parameters*/}
+#### Tham số {/*forceupdate-parameters*/}
 
-* **optional** `callback` If specified, React will call the `callback` you've provided after the update is committed.
+* **tùy chọn** `callback` Nếu được chỉ định, React sẽ gọi `callback` mà bạn cung cấp sau khi update được commit.
 
-#### Returns {/*forceupdate-returns*/}
+#### Giá trị trả về {/*forceupdate-returns*/}
 
-`forceUpdate` does not return anything.
+`forceUpdate` không trả về bất kỳ giá trị nào.
 
-#### Caveats {/*forceupdate-caveats*/}
+#### Lưu ý {/*forceupdate-caveats*/}
 
-- If you call `forceUpdate`, React will re-render without calling [`shouldComponentUpdate`.](#shouldcomponentupdate)
+- Nếu bạn gọi `forceUpdate`, React sẽ render lại mà không gọi [`shouldComponentUpdate`.](#shouldcomponentupdate)
 
 <Note>
 
-Reading an external data source and forcing class components to re-render in response to its changes with `forceUpdate` has been superseded by [`useSyncExternalStore`](/reference/react/useSyncExternalStore) in function components.
+Việc đọc một nguồn dữ liệu bên ngoài và buộc các class component render lại để phản hồi những thay đổi của nguồn đó bằng `forceUpdate` đã được thay thế bằng [`useSyncExternalStore`](/reference/react/useSyncExternalStore) trong các function component.
 
 </Note>
 
@@ -484,9 +484,9 @@ Reading an external data source and forcing class components to re-render in res
 
 ### `getSnapshotBeforeUpdate(prevProps, prevState)` {/*getsnapshotbeforeupdate*/}
 
-If you implement `getSnapshotBeforeUpdate`, React will call it immediately before React updates the DOM. It enables your component to capture some information from the DOM (e.g. scroll position) before it is potentially changed. Any value returned by this lifecycle method will be passed as a parameter to [`componentDidUpdate`.](#componentdidupdate)
+Nếu bạn triển khai `getSnapshotBeforeUpdate`, React sẽ gọi nó ngay trước khi React cập nhật DOM. Nó cho phép component của bạn ghi lại một số thông tin từ DOM, chẳng hạn như vị trí cuộn, trước khi thông tin đó có khả năng bị thay đổi. Bất kỳ giá trị nào được lifecycle method này trả về sẽ được truyền làm tham số cho [`componentDidUpdate`.](#componentdidupdate)
 
-For example, you can use it in a UI like a chat thread that needs to preserve its scroll position during updates:
+Ví dụ, bạn có thể sử dụng nó trong một UI như luồng chat cần duy trì vị trí cuộn trong quá trình update:
 
 ```js {7-15,17}
 class ScrollingList extends React.Component {
@@ -523,25 +523,25 @@ class ScrollingList extends React.Component {
 }
 ```
 
-In the above example, it is important to read the `scrollHeight` property directly in `getSnapshotBeforeUpdate`. It is not safe to read it in [`render`](#render), [`UNSAFE_componentWillReceiveProps`](#unsafe_componentwillreceiveprops), or [`UNSAFE_componentWillUpdate`](#unsafe_componentwillupdate) because there is a potential time gap between these methods getting called and React updating the DOM.
+Trong ví dụ trên, điều quan trọng là phải đọc trực tiếp property `scrollHeight` bên trong `getSnapshotBeforeUpdate`. Việc đọc nó trong [`render`](#render), [`UNSAFE_componentWillReceiveProps`](#unsafe_componentwillreceiveprops), hoặc [`UNSAFE_componentWillUpdate`](#unsafe_componentwillupdate) là không an toàn vì có thể có một khoảng trễ giữa lúc các method này được gọi và lúc React cập nhật DOM.
 
-#### Parameters {/*getsnapshotbeforeupdate-parameters*/}
+#### Tham số {/*getsnapshotbeforeupdate-parameters*/}
 
-* `prevProps`: Props before the update. Compare `prevProps` to [`this.props`](#props) to determine what changed.
+* `prevProps`: Props trước khi update. So sánh `prevProps` với [`this.props`](#props) để xác định điều gì đã thay đổi.
 
-* `prevState`: State before the update. Compare `prevState` to [`this.state`](#state) to determine what changed.
+* `prevState`: State trước khi update. So sánh `prevState` với [`this.state`](#state) để xác định điều gì đã thay đổi.
 
-#### Returns {/*getsnapshotbeforeupdate-returns*/}
+#### Giá trị trả về {/*getsnapshotbeforeupdate-returns*/}
 
-You should return a snapshot value of any type that you'd like, or `null`. The value you returned will be passed as the third argument to [`componentDidUpdate`.](#componentdidupdate)
+Bạn nên trả về một giá trị snapshot thuộc bất kỳ kiểu nào bạn muốn, hoặc `null`. Giá trị bạn trả về sẽ được truyền làm đối số thứ ba cho [`componentDidUpdate`.](#componentdidupdate)
 
-#### Caveats {/*getsnapshotbeforeupdate-caveats*/}
+#### Lưu ý {/*getsnapshotbeforeupdate-caveats*/}
 
-- `getSnapshotBeforeUpdate` will not get called if [`shouldComponentUpdate`](#shouldcomponentupdate) is defined and returns `false`.
+- `getSnapshotBeforeUpdate` sẽ không được gọi nếu [`shouldComponentUpdate`](#shouldcomponentupdate) được định nghĩa và trả về `false`.
 
 <Note>
 
-At the moment, there is no equivalent to `getSnapshotBeforeUpdate` for function components. This use case is very uncommon, but if you have the need for it, for now you'll have to write a class component.
+Hiện tại, không có cách tương đương với `getSnapshotBeforeUpdate` cho các function component. Trường hợp sử dụng này rất hiếm gặp, nhưng nếu bạn cần đến nó thì hiện tại bạn sẽ phải viết một class component.
 
 </Note>
 
@@ -549,9 +549,9 @@ At the moment, there is no equivalent to `getSnapshotBeforeUpdate` for function 
 
 ### `render()` {/*render*/}
 
-The `render` method is the only required method in a class component.
+Method `render` là method bắt buộc duy nhất trong một class component.
 
-The `render` method should specify what you want to appear on the screen, for example:
+Method `render` phải chỉ định nội dung bạn muốn hiển thị trên màn hình, ví dụ:
 
 ```js {4-6}
 import { Component } from 'react';
@@ -563,33 +563,33 @@ class Greeting extends Component {
 }
 ```
 
-React may call `render` at any moment, so you shouldn't assume that it runs at a particular time. Usually, the `render` method should return a piece of [JSX](/learn/writing-markup-with-jsx), but a few [other return types](#render-returns) (like strings) are supported. To calculate the returned JSX, the `render` method can read [`this.props`](#props), [`this.state`](#state), and [`this.context`](#context).
+React có thể gọi `render` bất cứ lúc nào, vì vậy bạn không nên giả định rằng nó chạy vào một thời điểm cụ thể. Thông thường, method `render` phải trả về một đoạn [JSX](/learn/writing-markup-with-jsx), nhưng một số [kiểu giá trị trả về khác](#render-returns) (chẳng hạn như string) cũng được hỗ trợ. Để tính JSX được trả về, method `render` có thể đọc [`this.props`](#props), [`this.state`](#state), và [`this.context`](#context).
 
-You should write the `render` method as a pure function, meaning that it should return the same result if props, state, and context are the same. It also shouldn't contain side effects (like setting up subscriptions) or interact with the browser APIs. Side effects should happen either in event handlers or methods like [`componentDidMount`.](#componentdidmount)
+Bạn nên viết method `render` dưới dạng một pure function, nghĩa là nó phải trả về cùng một kết quả nếu props, state và context giống nhau. Method này cũng không được chứa side effect (chẳng hạn như thiết lập subscription) hoặc tương tác với browser API. Side effect nên được thực hiện trong event handler hoặc các method như [`componentDidMount`.](#componentdidmount)
 
-#### Parameters {/*render-parameters*/}
+#### Tham số {/*render-parameters*/}
 
-`render` does not take any parameters.
+`render` không nhận tham số nào.
 
-#### Returns {/*render-returns*/}
+#### Giá trị trả về {/*render-returns*/}
 
-`render` can return any valid React node. This includes React elements such as `<div />`, strings, numbers, [portals](/reference/react-dom/createPortal), empty nodes (`null`, `undefined`, `true`, and `false`), and arrays of React nodes.
+`render` có thể trả về bất kỳ React node hợp lệ nào. Điều này bao gồm các React element như `<div />`, string, number, [portal](/reference/react-dom/createPortal), node rỗng (`null`, `undefined`, `true`, và `false`), cùng các array chứa React node.
 
-#### Caveats {/*render-caveats*/}
+#### Lưu ý {/*render-caveats*/}
 
-- `render` should be written as a pure function of props, state, and context. It should not have side effects.
+- `render` nên được viết dưới dạng pure function của props, state và context. Method này không được có side effect.
 
-- `render` will not get called if [`shouldComponentUpdate`](#shouldcomponentupdate) is defined and returns `false`.
+- `render` sẽ không được gọi nếu [`shouldComponentUpdate`](#shouldcomponentupdate) được định nghĩa và trả về `false`.
 
-- When [Strict Mode](/reference/react/StrictMode) is on, React will call `render` twice in development and then throw away one of the results. This helps you notice the accidental side effects that need to be moved out of the `render` method.
+- Khi [Strict Mode](/reference/react/StrictMode) được bật, React sẽ gọi `render` hai lần trong môi trường development rồi loại bỏ một trong các kết quả. Điều này giúp bạn nhận ra những side effect vô tình tạo ra, vốn cần được chuyển ra khỏi method `render`.
 
-- There is no one-to-one correspondence between the `render` call and the subsequent `componentDidMount` or `componentDidUpdate` call. Some of the `render` call results may be discarded by React when it's beneficial.
+- Không có sự tương ứng một-một giữa lần gọi `render` và lần gọi `componentDidMount` hoặc `componentDidUpdate` ngay sau đó. React có thể loại bỏ một số kết quả của lần gọi `render` khi điều đó có lợi.
 
 ---
 
 ### `setState(nextState, callback?)` {/*setstate*/}
 
-Call `setState` to update the state of your React component.
+Gọi `setState` để cập nhật state của React component.
 
 ```js {8-10}
 class Form extends Component {
@@ -615,11 +615,11 @@ class Form extends Component {
 }
 ```
 
-`setState` enqueues changes to the component state. It tells React that this component and its children need to re-render with the new state. This is the main way you'll update the user interface in response to interactions.
+`setState` xếp hàng các thay đổi đối với state của component. Nó thông báo cho React rằng component này và các component con của nó cần render lại với state mới. Đây là cách chính để bạn cập nhật giao diện người dùng nhằm phản hồi các tương tác.
 
 <Pitfall>
 
-Calling `setState` **does not** change the current state in the already executing code:
+Việc gọi `setState` **không** thay đổi state hiện tại trong đoạn code đang được thực thi:
 
 ```js {6}
 function handleClick() {
@@ -631,11 +631,11 @@ function handleClick() {
 }
 ```
 
-It only affects what `this.state` will return starting from the *next* render.
+Nó chỉ ảnh hưởng đến giá trị mà `this.state` trả về kể từ lần render *tiếp theo*.
 
 </Pitfall>
 
-You can also pass a function to `setState`. It lets you update state based on the previous state:
+Bạn cũng có thể truyền một function vào `setState`. Cách này cho phép bạn cập nhật state dựa trên state trước đó:
 
 ```js {2-6}
   handleIncreaseAge = () => {
@@ -647,31 +647,31 @@ You can also pass a function to `setState`. It lets you update state based on th
   }
 ```
 
-You don't have to do this, but it's handy if you want to update state multiple times during the same event.
+Bạn không bắt buộc phải làm điều này, nhưng nó rất hữu ích nếu bạn muốn cập nhật state nhiều lần trong cùng một event.
 
-#### Parameters {/*setstate-parameters*/}
+#### Tham số {/*setstate-parameters*/}
 
-* `nextState`: Either an object or a function.
-  * If you pass an object as `nextState`, it will be shallowly merged into `this.state`.
-  * If you pass a function as `nextState`, it will be treated as an _updater function_. It must be pure, should take the pending state and props as arguments, and should return the object to be shallowly merged into `this.state`. React will put your updater function in a queue and re-render your component. During the next render, React will calculate the next state by applying all of the queued updaters to the previous state.
+* `nextState`: Một object hoặc một function.
+  * Nếu bạn truyền một object làm `nextState`, object đó sẽ được shallow merge vào `this.state`.
+  * Nếu bạn truyền một function làm `nextState`, function đó sẽ được xem là một _updater function_. Function này phải pure, nên nhận state đang chờ xử lý và props làm các đối số, đồng thời trả về object để shallow merge vào `this.state`. React sẽ đưa updater function của bạn vào một queue và re-render component. Trong lần render tiếp theo, React sẽ tính state tiếp theo bằng cách áp dụng tất cả updater trong queue lên state trước đó.
 
-* **optional** `callback`: If specified, React will call the `callback` you've provided after the update is committed.
+* **tùy chọn** `callback`: Nếu được chỉ định, React sẽ gọi `callback` mà bạn cung cấp sau khi update được commit.
 
-#### Returns {/*setstate-returns*/}
+#### Giá trị trả về {/*setstate-returns*/}
 
-`setState` does not return anything.
+`setState` không trả về gì.
 
-#### Caveats {/*setstate-caveats*/}
+#### Lưu ý {/*setstate-caveats*/}
 
-- Think of `setState` as a *request* rather than an immediate command to update the component. When multiple components update their state in response to an event, React will batch their updates and re-render them together in a single pass at the end of the event. In the rare case that you need to force a particular state update to be applied synchronously, you may wrap it in [`flushSync`,](/reference/react-dom/flushSync) but this may hurt performance.
+- Hãy xem `setState` như một *request* thay vì một command tức thời để cập nhật component. Khi nhiều component cập nhật state để phản hồi một event, React sẽ batch các update của chúng và re-render chúng cùng nhau trong một lần duy nhất vào cuối event. Trong trường hợp hiếm khi bạn cần buộc một state update cụ thể được áp dụng đồng bộ, bạn có thể bọc nó trong [`flushSync`,](/reference/react-dom/flushSync) nhưng điều này có thể làm giảm performance.
 
-- `setState` does not update `this.state` immediately. This makes reading `this.state` right after calling `setState` a potential pitfall. Instead, use [`componentDidUpdate`](#componentdidupdate) or the setState `callback` argument, either of which are guaranteed to fire after the update has been applied. If you need to set the state based on the previous state, you can pass a function to `nextState` as described above.
+- `setState` không cập nhật `this.state` ngay lập tức. Vì vậy, việc đọc `this.state` ngay sau khi gọi `setState` có thể dẫn đến lỗi khó nhận ra. Thay vào đó, hãy sử dụng [`componentDidUpdate`](#componentdidupdate) hoặc đối số `callback` của setState; cả hai đều được đảm bảo chạy sau khi update được áp dụng. Nếu cần thiết lập state dựa trên state trước đó, bạn có thể truyền một function vào `nextState` như mô tả ở trên.
 
 <Note>
 
-Calling `setState` in class components is similar to calling a [`set` function](/reference/react/useState#setstate) in function components.
+Việc gọi `setState` trong class component tương tự như việc gọi một function [`set`function](/reference/react/useState#setstate) trong function component.
 
-[See how to migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
+[Xem cách migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
 
 </Note>
 
@@ -679,9 +679,9 @@ Calling `setState` in class components is similar to calling a [`set` function](
 
 ### `shouldComponentUpdate(nextProps, nextState, nextContext)` {/*shouldcomponentupdate*/}
 
-If you define `shouldComponentUpdate`, React will call it to determine whether a re-render can be skipped.
+Nếu bạn định nghĩa `shouldComponentUpdate`, React sẽ gọi nó để xác định liệu có thể bỏ qua một lần re-render hay không.
 
-If you are confident you want to write it by hand, you may compare `this.props` with `nextProps` and `this.state` with `nextState` and return `false` to tell React the update can be skipped.
+Nếu bạn chắc chắn muốn tự viết, bạn có thể so sánh `this.props` với `nextProps` và `this.state` với `nextState`, rồi trả về `false` để cho React biết rằng có thể bỏ qua update.
 
 ```js {6-18}
 class Rectangle extends Component {
@@ -708,35 +708,35 @@ class Rectangle extends Component {
 
 ```
 
-React calls `shouldComponentUpdate` before rendering when new props or state are being received. Defaults to `true`. This method is not called for the initial render or when [`forceUpdate`](#forceupdate) is used.
+React gọi `shouldComponentUpdate` trước khi render khi đang nhận props hoặc state mới. Mặc định là `true`. Method này không được gọi trong lần render ban đầu hoặc khi sử dụng [`forceUpdate`](#forceupdate).
 
-#### Parameters {/*shouldcomponentupdate-parameters*/}
+#### Tham số {/*shouldcomponentupdate-parameters*/}
 
-- `nextProps`: The next props that the component is about to render with. Compare `nextProps` to [`this.props`](#props) to determine what changed.
-- `nextState`: The next state that the component is about to render with. Compare `nextState` to [`this.state`](#props) to determine what changed.
-- `nextContext`: The next context that the component is about to render with. Compare `nextContext` to [`this.context`](#context) to determine what changed. Only available if you specify [`static contextType`](#static-contexttype).
+- `nextProps`: Props tiếp theo mà component sắp render cùng. So sánh `nextProps` với [`this.props`](#props) để xác định điều gì đã thay đổi.
+- `nextState`: State tiếp theo mà component sắp render cùng. So sánh `nextState` với [`this.state`](#props) để xác định điều gì đã thay đổi.
+- `nextContext`: Context tiếp theo mà component sắp render cùng. So sánh `nextContext` với [`this.context`](#context) để xác định điều gì đã thay đổi. Chỉ khả dụng nếu bạn chỉ định [`static contextType`](#static-contexttype).
 
-#### Returns {/*shouldcomponentupdate-returns*/}
+#### Giá trị trả về {/*shouldcomponentupdate-returns*/}
 
-Return `true` if you want the component to re-render. That's the default behavior.
+Trả về `true` nếu bạn muốn component re-render. Đây là hành vi mặc định.
 
-Return `false` to tell React that re-rendering can be skipped.
+Trả về `false` để cho React biết rằng có thể bỏ qua việc re-render.
 
-#### Caveats {/*shouldcomponentupdate-caveats*/}
+#### Lưu ý {/*shouldcomponentupdate-caveats*/}
 
-- This method *only* exists as a performance optimization. If your component breaks without it, fix that first.
+- Method này *chỉ* tồn tại như một tối ưu hóa performance. Nếu component của bạn bị lỗi khi không có method này, hãy khắc phục điều đó trước.
 
-- Consider using [`PureComponent`](/reference/react/PureComponent) instead of writing `shouldComponentUpdate` by hand. `PureComponent` shallowly compares props and state, and reduces the chance that you'll skip a necessary update.
+- Hãy cân nhắc sử dụng [`PureComponent`](/reference/react/PureComponent) thay vì tự viết `shouldComponentUpdate`. `PureComponent` sẽ shallow compare props và state, đồng thời giảm khả năng bạn bỏ qua một update cần thiết.
 
-- We do not recommend doing deep equality checks or using `JSON.stringify` in `shouldComponentUpdate`. It makes performance unpredictable and dependent on the data structure of every prop and state. In the best case, you risk introducing multi-second stalls to your application, and in the worst case you risk crashing it.
+- Chúng tôi không khuyến nghị thực hiện deep equality check hoặc sử dụng `JSON.stringify` trong `shouldComponentUpdate`. Điều này khiến performance trở nên khó dự đoán và phụ thuộc vào cấu trúc dữ liệu của mọi prop và state. Trong trường hợp tốt nhất, bạn có nguy cơ tạo ra tình trạng ứng dụng bị stall trong nhiều giây; trong trường hợp xấu nhất, ứng dụng có thể bị crash.
 
-- Returning `false` does not prevent child components from re-rendering when *their* state changes.
+- Việc trả về `false` không ngăn các child component re-render khi *state của chính chúng* thay đổi.
 
-- Returning `false` does not *guarantee* that the component will not re-render. React will use the return value as a hint but it may still choose to re-render your component if it makes sense to do for other reasons.
+- Việc trả về `false` không *đảm bảo* component sẽ không re-render. React sẽ sử dụng giá trị trả về như một gợi ý, nhưng vẫn có thể chọn re-render component nếu điều đó hợp lý vì các lý do khác.
 
 <Note>
 
-Optimizing class components with `shouldComponentUpdate` is similar to optimizing function components with [`memo`.](/reference/react/memo) Function components also offer more granular optimization with [`useMemo`.](/reference/react/useMemo)
+Tối ưu hóa class component bằng `shouldComponentUpdate` tương tự như tối ưu hóa function component bằng [`memo`.](/reference/react/memo) Function component cũng cung cấp khả năng tối ưu hóa chi tiết hơn với [`useMemo`.](/reference/react/useMemo)
 
 </Note>
 
@@ -744,32 +744,32 @@ Optimizing class components with `shouldComponentUpdate` is similar to optimizin
 
 ### `UNSAFE_componentWillMount()` {/*unsafe_componentwillmount*/}
 
-If you define `UNSAFE_componentWillMount`, React will call it immediately after the [`constructor`.](#constructor) It only exists for historical reasons and should not be used in any new code. Instead, use one of the alternatives:
+Nếu bạn định nghĩa `UNSAFE_componentWillMount`, React sẽ gọi nó ngay sau [`constructor`.](#constructor) Method này chỉ tồn tại vì lý do lịch sử và không nên được sử dụng trong code mới. Thay vào đó, hãy sử dụng một trong các phương án sau:
 
-- To initialize state, declare [`state`](#state) as a class field or set `this.state` inside the [`constructor`.](#constructor)
-- If you need to run a side effect or set up a subscription, move that logic to [`componentDidMount`](#componentdidmount) instead.
+- Để khởi tạo state, hãy khai báo [`state`](#state) dưới dạng class field hoặc thiết lập `this.state` bên trong [`constructor`.](#constructor)
+- Nếu cần chạy một side effect hoặc thiết lập subscription, hãy chuyển logic đó sang [`componentDidMount`](#componentdidmount).
 
-[See examples of migrating away from unsafe lifecycles.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#examples)
+[Xem các ví dụ về cách migrate khỏi unsafe lifecycle.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#examples)
 
-#### Parameters {/*unsafe_componentwillmount-parameters*/}
+#### Tham số {/*unsafe_componentwillmount-parameters*/}
 
-`UNSAFE_componentWillMount` does not take any parameters.
+`UNSAFE_componentWillMount` không nhận tham số nào.
 
-#### Returns {/*unsafe_componentwillmount-returns*/}
+#### Giá trị trả về {/*unsafe_componentwillmount-returns*/}
 
-`UNSAFE_componentWillMount` should not return anything.
+`UNSAFE_componentWillMount` không nên trả về gì.
 
-#### Caveats {/*unsafe_componentwillmount-caveats*/}
+#### Lưu ý {/*unsafe_componentwillmount-caveats*/}
 
-- `UNSAFE_componentWillMount` will not get called if the component implements [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) or [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
+- `UNSAFE_componentWillMount` sẽ không được gọi nếu component triển khai [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) hoặc [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
 
-- Despite its naming, `UNSAFE_componentWillMount` does not guarantee that the component *will* get mounted if your app uses modern React features like [`Suspense`.](/reference/react/Suspense) If a render attempt is suspended (for example, because the code for some child component has not loaded yet), React will throw the in-progress tree away and attempt to construct the component from scratch during the next attempt. This is why this method is "unsafe". Code that relies on mounting (like adding a subscription) should go into [`componentDidMount`.](#componentdidmount)
+- Mặc dù tên gọi gợi ý điều ngược lại, `UNSAFE_componentWillMount` không đảm bảo component *sẽ* được mounted nếu app của bạn sử dụng các tính năng React hiện đại như [`Suspense`.](/reference/react/Suspense) Nếu một lần render bị suspended (ví dụ: do code của một child component nào đó chưa được load), React sẽ loại bỏ tree đang xử lý và cố gắng xây dựng component lại từ đầu trong lần thử tiếp theo. Đây là lý do method này là "unsafe". Code phụ thuộc vào việc mounting (chẳng hạn như thêm subscription) nên được đặt trong [`componentDidMount`.](#componentdidmount)
 
-- `UNSAFE_componentWillMount` is the only lifecycle method that runs during [server rendering.](/reference/react-dom/server) For all practical purposes, it is identical to [`constructor`,](#constructor) so you should use the `constructor` for this type of logic instead.
+- `UNSAFE_componentWillMount` là lifecycle method duy nhất chạy trong quá trình [server rendering.](/reference/react-dom/server) Xét trên mọi phương diện thực tế, nó tương đương với [`constructor`,](#constructor) vì vậy bạn nên sử dụng `constructor` cho loại logic này.
 
 <Note>
 
-Calling [`setState`](#setstate) inside `UNSAFE_componentWillMount` in a class component to initialize state is equivalent to passing that state as the initial state to [`useState`](/reference/react/useState) in a function component.
+Việc gọi [`setState`](#setstate) bên trong `UNSAFE_componentWillMount` trong class component để khởi tạo state tương đương với việc truyền state đó làm initial state cho [`useState`](/reference/react/useState) trong function component.
 
 </Note>
 
@@ -777,37 +777,37 @@ Calling [`setState`](#setstate) inside `UNSAFE_componentWillMount` in a class co
 
 ### `UNSAFE_componentWillReceiveProps(nextProps, nextContext)` {/*unsafe_componentwillreceiveprops*/}
 
-If you define `UNSAFE_componentWillReceiveProps`, React will call it when the component receives new props. It only exists for historical reasons and should not be used in any new code. Instead, use one of the alternatives:
+Nếu bạn định nghĩa `UNSAFE_componentWillReceiveProps`, React sẽ gọi nó khi component nhận props mới. Method này chỉ tồn tại vì lý do lịch sử và không nên được sử dụng trong code mới. Thay vào đó, hãy sử dụng một trong các phương án sau:
 
-- If you need to **run a side effect** (for example, fetch data, run an animation, or reinitialize a subscription) in response to prop changes, move that logic to [`componentDidUpdate`](#componentdidupdate) instead.
-- If you need to **avoid re-computing some data only when a prop changes,** use a [memoization helper](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization) instead.
-- If you need to **"reset" some state when a prop changes,** consider either making a component [fully controlled](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) or [fully uncontrolled with a key](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) instead.
-- If you need to **"adjust" some state when a prop changes,** check whether you can compute all the necessary information from props alone during rendering. If you can't, use [`static getDerivedStateFromProps`](/reference/react/Component#static-getderivedstatefromprops) instead.
+- Nếu bạn cần **chạy một side effect** (ví dụ: fetch dữ liệu, chạy animation hoặc khởi tạo lại một subscription) để phản hồi các thay đổi của prop, thay vào đó hãy chuyển logic đó vào [`componentDidUpdate`](#componentdidupdate).
+- Nếu bạn cần **tránh tính toán lại một số dữ liệu chỉ khi một prop thay đổi,** thay vào đó hãy sử dụng một [helper memoization](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization).
+- Nếu bạn cần **“đặt lại” một số state khi một prop thay đổi,** hãy cân nhắc việc biến component thành [được kiểm soát hoàn toàn](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) hoặc [hoàn toàn không được kiểm soát với một key](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key).
+- Nếu bạn cần **“điều chỉnh” một số state khi một prop thay đổi,** hãy kiểm tra xem bạn có thể tính toán mọi thông tin cần thiết chỉ từ props trong quá trình rendering hay không. Nếu không thể, thay vào đó hãy sử dụng [`static getDerivedStateFromProps`](/reference/react/Component#static-getderivedstatefromprops).
 
-[See examples of migrating away from unsafe lifecycles.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props)
+[Xem các ví dụ về cách chuyển đổi khỏi các lifecycle không an toàn.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props)
 
 #### Parameters {/*unsafe_componentwillreceiveprops-parameters*/}
 
-- `nextProps`: The next props that the component is about to receive from its parent component. Compare `nextProps` to [`this.props`](#props) to determine what changed.
-- `nextContext`: The next context that the component is about to receive from the closest provider. Compare `nextContext` to [`this.context`](#context) to determine what changed. Only available if you specify [`static contextType`](#static-contexttype).
+- `nextProps`: Các props tiếp theo mà component sắp nhận từ component cha. So sánh `nextProps` với [`this.props`](#props) để xác định điều gì đã thay đổi.
+- `nextContext`: Context tiếp theo mà component sắp nhận từ provider gần nhất. So sánh `nextContext` với [`this.context`](#context) để xác định điều gì đã thay đổi. Chỉ khả dụng nếu bạn chỉ định [`static contextType`](#static-contexttype).
 
 #### Returns {/*unsafe_componentwillreceiveprops-returns*/}
 
-`UNSAFE_componentWillReceiveProps` should not return anything.
+`UNSAFE_componentWillReceiveProps` không nên trả về bất kỳ giá trị nào.
 
 #### Caveats {/*unsafe_componentwillreceiveprops-caveats*/}
 
-- `UNSAFE_componentWillReceiveProps` will not get called if the component implements [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) or [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
+- `UNSAFE_componentWillReceiveProps` sẽ không được gọi nếu component triển khai [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) hoặc [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
 
-- Despite its naming, `UNSAFE_componentWillReceiveProps` does not guarantee that the component *will* receive those props if your app uses modern React features like [`Suspense`.](/reference/react/Suspense) If a render attempt is suspended (for example, because the code for some child component has not loaded yet), React will throw the in-progress tree away and attempt to construct the component from scratch during the next attempt. By the time of the next render attempt, the props might be different. This is why this method is "unsafe". Code that should run only for committed updates (like resetting a subscription) should go into [`componentDidUpdate`.](#componentdidupdate)
+- Mặc dù tên gọi mang ý nghĩa như vậy, `UNSAFE_componentWillReceiveProps` không đảm bảo rằng component *sẽ* nhận các props đó nếu ứng dụng của bạn sử dụng những tính năng hiện đại của React như [`Suspense`.](/reference/react/Suspense) Nếu một lần thử render bị tạm dừng (ví dụ: vì code của một component con nào đó chưa được tải), React sẽ loại bỏ cây đang xử lý và cố gắng xây dựng component từ đầu trong lần thử tiếp theo. Đến lần thử render tiếp theo, các props có thể đã khác. Đây là lý do phương thức này “không an toàn”. Code chỉ nên chạy đối với các lần cập nhật đã commit (chẳng hạn như đặt lại một subscription) nên được đưa vào [`componentDidUpdate`.](#componentdidupdate)
 
-- `UNSAFE_componentWillReceiveProps` does not mean that the component has received *different* props than the last time. You need to compare `nextProps` and `this.props` yourself to check if something changed.
+- `UNSAFE_componentWillReceiveProps` không có nghĩa là component đã nhận các props *khác* so với lần trước. Bạn cần tự so sánh `nextProps` và `this.props` để kiểm tra xem có điều gì thay đổi hay không.
 
-- React doesn't call `UNSAFE_componentWillReceiveProps` with initial props during mounting. It only calls this method if some of component's props are going to be updated. For example, calling [`setState`](#setstate) doesn't generally trigger `UNSAFE_componentWillReceiveProps` inside the same component.
+- React không gọi `UNSAFE_componentWillReceiveProps` với các props ban đầu trong quá trình mounting. React chỉ gọi phương thức này nếu một số props của component sắp được cập nhật. Ví dụ: việc gọi [`setState`](#setstate) nhìn chung không kích hoạt `UNSAFE_componentWillReceiveProps` bên trong cùng component.
 
 <Note>
 
-Calling [`setState`](#setstate) inside `UNSAFE_componentWillReceiveProps` in a class component to "adjust" state is equivalent to [calling the `set` function from `useState` during rendering](/reference/react/useState#storing-information-from-previous-renders) in a function component.
+Việc gọi [`setState`](#setstate) bên trong `UNSAFE_componentWillReceiveProps` trong một class component để “điều chỉnh” state tương đương với [việc gọi hàm `set` từ `useState` trong quá trình rendering](/reference/react/useState#storing-information-from-previous-renders) trong một function component.
 
 </Note>
 
@@ -816,39 +816,39 @@ Calling [`setState`](#setstate) inside `UNSAFE_componentWillReceiveProps` in a c
 ### `UNSAFE_componentWillUpdate(nextProps, nextState)` {/*unsafe_componentwillupdate*/}
 
 
-If you define `UNSAFE_componentWillUpdate`, React will call it before rendering with the new props or state. It only exists for historical reasons and should not be used in any new code. Instead, use one of the alternatives:
+Nếu bạn định nghĩa `UNSAFE_componentWillUpdate`, React sẽ gọi nó trước khi rendering với props hoặc state mới. Phương thức này chỉ tồn tại vì lý do lịch sử và không nên được sử dụng trong code mới. Thay vào đó, hãy sử dụng một trong các phương án sau:
 
-- If you need to run a side effect (for example, fetch data, run an animation, or reinitialize a subscription) in response to prop or state changes, move that logic to [`componentDidUpdate`](#componentdidupdate) instead.
-- If you need to read some information from the DOM (for example, to save the current scroll position) so that you can use it in [`componentDidUpdate`](#componentdidupdate) later, read it inside [`getSnapshotBeforeUpdate`](#getsnapshotbeforeupdate) instead.
+- Nếu bạn cần chạy một side effect (ví dụ: fetch dữ liệu, chạy animation hoặc khởi tạo lại một subscription) để phản hồi các thay đổi của prop hoặc state, hãy chuyển logic đó vào [`componentDidUpdate`](#componentdidupdate).
+- Nếu bạn cần đọc một số thông tin từ DOM (ví dụ: để lưu vị trí scroll hiện tại) nhằm sử dụng trong [`componentDidUpdate`](#componentdidupdate) sau đó, hãy đọc thông tin đó bên trong [`getSnapshotBeforeUpdate`](#getsnapshotbeforeupdate).
 
-[See examples of migrating away from unsafe lifecycles.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#examples)
+[Xem các ví dụ về cách chuyển đổi khỏi các lifecycle không an toàn.](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html#examples)
 
 #### Parameters {/*unsafe_componentwillupdate-parameters*/}
 
-- `nextProps`: The next props that the component is about to render with. Compare `nextProps` to [`this.props`](#props) to determine what changed.
-- `nextState`: The next state that the component is about to render with. Compare `nextState` to [`this.state`](#state) to determine what changed.
+- `nextProps`: Các props tiếp theo mà component sắp render cùng. So sánh `nextProps` với [`this.props`](#props) để xác định điều gì đã thay đổi.
+- `nextState`: State tiếp theo mà component sắp render cùng. So sánh `nextState` với [`this.state`](#state) để xác định điều gì đã thay đổi.
 
 #### Returns {/*unsafe_componentwillupdate-returns*/}
 
-`UNSAFE_componentWillUpdate` should not return anything.
+`UNSAFE_componentWillUpdate` không nên trả về bất kỳ giá trị nào.
 
 #### Caveats {/*unsafe_componentwillupdate-caveats*/}
 
-- `UNSAFE_componentWillUpdate` will not get called if [`shouldComponentUpdate`](#shouldcomponentupdate) is defined and returns `false`.
+- `UNSAFE_componentWillUpdate` sẽ không được gọi nếu [`shouldComponentUpdate`](#shouldcomponentupdate) được định nghĩa và trả về `false`.
 
-- `UNSAFE_componentWillUpdate` will not get called if the component implements [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) or [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
+- `UNSAFE_componentWillUpdate` sẽ không được gọi nếu component triển khai [`static getDerivedStateFromProps`](#static-getderivedstatefromprops) hoặc [`getSnapshotBeforeUpdate`.](#getsnapshotbeforeupdate)
 
-- It's not supported to call [`setState`](#setstate) (or any method that leads to `setState` being called, like dispatching a Redux action) during `componentWillUpdate`.
+- Không hỗ trợ việc gọi [`setState`](#setstate) (hoặc bất kỳ phương thức nào dẫn đến việc gọi `setState`, chẳng hạn như dispatch một Redux action) trong quá trình `componentWillUpdate`.
 
-- Despite its naming, `UNSAFE_componentWillUpdate` does not guarantee that the component *will* update if your app uses modern React features like [`Suspense`.](/reference/react/Suspense) If a render attempt is suspended (for example, because the code for some child component has not loaded yet), React will throw the in-progress tree away and attempt to construct the component from scratch during the next attempt. By the time of the next render attempt, the props and state might be different. This is why this method is "unsafe". Code that should run only for committed updates (like resetting a subscription) should go into [`componentDidUpdate`.](#componentdidupdate)
+- Mặc dù tên gọi mang ý nghĩa như vậy, `UNSAFE_componentWillUpdate` không đảm bảo rằng component *sẽ* được cập nhật nếu ứng dụng của bạn sử dụng những tính năng hiện đại của React như [`Suspense`.](/reference/react/Suspense) Nếu một lần thử render bị tạm dừng (ví dụ: vì code của một component con nào đó chưa được tải), React sẽ loại bỏ cây đang xử lý và cố gắng xây dựng component từ đầu trong lần thử tiếp theo. Đến lần thử render tiếp theo, props và state có thể đã khác. Đây là lý do phương thức này “không an toàn”. Code chỉ nên chạy đối với các lần cập nhật đã commit (chẳng hạn như đặt lại một subscription) nên được đưa vào [`componentDidUpdate`.](#componentdidupdate)
 
-- `UNSAFE_componentWillUpdate` does not mean that the component has received *different* props or state than the last time. You need to compare `nextProps` with `this.props` and `nextState` with `this.state` yourself to check if something changed.
+- `UNSAFE_componentWillUpdate` không có nghĩa là component đã nhận các props hoặc state *khác* so với lần trước. Bạn cần tự so sánh `nextProps` với `this.props` và `nextState` với `this.state` để kiểm tra xem có điều gì thay đổi hay không.
 
-- React doesn't call `UNSAFE_componentWillUpdate` with initial props and state during mounting.
+- React không gọi `UNSAFE_componentWillUpdate` với props và state ban đầu trong quá trình mounting.
 
 <Note>
 
-There is no direct equivalent to `UNSAFE_componentWillUpdate` in function components.
+Không có phương thức tương đương trực tiếp với `UNSAFE_componentWillUpdate` trong function component.
 
 </Note>
 
@@ -856,7 +856,7 @@ There is no direct equivalent to `UNSAFE_componentWillUpdate` in function compon
 
 ### `static contextType` {/*static-contexttype*/}
 
-If you want to read [`this.context`](#context-instance-field) from your class component, you must specify which context it needs to read. The context you specify as the `static contextType` must be a value previously created by [`createContext`.](/reference/react/createContext)
+Nếu muốn đọc [`this.context`](#context-instance-field) từ class component, bạn phải chỉ định context mà component cần đọc. Context bạn chỉ định làm `static contextType` phải là một giá trị đã được tạo trước đó bởi [`createContext`.](/reference/react/createContext)
 
 ```js {2}
 class Button extends Component {
@@ -876,9 +876,9 @@ class Button extends Component {
 
 <Note>
 
-Reading `this.context` in class components is equivalent to [`useContext`](/reference/react/useContext) in function components.
+Việc đọc `this.context` trong class component tương đương với [`useContext`](/reference/react/useContext) trong function component.
 
-[See how to migrate.](#migrating-a-component-with-context-from-a-class-to-a-function)
+[Xem cách chuyển đổi.](#migrating-a-component-with-context-from-a-class-to-a-function)
 
 </Note>
 
@@ -886,9 +886,9 @@ Reading `this.context` in class components is equivalent to [`useContext`](/refe
 
 ### `static defaultProps` {/*static-defaultprops*/}
 
-You can define `static defaultProps` to set the default props for the class. They will be used for `undefined` and missing props, but not for `null` props.
+Bạn có thể định nghĩa `static defaultProps` để thiết lập các props mặc định cho class. Chúng sẽ được sử dụng cho `undefined` và các props bị thiếu, nhưng không được sử dụng cho các props `null`.
 
-For example, here is how you define that the `color` prop should default to `'blue'`:
+Ví dụ: sau đây là cách bạn định nghĩa rằng prop `color` sẽ mặc định là `'blue'`:
 
 ```js {2-4}
 class Button extends Component {
@@ -902,7 +902,7 @@ class Button extends Component {
 }
 ```
 
-If the `color` prop is not provided or is `undefined`, it will be set by default to `'blue'`:
+Nếu prop `color` không được cung cấp hoặc là `undefined`, nó sẽ được mặc định đặt thành `'blue'`:
 
 ```js
 <>
@@ -922,7 +922,7 @@ If the `color` prop is not provided or is `undefined`, it will be set by default
 
 <Note>
 
-Defining `defaultProps` in class components is similar to using [default values](/learn/passing-props-to-a-component#specifying-a-default-value-for-a-prop) in function components.
+Việc định nghĩa `defaultProps` trong các class component tương tự như việc sử dụng [giá trị mặc định](/learn/passing-props-to-a-component#specifying-a-default-value-for-a-prop) trong các function component.
 
 </Note>
 
@@ -930,27 +930,27 @@ Defining `defaultProps` in class components is similar to using [default values]
 
 ### `static getDerivedStateFromError(error)` {/*static-getderivedstatefromerror*/}
 
-If you define `static getDerivedStateFromError`, React will call it when a child component (including distant children) throws an error during rendering. This lets you display an error message instead of clearing the UI.
+Nếu bạn định nghĩa `static getDerivedStateFromError`, React sẽ gọi nó khi một child component (bao gồm cả các component con ở xa) phát sinh lỗi trong quá trình render. Điều này cho phép bạn hiển thị thông báo lỗi thay vì xóa UI.
 
-Typically, it is used together with [`componentDidCatch`](#componentdidcatch) which lets you send the error report to some analytics service. A component with these methods is called an *Error Boundary*.
+Thông thường, nó được sử dụng cùng với [`componentDidCatch`](#componentdidcatch), cho phép bạn gửi báo cáo lỗi đến một analytics service nào đó. Một component có các method này được gọi là *Error Boundary*.
 
-[See an example.](#catching-rendering-errors-with-an-error-boundary)
+[Xem ví dụ.](#catching-rendering-errors-with-an-error-boundary)
 
-#### Parameters {/*static-getderivedstatefromerror-parameters*/}
+#### Tham số {/*static-getderivedstatefromerror-parameters*/}
 
-* `error`: The error that was thrown. In practice, it will usually be an instance of [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) but this is not guaranteed because JavaScript allows to [`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) any value, including strings or even `null`.
+* `error`: Lỗi đã phát sinh. Trên thực tế, nó thường sẽ là một instance của [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error), nhưng điều này không được đảm bảo vì JavaScript cho phép [`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) bất kỳ giá trị nào, bao gồm cả chuỗi hoặc thậm chí `null`.
 
-#### Returns {/*static-getderivedstatefromerror-returns*/}
+#### Giá trị trả về {/*static-getderivedstatefromerror-returns*/}
 
-`static getDerivedStateFromError` should return the state telling the component to display the error message.
+`static getDerivedStateFromError` phải trả về state cho biết component cần hiển thị thông báo lỗi.
 
-#### Caveats {/*static-getderivedstatefromerror-caveats*/}
+#### Lưu ý {/*static-getderivedstatefromerror-caveats*/}
 
-* `static getDerivedStateFromError` should be a pure function. If you want to perform a side effect (for example, to call an analytics service), you need to also implement [`componentDidCatch`.](#componentdidcatch)
+* `static getDerivedStateFromError` phải là một pure function. Nếu bạn muốn thực hiện một side effect (ví dụ: gọi một analytics service), bạn cũng cần triển khai [`componentDidCatch`.](#componentdidcatch)
 
 <Note>
 
-There is no direct equivalent for `static getDerivedStateFromError` in function components yet. If you'd like to avoid creating class components, write a single `ErrorBoundary` component like above and use it throughout your app. Alternatively, use the [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary) package which does that.
+Hiện chưa có cách tương đương trực tiếp cho `static getDerivedStateFromError` trong function component. Nếu bạn muốn tránh việc tạo class component, hãy viết một `ErrorBoundary` component duy nhất như trên và sử dụng nó trong toàn bộ app. Ngoài ra, hãy sử dụng package [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary), package này thực hiện điều đó.
 
 </Note>
 
@@ -958,9 +958,9 @@ There is no direct equivalent for `static getDerivedStateFromError` in function 
 
 ### `static getDerivedStateFromProps(props, state)` {/*static-getderivedstatefromprops*/}
 
-If you define `static getDerivedStateFromProps`, React will call it right before calling [`render`,](#render) both on the initial mount and on subsequent updates. It should return an object to update the state, or `null` to update nothing.
+Nếu bạn định nghĩa `static getDerivedStateFromProps`, React sẽ gọi nó ngay trước khi gọi [`render`,](#render) cả khi mount lần đầu lẫn trong các lần update tiếp theo. Method này phải trả về một object để cập nhật state, hoặc `null` nếu không cập nhật gì.
 
-This method exists for [rare use cases](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state) where the state depends on changes in props over time. For example, this `Form` component resets the `email` state when the `userID` prop changes:
+Method này tồn tại cho các trường hợp [hiếm gặp](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state) mà state phụ thuộc vào những thay đổi của props theo thời gian. Ví dụ, component `Form` này reset state `email` khi prop `userID` thay đổi:
 
 ```js {7-18}
 class Form extends Component {
@@ -986,46 +986,46 @@ class Form extends Component {
 }
 ```
 
-Note that this pattern requires you to keep a previous value of the prop (like `userID`) in state (like `prevUserID`).
+Lưu ý rằng pattern này yêu cầu bạn lưu giá trị trước đó của prop (chẳng hạn như `userID`) trong state (chẳng hạn như `prevUserID`).
 
 <Pitfall>
 
-Deriving state leads to verbose code and makes your components difficult to think about. [Make sure you're familiar with simpler alternatives:](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
+Việc suy ra state dẫn đến code dài dòng và khiến component khó hiểu hơn. [Hãy đảm bảo bạn đã quen thuộc với các lựa chọn thay thế đơn giản hơn:](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
 
-- If you need to **perform a side effect** (for example, data fetching or an animation) in response to a change in props, use [`componentDidUpdate`](#componentdidupdate) method instead.
-- If you want to **re-compute some data only when a prop changes,** [use a memoization helper instead.](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization)
-- If you want to **"reset" some state when a prop changes,** consider either making a component [fully controlled](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) or [fully uncontrolled with a key](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) instead.
+- Nếu bạn cần **thực hiện một side effect** (ví dụ: fetching dữ liệu hoặc animation) để phản hồi một thay đổi trong props, hãy sử dụng method [`componentDidUpdate`](#componentdidupdate) thay thế.
+- Nếu bạn muốn **tính toán lại một số dữ liệu chỉ khi prop thay đổi,** [hãy sử dụng một memoization helper thay thế.](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization)
+- Nếu bạn muốn **“reset” một state khi prop thay đổi,** hãy cân nhắc việc biến component thành [fully controlled](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) hoặc [fully uncontrolled with a key](https://legacy.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key).
 
 </Pitfall>
 
-#### Parameters {/*static-getderivedstatefromprops-parameters*/}
+#### Tham số {/*static-getderivedstatefromprops-parameters*/}
 
-- `props`: The next props that the component is about to render with.
-- `state`: The next state that the component is about to render with.
+- `props`: Các props tiếp theo mà component sắp render.
+- `state`: State tiếp theo mà component sắp render.
 
-#### Returns {/*static-getderivedstatefromprops-returns*/}
+#### Giá trị trả về {/*static-getderivedstatefromprops-returns*/}
 
-`static getDerivedStateFromProps` return an object to update the state, or `null` to update nothing.
+`static getDerivedStateFromProps` trả về một object để cập nhật state, hoặc `null` nếu không cập nhật gì.
 
-#### Caveats {/*static-getderivedstatefromprops-caveats*/}
+#### Lưu ý {/*static-getderivedstatefromprops-caveats*/}
 
-- This method is fired on *every* render, regardless of the cause. This is different from [`UNSAFE_componentWillReceiveProps`](#unsafe_componentwillreceiveprops), which only fires when the parent causes a re-render and not as a result of a local `setState`.
+- Method này được gọi trong *mọi* lần render, bất kể nguyên nhân. Điều này khác với [`UNSAFE_componentWillReceiveProps`](#unsafe_componentwillreceiveprops), vốn chỉ được gọi khi parent gây ra một lần re-render chứ không phải do một `setState` cục bộ.
 
-- This method doesn't have access to the component instance. If you'd like, you can reuse some code between `static getDerivedStateFromProps` and the other class methods by extracting pure functions of the component props and state outside the class definition.
+- Method này không có quyền truy cập vào instance của component. Nếu muốn, bạn có thể dùng lại một số code giữa `static getDerivedStateFromProps` và các class method khác bằng cách tách các pure function nhận props và state của component ra bên ngoài định nghĩa class.
 
 <Note>
 
-Implementing `static getDerivedStateFromProps` in a class component is equivalent to [calling the `set` function from `useState` during rendering](/reference/react/useState#storing-information-from-previous-renders) in a function component.
+Việc triển khai `static getDerivedStateFromProps` trong một class component tương đương với [việc gọi function `set` từ `useState` trong quá trình render](/reference/react/useState#storing-information-from-previous-renders) trong một function component.
 
 </Note>
 
 ---
 
-## Usage {/*usage*/}
+## Cách sử dụng {/*usage*/}
 
-### Defining a class component {/*defining-a-class-component*/}
+### Định nghĩa một class component {/*defining-a-class-component*/}
 
-To define a React component as a class, extend the built-in `Component` class and define a [`render` method:](#render)
+Để định nghĩa một React component dưới dạng class, hãy extend class tích hợp sẵn `Component` và định nghĩa một method [`render`:](#render)
 
 ```js
 import { Component } from 'react';
@@ -1037,9 +1037,9 @@ class Greeting extends Component {
 }
 ```
 
-React will call your [`render`](#render) method whenever it needs to figure out what to display on the screen. Usually, you will return some [JSX](/learn/writing-markup-with-jsx) from it. Your `render` method should be a [pure function:](https://en.wikipedia.org/wiki/Pure_function) it should only calculate the JSX.
+React sẽ gọi method [`render`](#render) của bạn bất cứ khi nào cần xác định nội dung sẽ hiển thị trên màn hình. Thông thường, bạn sẽ trả về một số [JSX](/learn/writing-markup-with-jsx) từ method này. Method `render` của bạn phải là một [pure function:](https://en.wikipedia.org/wiki/Pure_function) nó chỉ nên tính toán JSX.
 
-Similarly to [function components,](/learn/your-first-component#defining-a-component) a class component can [receive information by props](/learn/your-first-component#defining-a-component) from its parent component. However, the syntax for reading props is different. For example, if the parent component renders `<Greeting name="Taylor" />`, then you can read the `name` prop from [`this.props`](#props), like `this.props.name`:
+Tương tự như [function component,](/learn/your-first-component#defining-a-component), class component có thể [nhận thông tin thông qua props](/learn/your-first-component#defining-a-component) từ parent component. Tuy nhiên, cú pháp đọc props khác nhau. Ví dụ: nếu parent component render `<Greeting name="Taylor" />`, bạn có thể đọc prop `name` từ [`this.props`](#props), như sau `this.props.name`:
 
 <Sandpack>
 
@@ -1065,19 +1065,19 @@ export default function App() {
 
 </Sandpack>
 
-Note that Hooks (functions starting with `use`, like [`useState`](/reference/react/useState)) are not supported inside class components.
+Lưu ý rằng Hooks (các function bắt đầu bằng `use`, như [`useState`](/reference/react/useState)) không được hỗ trợ bên trong class component.
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#migrating-a-simple-component-from-a-class-to-a-function)
+Chúng tôi khuyến nghị định nghĩa component dưới dạng function thay vì class. [Xem cách migrate.](#migrating-a-simple-component-from-a-class-to-a-function)
 
 </Pitfall>
 
 ---
 
-### Adding state to a class component {/*adding-state-to-a-class-component*/}
+### Thêm state vào class component {/*adding-state-to-a-class-component*/}
 
-To add [state](/learn/state-a-components-memory) to a class, assign an object to a property called [`state`](#state). To update state, call [`this.setState`](#setstate).
+Để thêm [state](/learn/state-a-components-memory) vào một class, hãy gán một object cho property có tên [`state`](#state). Để cập nhật state, hãy gọi [`this.setState`](#setstate).
 
 <Sandpack>
 
@@ -1127,21 +1127,21 @@ button { display: block; margin-top: 10px; }
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
+Chúng tôi khuyến nghị định nghĩa component dưới dạng function thay vì class. [Xem cách migrate.](#migrating-a-component-with-state-from-a-class-to-a-function)
 
 </Pitfall>
 
 ---
 
-### Adding lifecycle methods to a class component {/*adding-lifecycle-methods-to-a-class-component*/}
+### Thêm lifecycle method vào class component {/*adding-lifecycle-methods-to-a-class-component*/}
 
-There are a few special methods you can define on your class.
+Bạn có thể định nghĩa một vài method đặc biệt trên class của mình.
 
-If you define the [`componentDidMount`](#componentdidmount) method, React will call it when your component is added *(mounted)* to the screen. React will call [`componentDidUpdate`](#componentdidupdate) after your component re-renders due to changed props or state. React will call [`componentWillUnmount`](#componentwillunmount) after your component has been removed *(unmounted)* from the screen.
+Nếu bạn định nghĩa method [`componentDidMount`](#componentdidmount), React sẽ gọi nó khi component của bạn được thêm *(mounted)* vào màn hình. React sẽ gọi [`componentDidUpdate`](#componentdidupdate) sau khi component của bạn re-render do props hoặc state thay đổi. React sẽ gọi [`componentWillUnmount`](#componentwillunmount) sau khi component của bạn bị xóa *(unmounted)* khỏi màn hình.
 
-If you implement `componentDidMount`, you usually need to implement all three lifecycles to avoid bugs. For example, if `componentDidMount` reads some state or props, you also have to implement `componentDidUpdate` to handle their changes, and `componentWillUnmount` to clean up whatever `componentDidMount` was doing.
+Nếu bạn triển khai `componentDidMount`, thông thường bạn cần triển khai cả ba lifecycle để tránh lỗi. Ví dụ: nếu `componentDidMount` đọc một số state hoặc props, bạn cũng phải triển khai `componentDidUpdate` để xử lý các thay đổi của chúng, và `componentWillUnmount` để dọn dẹp bất cứ điều gì mà `componentDidMount` đang thực hiện.
 
-For example, this `ChatRoom` component keeps a chat connection synchronized with props and state:
+Ví dụ, component `ChatRoom` này giữ cho kết nối chat được đồng bộ với props và state:
 
 <Sandpack>
 
@@ -1257,33 +1257,33 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-Note that in development when [Strict Mode](/reference/react/StrictMode) is on, React will call `componentDidMount`, immediately call `componentWillUnmount`, and then call `componentDidMount` again. This helps you notice if you forgot to implement `componentWillUnmount` or if its logic doesn't fully "mirror" what `componentDidMount` does.
+Lưu ý rằng trong môi trường development, khi [Strict Mode](/reference/react/StrictMode) được bật, React sẽ gọi `componentDidMount`, ngay lập tức gọi `componentWillUnmount`, rồi lại gọi `componentDidMount`. Điều này giúp bạn nhận ra nếu quên triển khai `componentWillUnmount` hoặc nếu logic của nó không hoàn toàn “mirror” những gì `componentDidMount` thực hiện.
 
 <Pitfall>
 
-We recommend defining components as functions instead of classes. [See how to migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
+Chúng tôi khuyến nghị định nghĩa component dưới dạng function thay vì class. [Xem cách migrate.](#migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function)
 
 </Pitfall>
 
 ---
 
-### Catching rendering errors with an Error Boundary {/*catching-rendering-errors-with-an-error-boundary*/}
+### Bắt lỗi khi rendering bằng một Error Boundary {/*catching-rendering-errors-with-an-error-boundary*/}
 
-By default, if your application throws an error during rendering, React will remove its UI from the screen. To prevent this, you can wrap a part of your UI into an *Error Boundary*. An Error Boundary is a special component that lets you display some fallback UI instead of the part that crashed--for example, an error message.
+Theo mặc định, nếu ứng dụng của bạn throw một error trong quá trình rendering, React sẽ xóa UI của ứng dụng khỏi màn hình. Để ngăn điều này, bạn có thể bọc một phần UI trong một *Error Boundary*. Error Boundary là một component đặc biệt cho phép bạn hiển thị một fallback UI thay cho phần đã bị crash--ví dụ: một thông báo lỗi.
 
 <Note>
-Error boundaries do not catch errors for:
+Error Boundary không bắt được lỗi trong các trường hợp sau:
 
-- Event handlers [(learn more)](/learn/responding-to-events)
+- Event handler [(tìm hiểu thêm)](/learn/responding-to-events)
 - [Server side rendering](/reference/react-dom/server)
-- Errors thrown in the error boundary itself (rather than its children)
-- Asynchronous code (e.g. `setTimeout` or `requestAnimationFrame` callbacks); an exception is the usage of the [`startTransition`](/reference/react/useTransition#starttransition) function returned by the [`useTransition`](/reference/react/useTransition) Hook. Errors thrown inside the transition function are caught by error boundaries [(learn more)](/reference/react/useTransition#displaying-an-error-to-users-with-error-boundary)
+- Lỗi được throw ngay bên trong Error Boundary (thay vì bên trong các component con của nó)
+- Code bất đồng bộ (ví dụ: callback của `setTimeout` hoặc `requestAnimationFrame`); một ngoại lệ là việc sử dụng hàm [`startTransition`](/reference/react/useTransition#starttransition) được trả về bởi [`useTransition`](/reference/react/useTransition) Hook. Các lỗi được throw bên trong transition function sẽ được Error Boundary bắt lại [(tìm hiểu thêm)](/reference/react/useTransition#displaying-an-error-to-users-with-error-boundary)
 
 </Note>
 
-To implement an Error Boundary component, you need to provide [`static getDerivedStateFromError`](#static-getderivedstatefromerror) which lets you update state in response to an error and display an error message to the user. You can also optionally implement [`componentDidCatch`](#componentdidcatch) to add some extra logic, for example, to log the error to an analytics service.
+Để triển khai một component Error Boundary, bạn cần cung cấp [`static getDerivedStateFromError`](#static-getderivedstatefromerror), cho phép bạn cập nhật state để phản hồi lỗi và hiển thị thông báo lỗi cho người dùng. Bạn cũng có thể tùy chọn triển khai [`componentDidCatch`](#componentdidcatch) để thêm một số logic khác, chẳng hạn như ghi log lỗi vào một analytics service.
 
-With [`captureOwnerStack`](/reference/react/captureOwnerStack) you can include the Owner Stack during development.
+Với [`captureOwnerStack`](/reference/react/captureOwnerStack), bạn có thể đưa Owner Stack vào trong quá trình development.
 
 ```js {9-12,14-27}
 import * as React from 'react';
@@ -1324,7 +1324,7 @@ class ErrorBoundary extends React.Component {
 }
 ```
 
-Then you can wrap a part of your component tree with it:
+Sau đó, bạn có thể bọc một phần cây component bằng nó:
 
 ```js {1,3}
 <ErrorBoundary fallback={<p>Something went wrong</p>}>
@@ -1332,25 +1332,25 @@ Then you can wrap a part of your component tree with it:
 </ErrorBoundary>
 ```
 
-If `Profile` or its child component throws an error, `ErrorBoundary` will "catch" that error, display a fallback UI with the error message you've provided, and send a production error report to your error reporting service.
+Nếu `Profile` hoặc component con của nó throw một error, `ErrorBoundary` sẽ “catch” error đó, hiển thị fallback UI cùng thông báo lỗi mà bạn đã cung cấp, đồng thời gửi báo cáo lỗi production đến error reporting service của bạn.
 
-You don't need to wrap every component into a separate Error Boundary. When you think about the [granularity of Error Boundaries,](https://www.brandondail.com/posts/fault-tolerance-react) consider where it makes sense to display an error message. For example, in a messaging app, it makes sense to place an Error Boundary around the list of conversations. It also makes sense to place one around every individual message. However, it wouldn't make sense to place a boundary around every avatar.
+Bạn không cần bọc từng component trong một Error Boundary riêng. Khi cân nhắc [granularity của Error Boundary,](https://www.brandondail.com/posts/fault-tolerance-react) hãy xem nơi nào phù hợp để hiển thị thông báo lỗi. Ví dụ, trong một ứng dụng nhắn tin, việc đặt một Error Boundary quanh danh sách các cuộc trò chuyện là hợp lý. Việc đặt một Error Boundary quanh từng tin nhắn riêng lẻ cũng hợp lý. Tuy nhiên, sẽ không hợp lý nếu đặt một boundary quanh từng avatar.
 
 <Note>
 
-There is currently no way to write an Error Boundary as a function component. However, you don't have to write the Error Boundary class yourself. For example, you can use [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary) instead.
+Hiện tại không có cách nào viết một Error Boundary dưới dạng function component. Tuy nhiên, bạn không cần tự viết class Error Boundary. Ví dụ, bạn có thể sử dụng [`react-error-boundary`](https://github.com/bvaughn/react-error-boundary) thay thế.
 
 </Note>
 
 ---
 
-## Alternatives {/*alternatives*/}
+## Các lựa chọn thay thế {/*alternatives*/}
 
-### Migrating a simple component from a class to a function {/*migrating-a-simple-component-from-a-class-to-a-function*/}
+### Migrate một component đơn giản từ class sang function {/*migrating-a-simple-component-from-a-class-to-a-function*/}
 
-Typically, you will [define components as functions](/learn/your-first-component#defining-a-component) instead.
+Thông thường, bạn sẽ [định nghĩa component dưới dạng function](/learn/your-first-component#defining-a-component) thay thế.
 
-For example, suppose you're converting this `Greeting` class component to a function:
+Ví dụ, giả sử bạn đang chuyển class component `Greeting` sau đây thành function:
 
 <Sandpack>
 
@@ -1376,7 +1376,7 @@ export default function App() {
 
 </Sandpack>
 
-Define a function called `Greeting`. This is where you will move the body of your `render` function.
+Định nghĩa một function có tên `Greeting`. Đây là nơi bạn sẽ chuyển phần thân của function `render`.
 
 ```js
 function Greeting() {
@@ -1384,7 +1384,7 @@ function Greeting() {
 }
 ```
 
-Instead of `this.props.name`, define the `name` prop [using the destructuring syntax](/learn/passing-props-to-a-component) and read it directly:
+Thay vì `this.props.name`, hãy định nghĩa prop `name` [bằng cú pháp destructuring](/learn/passing-props-to-a-component) và đọc trực tiếp prop đó:
 
 ```js
 function Greeting({ name }) {
@@ -1392,7 +1392,7 @@ function Greeting({ name }) {
 }
 ```
 
-Here is a complete example:
+Dưới đây là một ví dụ hoàn chỉnh:
 
 <Sandpack>
 
@@ -1416,9 +1416,9 @@ export default function App() {
 
 ---
 
-### Migrating a component with state from a class to a function {/*migrating-a-component-with-state-from-a-class-to-a-function*/}
+### Migrate một component có state từ class sang function {/*migrating-a-component-with-state-from-a-class-to-a-function*/}
 
-Suppose you're converting this `Counter` class component to a function:
+Giả sử bạn đang chuyển class component `Counter` sau đây thành function:
 
 <Sandpack>
 
@@ -1466,7 +1466,7 @@ button { display: block; margin-top: 10px; }
 
 </Sandpack>
 
-Start by declaring a function with the necessary [state variables:](/reference/react/useState#adding-state-to-a-component)
+Bắt đầu bằng cách khai báo một function với các [biến state cần thiết:](/reference/react/useState#adding-state-to-a-component)
 
 ```js {4-5}
 import { useState } from 'react';
@@ -1477,7 +1477,7 @@ function Counter() {
   // ...
 ```
 
-Next, convert the event handlers:
+Tiếp theo, chuyển đổi các event handler:
 
 ```js {5-7,9-11}
 function Counter() {
@@ -1494,9 +1494,9 @@ function Counter() {
   // ...
 ```
 
-Finally, replace all references starting with `this` with the variables and functions you defined in your component. For example, replace `this.state.age` with `age`, and replace `this.handleNameChange` with `handleNameChange`.
+Cuối cùng, thay thế tất cả tham chiếu bắt đầu bằng `this` bằng các biến và function mà bạn đã định nghĩa trong component. Ví dụ, thay thế `this.state.age` bằng `age`, và thay thế `this.handleNameChange` bằng `handleNameChange`.
 
-Here is a fully converted component:
+Dưới đây là component đã được chuyển đổi hoàn chỉnh:
 
 <Sandpack>
 
@@ -1538,9 +1538,9 @@ button { display: block; margin-top: 10px; }
 
 ---
 
-### Migrating a component with lifecycle methods from a class to a function {/*migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function*/}
+### Migrate một component có lifecycle method từ class sang function {/*migrating-a-component-with-lifecycle-methods-from-a-class-to-a-function*/}
 
-Suppose you're converting this `ChatRoom` class component with lifecycle methods to a function:
+Giả sử bạn đang chuyển class component `ChatRoom` có lifecycle method sau đây thành function:
 
 <Sandpack>
 
@@ -1656,11 +1656,11 @@ button { margin-left: 10px; }
 
 </Sandpack>
 
-First, verify that your [`componentWillUnmount`](#componentwillunmount) does the opposite of [`componentDidMount`.](#componentdidmount) In the above example, that's true: it disconnects the connection that `componentDidMount` sets up. If such logic is missing, add it first.
+Trước tiên, hãy xác minh rằng [`componentWillUnmount`](#componentwillunmount) của bạn thực hiện điều ngược lại với [`componentDidMount`.](#componentdidmount) Trong ví dụ trên, điều này là đúng: nó ngắt kết nối mà `componentDidMount` thiết lập. Nếu thiếu logic như vậy, trước tiên hãy thêm logic đó.
 
-Next, verify that your [`componentDidUpdate`](#componentdidupdate) method handles changes to any props and state you're using in `componentDidMount`. In the above example, `componentDidMount` calls `setupConnection` which reads `this.state.serverUrl` and `this.props.roomId`. This is why `componentDidUpdate` checks whether `this.state.serverUrl` and `this.props.roomId` have changed, and resets the connection if they did. If your `componentDidUpdate` logic is missing or doesn't handle changes to all relevant props and state, fix that first.
+Tiếp theo, hãy xác minh rằng method [`componentDidUpdate`](#componentdidupdate) của bạn xử lý các thay đổi đối với mọi prop và state mà bạn đang sử dụng trong `componentDidMount`. Trong ví dụ trên, `componentDidMount` gọi `setupConnection`, hàm này đọc `this.state.serverUrl` và `this.props.roomId`. Đó là lý do `componentDidUpdate` kiểm tra xem `this.state.serverUrl` và `this.props.roomId` có thay đổi hay không, rồi reset connection nếu chúng đã thay đổi. Nếu logic `componentDidUpdate` của bạn bị thiếu hoặc không xử lý các thay đổi đối với tất cả prop và state liên quan, trước tiên hãy sửa logic đó.
 
-In the above example, the logic inside the lifecycle methods connects the component to a system outside of React (a chat server). To connect a component to an external system, [describe this logic as a single Effect:](/reference/react/useEffect#connecting-to-an-external-system)
+Trong ví dụ trên, logic bên trong các lifecycle method kết nối component với một hệ thống bên ngoài React (một chat server). Để kết nối component với một hệ thống bên ngoài, [hãy mô tả logic này dưới dạng một Effect duy nhất:](/reference/react/useEffect#connecting-to-an-external-system)
 
 ```js {6-12}
 import { useState, useEffect } from 'react';
@@ -1680,7 +1680,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-This [`useEffect`](/reference/react/useEffect) call is equivalent to the logic in the lifecycle methods above. If your lifecycle methods do multiple unrelated things, [split them into multiple independent Effects.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) Here is a complete example you can play with:
+Lời gọi [`useEffect`](/reference/react/useEffect) này tương đương với logic trong các lifecycle method ở trên. Nếu lifecycle method của bạn thực hiện nhiều việc không liên quan, [hãy tách chúng thành nhiều Effect độc lập.](/learn/removing-effect-dependencies#is-your-effect-doing-several-unrelated-things) Dưới đây là một ví dụ hoàn chỉnh để bạn có thể thực hành:
 
 <Sandpack>
 
@@ -1767,15 +1767,15 @@ button { margin-left: 10px; }
 
 <Note>
 
-If your component does not synchronize with any external systems, [you might not need an Effect.](/learn/you-might-not-need-an-effect)
+Nếu component của bạn không đồng bộ hóa với bất kỳ hệ thống bên ngoài nào, [có thể bạn không cần Effect.](/learn/you-might-not-need-an-effect)
 
 </Note>
 
 ---
 
-### Migrating a component with context from a class to a function {/*migrating-a-component-with-context-from-a-class-to-a-function*/}
+### Migrate một component có context từ class sang function {/*migrating-a-component-with-context-from-a-class-to-a-function*/}
 
-In this example, the `Panel` and `Button` class components read [context](/learn/passing-data-deeply-with-context) from [`this.context`:](#context)
+Trong ví dụ này, hai class component `Panel` và `Button` đọc [context](/learn/passing-data-deeply-with-context) từ [`this.context`:](#context)
 
 <Sandpack>
 
@@ -1869,7 +1869,7 @@ export default function MyApp() {
 
 </Sandpack>
 
-When you convert them to function components, replace `this.context` with [`useContext`](/reference/react/useContext) calls:
+Khi chuyển chúng thành function component, hãy thay thế `this.context` bằng các lời gọi [`useContext`](/reference/react/useContext):
 
 <Sandpack>
 
