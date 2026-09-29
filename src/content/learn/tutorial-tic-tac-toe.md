@@ -281,7 +281,7 @@ Bây giờ bạn đã thiết lập xong, hãy cùng tìm hiểu tổng quan v�
 
 Trong CodeSandbox, bạn sẽ thấy ba khu vực chính:
 
-![CodeSandbox với code khởi đầu](../images/tutorial/react-starter-code-codesandbox.png)
+![CodeSandbox với code khởi đầu](/images/tutorial/react-starter-code-codesandbox.png)
 
 1. Khu vực _Files_ với danh sách các file như `App.js`, `index.js`, `styles.css` trong thư mục `src` và một thư mục có tên `public`
 1. _code editor_, nơi bạn sẽ thấy source code của file đã chọn
@@ -297,7 +297,7 @@ export default function Square() {
 
 Khu vực _browser_ sẽ hiển thị một hình vuông có chữ X bên trong như sau:
 
-![hình vuông chứa x](../images/tutorial/x-filled-square.png)
+![hình vuông chứa x](/images/tutorial/x-filled-square.png)
 
 Bây giờ hãy cùng xem các file trong code khởi đầu.
 
@@ -381,11 +381,11 @@ export default function Square() {
 
 Bây giờ bạn sẽ thấy:
 
-![hai hình vuông chứa x](../images/tutorial/two-x-filled-squares.png)
+![hai hình vuông chứa x](/images/tutorial/two-x-filled-squares.png)
 
 Tuyệt! Bây giờ bạn chỉ cần sao chép và dán thêm vài lần để tạo chín hình vuông và...
 
-![chín hình vuông chứa x trên một hàng](../images/tutorial/nine-x-filled-squares.png)
+![chín hình vuông chứa x trên một hàng](/images/tutorial/nine-x-filled-squares.png)
 
 Ôi không! Các hình vuông đều nằm trên một hàng duy nhất thay vì nằm trong một grid như bàn cờ bạn cần. Để khắc phục, bạn sẽ cần nhóm các hình vuông thành từng hàng bằng các thẻ `div`s và thêm một số CSS class. Nhân tiện, bạn cũng sẽ đánh số từng hình vuông để đảm bảo biết mỗi hình vuông được hiển thị ở đâu.
 
@@ -417,7 +417,7 @@ export default function Square() {
 
 CSS được định nghĩa trong `styles.css` tạo style cho các div có `className` là `board-row`. Bây giờ bạn đã nhóm các component thành từng hàng bằng các `div`s có style, bạn đã có bàn cờ tic-tac-toe:
 
-![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](../images/tutorial/number-filled-board.png)
+![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](/images/tutorial/number-filled-board.png)
 
 Nhưng bây giờ bạn gặp một vấn đề. Component có tên `Square` thực sự không còn là một square nữa. Hãy sửa điều đó bằng cách đổi tên thành `Board`:
 
@@ -555,7 +555,7 @@ Lưu ý rằng không giống như các `div` của trình duyệt, các compone
 
 Hãy cùng xem:
 
-![bàn cờ có một ô đã được điền](../images/tutorial/board-filled-with-ones.png)
+![bàn cờ có một ô đã được điền](/images/tutorial/board-filled-with-ones.png)
 
 Ôi không! Bạn đã làm mất các ô được đánh số trước đó. Bây giờ mỗi ô đều hiển thị "1". Để sửa điều này, bạn sẽ dùng *props* để truyền giá trị mà mỗi ô nên có từ component cha (`Board`) đến component con (`Square`).
 
@@ -579,7 +579,7 @@ function Square({ value }) {
 
 Ồ, đây không phải điều bạn muốn:
 
-![bàn cờ đã điền giá trị](../images/tutorial/board-filled-with-value.png)
+![bàn cờ đã điền giá trị](/images/tutorial/board-filled-with-value.png)
 
 Bạn muốn render biến JavaScript có tên `value` từ component của mình, chứ không phải từ "value". Để "thoát vào JavaScript" từ JSX, bạn cần dùng dấu ngoặc nhọn. Thêm dấu ngoặc nhọn xung quanh `value` trong JSX như sau:
 
@@ -591,7 +591,7 @@ function Square({ value }) {
 
 Hiện tại, bạn sẽ thấy một bàn cờ trống:
 
-![bàn cờ trống](../images/tutorial/empty-board.png)
+![bàn cờ trống](/images/tutorial/empty-board.png)
 
 Điều này là do component `Board` vẫn chưa truyền prop `value` cho từng component `Square` mà nó render. Để sửa điều này, bạn sẽ thêm prop `value` vào từng component `Square` được render bởi component `Board`:
 
@@ -621,7 +621,7 @@ export default function Board() {
 
 Bây giờ bạn sẽ lại thấy một lưới các số:
 
-![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](../images/tutorial/number-filled-board.png)
+![bàn cờ tic-tac-toe được điền các số từ 1 đến 9](/images/tutorial/number-filled-board.png)
 
 Code đã cập nhật của bạn sẽ trông như sau:
 
@@ -799,7 +799,7 @@ function Square() {
 
 Bằng cách gọi hàm `set` này từ một event handler `onClick`, bạn đang yêu cầu React render lại `Square` đó mỗi khi `<button>` của nó được nhấp vào. Sau khi cập nhật, `Square` của `value` sẽ là `'X'`, vì vậy bạn sẽ thấy "X" trên bàn cờ. Nhấp vào bất kỳ Square nào, và "X" sẽ xuất hiện:
 
-![thêm các dấu x vào bàn cờ](../images/tutorial/tictac-adding-x-s.gif)
+![thêm các dấu x vào bàn cờ](/images/tutorial/tictac-adding-x-s.gif)
 
 Mỗi Square có state riêng: `value` được lưu trong mỗi Square hoàn toàn độc lập với các Square khác. Khi bạn gọi hàm `set` trong một component, React cũng tự động cập nhật các component con bên trong component đó.
 
@@ -903,15 +903,15 @@ React Developer Tools cho phép bạn kiểm tra props và state của các comp
 
 Sau khi cài đặt, một tab *Components* mới sẽ xuất hiện trong Developer Tools của trình duyệt đối với các trang web sử dụng React. Nếu bạn đang làm theo hướng dẫn trong CodeSandbox, trước tiên bạn cần mở bản xem trước sandbox trong một tab mới:
 
-![mở trong tab mới](../images/tutorial/sandbox-new-tab.png)
+![mở trong tab mới](/images/tutorial/sandbox-new-tab.png)
 
 Sau đó, trên trang xem trước, hãy mở DevTools của trình duyệt và tìm tab *Components*:
 
-![tab components](../images/tutorial/components-tab.png)
+![tab components](/images/tutorial/components-tab.png)
 
 Để kiểm tra một component cụ thể trên màn hình, hãy dùng nút ở góc trên bên trái của tab Components:
 
-![kiểm tra bằng devtools](../images/tutorial/devtools-inspect.gif)
+![kiểm tra bằng devtools](/images/tutorial/devtools-inspect.gif)
 
 
 ## Hoàn thiện trò chơi {/*completing-the-game*/}
@@ -983,7 +983,7 @@ function Square({value}) {
 
 Lúc này, bạn sẽ thấy một bàn cờ tic-tac-toe trống:
 
-![empty board](../images/tutorial/empty-board.png)
+![empty board](/images/tutorial/empty-board.png)
 
 Và code của bạn sẽ trông như sau:
 
@@ -1221,7 +1221,7 @@ export default function Board() {
 
 Bây giờ bạn lại có thể thêm X vào bất kỳ ô nào trên bàn cờ bằng cách nhấp vào chúng:
 
-![filling the board with X](../images/tutorial/tictac-adding-x-s.gif)
+![filling the board with X](/images/tutorial/tictac-adding-x-s.gif)
 
 Nhưng lần này, toàn bộ việc quản lý state được xử lý bởi component `Board`!
 
@@ -1403,7 +1403,7 @@ Bây giờ, khi bạn nhấp vào các ô khác nhau, chúng sẽ luân phiên g
 
 Nhưng khoan, có một vấn đề. Hãy thử nhấp nhiều lần vào cùng một ô:
 
-![O ghi đè lên X](../images/tutorial/o-replaces-x.gif)
+![O ghi đè lên X](/images/tutorial/o-replaces-x.gif)
 
 `X` bị một `O` ghi đè! Mặc dù điều này sẽ tạo thêm một tình tiết rất thú vị cho trò chơi, hiện tại chúng ta sẽ tuân theo luật ban đầu.
 

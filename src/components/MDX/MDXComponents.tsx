@@ -515,7 +515,18 @@ function YouTubeIframe(props: any) {
 
 function Image(props: any) {
   const {alt, ...rest} = props;
-  return <img alt={alt} className="max-w-[calc(min(700px,100%))]" {...rest} />;
+  const src =
+    typeof rest.src === 'string' && rest.src.startsWith('/images/')
+      ? `${process.env.NEXT_PUBLIC_BASE_PATH}${rest.src}`
+      : rest.src;
+  return (
+    <img
+      alt={alt}
+      className="max-w-[calc(min(700px,100%))]"
+      {...rest}
+      src={src}
+    />
+  );
 }
 
 export const MDXComponents = {

@@ -12,7 +12,10 @@
 /**
  * @type {import('next').NextConfig}
  **/
+const basePath = '/react/v9.3';
+
 const nextConfig = {
+  basePath,
   output: 'export',
   distDir: 'dist',
   trailingSlash: true,
@@ -25,7 +28,9 @@ const nextConfig = {
     scrollRestoration: true,
     reactCompiler: true,
   },
-  env: {},
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   webpack: (config, {dev, isServer, ...options}) => {
     if (process.env.ANALYZE) {
       const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
