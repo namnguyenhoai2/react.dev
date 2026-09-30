@@ -4,7 +4,7 @@ title: refs
 
 <Intro>
 
-Xác thực việc sử dụng refs đúng cách, không đọc/ghi trong quá trình render. Xem phần "pitfalls" trong [`useRef()` usage](/reference/react/useRef#usage).
+Xác thực việc sử dụng refs đúng cách, không đọc/ghi trong quá trình render. Xem phần "Cạm bẫy" trong [`useRef()` usage](/reference/react/useRef#usage).
 
 </Intro>
 

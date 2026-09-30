@@ -381,7 +381,7 @@ const [index, setIndex] = useState(0);
 
 ## Cung cấp cho một Component nhiều biến state {/*giving-a-component-multiple-state-variables*/}
 
-Bạn có thể có bao nhiêu biến state tùy thích, với bao nhiêu kiểu dữ liệu tùy ý, trong một Component. Component này có hai biến state, một số `index` và một boolean `showMore` được bật/tắt khi bạn nhấp vào "Show details":
+Bạn có thể có bao nhiêu biến state tùy thích, với bao nhiêu kiểu dữ liệu tùy ý, trong một Component. Component này có hai biến state, một số `index` và một boolean `showMore` được bật/tắt khi bạn nhấp vào "Xem chi tiết":
 
 <Sandpack>
 
