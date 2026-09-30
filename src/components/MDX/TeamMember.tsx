@@ -18,6 +18,7 @@ import {IconGitHub} from '../Icon/IconGitHub';
 import {ExternalLink} from '../ExternalLink';
 import {H3} from './Heading';
 import {IconLink} from 'components/Icon/IconLink';
+import {assetPath} from 'utils/assetPath';
 
 interface TeamMemberProps {
   name: string;
@@ -92,12 +93,22 @@ export function TeamMember({
         <div
           className="hidden sm:block basis-2/5 rounded overflow-hidden relative"
           style={{width: 300, height: 250}}>
-          <Image src={photo} layout="fill" objectFit="cover" alt={name} />
+          <Image
+            src={assetPath(photo)}
+            layout="fill"
+            objectFit="cover"
+            alt={name}
+          />
         </div>
         <div
           style={{minHeight: 300}}
           className="block w-full sm:hidden flex-grow basis-2/5 rounded overflow-hidden relative">
-          <Image src={photo} layout="fill" objectFit="cover" alt={name} />
+          <Image
+            src={assetPath(photo)}
+            layout="fill"
+            objectFit="cover"
+            alt={name}
+          />
         </div>
         <div className="ps-0 sm:ps-6 basis-3/5 items-start">
           <H3 className="mb-1 sm:my-0" id={permalink}>

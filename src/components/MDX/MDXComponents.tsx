@@ -144,7 +144,7 @@ const CanaryBadge = ({title}: {title: string}) => {
         size="s"
         className={'inline me-1 mb-0.5 text-sm text-gray-60 dark:text-gray-10'}
       />
-      Canary only
+      Chỉ có trên Canary
     </span>
   );
 };
@@ -170,7 +170,7 @@ const ExperimentalBadge = ({title}: {title: string}) => {
         size="s"
         className={'inline me-1 mb-0.5 text-sm text-gray-60 dark:text-gray-10'}
       />
-      Experimental only
+      Chỉ có trên bản thử nghiệm
     </span>
   );
 };
@@ -218,16 +218,16 @@ function LearnMore({
       <section className="p-8 mt-16 mb-16 flex flex-row shadow-inner-border dark:shadow-inner-border-dark justify-between items-center bg-card dark:bg-card-dark rounded-2xl">
         <div className="flex-col">
           <h2 className="text-primary font-display dark:text-primary-dark font-bold text-2xl leading-tight">
-            Ready to learn this topic?
+            Sẵn sàng tìm hiểu chủ đề này?
           </h2>
           {children}
           {path ? (
             <ButtonLink
               className="mt-1"
-              label="Read More"
+              label="Đọc thêm"
               href={path}
               type="primary">
-              Read More
+              Đọc thêm
               <IconNavArrow displayDirection="end" className="inline ms-1" />
             </ButtonLink>
           ) : null}
@@ -240,8 +240,8 @@ function LearnMore({
 
 function ReadBlogPost({path}: {path: string}) {
   return (
-    <ButtonLink className="mt-1" label="Read Post" href={path} type="primary">
-      Read Post
+    <ButtonLink className="mt-1" label="Đọc bài viết" href={path} type="primary">
+      Đọc bài viết
       <IconNavArrow displayDirection="end" className="inline ms-1" />
     </ButtonLink>
   );
@@ -278,7 +278,7 @@ function YouWillLearn({
   children: any;
   isChapter?: boolean;
 }) {
-  let title = isChapter ? 'In this chapter' : 'You will learn';
+  let title = isChapter ? 'Trong chương này' : 'Bạn sẽ học';
   return <SimpleCallout title={title}>{children}</SimpleCallout>;
 }
 
@@ -298,7 +298,7 @@ function AuthorCredit({
     <div className="sr-only group-hover:not-sr-only group-focus-within:not-sr-only hover:sr-only">
       <p className="bg-card dark:bg-card-dark text-center text-sm text-secondary dark:text-secondary-dark leading-tight p-2 rounded-lg absolute start-1/2 -top-4 -translate-x-1/2 -translate-y-full group-hover:flex group-hover:opacity-100 after:content-[''] after:absolute after:start-1/2 after:top-[95%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-card after:dark:border-t-card-dark opacity-0 transition-opacity duration-300">
         <cite>
-          Illustrated by{' '}
+          Minh họa bởi{' '}
           {authorLink ? (
             <a
               target="_blank"
@@ -341,7 +341,7 @@ function Illustration({
     <div className="relative group before:absolute before:-inset-y-16 before:inset-x-0 my-16 mx-0 2xl:mx-auto max-w-4xl 2xl:max-w-6xl">
       <figure className="my-8 flex justify-center">
         <img
-          src={src}
+          src={assetPath(src)}
           alt={alt}
           style={{maxHeight: 300}}
           className="rounded-lg"
@@ -378,7 +378,7 @@ function IllustrationBlock({
       <div className="bg-white rounded-lg p-4 flex-1 flex xl:p-6 justify-center items-center my-4">
         <img
           className="text-primary"
-          src={info.src}
+          src={assetPath(info.src)}
           alt={info.alt}
           height={info.height}
         />
@@ -490,7 +490,7 @@ function LanguageList({progress}: {progress: TranslationProgress}) {
             </Link>{' '}
             &mdash;{' '}
             <Link href={`https://github.com/reactjs/${code}.react.dev`}>
-              Contribute
+              Đóng góp
             </Link>
           </LI>
         );
