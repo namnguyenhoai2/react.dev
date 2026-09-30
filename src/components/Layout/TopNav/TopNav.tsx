@@ -33,6 +33,7 @@ import {SidebarRouteTree} from '../Sidebar';
 import type {RouteItem} from '../getRouteMeta';
 import {siteConfig} from 'siteConfig';
 import {assetPath} from 'utils/assetPath';
+import {staticHref} from 'utils/staticHref';
 import BrandMenu from './BrandMenu';
 
 declare global {
@@ -117,6 +118,17 @@ function Link({
   children,
   ...props
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  if (href?.startsWith('/')) {
+    return (
+      <a
+        href={staticHref(href)}
+        className="inline leading-normal transition duration-100 ease-in border-b border-opacity-0 text-primary dark:text-primary-dark hover:text-link hover:dark:text-link-dark border-link hover:border-opacity-100"
+        {...props}>
+        {children}
+      </a>
+    );
+  }
+
   return (
     <NextLink
       href={`${href}`}
@@ -273,8 +285,8 @@ export default function TopNav({
               <BrandMenu>
                 <div className="flex items-center">
                   <div className="uwu-visible flex items-center justify-center h-full">
-                    <NextLink
-                      href="/"
+                    <a
+                      href={staticHref('/')}
                       className="active:scale-95 transition-transform">
                       <Image
                         alt="logo do @sawaratsuki1004 tạo"
@@ -285,11 +297,11 @@ export default function TopNav({
                         height={32}
                         src={assetPath('/images/uwu.png')}
                       />
-                    </NextLink>
+                    </a>
                   </div>
                   <div className="uwu-hidden">
-                    <NextLink
-                      href="/"
+                    <a
+                      href={staticHref('/')}
                       className={`active:scale-95 overflow-hidden transition-transform relative items-center text-primary dark:text-primary-dark p-1 whitespace-nowrap outline-link rounded-full 3xl:rounded-xl inline-flex text-lg font-normal gap-2`}>
                       <Logo
                         className={cn(
@@ -297,16 +309,16 @@ export default function TopNav({
                         )}
                       />
                       <span className="sr-only 3xl:not-sr-only">React</span>
-                    </NextLink>
+                    </a>
                   </div>
                 </div>
               </BrandMenu>
               <div className="flex flex-column justify-center items-center">
-                <NextLink
-                  href="/versions"
+                <a
+                  href={staticHref('/versions')}
                   className=" flex py-2 flex-column justify-center items-center text-gray-50 dark:text-gray-30 hover:text-link hover:dark:text-link-dark hover:underline text-sm ms-1 cursor-pointer">
                   v{siteConfig.version}
-                </NextLink>
+                </a>
               </div>
             </div>
             <div className="items-center justify-center flex-1 hidden w-full md:flex 3xl:w-auto 3xl:shrink-0 3xl:justify-center">

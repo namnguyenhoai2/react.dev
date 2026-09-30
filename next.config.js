@@ -12,6 +12,7 @@
 /**
  * @type {import('next').NextConfig}
  **/
+// The exported site is hosted under this R2 bucket prefix.
 const basePath = '/react/v19.3';
 
 const nextConfig = {

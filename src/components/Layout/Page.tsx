@@ -69,8 +69,11 @@ export function Page({
   const title = meta.title || route?.title || '';
   const version = meta.version;
   const description = meta.description || route?.description || '';
-  const isHomePage = cleanedPath === '/';
-  const isBlogIndex = cleanedPath === '/blog';
+  // `asPath` is `/` during the server render of statically generated error
+  // pages, then becomes `/404` or `/500` in the browser. Deriving the page
+  // type from it makes the server and client render different layouts.
+  const isHomePage = section === 'home';
+  const isBlogIndex = section === 'blog' && cleanedPath === '/blog';
 
   let content;
   if (isHomePage) {

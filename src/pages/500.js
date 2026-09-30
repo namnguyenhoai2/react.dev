@@ -20,7 +20,8 @@ export default function NotFound() {
     <Page
       toc={[]}
       routeTree={sidebarLearn}
-      meta={{title: 'Something Went Wrong'}}>
+      meta={{title: 'Something Went Wrong'}}
+      section="unknown">
       <MaxWidth>
         <Intro>
           <P>Something went very wrong.</P>

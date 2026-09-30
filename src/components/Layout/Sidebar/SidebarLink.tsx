@@ -17,6 +17,7 @@ import cn from 'classnames';
 import {IconNavArrow} from 'components/Icon/IconNavArrow';
 import {IconCanary} from 'components/Icon/IconCanary';
 import {IconExperimental} from 'components/Icon/IconExperimental';
+import {staticHref} from 'utils/staticHref';
 
 interface SidebarLinkProps {
   href: string;
@@ -28,12 +29,6 @@ interface SidebarLinkProps {
   isExpanded?: boolean;
   hideArrow?: boolean;
   isPending: boolean;
-}
-
-function staticHref(href: string) {
-  if (!href.startsWith('/')) return href;
-  const path = href.replace(/\/$/, '');
-  return path ? `${path}/index.html` : '/index.html';
 }
 
 export function SidebarLink({
