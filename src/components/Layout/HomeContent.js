@@ -1565,7 +1565,7 @@ function Cover({background, children}) {
         {children}
       </div>
       <img
-        src={assetPath(background)}
+        src={background}
         width={500}
         height={263}
         alt=""

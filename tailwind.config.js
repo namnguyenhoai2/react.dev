@@ -60,8 +60,8 @@ module.exports = {
           'conic-gradient(from 90deg at -10% 100%, #BCC1CD 0deg, #BCC1CD 90deg, #FFFFFF 360deg)',
         'gradient-right':
           'conic-gradient(from -90deg at 110% 100%, #FFFFFF 0deg, #EBECF0 90deg, #EBECF0 360deg)',
-        'meta-gradient': "url('/images/meta-gradient.png')",
-        'meta-gradient-dark': "url('/images/meta-gradient-dark.png')",
+        'meta-gradient': "url('/react/v19.3/images/meta-gradient.png')",
+        'meta-gradient-dark': "url('/react/v19.3/images/meta-gradient-dark.png')",
       },
       maxWidth: {
         ...defaultTheme.maxWidth,

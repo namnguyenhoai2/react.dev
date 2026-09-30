@@ -11,6 +11,7 @@
 
 import {Html, Head, Main, NextScript} from 'next/document';
 import {siteConfig} from '../siteConfig';
+import {assetPath} from 'utils/assetPath';
 
 const MyDocument = () => {
   return (
@@ -19,22 +20,26 @@ const MyDocument = () => {
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="/apple-touch-icon.png"
+        href={assetPath('/apple-touch-icon.png')}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/favicon-32x32.png"
+        href={assetPath('/favicon-32x32.png')}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/favicon-16x16.png"
+        href={assetPath('/favicon-16x16.png')}
       />
-      <link rel="manifest" href="/site.webmanifest" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#404756" />
+      <link rel="manifest" href={assetPath('/site.webmanifest')} />
+      <link
+        rel="mask-icon"
+        href={assetPath('/safari-pinned-tab.svg')}
+        color="#404756"
+      />
       <meta name="msapplication-TileColor" content="#2b5797" />
       <meta name="theme-color" content="#23272f" />
       <script
