@@ -132,7 +132,7 @@ Hãy thực hiện interaction mà bạn đang đo (ví dụ: nhập vào input)
 ```js
 console.time('filter array');
 const visibleTodos = useMemo(() => {
-  return filterTodos(todos, tab); // Skipped if todos and tab haven't changed
+  return filterTodos(todos, tab); // Bỏ qua nếu todos và tab chưa thay đổi
 }, [todos, tab]);
 console.timeEnd('filter array');
 ```
@@ -269,7 +269,7 @@ export function filterTodos(todos, tab) {
   console.log('[ARTIFICIALLY SLOW] Filtering ' + todos.length + ' todos for "' + tab + '" tab.');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   return todos.filter(todo => {
@@ -395,7 +395,7 @@ export function filterTodos(todos, tab) {
   console.log('[ARTIFICIALLY SLOW] Filtering ' + todos.length + ' todos for "' + tab + '" tab.');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   return todos.filter(todo => {
@@ -585,7 +585,7 @@ const List = memo(function List({ items }) {
 
 ```js {2-3,6-7}
 export default function TodoList({ todos, tab, theme }) {
-  // Every time the theme changes, this will be a different array...
+  // Mỗi lần theme thay đổi, đây sẽ là một mảng khác...
   const visibleTodos = filterTodos(todos, tab);
   return (
     <div className={theme}>
@@ -600,7 +600,7 @@ export default function TodoList({ todos, tab, theme }) {
 
 ```js {2-3,5,9-10}
 export default function TodoList({ todos, tab, theme }) {
-  // Tell React to cache your calculation between re-renders...
+  // Yêu cầu React cache phép tính của bạn giữa các lần render lại...
   const visibleTodos = useMemo(
     () => filterTodos(todos, tab),
     [todos, tab] // ...so as long as these dependencies don't change...
@@ -724,7 +724,7 @@ const List = memo(function List({ items }) {
   console.log('[ARTIFICIALLY SLOW] Rendering <List /> with ' + items.length + ' items');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   return (
@@ -862,7 +862,7 @@ const List = memo(function List({ items }) {
   console.log('[ARTIFICIALLY SLOW] Rendering <List /> with ' + items.length + ' items');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   return (
@@ -1244,10 +1244,10 @@ Trong [Strict Mode](/reference/react/StrictMode), React sẽ gọi một số fu
 
 ```js {2,5,6}
 function TodoList({ todos, tab }) {
-  // This component function will run twice for every render.
+  // Hàm component này sẽ chạy hai lần cho mỗi lần render.
 
   const visibleTodos = useMemo(() => {
-    // This calculation will run twice if any of the dependencies change.
+    // Phép tính này sẽ chạy hai lần nếu bất kỳ dependency nào thay đổi.
     return filterTodos(todos, tab);
   }, [todos, tab]);
 
@@ -1301,7 +1301,7 @@ Ngoài ra, hãy xem các hướng dẫn về [cập nhật object](/learn/updati
 Trong JavaScript, `() => {` bắt đầu phần thân của arrow function, vì vậy dấu ngoặc nhọn `{` không thuộc về object của bạn. Đây là lý do nó không trả về một object và dẫn đến sai sót. Bạn có thể sửa bằng cách thêm dấu ngoặc đơn như `({` và `})`:
 
 ```js {1-2,5}
-  // This works, but is easy for someone to break again
+  // Cách này hoạt động, nhưng dễ bị ai đó làm hỏng lần nữa
   const searchOptions = useMemo(() => ({
     matchMode: 'whole-word',
     text: text
@@ -1356,8 +1356,8 @@ Nếu cách này không hiệu quả, thì vấn đề là ít nhất một depe
 Sau đó, bạn có thể nhấp chuột phải vào các array từ những lần re-render khác nhau trong console và chọn "Store as a global variable" cho cả hai. Giả sử array thứ nhất được lưu dưới dạng `temp1` và array thứ hai được lưu dưới dạng `temp2`, bạn có thể dùng browser console để kiểm tra xem mỗi dependency trong cả hai array có giống nhau hay không:
 
 ```js
-Object.is(temp1[0], temp2[0]); // Is the first dependency the same between the arrays?
-Object.is(temp1[1], temp2[1]); // Is the second dependency the same between the arrays?
+Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
+Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
 Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
 ```
 

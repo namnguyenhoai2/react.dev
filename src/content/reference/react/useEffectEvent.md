@@ -63,7 +63,7 @@ Không giống các hàm `set` từ `useState` hoặc refs, các hàm Effect Eve
 // 🔴 Wrong: including Effect Event in dependencies
 useEffect(() => {
   onSomething();
-}, [onSomething]); // ESLint will warn about this
+}, [onSomething]); // ESLint sẽ cảnh báo về điều này
 ```
 
 Đây là một lựa chọn thiết kế có chủ đích. Effect Events chỉ được gọi từ bên trong các Effects trong cùng component. Vì bạn chỉ có thể gọi chúng cục bộ, không thể truyền chúng cho các component khác hoặc đưa chúng vào dependency arrays, nên identity ổn định sẽ không mang lại lợi ích gì và thực tế còn che giấu bug.
@@ -121,7 +121,7 @@ const logVisit = useEffectEvent(() => {
 
 useEffect(() => {
   logVisit()
-}, []); // Missing pageUrl means you miss logs
+}, []); // Thiếu pageUrl nghĩa là bạn sẽ bỏ lỡ log
 ```
 
 Nếu một giá trị cần khiến Effect chạy lại, hãy giữ giá trị đó làm dependency. Chỉ sử dụng Effect Events cho logic thực sự không nên kích hoạt lại Effect.
@@ -350,7 +350,7 @@ export default function App() {
 const serverUrl = 'https://localhost:1234';
 
 export function createConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {

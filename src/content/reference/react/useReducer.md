@@ -947,11 +947,11 @@ Việc gọi hàm `dispatch` **không thay đổi state trong code đang chạy*
 function handleClick() {
   console.log(state.age);  // 42
 
-  dispatch({ type: 'incremented_age' }); // Request a re-render with 43
-  console.log(state.age);  // Still 42!
+  dispatch({ type: 'incremented_age' }); // Yêu cầu render lại với 43
+  console.log(state.age);  // Vẫn là 42!
 
   setTimeout(() => {
-    console.log(state.age); // Also 42!
+    console.log(state.age); // Vẫn là 42!
   }, 5000);
 }
 ```
@@ -1028,7 +1028,7 @@ function reducer(state, action) {
   switch (action.type) {
     case 'incremented_age': {
       return {
-        ...state, // Don't forget this!
+        ...state, // Đừng quên phần này!
         age: state.age + 1
       };
     }

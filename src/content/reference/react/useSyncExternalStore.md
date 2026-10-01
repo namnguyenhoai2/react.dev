@@ -132,11 +132,11 @@ export default function TodosApp() {
 ```
 
 ```js src/todoStore.js
-// This is an example of a third-party store
-// that you might need to integrate with React.
+// Đây là ví dụ về store bên thứ ba
+// mà bạn có thể cần tích hợp với React.
 
-// If your app is fully built with React,
-// we recommend using React state instead.
+// Nếu app của bạn được xây dựng hoàn toàn bằng React,
+// chúng tôi khuyến nghị dùng React state thay thế.
 
 let nextId = 0;
 let todos = [{ id: nextId++, text: 'Todo #1' }];
@@ -348,7 +348,7 @@ function getSnapshot() {
 }
 
 function getServerSnapshot() {
-  return true; // Always show "Online" for server-generated HTML
+  return true; // Luôn hiển thị "Online" cho HTML do server tạo
 }
 
 function subscribe(callback) {

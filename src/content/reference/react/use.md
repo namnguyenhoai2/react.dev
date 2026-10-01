@@ -348,9 +348,9 @@ function Loading() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -370,7 +370,7 @@ async function getData(url) {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -460,7 +460,7 @@ export default function App() {
 
 ```js src/data.js hidden
 export async function fetchAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -534,7 +534,7 @@ function Albums() {
   })());
 
   // 🔴 Adding `.then` returns a new Promise on every render,
-  // even if `fetchData` is cached.
+  // ngay cả khi `fetchData` đã được cache.
   const albums = use(fetchData('/albums').then(res => res.json()));
   // ...
 }
@@ -613,9 +613,9 @@ function Albums() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -635,7 +635,7 @@ async function getData(url) {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -793,9 +793,9 @@ function Loading() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -820,7 +820,7 @@ async function getData(url) {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -943,17 +943,17 @@ export default function Albums({ artistId }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
 export function fetchData(url) {
   if (!cache.has(url)) {
     const promise = getData(url);
-    // Set status fields so React can read the value
-    // synchronously if the Promise resolves before
+    // Thiết lập các trường trạng thái để React có thể đọc giá trị
+    // đồng bộ nếu Promise được resolve trước
     // `use` is called (e.g. when preloading on hover).
     promise.status = 'pending';
     promise.then(
@@ -984,7 +984,7 @@ async function getData(url) {
 }
 
 async function getAlbums(artistId) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 800);
   });
@@ -1127,8 +1127,8 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 
 // TODO: update this example to use
-// the Codesandbox Server Component
-// demo environment once it is created
+// môi trường demo Codesandbox Server Component
+// sau khi được tạo
 import App from './App';
 
 const root = createRoot(document.getElementById('root'));
@@ -1259,9 +1259,9 @@ function Albums({ albumsPromise }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 let retried = false;
@@ -1280,11 +1280,11 @@ export function refetchData(url) {
 }
 
 async function getData(url) {
-  // Add a fake delay to make the loading state visible.
+  // Thêm độ trễ giả để trạng thái đang tải hiển thị rõ hơn.
   await new Promise(resolve => setTimeout(resolve, 1000));
   if (url === '/the-beatles/albums') {
-    // Fail the first attempt to demonstrate the Error Boundary,
-    // then succeed on retry.
+    // Làm lần thử đầu tiên thất bại để minh họa Error Boundary,
+    // sau đó thành công khi thử lại.
     if (!retried) {
       throw new Error('Example Error: Failed to fetch albums');
     }
@@ -1409,7 +1409,7 @@ async function main(frame) {
   const stream = await renderToReadableStream(<Document />);
   await flushReadableStreamToFrame(stream, frame);
 
-  // Wait so both the fallback and hydrated content are visible.
+  // Chờ để cả fallback lẫn nội dung đã hydrate đều hiển thị.
   await new Promise(resolve => setTimeout(resolve, 1200));
   hydrateRoot(frame.contentDocument, <Document />);
 }

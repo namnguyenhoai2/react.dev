@@ -142,9 +142,9 @@ export default function SearchResults({ query }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -164,7 +164,7 @@ async function getData(url) {
 }
 
 async function getSearchResults(query) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -312,9 +312,9 @@ export default function SearchResults({ query }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -334,7 +334,7 @@ async function getData(url) {
 }
 
 async function getSearchResults(query) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -496,9 +496,9 @@ export default function SearchResults({ query }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -518,7 +518,7 @@ async function getData(url) {
 }
 
 async function getSearchResults(query) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -667,7 +667,7 @@ export default function App() {
 import { memo } from 'react';
 
 const SlowList = memo(function SlowList({ text }) {
-  // Log once. The actual slowdown is inside SlowItem.
+  // Chỉ log một lần. Sự chậm trễ thực tế nằm trong SlowItem.
   console.log('[ARTIFICIALLY SLOW] Rendering 250 <SlowItem />');
 
   let items = [];
@@ -684,7 +684,7 @@ const SlowList = memo(function SlowList({ text }) {
 function SlowItem({ text }) {
   let startTime = performance.now();
   while (performance.now() - startTime < 1) {
-    // Do nothing for 1 ms per item to emulate extremely slow code
+    // Không làm gì trong 1 ms cho mỗi phần tử để mô phỏng code cực chậm
   }
 
   return (
@@ -746,7 +746,7 @@ export default function App() {
 import { memo } from 'react';
 
 const SlowList = memo(function SlowList({ text }) {
-  // Log once. The actual slowdown is inside SlowItem.
+  // Chỉ log một lần. Sự chậm trễ thực tế nằm trong SlowItem.
   console.log('[ARTIFICIALLY SLOW] Rendering 250 <SlowItem />');
 
   let items = [];
@@ -763,7 +763,7 @@ const SlowList = memo(function SlowList({ text }) {
 function SlowItem({ text }) {
   let startTime = performance.now();
   while (performance.now() - startTime < 1) {
-    // Do nothing for 1 ms per item to emulate extremely slow code
+    // Không làm gì trong 1 ms cho mỗi phần tử để mô phỏng code cực chậm
   }
 
   return (

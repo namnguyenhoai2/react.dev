@@ -174,12 +174,12 @@ Section Overview luôn bắt đầu ở trạng thái thu gọn. Vì chúng ta u
 Hãy thay việc render sidebar có điều kiện bằng một boundary Activity:
 
 ```jsx {7,9}
-// Before
+// Trước
 {isShowingSidebar && (
   <Sidebar />
 )}
 
-// After
+// Sau
 <Activity mode={isShowingSidebar ? 'visible' : 'hidden'}>
   <Sidebar />
 </Activity>
@@ -564,9 +564,9 @@ export default function Posts() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -586,7 +586,7 @@ async function getData(url) {
 }
 
 async function getPosts() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -700,9 +700,9 @@ export default function Posts() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -722,7 +722,7 @@ async function getData(url) {
 }
 
 async function getPosts() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });

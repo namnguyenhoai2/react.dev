@@ -197,7 +197,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -327,11 +327,11 @@ export class FadeInAnimation {
   start(duration) {
     this.duration = duration;
     if (this.duration === 0) {
-      // Jump to end immediately
+      // Nhảy ngay đến cuối
       this.onProgress(1);
     } else {
       this.onProgress(0);
-      // Start animating
+      // Bắt đầu hiệu ứng động
       this.startTime = performance.now();
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
@@ -341,7 +341,7 @@ export class FadeInAnimation {
     const progress = Math.min(timePassed / this.duration, 1);
     this.onProgress(progress);
     if (progress < 1) {
-      // We still have more frames to paint
+      // Vẫn còn các frame cần vẽ
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
   }
@@ -616,7 +616,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1063,11 +1063,11 @@ Bạn vẫn có thể tiếp tục lấy dữ liệu trực tiếp trong Effects
 **Lưu ý rằng bạn không thể “chọn” các dependency của Effect.** Mọi <CodeStep step={2}>giá trị mang tính phản ứng</CodeStep> được code của Effect sử dụng đều phải được khai báo là dependency. Danh sách dependency của Effect được xác định bởi code xung quanh:
 
 ```js [[2, 1, "roomId"], [2, 2, "serverUrl"], [2, 5, "serverUrl"], [2, 5, "roomId"], [2, 8, "serverUrl"], [2, 8, "roomId"]]
-function ChatRoom({ roomId }) { // This is a reactive value
-  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // This is a reactive value too
+function ChatRoom({ roomId }) { // Đây là một giá trị reactive
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // Đây cũng là một giá trị reactive
 
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // This Effect reads these reactive values
+    const connection = createConnection(serverUrl, roomId); // Effect này đọc các giá trị reactive này
     connection.connect();
     return () => connection.disconnect();
   }, [serverUrl, roomId]); // ✅ So you must specify them as dependencies of your Effect
@@ -1095,7 +1095,7 @@ function ChatRoom({ roomId }) {
 **Để loại bỏ một dependency, bạn cần [“chứng minh” với linter rằng dependency đó *không cần thiết*.](/learn/removing-effect-dependencies#removing-unnecessary-dependencies)** Ví dụ, bạn có thể đưa `serverUrl` ra ngoài component để chứng minh rằng nó không mang tính phản ứng và sẽ không thay đổi khi re-render:
 
 ```js {1,8}
-const serverUrl = 'https://localhost:1234'; // Not a reactive value anymore
+const serverUrl = 'https://localhost:1234'; // Không còn là giá trị reactive nữa
 
 function ChatRoom({ roomId }) {
   useEffect(() => {
@@ -1110,8 +1110,8 @@ function ChatRoom({ roomId }) {
 Bây giờ `serverUrl` không còn là một giá trị mang tính phản ứng (và không thể thay đổi khi re-render), nên nó không cần là một dependency. **Nếu code của Effect không sử dụng bất kỳ giá trị mang tính phản ứng nào, danh sách dependency của nó phải trống (`[]`):**
 
 ```js {1,2,9}
-const serverUrl = 'https://localhost:1234'; // Not a reactive value anymore
-const roomId = 'music'; // Not a reactive value anymore
+const serverUrl = 'https://localhost:1234'; // Không còn là giá trị reactive nữa
+const roomId = 'music'; // Không còn là giá trị reactive nữa
 
 function ChatRoom() {
   useEffect(() => {
@@ -1150,7 +1150,7 @@ Nếu bạn chỉ định các dependency, Effect sẽ chạy **sau commit ban �
 ```js {3}
 useEffect(() => {
   // ...
-}, [a, b]); // Runs again if a or b are different
+}, [a, b]); // Chạy lại nếu a hoặc b khác đi
 ```
 
 Trong ví dụ bên dưới, `serverUrl` và `roomId` là các [giá trị mang tính phản ứng,](/learn/lifecycle-of-reactive-effects#effects-react-to-reactive-values) nên cả hai đều phải được chỉ định làm dependency. Do đó, việc chọn một room khác trong dropdown hoặc chỉnh sửa input URL của server sẽ khiến chat kết nối lại. Tuy nhiên, vì `message` không được sử dụng trong Effect (và do đó không phải là dependency), việc chỉnh sửa message sẽ không khiến chat kết nối lại.
@@ -1219,7 +1219,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1247,7 +1247,7 @@ Nếu Effect của bạn thực sự không sử dụng bất kỳ giá trị ma
 ```js {3}
 useEffect(() => {
   // ...
-}, []); // Does not run again (except once in development)
+}, []); // Không chạy lại (trừ một lần trong môi trường phát triển)
 ```
 
 **Ngay cả với dependency trống, setup và cleanup vẫn sẽ [chạy thêm một lần trong development](/learn/synchronizing-with-effects#how-to-handle-the-effect-firing-twice-in-development) để giúp bạn tìm ra bug.**
@@ -1300,7 +1300,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1324,7 +1324,7 @@ Nếu hoàn toàn không truyền dependency array, Effect sẽ chạy **sau m�
 ```js {3}
 useEffect(() => {
   // ...
-}); // Always runs again
+}); // Luôn chạy lại
 ```
 
 Trong ví dụ này, Effect chạy lại khi bạn thay đổi `serverUrl` và `roomId`, điều này hợp lý. Tuy nhiên, nó *cũng* chạy lại khi bạn thay đổi `message`, điều có lẽ không mong muốn. Đây là lý do bạn thường sẽ chỉ định dependency array.
@@ -1345,7 +1345,7 @@ function ChatRoom({ roomId }) {
     return () => {
       connection.disconnect();
     };
-  }); // No dependency array at all
+  }); // Không có dependency array nào
 
   return (
     <>
@@ -1393,7 +1393,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1428,7 +1428,7 @@ function Counter() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCount(count + 1); // You want to increment the counter every second...
+      setCount(count + 1); // Bạn muốn tăng bộ đếm mỗi giây...
     }, 1000)
     return () => clearInterval(intervalId);
   }, [count]); // 🚩 ... but specifying `count` as a dependency always resets the interval.
@@ -1493,7 +1493,7 @@ function ChatRoom({ roomId }) {
   };
 
   useEffect(() => {
-    const connection = createConnection(options); // It's used inside the Effect
+    const connection = createConnection(options); // Nó được dùng bên trong Effect
     connection.connect();
     return () => connection.disconnect();
   }, [options]); // 🚩 As a result, these dependencies are always different on a commit
@@ -1555,7 +1555,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1596,7 +1596,7 @@ function ChatRoom({ roomId }) {
   }
 
   useEffect(() => {
-    const options = createOptions(); // It's used inside the Effect
+    const options = createOptions(); // Nó được dùng bên trong Effect
     const connection = createConnection();
     connection.connect();
     return () => connection.disconnect();
@@ -1665,7 +1665,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1790,8 +1790,8 @@ Bạn có thể debug vấn đề này bằng cách ghi thủ công các depende
 Sau đó, bạn có thể nhấp chuột phải vào các array từ những lần re-render khác nhau trong console và chọn "Store as a global variable" cho cả hai array. Giả sử array đầu tiên được lưu dưới tên `temp1` và array thứ hai được lưu dưới tên `temp2`, bạn có thể dùng browser console để kiểm tra xem từng dependency trong cả hai array có giống nhau hay không:
 
 ```js
-Object.is(temp1[0], temp2[0]); // Is the first dependency the same between the arrays?
-Object.is(temp1[1], temp2[1]); // Is the second dependency the same between the arrays?
+Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
+Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
 Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
 ```
 

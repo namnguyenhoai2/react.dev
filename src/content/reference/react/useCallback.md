@@ -123,7 +123,7 @@ const ShippingForm = memo(function ShippingForm({ onSubmit }) {
 
 ```js {2,3,8,12-13}
 function ProductPage({ productId, referrer, theme }) {
-  // Every time the theme changes, this will be a different function...
+  // Mỗi lần theme thay đổi, đây sẽ là một hàm khác...
   function handleSubmit(orderDetails) {
     post('/product/' + productId + '/buy', {
       referrer,
@@ -144,7 +144,7 @@ function ProductPage({ productId, referrer, theme }) {
 
 ```js {2,3,8,12-13}
 function ProductPage({ productId, referrer, theme }) {
-  // Tell React to cache your function between re-renders...
+  // Yêu cầu React cache hàm của bạn giữa các lần render lại...
   const handleSubmit = useCallback((orderDetails) => {
     post('/product/' + productId + '/buy', {
       referrer,
@@ -181,11 +181,11 @@ import { useMemo, useCallback } from 'react';
 function ProductPage({ productId, referrer }) {
   const product = useData('/product/' + productId);
 
-  const requirements = useMemo(() => { // Calls your function and caches its result
+  const requirements = useMemo(() => { // Gọi hàm của bạn và cache kết quả
     return computeRequirements(product);
   }, [product]);
 
-  const handleSubmit = useCallback((orderDetails) => { // Caches your function itself
+  const handleSubmit = useCallback((orderDetails) => { // Cache chính hàm của bạn
     post('/product/' + productId + '/buy', {
       referrer,
       orderDetails,
@@ -208,7 +208,7 @@ function ProductPage({ productId, referrer }) {
 Nếu bạn đã quen thuộc với [`useMemo`,](/reference/react/useMemo) bạn có thể thấy hữu ích nếu hình dung `useCallback` như sau:
 
 ```js {expectedErrors: {'react-compiler': [3]}}
-// Simplified implementation (inside React)
+// Bản triển khai đơn giản hóa (bên trong React)
 function useCallback(fn, dependencies) {
   return useMemo(() => fn, dependencies);
 }
@@ -304,7 +304,7 @@ export default function ProductPage({ productId, referrer, theme }) {
 }
 
 function post(url, data) {
-  // Imagine this sends a request...
+  // Giả sử đoạn này gửi một yêu cầu...
   console.log('POST /' + url);
   console.log(data);
 }
@@ -319,7 +319,7 @@ const ShippingForm = memo(function ShippingForm({ onSubmit }) {
   console.log('[ARTIFICIALLY SLOW] Rendering <ShippingForm />');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   function handleSubmit(e) {
@@ -443,7 +443,7 @@ export default function ProductPage({ productId, referrer, theme }) {
 }
 
 function post(url, data) {
-  // Imagine this sends a request...
+  // Giả sử đoạn này gửi một yêu cầu...
   console.log('POST /' + url);
   console.log(data);
 }
@@ -458,7 +458,7 @@ const ShippingForm = memo(function ShippingForm({ onSubmit }) {
   console.log('[ARTIFICIALLY SLOW] Rendering <ShippingForm />');
   let startTime = performance.now();
   while (performance.now() - startTime < 500) {
-    // Do nothing for 500 ms to emulate extremely slow code
+    // Không làm gì trong 500 ms để mô phỏng code cực chậm
   }
 
   function handleSubmit(e) {
@@ -576,7 +576,7 @@ export default function ProductPage({ productId, referrer, theme }) {
 }
 
 function post(url, data) {
-  // Imagine this sends a request...
+  // Giả sử đoạn này gửi một yêu cầu...
   console.log('POST /' + url);
   console.log(data);
 }
@@ -852,8 +852,8 @@ Nếu cách này vẫn không hiệu quả, thì vấn đề là ít nhất mộ
 Sau đó, bạn có thể nhấp chuột phải vào các array từ những lần re-render khác nhau trong console và chọn "Store as a global variable" cho cả hai. Giả sử array đầu tiên được lưu với tên `temp1` và array thứ hai được lưu với tên `temp2`, bạn có thể dùng browser console để kiểm tra xem mỗi dependency trong cả hai array có giống nhau hay không:
 
 ```js
-Object.is(temp1[0], temp2[0]); // Is the first dependency the same between the arrays?
-Object.is(temp1[1], temp2[1]); // Is the second dependency the same between the arrays?
+Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
+Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
 Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
 ```
 

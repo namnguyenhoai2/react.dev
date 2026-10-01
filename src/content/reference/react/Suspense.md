@@ -145,9 +145,9 @@ export default function Albums({ artistId }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -167,7 +167,7 @@ async function getData(url) {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -298,8 +298,8 @@ export default function EffectAlbums({ artistId }) {
     };
   }, [artistId]);
 
-  // Suspense can't see this fetch, so its fallback never
-  // shows. The list stays empty until the data arrives.
+  // Suspense không nhìn thấy lần fetch này nên fallback của nó
+  // không bao giờ hiển thị. Danh sách rỗng cho đến khi dữ liệu đến.
   return (
     <ul>
       {albums.map(album => (
@@ -313,9 +313,9 @@ export default function EffectAlbums({ artistId }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -335,7 +335,7 @@ async function getData(url) {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -450,8 +450,8 @@ async function main(frame) {
   posts = Promise.withResolvers();
   const stream = await renderToReadableStream(<ProfilePage />);
 
-  // The posts resolve after the shell has streamed, so React
-  // streams their HTML in and swaps out the fallback.
+  // Các bài viết được resolve sau khi shell đã stream, nên React
+  // stream HTML của chúng vào và thay thế fallback.
   setTimeout(() => {
     posts.resolve(
       'Just got back from two weeks along the coast. The drive ' +
@@ -603,9 +603,9 @@ export default function Albums({ artistId }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -627,7 +627,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1500);
   });
@@ -639,7 +639,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -865,9 +865,9 @@ export default function Albums({ artistId }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -889,7 +889,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -901,7 +901,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -1049,9 +1049,9 @@ export default function SearchResults({ query }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1071,7 +1071,7 @@ async function getData(url) {
 }
 
 async function getSearchResults(query) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -1232,9 +1232,9 @@ export default function SearchResults({ query }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1254,7 +1254,7 @@ async function getData(url) {
 }
 
 async function getSearchResults(query) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -1491,9 +1491,9 @@ export default function Panel({ children }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1515,7 +1515,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -1527,7 +1527,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -1803,9 +1803,9 @@ export default function Panel({ children }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1827,7 +1827,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -1839,7 +1839,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -2114,9 +2114,9 @@ export default function Panel({ children }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -2138,7 +2138,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -2150,7 +2150,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -2331,11 +2331,11 @@ export default function Bio({ bioPromise }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
 
 export async function fetchBio(userId) {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1500);
   });
@@ -2463,7 +2463,7 @@ async function main(frame) {
   const stream = await renderToReadableStream(<Document />);
   await flushReadableStreamToFrame(stream, frame);
 
-  // Wait so both the fallback and hydrated content are visible.
+  // Chờ để cả fallback lẫn nội dung đã hydrate đều hiển thị.
   await new Promise(resolve => setTimeout(resolve, 1200));
   hydrateRoot(frame.contentDocument, <Document />);
 }
@@ -2617,8 +2617,8 @@ export default function VanillaCard() {
 ```
 
 ```js src/styles.js hidden
-// Add a unique parameter so the stylesheet isn't cached,
-// and every run shows the loading state.
+// Thêm tham số duy nhất để stylesheet không bị cache,
+// và mỗi lần chạy đều hiển thị trạng thái đang tải.
 export function freshStylesheetUrl() {
   return (
     'https://fonts.googleapis.com/css2?family=Caveat&display=swap' +
@@ -2982,8 +2982,8 @@ export default function VanillaQuote() {
 ```
 
 ```js src/font.js hidden
-// Add a unique parameter so the font isn't cached,
-// and every run shows the loading state.
+// Thêm tham số duy nhất để font không bị cache,
+// và mỗi lần chạy đều hiển thị trạng thái đang tải.
 export function freshFontUrl() {
   return (
     'https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/Caveat%5Bwght%5D.ttf' +
@@ -2994,16 +2994,16 @@ export function freshFontUrl() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = null;
 
 export function fetchQuote() {
   if (!cache) {
     cache = new Promise((resolve) => {
-      // Add a fake delay to make waiting noticeable.
+      // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
       setTimeout(() => {
         resolve(
           'The best way to predict the future is to invent it.'
@@ -3129,8 +3129,8 @@ export default function VanillaProfile() {
 ```
 
 ```js src/image.js hidden
-// Add a unique parameter so the image isn't cached,
-// and every run shows the loading state.
+// Thêm tham số duy nhất để hình ảnh không bị cache,
+// và mỗi lần chạy đều hiển thị trạng thái đang tải.
 export function freshImageUrl() {
   return 'https://react.dev/images/team/jack-pope.jpg?t=' + Date.now();
 }
@@ -3293,8 +3293,8 @@ export default function VanillaProfileCard() {
 ```
 
 ```js src/resources.js hidden
-// Add a unique parameter so the resources aren't cached,
-// and every run shows the loading state.
+// Thêm tham số duy nhất để tài nguyên không bị cache,
+// và mỗi lần chạy đều hiển thị trạng thái đang tải.
 export function freshStylesheetUrl() {
   return (
     'https://fonts.googleapis.com/css2?family=Caveat&display=swap' +
@@ -3309,11 +3309,11 @@ export function freshImageUrl() {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
 
 export async function fetchQuote() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise((resolve) => {
     setTimeout(resolve, 1000);
   });
@@ -3408,7 +3408,7 @@ Việc thay thế UI đang hiển thị bằng nội dung dự phòng tạo ra t
 
 ```js {2-3,5}
 function handleNextPageClick() {
-  // If this update suspends, don't hide the already displayed content
+  // Nếu cập nhật này suspend, đừng ẩn nội dung đã hiển thị
   startTransition(() => {
     setCurrentPage(currentPage + 1);
   });

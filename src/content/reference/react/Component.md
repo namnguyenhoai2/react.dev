@@ -496,8 +496,8 @@ class ScrollingList extends React.Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    // Are we adding new items to the list?
-    // Capture the scroll position so we can adjust scroll later.
+    // Chúng ta có đang thêm phần tử mới vào danh sách không?
+    // Lưu vị trí cuộn để có thể điều chỉnh sau.
     if (prevProps.list.length < this.props.list.length) {
       const list = this.listRef.current;
       return list.scrollHeight - list.scrollTop;
@@ -506,8 +506,8 @@ class ScrollingList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // If we have a snapshot value, we've just added new items.
-    // Adjust scroll so these new items don't push the old ones out of view.
+    // Nếu có giá trị snapshot, chúng ta vừa thêm phần tử mới.
+    // Điều chỉnh cuộn để phần tử mới không đẩy phần tử cũ ra khỏi vùng nhìn thấy.
     // (snapshot here is the value returned from getSnapshotBeforeUpdate)
     if (snapshot !== null) {
       const list = this.listRef.current;
@@ -627,7 +627,7 @@ function handleClick() {
   this.setState({
     name: 'Robin'
   });
-  console.log(this.state.name); // Still "Taylor"!
+  console.log(this.state.name); // Vẫn là "Taylor"!
 }
 ```
 
@@ -697,7 +697,7 @@ class Rectangle extends Component {
       nextProps.size.height === this.props.size.height &&
       nextState.isHovered === this.state.isHovered
     ) {
-      // Nothing has changed, so a re-render is unnecessary
+      // Không có gì thay đổi nên không cần render lại
       return false;
     }
     return true;
@@ -970,9 +970,9 @@ class Form extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    // Any time the current user changes,
-    // Reset any parts of state that are tied to that user.
-    // In this simple example, that's just the email.
+    // Mỗi khi người dùng hiện tại thay đổi,
+    // hãy reset mọi phần state gắn với người dùng đó.
+    // Trong ví dụ đơn giản này, đó chỉ là email.
     if (props.userID !== state.prevUserID) {
       return {
         prevUserID: props.userID,
@@ -1238,7 +1238,7 @@ export default class ChatRoom extends Component {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1295,27 +1295,27 @@ class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
+    // Cập nhật state để lần render tiếp theo hiển thị UI fallback.
     return { hasError: true };
   }
 
   componentDidCatch(error, info) {
     logErrorToMyService(
       error,
-      // Example "componentStack":
-      //   in ComponentThatThrows (created by App)
-      //   in ErrorBoundary (created by App)
-      //   in div (created by App)
-      //   in App
+      // Ví dụ về "componentStack":
+      //   trong ComponentThatThrows (được tạo bởi App)
+      //   trong ErrorBoundary (được tạo bởi App)
+      //   trong div (được tạo bởi App)
+      //   trong App
       info.componentStack,
-      // Warning: `captureOwnerStack` is not available in production.
+      // Cảnh báo: `captureOwnerStack` không có trong môi trường production.
       React.captureOwnerStack(),
     );
   }
 
   render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
+      // Bạn có thể render bất kỳ UI fallback tùy chỉnh nào
       return this.props.fallback;
     }
 
@@ -1637,7 +1637,7 @@ export default class ChatRoom extends Component {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1746,7 +1746,7 @@ export default function ChatRoom({ roomId }) {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');

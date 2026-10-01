@@ -342,16 +342,16 @@ Khi click vào button, `setIsPending(true)` sử dụng trạng thái optimistic
 Pattern này tự động hiển thị trạng thái pending khi `action` prop được sử dụng với `Button`:
 
 ```js
-// Show pending state for a state update
+// Hiển thị trạng thái pending cho cập nhật state
 <Button action={() => { setState(c => c + 1) }} />
 
-// Show pending state for a navigation
+// Hiển thị trạng thái pending cho điều hướng
 <Button action={() => { navigate('/done') }} />
 
-// Show pending state for a POST
+// Hiển thị trạng thái pending cho POST
 <Button action={async () => { await fetch(/* ... */) }} />
 
-// Show pending state for any combination
+// Hiển thị trạng thái pending cho mọi tổ hợp
 <Button action={async () => {
   setState(c => c + 1);
   await fetch(/* ... */);
@@ -420,7 +420,7 @@ export default function App() {
 ```js src/actions.js hidden
 export async function toggleLike(value) {
   return await new Promise((res) => setTimeout(() => res(value), 1000));
-  // In a real app, this would update the server
+  // Trong app thực tế, đoạn này sẽ cập nhật server
 }
 ```
 
@@ -432,7 +432,7 @@ import './styles.css';
 import App from './App';
 
 const root = createRoot(document.getElementById('root'));
-// Not using StrictMode so double render logs are not shown.
+// Không dùng StrictMode để không hiển thị log render hai lần.
 root.render(<App />);
 ```
 
@@ -552,7 +552,7 @@ setOptimistic(current => !current);
 
 ```js
 const [optimistic, dispatch] = useOptimistic(value, (current, action) => {
-  // Calculate next state based on current and action
+  // Tính state tiếp theo dựa trên state hiện tại và action
 });
 dispatch(action);
 ```
@@ -636,7 +636,7 @@ export default function TodoList({ todos, addTodoAction }) {
 ```js src/actions.js hidden
 export async function addTodo(todo) {
   await new Promise((res) => setTimeout(res, 1000));
-  // In a real app, this would save to the server
+  // Trong app thực tế, đoạn này sẽ lưu vào server
   return { ...todo, pending: false };
 }
 ```
@@ -920,7 +920,7 @@ export default function ItemList({ items, deleteAction }) {
 ```js src/actions.js hidden
 export async function deleteItem(id) {
   await new Promise((res) => setTimeout(res, 1000));
-  // Item 3 always fails to demonstrate error recovery
+  // Phần tử 3 luôn thất bại để minh họa việc khôi phục sau lỗi
   if (id === 3) {
     throw new Error('Cannot delete. Permission denied.');
   }
@@ -954,7 +954,7 @@ Hàm optimistic setter phải được gọi bên trong `startTransition`:
 ```js
 // 🚩 Incorrect: outside a Transition
 function handleClick() {
-  setOptimistic(newValue);  // Warning!
+  setOptimistic(newValue);  // Cảnh báo!
   // ...
 }
 
@@ -996,7 +996,7 @@ Lỗi này xảy ra khi bạn gọi optimistic setter trong giai đoạn render 
 function MyComponent({ items }) {
   const [isPending, setPending] = useOptimistic(false);
 
-  // This runs during render - not allowed!
+  // Đoạn này chạy trong khi render — không được phép!
   setPending(true);
 
   // ...
@@ -1034,13 +1034,13 @@ function MyComponent({ items }) {
 Nếu trạng thái optimistic của bạn có vẻ dựa trên dữ liệu cũ, hãy cân nhắc sử dụng updater function hoặc reducer để tính toán trạng thái optimistic dựa trên state hiện tại.
 
 ```js
-// May show stale data if state changes during Action
+// Có thể hiển thị dữ liệu cũ nếu state thay đổi trong Action
 const [optimistic, setOptimistic] = useOptimistic(count);
-setOptimistic(5);  // Always sets to 5, even if count changed
+setOptimistic(5);  // Luôn đặt thành 5, kể cả khi count đã thay đổi
 
-// Better: relative updates handle state changes correctly
+// Tốt hơn: cập nhật tương đối xử lý thay đổi state đúng cách
 const [optimistic, adjust] = useOptimistic(count, (current, delta) => current + delta);
-adjust(1);  // Always adds 1 to whatever the current count is
+adjust(1);  // Luôn cộng 1 vào giá trị count hiện tại
 ```
 
 Xem [Cập nhật state dựa trên state hiện tại](#updating-state-based-on-current-state) để biết chi tiết.

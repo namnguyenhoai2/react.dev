@@ -199,8 +199,8 @@ export default function App({}) {
   const [isPending, startTransition] = useTransition();
 
   const updateQuantityAction = async newQuantity => {
-    // To access the pending state of a transition,
-    // call startTransition again.
+    // Để truy cập trạng thái pending của transition,
+    // hãy gọi lại startTransition.
     startTransition(async () => {
       const savedQuantity = await updateQuantity(newQuantity);
       startTransition(() => {
@@ -225,7 +225,7 @@ import { startTransition } from "react";
 
 export default function Item({action}) {
   function handleChange(event) {
-    // To expose an action prop, await the callback in startTransition.
+    // Để expose prop action, hãy await callback trong startTransition.
     startTransition(async () => {
       await action(event.target.value);
     })
@@ -266,7 +266,7 @@ export default function Total({quantity, isPending}) {
 ```js src/api.js
 export async function updateQuantity(newQuantity) {
   return new Promise((resolve, reject) => {
-    // Simulate a slow network request.
+    // Mô phỏng một yêu cầu mạng chậm.
     setTimeout(() => {
       resolve(newQuantity);
     }, 2000);
@@ -348,7 +348,7 @@ export default function App({}) {
   const [isPending, setIsPending] = useState(false);
 
   const onUpdateQuantity = async newQuantity => {
-    // Manually set the isPending State.
+    // Thiết lập thủ công state isPending.
     setIsPending(true);
     const savedQuantity = await updateQuantity(newQuantity);
     setIsPending(false);
@@ -408,7 +408,7 @@ export default function Total({quantity, isPending}) {
 ```js src/api.js
 export async function updateQuantity(newQuantity) {
   return new Promise((resolve, reject) => {
-    // Simulate a slow network request.
+    // Mô phỏng một yêu cầu mạng chậm.
     setTimeout(() => {
       resolve(newQuantity);
     }, 2000);
@@ -476,7 +476,7 @@ export default function App({}) {
 
   const onUpdateQuantity = async event => {
     const newQuantity = event.target.value;
-    // Manually set the isPending state.
+    // Thiết lập thủ công state isPending.
     setIsPending(true);
     const savedQuantity = await updateQuantity(newQuantity);
     setIsPending(false);
@@ -534,7 +534,7 @@ export default function Total({quantity, isPending}) {
 ```js src/api.js
 export async function updateQuantity(newQuantity) {
   return new Promise((resolve, reject) => {
-    // Simulate a slow network request.
+    // Mô phỏng một yêu cầu mạng chậm.
     setTimeout(() => {
       resolve(newQuantity);
     }, 2000);
@@ -594,8 +594,8 @@ export default function TabButton({ action, children, isActive }) {
   return (
     <button onClick={() => {
       startTransition(async () => {
-        // await the action that's passed in.
-        // This allows it to be either sync or async.
+        // await action được truyền vào.
+        // Điều này cho phép action là sync hoặc async.
         await action();
       });
     }}>
@@ -661,8 +661,8 @@ export default function TabButton({ action, children, isActive }) {
   return (
     <button onClick={async () => {
       startTransition(async () => {
-        // await the action that's passed in.
-        // This allows it to be either sync or async.
+        // await action được truyền vào.
+        // Điều này cho phép action là sync hoặc async.
         await action();
       });
     }}>
@@ -684,7 +684,7 @@ export default function AboutTab() {
 import { memo } from 'react';
 
 const PostsTab = memo(function PostsTab() {
-  // Log once. The actual slowdown is inside SlowPost.
+  // Chỉ log một lần. Sự chậm trễ thực tế nằm trong SlowPost.
   console.log('[ARTIFICIALLY SLOW] Rendering 500 <SlowPost />');
 
   let items = [];
@@ -701,7 +701,7 @@ const PostsTab = memo(function PostsTab() {
 function SlowPost({ index }) {
   let startTime = performance.now();
   while (performance.now() - startTime < 1) {
-    // Do nothing for 1 ms per item to emulate extremely slow code
+    // Không làm gì trong 1 ms cho mỗi phần tử để mô phỏng code cực chậm
   }
 
   return (
@@ -843,7 +843,7 @@ export default function AboutTab() {
 import { memo } from 'react';
 
 const PostsTab = memo(function PostsTab() {
-  // Log once. The actual slowdown is inside SlowPost.
+  // Chỉ log một lần. Sự chậm trễ thực tế nằm trong SlowPost.
   console.log('[ARTIFICIALLY SLOW] Rendering 500 <SlowPost />');
 
   let items = [];
@@ -860,7 +860,7 @@ const PostsTab = memo(function PostsTab() {
 function SlowPost({ index }) {
   let startTime = performance.now();
   while (performance.now() - startTime < 1) {
-    // Do nothing for 1 ms per item to emulate extremely slow code
+    // Không làm gì trong 1 ms cho mỗi phần tử để mô phỏng code cực chậm
   }
 
   return (
@@ -1014,9 +1014,9 @@ export default function ContactTab() {
 
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1036,7 +1036,7 @@ async function getData(url) {
 }
 
 async function getPosts() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -1178,9 +1178,9 @@ export default function ContactTab() {
 
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1200,7 +1200,7 @@ async function getData(url) {
 }
 
 async function getPosts() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
@@ -1412,9 +1412,9 @@ export default function Panel({ children }) {
 ```
 
 ```js src/data.js hidden
-// Note: the way you would do data fetching depends on
-// the framework that you use together with Suspense.
-// Normally, the caching logic would be inside a framework.
+// Lưu ý: cách bạn lấy dữ liệu phụ thuộc vào
+// framework được dùng cùng Suspense.
+// Thông thường, logic cache nằm bên trong framework.
 
 let cache = new Map();
 
@@ -1436,7 +1436,7 @@ async function getData(url) {
 }
 
 async function getBio() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 500);
   });
@@ -1448,7 +1448,7 @@ async function getBio() {
 }
 
 async function getAlbums() {
-  // Add a fake delay to make waiting noticeable.
+  // Thêm độ trễ giả để việc chờ đợi trở nên dễ nhận biết.
   await new Promise(resolve => {
     setTimeout(resolve, 3000);
   });
@@ -1582,7 +1582,7 @@ export function AddCommentContainer() {
 }
 
 function addComment(comment) {
-  // For demonstration purposes to show Error Boundary
+  // Nhằm minh họa cách hiển thị Error Boundary
   if (comment == null) {
     throw new Error("Example Error: An error thrown to trigger error boundary");
   }
@@ -1596,8 +1596,8 @@ function AddCommentButton() {
       disabled={pending}
       onClick={() => {
         startTransition(() => {
-          // Intentionally not passing a comment
-          // so error gets thrown
+          // Cố ý không truyền comment
+          // để lỗi được ném ra
           addComment();
         });
       }}
@@ -1756,7 +1756,7 @@ console.log(3);
 **Việc in ra 1, 2, 3 là đúng như dự kiến.** Function bạn truyền vào `startTransition` không bị trì hoãn. Không giống browser `setTimeout`, nó không chạy callback sau đó. React thực thi function của bạn ngay lập tức, nhưng mọi state update được schedule *trong khi function đang chạy* đều được đánh dấu là Transitions. Bạn có thể hình dung nó hoạt động như sau:
 
 ```js
-// A simplified version of how React works
+// Phiên bản đơn giản hóa về cách React hoạt động
 
 let isInsideTransition = false;
 
@@ -1809,14 +1809,14 @@ import Total from "./Total";
 export default function App({}) {
   const [quantity, setQuantity] = useState(1);
   const [isPending, startTransition] = useTransition();
-  // Store the actual quantity in separate state to show the mismatch.
+  // Lưu số lượng thực tế trong state riêng để hiển thị sự không khớp.
   const [clientQuantity, setClientQuantity] = useState(1);
 
   const updateQuantityAction = newQuantity => {
     setClientQuantity(newQuantity);
 
-    // Access the pending state of the transition,
-    // by wrapping in startTransition again.
+    // Truy cập trạng thái pending của transition
+    // bằng cách lại bọc trong startTransition.
     startTransition(async () => {
       const savedQuantity = await updateQuantity(newQuantity);
       startTransition(() => {
@@ -1842,7 +1842,7 @@ import {startTransition} from 'react';
 
 export default function Item({action}) {
   function handleChange(e) {
-    // Update the quantity in an Action.
+    // Cập nhật số lượng trong một Action.
     startTransition(async () => {
       await action(e.target.value);
     });
@@ -1898,7 +1898,7 @@ export async function updateQuantity(newName) {
       setTimeout(() => {
         firstRequest = true;
         resolve(newName);
-        // Simulate every other request being slower
+        // Mô phỏng mọi yêu cầu xen kẽ đều chậm hơn
       }, 1000);
     } else {
       setTimeout(() => {
@@ -1980,15 +1980,15 @@ import Item from "./Item";
 import Total from "./Total";
 
 export default function App({}) {
-  // Store the actual quantity in separate state to show the mismatch.
+  // Lưu số lượng thực tế trong state riêng để hiển thị sự không khớp.
   const [clientQuantity, setClientQuantity] = useState(1);
   const [quantity, updateQuantityAction, isPending] = useActionState(
     async (prevState, payload) => {
       setClientQuantity(payload);
       const savedQuantity = await updateQuantity(payload);
-      return savedQuantity; // Return the new quantity to update the state
+      return savedQuantity; // Trả về số lượng mới để cập nhật state
     },
-    1 // Initial quantity
+    1 // Số lượng ban đầu
   );
 
   return (
@@ -2008,7 +2008,7 @@ import {startTransition} from 'react';
 
 export default function Item({action}) {
   function handleChange(e) {
-    // Update the quantity in an Action.
+    // Cập nhật số lượng trong một Action.
     startTransition(() => {
       action(e.target.value);
     });
@@ -2064,7 +2064,7 @@ export async function updateQuantity(newName) {
       setTimeout(() => {
         firstRequest = true;
         resolve(newName);
-        // Simulate every other request being slower
+        // Mô phỏng mọi yêu cầu xen kẽ đều chậm hơn
       }, 1000);
     } else {
       setTimeout(() => {

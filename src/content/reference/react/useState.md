@@ -132,7 +132,7 @@ Việc gọi function `set` [**không** thay đổi state hiện tại trong đo
 ```js {3}
 function handleClick() {
   setName('Robin');
-  console.log(name); // Still "Taylor"!
+  console.log(name); // Vẫn là "Taylor"!
 }
 ```
 
@@ -1156,11 +1156,11 @@ Việc gọi hàm `set` **không thay đổi state trong code đang chạy**:
 function handleClick() {
   console.log(count);  // 0
 
-  setCount(count + 1); // Request a re-render with 1
-  console.log(count);  // Still 0!
+  setCount(count + 1); // Yêu cầu render lại với 1
+  console.log(count);  // Vẫn là 0!
 
   setTimeout(() => {
-    console.log(count); // Also 0!
+    console.log(count); // Vẫn là 0!
   }, 5000);
 }
 ```
@@ -1225,16 +1225,16 @@ Trong [Strict Mode](/reference/react/StrictMode), React sẽ gọi một số h�
 
 ```js {2,5-6,11-12}
 function TodoList() {
-  // This component function will run twice for every render.
+  // Hàm component này sẽ chạy hai lần cho mỗi lần render.
 
   const [todos, setTodos] = useState(() => {
-    // This initializer function will run twice during initialization.
+    // Hàm khởi tạo này sẽ chạy hai lần trong quá trình khởi tạo.
     return createTodos();
   });
 
   function handleClick() {
     setTodos(prevTodos => {
-      // This updater function will run twice for every click.
+      // Hàm updater này sẽ chạy hai lần cho mỗi lần nhấp.
       return [...prevTodos, createTodo()];
     });
   }

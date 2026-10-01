@@ -119,7 +119,7 @@ Một React node có thể là:
 
 ```js
 function MyComponent() {
-  return 42; // It's ok to return a number from component
+  return 42; // Có thể trả về một number từ component
 }
 ```
 

@@ -105,11 +105,11 @@ import './styles.css';
 
 createRoot(document.createElement('div'), {
   onUncaughtError: (error, errorInfo) => {
-    // The stacks are logged instead of showing them in the UI directly to
-    // highlight that browsers will apply sourcemaps to the logged stacks.
-    // Note that sourcemapping is only applied in the real browser console not
-    // in the fake one displayed on this page.
-    // Press "fork" to be able to view the sourcemapped stack in a real console.
+    // Các stack được log thay vì hiển thị trực tiếp trong UI để
+    // nhấn mạnh rằng trình duyệt sẽ áp dụng sourcemap cho stack đã log.
+    // Lưu ý rằng sourcemap chỉ được áp dụng trong console thật của trình duyệt,
+    // không phải console giả hiển thị trên trang này.
+    // Nhấn "fork" để xem stack đã sourcemap trong console thật.
     console.log(errorInfo.componentStack);
     console.log(captureOwnerStack());
   },
@@ -175,8 +175,8 @@ console.error = function patchedConsoleError(...args) {
   originalConsoleError.apply(console, args);
   const ownerStack = captureOwnerStack();
   onConsoleError({
-    // Keep in mind that in a real application, console.error can be
-    // called with multiple arguments which you should account for.
+    // Lưu ý rằng trong ứng dụng thực tế, console.error có thể được
+    // gọi với nhiều đối số mà bạn cần xử lý.
     consoleMessage: args[0],
     ownerStack,
   });
@@ -301,13 +301,13 @@ export function onConsoleError({ consoleMessage, ownerStack }) {
   const errorBody = document.getElementById("error-body");
   const errorOwnerStack = document.getElementById("error-owner-stack");
 
-  // Display console.error() message
+  // Hiển thị thông báo console.error()
   errorBody.innerText = consoleMessage;
 
-  // Display owner stack
+  // Hiển thị owner stack
   errorOwnerStack.innerText = ownerStack;
 
-  // Show the dialog
+  // Hiển thị hộp thoại
   errorDialog.classList.remove("hidden");
 }
 ```
@@ -324,8 +324,8 @@ console.error = function patchedConsoleError(...args) {
   originalConsoleError.apply(console, args);
   const ownerStack = captureOwnerStack();
   onConsoleError({
-    // Keep in mind that in a real application, console.error can be
-    // called with multiple arguments which you should account for.
+    // Lưu ý rằng trong ứng dụng thực tế, console.error có thể được
+    // gọi với nhiều đối số mà bạn cần xử lý.
     consoleMessage: args[0],
     ownerStack,
   });
@@ -362,10 +362,10 @@ import {captureOwnerStack, useEffect} from 'react';
 
 export default function App() {
   useEffect(() => {
-    // Should call `captureOwnerStack` here.
+    // Nên gọi `captureOwnerStack` ở đây.
     function handleEvent() {
-      // Calling it in a custom DOM event handler is too late.
-      // The Owner Stack will be `null` at this point.
+      // Gọi nó trong event handler DOM tùy chỉnh là quá muộn.
+      // Owner Stack sẽ là `null` ở thời điểm này.
       console.log('Owner Stack: ', captureOwnerStack());
     }
 
@@ -387,9 +387,9 @@ export default function App() {
 `captureOwnerStack` chỉ được export trong các build development. Nó sẽ `undefined` trong các build production. Nếu `captureOwnerStack` được sử dụng trong các file được bundle cho cả production và development, bạn nên truy cập nó có điều kiện từ một namespace import.
 
 ```js
-// Don't use named imports of `captureOwnerStack` in files that are bundled for development and production.
+// Không dùng named import của `captureOwnerStack` trong các tệp được bundle cho development và production.
 import {captureOwnerStack} from 'react';
-// Use a namespace import instead and access `captureOwnerStack` conditionally.
+// Thay vào đó, dùng namespace import và truy cập `captureOwnerStack` có điều kiện.
 import * as React from 'react';
 
 if (process.env.NODE_ENV !== 'production') {

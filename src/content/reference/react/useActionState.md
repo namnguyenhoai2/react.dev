@@ -1215,16 +1215,16 @@ function Checkout() {
     async (prevState, quantity) => {
       const result = await addToCart(prevState.count, quantity);
       if (result.error) {
-        // Return the error from the API as state
+        // Trả về lỗi từ API dưới dạng state
         return {...prevState, error: `Could not add quanitiy ${quantity}: ${result.error}`};
       }
 
       if (!isPending) {
-        // Clear the error state for the first dispatch.
+        // Xóa state lỗi cho lần dispatch đầu tiên.
         return {count: result.count, error: null};
       }
 
-      // Return the new count, and any errors that happened.
+      // Trả về count mới và mọi lỗi đã xảy ra.
       return {count: result.count, error: prevState.error};
 
 
@@ -1410,12 +1410,12 @@ Khi `dispatchAction` được truyền vào prop Action, React sẽ tự động
 Khi sử dụng `useActionState`, `reducerAction` nhận thêm một đối số ở vị trí đầu tiên: state trước đó hoặc state ban đầu. Vì vậy, dữ liệu form đã submit là đối số thứ hai thay vì đối số thứ nhất.
 
 ```js {2,7}
-// Without useActionState
+// Không dùng useActionState
 function action(formData) {
   const name = formData.get('name');
 }
 
-// With useActionState
+// Dùng useActionState
 function action(prevState, formData) {
   const name = formData.get('name');
 }
@@ -1453,11 +1453,11 @@ async function myReducerAction(prevState, data) {
 const initialState = { name: '', error: null };
 
 async function formAction(prevState, payload) {
-  // Handle reset
+  // Xử lý reset
   if (payload === null) {
     return initialState;
   }
-  // Normal action logic
+  // Logic action thông thường
   const result = await submitData(payload);
   return result;
 }
@@ -1467,7 +1467,7 @@ function MyComponent() {
 
   function handleReset() {
     startTransition(() => {
-      dispatchAction(null); // Pass null to trigger reset
+      dispatchAction(null); // Truyền null để kích hoạt reset
     });
   }
 
