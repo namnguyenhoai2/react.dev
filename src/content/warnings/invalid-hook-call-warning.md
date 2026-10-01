@@ -29,13 +29,13 @@ Các hàm có tên bắt đầu bằng `use` được gọi là [*Hooks*](/refer
 
 ```js{2-3,8-9}
 function Counter() {
-  // ✅ Good: top-level in a function component
+  // ✅ Đúng: ở cấp cao nhất trong function component
   const [count, setCount] = useState(0);
   // ...
 }
 
 function useWindowWidth() {
-  // ✅ Good: top-level in a custom Hook
+  // ✅ Đúng: ở cấp cao nhất trong custom Hook
   const [width, setWidth] = useState(window.innerWidth);
   // ...
 }
@@ -54,7 +54,7 @@ Nếu vi phạm các quy tắc này, bạn có thể thấy lỗi trên.
 ```js{3-4,11-12,20-21}
 function Bad({ cond }) {
   if (cond) {
-    // 🔴 Bad: inside a condition (to fix, move it outside!)
+    // 🔴 Sai: bên trong điều kiện (để sửa, hãy chuyển nó ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -62,7 +62,7 @@ function Bad({ cond }) {
 
 function Bad() {
   for (let i = 0; i < 10; i++) {
-    // 🔴 Bad: inside a loop (to fix, move it outside!)
+    // 🔴 Sai: bên trong vòng lặp (để sửa, hãy chuyển nó ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -72,14 +72,14 @@ function Bad({ cond }) {
   if (cond) {
     return;
   }
-  // 🔴 Bad: after a conditional return (to fix, move it before the return!)
+  // 🔴 Sai: sau câu lệnh return có điều kiện (để sửa, hãy chuyển nó lên trước return!)
   const theme = useContext(ThemeContext);
   // ...
 }
 
 function Bad() {
   function handleClick() {
-    // 🔴 Bad: inside an event handler (to fix, move it outside!)
+    // 🔴 Sai: bên trong event handler (để sửa, hãy chuyển nó ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -87,7 +87,7 @@ function Bad() {
 
 function Bad() {
   const style = useMemo(() => {
-    // 🔴 Bad: inside useMemo (to fix, move it outside!)
+    // 🔴 Sai: bên trong useMemo (để sửa, hãy chuyển nó ra ngoài!)
     const theme = useContext(ThemeContext);
     return createStyle(theme);
   });
@@ -96,7 +96,7 @@ function Bad() {
 
 class Bad extends React.Component {
   render() {
-    // 🔴 Bad: inside a class component (to fix, write a function component instead of a class!)
+    // 🔴 Sai: bên trong class component (để sửa, hãy viết function component thay vì class!)
     useEffect(() => {})
     // ...
   }
@@ -134,10 +134,10 @@ Nếu thấy nhiều hơn một React, bạn cần tìm hiểu nguyên nhân và
 Bạn cũng có thể thử debug sự cố này bằng cách thêm một số log và khởi động lại development server:
 
 ```js
-// Add this in node_modules/react-dom/index.js
+// Thêm đoạn này vào node_modules/react-dom/index.js
 window.React1 = require('react');
 
-// Add this in your component file
+// Thêm đoạn này vào tệp component của bạn
 require('react-dom');
 window.React2 = require('react');
 console.log(window.React1 === window.React2);

@@ -23,10 +23,10 @@ Nếu nhận được cảnh báo này vì bạn truyền các prop như `{...pr
 ```js
 function MyDiv(props) {
   if (props.layout === 'horizontal') {
-    // BAD! Because you know for sure "layout" is not a prop that <div> understands.
+    // SAI! Vì bạn biết chắc rằng "layout" không phải là prop mà <div> hiểu được.
     return <div {...props} style={getHorizontalStyle()} />
   } else {
-    // BAD! Because you know for sure "layout" is not a prop that <div> understands.
+    // SAI! Vì bạn biết chắc rằng "layout" không phải là prop mà <div> hiểu được.
     return <div {...props} style={getVerticalStyle()} />
   }
 }
