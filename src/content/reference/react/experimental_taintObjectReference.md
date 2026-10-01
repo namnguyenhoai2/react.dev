@@ -118,7 +118,7 @@ import { InfoCard } from 'components.js';
 
 export async function Profile(props) {
   const user = await getUser(props.userId);
-  // DO NOT DO THIS
+  // ĐỪNG LÀM ĐIỀU NÀY
   return <InfoCard user={user} />;
 }
 ```

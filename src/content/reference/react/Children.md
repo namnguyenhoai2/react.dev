@@ -403,7 +403,7 @@ export default function SeparatorList({ children }) {
     result.push(child);
     result.push(<hr key={index} />);
   });
-  result.pop(); // Remove the last separator
+  result.pop(); // Xóa separator cuối cùng
   return result;
 }
 ```

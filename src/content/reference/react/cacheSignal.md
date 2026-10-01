@@ -75,7 +75,7 @@ Bạn không thể sử dụng `cacheSignal` để abort công việc async đư
 
 ```js
 import {cacheSignal} from 'react';
-// 🚩 Pitfall: The request will not actually be aborted if the rendering of `Component` is finished.
+// 🚩 Lưu ý: request thực tế sẽ không bị hủy nếu `Component` render xong.
 const response = fetch(url, { signal: cacheSignal() });
 async function Component() {
   await response;
@@ -96,7 +96,7 @@ async function getData(id) {
      return await queryDatabase(id);
   } catch (x) {
      if (!cacheSignal()?.aborted) {
-        // only log if it's a real error and not due to cancellation
+        // Chỉ ghi log nếu đây là lỗi thực sự, không phải do bị hủy
        logError(x);
      }
      return null;

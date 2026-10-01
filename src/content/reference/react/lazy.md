@@ -112,7 +112,7 @@ export default function MarkdownEditor() {
   );
 }
 
-// Add a fixed delay so you can see the loading state
+// Thêm độ trễ cố định để bạn có thể thấy trạng thái loading
 function delayForDemo(promise) {
   return new Promise(resolve => {
     setTimeout(resolve, 2000);
@@ -191,7 +191,7 @@ Không khai báo các component `lazy` *bên trong* những component khác:
 import { lazy } from 'react';
 
 function Editor() {
-  // 🔴 Bad: This will cause all state to be reset on re-renders
+  // 🔴 Không tốt: Việc này sẽ khiến toàn bộ state bị reset khi re-render
   const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
   // ...
 }
@@ -202,7 +202,7 @@ Thay vào đó, luôn khai báo chúng ở cấp cao nhất của module:
 ```js {3-4}
 import { lazy } from 'react';
 
-// ✅ Good: Declare lazy components outside of your components
+// ✅ Tốt: Khai báo lazy component bên ngoài component của bạn
 const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
 
 function Editor() {

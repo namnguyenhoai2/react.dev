@@ -185,7 +185,7 @@ Cả hai phong cách viết code đều phù hợp, vì vậy bạn có thể s�
 Element là một mô tả nhẹ về một phần của user interface. Ví dụ: cả `<Greeting name="Taylor" />` và `createElement(Greeting, { name: 'Taylor' })` đều tạo ra một object như sau:
 
 ```js
-// Slightly simplified
+// Đã được đơn giản hóa đôi chút
 {
   type: Greeting,
   props: {

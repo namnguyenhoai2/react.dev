@@ -126,7 +126,7 @@ experimental_taintUniqueValue(
   password
 );
 
-const uppercasePassword = password.toUpperCase() // `uppercasePassword` is not tainted
+const uppercasePassword = password.toUpperCase() // `uppercasePassword` không bị taint
 ```
 
 Trong ví dụ này, hằng số `password` bị taint. Sau đó, `password` được dùng để tạo một giá trị mới `uppercasePassword` bằng cách gọi method `toUpperCase` trên `password`. `uppercasePassword` mới được tạo không bị taint.
@@ -145,7 +145,7 @@ Nếu bạn đang chạy một môi trường Server Components có quyền truy
 
 ```js
 export async function Dashboard(props) {
-  // DO NOT DO THIS
+  // ĐỪNG LÀM ĐIỀU NÀY
   return <Overview password={process.env.API_PASSWORD} />;
 }
 ```

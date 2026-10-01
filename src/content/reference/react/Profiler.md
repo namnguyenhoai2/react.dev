@@ -47,7 +47,7 @@ React sẽ gọi callback `onRender` của bạn với thông tin về nội dun
 
 ```js
 function onRender(id, phase, actualDuration, baseDuration, startTime, commitTime) {
-  // Aggregate or log render timings...
+  // Tổng hợp hoặc ghi log thời gian render...
 }
 ```
 

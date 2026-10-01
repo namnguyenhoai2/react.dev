@@ -82,7 +82,7 @@ Trước khi `useContext` tồn tại, có một cách cũ hơn để đọc con
 
 ```js
 function Button() {
-  // 🟡 Legacy way (not recommended)
+  // 🟡 Cách legacy (không khuyến nghị)
   return (
     <ThemeContext.Consumer>
       {theme => (
@@ -97,7 +97,7 @@ Mặc dù cách cũ này vẫn hoạt động, **code mới nên đọc context 
 
 ```js
 function Button() {
-  // ✅ Recommended way
+  // ✅ Cách được khuyến nghị
   const theme = useContext(ThemeContext);
   return <button className={theme} />;
 }

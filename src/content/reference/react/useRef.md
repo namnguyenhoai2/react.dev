@@ -200,10 +200,10 @@ Việc đọc hoặc ghi ref **trong quá trình kết xuất** sẽ phá vỡ c
 ```js {expectedErrors: {'react-compiler': [4]}} {3-4,6-7}
 function MyComponent() {
   // ...
-  // 🚩 Don't write a ref during rendering
+  // 🚩 Đừng ghi vào ref trong khi render
   myRef.current = 123;
   // ...
-  // 🚩 Don't read a ref during rendering
+  // 🚩 Đừng đọc ref trong khi render
   return <h1>{myOtherRef.current}</h1>;
 }
 ```
@@ -214,12 +214,12 @@ Thay vào đó, bạn có thể đọc hoặc ghi refs **từ event handler ho�
 function MyComponent() {
   // ...
   useEffect(() => {
-    // ✅ You can read or write refs in effects
+    // ✅ Bạn có thể đọc hoặc ghi ref trong effect
     myRef.current = 123;
   });
   // ...
   function handleClick() {
-    // ✅ You can read or write refs in event handlers
+    // ✅ Bạn có thể đọc hoặc ghi ref trong event handler
     doSomething(myOtherRef.current);
   }
   // ...
@@ -314,7 +314,7 @@ export default function CatFriends() {
 
   function scrollToIndex(index) {
     const listNode = listRef.current;
-    // This line assumes a particular DOM structure:
+    // Dòng này giả định một cấu trúc DOM cụ thể:
     const imgNode = listNode.querySelectorAll('li > img')[index];
     imgNode.scrollIntoView({
       behavior: 'smooth',

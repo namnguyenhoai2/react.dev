@@ -28,7 +28,7 @@ import { useImperativeHandle } from 'react';
 function MyInput({ ref }) {
   useImperativeHandle(ref, () => {
     return {
-      // ... your methods ...
+      // ... các method của bạn ...
     };
   }, []);
   // ...
@@ -76,7 +76,7 @@ import { useImperativeHandle } from 'react';
 function MyInput({ ref }) {
   useImperativeHandle(ref, () => {
     return {
-      // ... your methods ...
+      // ... các method của bạn ...
     };
   }, []);
 
@@ -122,7 +122,7 @@ export default function Form() {
 
   function handleClick() {
     ref.current.focus();
-    // This won't work because the DOM node isn't exposed:
+    // Điều này không hoạt động vì DOM node không được expose:
     // ref.current.style.opacity = 0.5;
   }
 

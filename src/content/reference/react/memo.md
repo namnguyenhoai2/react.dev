@@ -372,7 +372,7 @@ Cách hoạt động như sau:
 **Không có React Compiler**, bạn cần `React.memo` để ngăn các lần re-render không cần thiết:
 
 ```js
-// Parent re-renders every second
+// Component cha re-render mỗi giây
 function Parent() {
   const [seconds, setSeconds] = useState(0);
 
@@ -391,7 +391,7 @@ function Parent() {
   );
 }
 
-// Without memo, this re-renders every second even though props don't change
+// Không có memo, component này re-render mỗi giây dù props không thay đổi
 const ExpensiveChild = memo(function ExpensiveChild({ name }) {
   console.log('ExpensiveChild rendered');
   return <div>Hello, {name}!</div>;
@@ -401,7 +401,7 @@ const ExpensiveChild = memo(function ExpensiveChild({ name }) {
 **Khi bật React Compiler**, cùng một tối ưu hóa sẽ diễn ra tự động:
 
 ```js
-// No memo needed - compiler prevents re-renders automatically
+// Không cần memo — compiler tự động ngăn re-render
 function ExpensiveChild({ name }) {
   console.log('ExpensiveChild rendered');
   return <div>Hello, {name}!</div>;
@@ -414,7 +414,7 @@ function ExpensiveChild({ name }) {
 function Parent() {
   const $ = _c(7);
   const [seconds, setSeconds] = useState(0);
-  // ... other code ...
+  // ... code khác ...
 
   let t3;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
@@ -423,7 +423,7 @@ function Parent() {
   } else {
     t3 = $[4];
   }
-  // ... return statement ...
+  // ... câu lệnh return ...
 }
 ```
 

@@ -77,7 +77,7 @@ function MyPage() {
 }
 
 function Form() {
-  // ... renders buttons inside ...
+  // ... render các button bên trong ...
 }
 ```
 
@@ -1358,7 +1358,7 @@ Có một số nguyên nhân phổ biến khiến điều này xảy ra:
 Có thể bạn có một provider không có `value` trong cây:
 
 ```js {1,2}
-// 🚩 Doesn't work: no value prop
+// 🚩 Không hoạt động: thiếu prop value
 <ThemeContext>
    <Button />
 </ThemeContext>
@@ -1369,7 +1369,7 @@ Nếu quên chỉ định `value`, điều đó tương đương với việc tr
 Bạn cũng có thể đã vô tình sử dụng sai tên prop:
 
 ```js {1,2}
-// 🚩 Doesn't work: prop should be called "value"
+// 🚩 Không hoạt động: prop phải có tên là "value"
 <ThemeContext theme={theme}>
    <Button />
 </ThemeContext>
@@ -1378,7 +1378,7 @@ Bạn cũng có thể đã vô tình sử dụng sai tên prop:
 Trong cả hai trường hợp này, bạn sẽ thấy cảnh báo từ React trong console. Để khắc phục, hãy gọi prop là `value`:
 
 ```js {1,2}
-// ✅ Passing the value prop
+// ✅ Truyền prop value
 <ThemeContext value={theme}>
    <Button />
 </ThemeContext>

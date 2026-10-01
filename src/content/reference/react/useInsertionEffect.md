@@ -31,10 +31,10 @@ Gọi `useInsertionEffect` để chèn các style trước khi bất kỳ Effect
 ```js
 import { useInsertionEffect } from 'react';
 
-// Inside your CSS-in-JS library
+// Bên trong thư viện CSS-in-JS của bạn
 function useCSS(rule) {
   useInsertionEffect(() => {
-    // ... inject <style> tags here ...
+    // ... chèn các thẻ <style> ở đây ...
   });
   return rule;
 }
@@ -68,10 +68,10 @@ function useCSS(rule) {
 Theo cách truyền thống, bạn sẽ tạo style cho các React component bằng CSS thuần.
 
 ```js
-// In your JS file:
+// Trong file JS của bạn:
 <button className="success" />
 
-// In your CSS file:
+// Trong file CSS của bạn:
 .success { color: green; }
 ```
 
@@ -91,12 +91,12 @@ Vấn đề đầu tiên không thể giải quyết, nhưng `useInsertionEffect
 Gọi `useInsertionEffect` để chèn các style trước khi bất kỳ layout Effect nào chạy:
 
 ```js {4-11}
-// Inside your CSS-in-JS library
+// Bên trong thư viện CSS-in-JS của bạn
 let isInserted = new Set();
 function useCSS(rule) {
   useInsertionEffect(() => {
-    // As explained earlier, we don't recommend runtime injection of <style> tags.
-    // But if you have to do it, then it's important to do in useInsertionEffect.
+    // Như đã giải thích ở trên, chúng tôi không khuyến nghị chèn thẻ <style> ở runtime.
+    // Nhưng nếu buộc phải làm vậy, điều quan trọng là phải thực hiện trong useInsertionEffect.
     if (!isInserted.has(rule)) {
       isInserted.add(rule);
       document.head.appendChild(getStyleForRule(rule));
