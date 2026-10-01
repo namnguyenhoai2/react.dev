@@ -21,13 +21,13 @@ Các hàm có tên bắt đầu bằng `use` được gọi là [*Hooks*](/refer
 
 ```js{2-3,8-9}
 function Counter() {
-  // ✅ Good: top-level in a function component
+  // ✅ Tốt: ở cấp cao nhất trong function component
   const [count, setCount] = useState(0);
   // ...
 }
 
 function useWindowWidth() {
-  // ✅ Good: top-level in a custom Hook
+  // ✅ Tốt: ở cấp cao nhất trong custom Hook
   const [width, setWidth] = useState(window.innerWidth);
   // ...
 }
@@ -47,7 +47,7 @@ Nếu vi phạm các quy tắc này, bạn có thể thấy lỗi sau.
 ```js{3-4,11-12,20-21}
 function Bad({ cond }) {
   if (cond) {
-    // 🔴 Bad: inside a condition (to fix, move it outside!)
+    // 🔴 Không tốt: bên trong điều kiện (để sửa, hãy đưa ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -55,7 +55,7 @@ function Bad({ cond }) {
 
 function Bad() {
   for (let i = 0; i < 10; i++) {
-    // 🔴 Bad: inside a loop (to fix, move it outside!)
+    // 🔴 Không tốt: bên trong vòng lặp (để sửa, hãy đưa ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -65,14 +65,14 @@ function Bad({ cond }) {
   if (cond) {
     return;
   }
-  // 🔴 Bad: after a conditional return (to fix, move it before the return!)
+  // 🔴 Không tốt: sau return có điều kiện (để sửa, hãy đưa lên trước return!)
   const theme = useContext(ThemeContext);
   // ...
 }
 
 function Bad() {
   function handleClick() {
-    // 🔴 Bad: inside an event handler (to fix, move it outside!)
+    // 🔴 Không tốt: bên trong event handler (để sửa, hãy đưa ra ngoài!)
     const theme = useContext(ThemeContext);
   }
   // ...
@@ -80,7 +80,7 @@ function Bad() {
 
 function Bad() {
   const style = useMemo(() => {
-    // 🔴 Bad: inside useMemo (to fix, move it outside!)
+    // 🔴 Không tốt: bên trong useMemo (để sửa, hãy đưa ra ngoài!)
     const theme = useContext(ThemeContext);
     return createStyle(theme);
   });
@@ -89,7 +89,7 @@ function Bad() {
 
 class Bad extends React.Component {
   render() {
-    // 🔴 Bad: inside a class component (to fix, write a function component instead of a class!)
+    // 🔴 Không tốt: bên trong class component (để sửa, hãy viết function component thay cho class!)
     useEffect(() => {})
     // ...
   }
@@ -97,7 +97,7 @@ class Bad extends React.Component {
 
 function Bad() {
   try {
-    // 🔴 Bad: inside try/catch/finally block (to fix, move it outside!)
+    // 🔴 Không tốt: bên trong khối try/catch/finally (để sửa, hãy đưa ra ngoài!)
     const [x, setX] = useState(0);
   } catch {
     const [x, setX] = useState(1);
@@ -129,7 +129,7 @@ function FriendList() {
   const [onlineStatus, setOnlineStatus] = useOnlineStatus(); // ✅
 }
 
-function setOnlineStatus() { // ❌ Not a component or custom Hook!
+function setOnlineStatus() { // ❌ Không phải component hoặc custom Hook!
   const [onlineStatus, setOnlineStatus] = useOnlineStatus();
 }
 ```

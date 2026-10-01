@@ -38,7 +38,7 @@ Một heuristic nhanh để xác định code có chạy trong quá trình rende
 
 ```js {2}
 function Dropdown() {
-  const selectedItems = new Set(); // created during render
+  const selectedItems = new Set(); // được tạo trong quá trình render
   // ...
 }
 ```
@@ -49,7 +49,7 @@ Event handlers và Effects không chạy trong quá trình render:
 function Dropdown() {
   const selectedItems = new Set();
   const onSelect = (item) => {
-    // this code is in an event handler, so it's only run when the user triggers this
+    // code này nằm trong event handler, nên chỉ chạy khi người dùng kích hoạt handler
     selectedItems.add(item);
   }
 }
@@ -59,7 +59,7 @@ function Dropdown() {
 function Dropdown() {
   const selectedItems = new Set();
   useEffect(() => {
-    // this code is inside of an Effect, so it only runs after rendering
+    // code này nằm trong Effect, nên chỉ chạy sau khi render
     logForAnalytics(selectedItems);
   }, [selectedItems]);
 }
@@ -76,7 +76,7 @@ Components phải luôn trả về cùng một output tương ứng với các �
 
 ```js {2}
 function Clock() {
-  const time = new Date(); // 🔴 Bad: always returns a different result!
+  const time = new Date(); // 🔴 Không tốt: luôn trả về kết quả khác nhau!
   return <span>{time.toLocaleString()}</span>
 }
 ```
@@ -91,17 +91,17 @@ function Clock() {
 import { useState, useEffect } from 'react';
 
 function useTime() {
-  // 1. Keep track of the current date's state. `useState` receives an initializer function as its
-  //    initial state. It only runs once when the hook is called, so only the current date at the
-  //    time the hook is called is set first.
+  // 1. Theo dõi state của ngày hiện tại. `useState` nhận một hàm khởi tạo làm state ban đầu.
+  //    Hàm này chỉ chạy một lần khi Hook được gọi, nên ban đầu chỉ ngày hiện tại tại thời điểm
+  //    Hook được gọi mới được thiết lập.
   const [time, setTime] = useState(() => new Date());
 
   useEffect(() => {
-    // 2. Update the current date every second using `setInterval`.
+    // 2. Cập nhật ngày hiện tại mỗi giây bằng `setInterval`.
     const id = setInterval(() => {
-      setTime(new Date()); // ✅ Good: non-idempotent code no longer runs in render
+      setTime(new Date()); // ✅ Tốt: code không idempotent không còn chạy trong quá trình render
     }, 1000);
-    // 3. Return a cleanup function so we don't leak the `setInterval` timer.
+    // 3. Trả về hàm dọn dẹp để tránh rò rỉ timer `setInterval`.
     return () => clearInterval(id);
   }, []);
 
@@ -141,12 +141,12 @@ Một ví dụ phổ biến về side effect là mutation, trong JavaScript có 
 
 ```js {2,7}
 function FriendList({ friends }) {
-  const items = []; // ✅ Good: locally created
+  const items = []; // ✅ Tốt: được tạo cục bộ
   for (let i = 0; i < friends.length; i++) {
     const friend = friends[i];
     items.push(
       <Friend key={friend.id} friend={friend} />
-    ); // ✅ Good: local mutation is okay
+    ); // ✅ Tốt: mutation cục bộ là hợp lệ
   }
   return <section>{items}</section>;
 }
@@ -159,13 +159,13 @@ Mặc dù có vẻ như chúng ta đang mutate `items`, điểm mấu chốt c�
 Mặt khác, nếu `items` được tạo bên ngoài component, nó sẽ giữ lại các giá trị trước đó và ghi nhớ các thay đổi:
 
 ```js {1,7}
-const items = []; // 🔴 Bad: created outside of the component
+const items = []; // 🔴 Không tốt: được tạo bên ngoài component
 function FriendList({ friends }) {
   for (let i = 0; i < friends.length; i++) {
     const friend = friends[i];
     items.push(
       <Friend key={friend.id} friend={friend} />
-    ); // 🔴 Bad: mutates a value created outside of render
+    ); // 🔴 Không tốt: thay đổi một giá trị được tạo bên ngoài quá trình render
   }
   return <section>{items}</section>;
 }
@@ -179,8 +179,8 @@ Khởi tạo lazy cũng hợp lệ dù không hoàn toàn "pure":
 
 ```js {2}
 function ExpenseForm() {
-  SuperCalculator.initializeIfNotReady(); // ✅ Good: if it doesn't affect other components
-  // Continue rendering...
+  SuperCalculator.initializeIfNotReady(); // ✅ Tốt: nếu không ảnh hưởng đến các component khác
+  // Tiếp tục render...
 }
 ```
 
@@ -190,7 +190,7 @@ Các side effect hiển thị trực tiếp cho người dùng không được p
 
 ```js {2}
 function ProductDetailPage({ product }) {
-  document.title = product.title; // 🔴 Bad: Changes the DOM
+  document.title = product.title; // 🔴 Không tốt: Thay đổi DOM
 }
 ```
 
@@ -211,14 +211,14 @@ Props là bất biến vì nếu bạn thay đổi chúng, ứng dụng sẽ t�
 
 ```js {expectedErrors: {'react-compiler': [2]}} {2}
 function Post({ item }) {
-  item.url = new Url(item.url, base); // 🔴 Bad: never mutate props directly
+  item.url = new Url(item.url, base); // 🔴 Không tốt: không bao giờ thay đổi trực tiếp props
   return <Link url={item.url}>{item.title}</Link>;
 }
 ```
 
 ```js {2}
 function Post({ item }) {
-  const url = new Url(item.url, base); // ✅ Good: make a copy instead
+  const url = new Url(item.url, base); // ✅ Tốt: hãy tạo bản sao thay thế
   return <Link url={url}>{item.title}</Link>;
 }
 ```
@@ -237,7 +237,7 @@ function Counter() {
   const [count, setCount] = useState(0);
 
   function handleClick() {
-    count = count + 1; // 🔴 Bad: never mutate state directly
+    count = count + 1; // 🔴 Không tốt: không bao giờ thay đổi trực tiếp state
   }
 
   return (
@@ -253,7 +253,7 @@ function Counter() {
   const [count, setCount] = useState(0);
 
   function handleClick() {
-    setCount(count + 1); // ✅ Good: use the setter function returned by useState
+    setCount(count + 1); // ✅ Tốt: dùng hàm setter do useState trả về
   }
 
   return (
@@ -274,7 +274,7 @@ Một khi các giá trị đã được truyền vào một hook, bạn không n
 function useIconStyle(icon) {
   const theme = useContext(ThemeContext);
   if (icon.enabled) {
-    icon.className = computeStyle(icon, theme); // 🔴 Bad: never mutate hook arguments directly
+    icon.className = computeStyle(icon, theme); // 🔴 Không tốt: không bao giờ thay đổi trực tiếp đối số của Hook
   }
   return icon;
 }
@@ -283,7 +283,7 @@ function useIconStyle(icon) {
 ```js {3}
 function useIconStyle(icon) {
   const theme = useContext(ThemeContext);
-  const newIcon = { ...icon }; // ✅ Good: make a copy instead
+  const newIcon = { ...icon }; // ✅ Tốt: hãy tạo bản sao thay thế
   if (icon.enabled) {
     newIcon.className = computeStyle(icon, theme);
   }
@@ -310,15 +310,15 @@ function useIconStyle(icon) {
 Nếu bạn thay đổi các đối số của Hook, cơ chế memoization của custom hook sẽ trở nên không chính xác, vì vậy điều quan trọng là tránh làm như vậy.
 
 ```js {4}
-style = useIconStyle(icon);         // `style` is memoized based on `icon`
-icon.enabled = false;               // Bad: 🔴 never mutate hook arguments directly
-style = useIconStyle(icon);         // previously memoized result is returned
+style = useIconStyle(icon);         // `style` được memoize dựa trên `icon`
+icon.enabled = false;               // Không tốt: 🔴 không bao giờ thay đổi trực tiếp đối số của Hook
+style = useIconStyle(icon);         // kết quả đã memoize trước đó được trả về
 ```
 
 ```js {4}
-style = useIconStyle(icon);         // `style` is memoized based on `icon`
-icon = { ...icon, enabled: false }; // Good: ✅ make a copy instead
-style = useIconStyle(icon);         // new value of `style` is calculated
+style = useIconStyle(icon);         // `style` được memoize dựa trên `icon`
+icon = { ...icon, enabled: false }; // Tốt: ✅ hãy tạo bản sao thay thế
+style = useIconStyle(icon);         // giá trị mới của `style` được tính toán
 ```
 
 Tương tự, điều quan trọng là không sửa đổi các giá trị trả về của Hooks, vì chúng có thể đã được memoize.
@@ -335,7 +335,7 @@ Khi bạn sử dụng JSX trong một biểu thức, React có thể eager evalu
 function Page({ colour }) {
   const styles = { colour, size: "large" };
   const header = <Header styles={styles} />;
-  styles.size = "small"; // 🔴 Bad: styles was already used in the JSX above
+  styles.size = "small"; // 🔴 Không tốt: styles đã được dùng trong JSX bên trên
   const footer = <Footer styles={styles} />;
   return (
     <>
@@ -351,7 +351,7 @@ function Page({ colour }) {
 function Page({ colour }) {
   const headerStyles = { colour, size: "large" };
   const header = <Header styles={headerStyles} />;
-  const footerStyles = { colour, size: "small" }; // ✅ Good: we created a new value
+  const footerStyles = { colour, size: "small" }; // ✅ Tốt: ta đã tạo một giá trị mới
   const footer = <Footer styles={footerStyles} />;
   return (
     <>

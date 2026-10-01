@@ -17,13 +17,13 @@ React phải quyết định thời điểm hàm component của bạn được 
 
 ```js {2}
 function BlogPost() {
-  return <Layout><Article /></Layout>; // ✅ Good: Only use components in JSX
+  return <Layout><Article /></Layout>; // ✅ Tốt: Chỉ dùng component trong JSX
 }
 ```
 
 ```js {expectedErrors: {'react-compiler': [2]}} {2}
 function BlogPost() {
-  return <Layout>{Article()}</Layout>; // 🔴 Bad: Never call them directly
+  return <Layout>{Article()}</Layout>; // 🔴 Không tốt: Không bao giờ gọi trực tiếp chúng
 }
 ```
 
@@ -53,7 +53,7 @@ Hooks nên "tĩnh" hết mức có thể. Điều này có nghĩa là bạn khô
 
 ```js {expectedErrors: {'react-compiler': [2, 3]}} {2}
 function ChatInput() {
-  const useDataWithLogging = withLogging(useData); // 🔴 Bad: don't write higher order Hooks
+  const useDataWithLogging = withLogging(useData); // 🔴 Không tốt: đừng viết higher-order Hook
   const data = useDataWithLogging();
 }
 ```
@@ -62,11 +62,11 @@ Hooks nên bất biến và không bị thay đổi. Thay vì thay đổi độn
 
 ```js {2,6}
 function ChatInput() {
-  const data = useDataWithLogging(); // ✅ Good: Create a new version of the Hook
+  const data = useDataWithLogging(); // ✅ Tốt: Tạo phiên bản mới của Hook
 }
 
 function useDataWithLogging() {
-  // ... Create a new version of the Hook and inline the logic here
+  // ... Tạo phiên bản mới của Hook và viết trực tiếp logic tại đây
 }
 ```
 
@@ -76,7 +76,7 @@ Hooks cũng không nên được sử dụng một cách động: ví dụ, thay
 
 ```js {expectedErrors: {'react-compiler': [2]}} {2}
 function ChatInput() {
-  return <Button useData={useDataWithLogging} /> // 🔴 Bad: don't pass Hooks as props
+  return <Button useData={useDataWithLogging} /> // 🔴 Không tốt: đừng truyền Hook làm prop
 }
 ```
 
@@ -88,12 +88,12 @@ function ChatInput() {
 }
 
 function Button() {
-  const data = useDataWithLogging(); // ✅ Good: Use the Hook directly
+  const data = useDataWithLogging(); // ✅ Tốt: Dùng Hook trực tiếp
 }
 
 function useDataWithLogging() {
-  // If there's any conditional logic to change the Hook's behavior, it should be inlined into
-  // the Hook
+  // Nếu có logic điều kiện làm thay đổi hành vi của Hook, logic đó nên được viết trực tiếp trong
+  // Hook
 }
 ```
 
