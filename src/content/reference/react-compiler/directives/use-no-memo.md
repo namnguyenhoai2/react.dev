@@ -55,9 +55,9 @@ Khi nghi ngờ compiler đang gây ra sự cố, hãy tạm thời vô hiệu h�
 
 ```js
 function ProblematicComponent({ data }) {
-  "use no memo"; // TODO: Remove after fixing issue #123
+  "use no memo"; // TODO: Xóa sau khi sửa lỗi #123
 
-  // Rules of React violations that weren't statically detected
+  // Các vi phạm Rules of React không được phát hiện bằng phân tích tĩnh
   // ...
 }
 ```
@@ -69,7 +69,7 @@ Khi tích hợp với các thư viện có thể không tương thích với com
 function ThirdPartyWrapper() {
   "use no memo";
 
-  useThirdPartyHook(); // Has side effects that compiler might optimize incorrectly
+  useThirdPartyHook(); // Có tác dụng phụ mà compiler có thể tối ưu hóa không đúng
   // ...
 }
 ```
@@ -83,7 +83,7 @@ Chỉ thị `"use no memo"` được đặt ở đầu thân hàm để ngăn Re
 ```js
 function MyComponent() {
   "use no memo";
-  // Function body
+  // Thân hàm
 }
 ```
 
@@ -92,7 +92,7 @@ Chỉ thị này cũng có thể được đặt ở đầu file để áp dụn
 ```js
 "use no memo";
 
-// All functions in this file will be skipped by the compiler
+// Compiler sẽ bỏ qua mọi hàm trong tệp này
 ```
 
 `"use no memo"` ở cấp độ hàm sẽ ghi đè chỉ thị ở cấp độ module.
@@ -106,13 +106,13 @@ Chỉ thị này cũng có thể được đặt ở đầu file để áp dụn
 Nếu `"use no memo"` không hoạt động:
 
 ```js
-// ❌ Wrong - directive after code
+// ❌ Sai - directive đặt sau code
 function Component() {
   const data = getData();
-  "use no memo"; // Too late!
+  "use no memo"; // Quá muộn!
 }
 
-// ✅ Correct - directive first
+// ✅ Đúng - directive được đặt đầu tiên
 function Component() {
   "use no memo";
   const data = getData();
@@ -128,13 +128,13 @@ Ngoài ra, hãy kiểm tra:
 **Luôn ghi lại lý do** bạn vô hiệu hóa tính năng tối ưu hóa:
 
 ```js
-// ✅ Good - clear explanation and tracking
+// ✅ Tốt - có giải thích rõ ràng và theo dõi
 function DataProcessor() {
-  "use no memo"; // TODO: Remove after fixing rule of react violation
+  "use no memo"; // TODO: Xóa sau khi sửa vi phạm Rules of React
   // ...
 }
 
-// ❌ Bad - no explanation
+// ❌ Không tốt - không có giải thích
 function Mystery() {
   "use no memo";
   // ...

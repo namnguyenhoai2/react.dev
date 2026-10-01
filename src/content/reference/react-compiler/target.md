@@ -10,7 +10,7 @@ Tùy chọn `target` chỉ định phiên bản React mà compiler nên tạo m�
 
 ```js
 {
-  target: '19' // or '18', '17'
+  target: '19' // hoặc '18', '17'
 }
 ```
 
@@ -57,14 +57,14 @@ Cấu hình khả năng tương thích phiên bản React cho output đã đư�
 
 ```js
 {
-  // defaults to target: '19'
+  // mặc định là target: '19'
 }
 ```
 
 Compiler sẽ sử dụng các runtime API tích hợp sẵn của React 19:
 
 ```js
-// Compiled output uses React 19's native APIs
+// Mã đầu ra đã biên dịch sử dụng API gốc của React 19
 import { c as _c } from 'react/compiler-runtime';
 ```
 
@@ -81,12 +81,12 @@ npm install react-compiler-runtime@latest
 2. Cấu hình target:
 
 ```js
-// For React 18
+// Dành cho React 18
 {
   target: '18'
 }
 
-// For React 17
+// Dành cho React 17
 {
   target: '17'
 }
@@ -95,7 +95,7 @@ npm install react-compiler-runtime@latest
 Compiler sẽ sử dụng polyfill runtime cho cả hai phiên bản:
 
 ```js
-// Compiled output uses the polyfill
+// Mã đầu ra đã biên dịch sử dụng polyfill
 import { c as _c } from 'react-compiler-runtime';
 ```
 
@@ -120,7 +120,7 @@ Nếu bạn thấy các lỗi như "Cannot find module 'react/compiler-runtime'"
 3. Đảm bảo target khớp với phiên bản React của bạn:
    ```js
    {
-     target: '18' // Must match your React major version
+     target: '18' // Phải khớp với phiên bản React chính của bạn
    }
    ```
 
@@ -138,11 +138,11 @@ Nếu bạn thấy các lỗi như "Cannot find module 'react/compiler-runtime'"
 Để xác minh runtime chính xác đang được sử dụng, hãy lưu ý import khác nhau (`react/compiler-runtime` cho runtime tích hợp sẵn, `react-compiler-runtime` cho standalone package dành cho 17/18):
 
 ```js
-// For React 19 (built-in runtime)
+// Dành cho React 19 (runtime tích hợp sẵn)
 import { c } from 'react/compiler-runtime'
 //                      ^
 
-// For React 17/18 (polyfill runtime)
+// Dành cho React 17/18 (runtime polyfill)
 import { c } from 'react-compiler-runtime'
 //                      ^
 ```

@@ -8,7 +8,7 @@ React Compiler directives là các string literal đặc biệt, dùng để ki�
 
 ```js
 function MyComponent() {
-  "use memo"; // Opt this component into compilation
+  "use memo"; // Đưa component này vào quá trình biên dịch
   return <div>{/* ... */}</div>;
 }
 ```
@@ -42,13 +42,13 @@ React Compiler directives cung cấp quyền kiểm soát chi tiết đối vớ
 Đặt directive ở đầu một hàm để kiểm soát việc biên dịch hàm đó:
 
 ```js
-// Opt into compilation
+// Đưa vào quá trình biên dịch
 function OptimizedComponent() {
   "use memo";
   return <div>This will be optimized</div>;
 }
 
-// Opt out of compilation
+// Loại khỏi quá trình biên dịch
 function UnoptimizedComponent() {
   "use no memo";
   return <div>This won't be optimized</div>;
@@ -60,10 +60,10 @@ function UnoptimizedComponent() {
 Đặt directive ở đầu file để áp dụng cho tất cả các hàm trong module đó:
 
 ```js
-// At the very top of the file
+// Ở đầu tệp
 "use memo";
 
-// All functions in this file will be compiled
+// Mọi hàm trong tệp này sẽ được biên dịch
 function Component1() {
   return <div>Compiled</div>;
 }
@@ -72,9 +72,9 @@ function Component2() {
   return <div>Also compiled</div>;
 }
 
-// Can be overridden at function level
+// Có thể ghi đè ở cấp hàm
 function Component3() {
-  "use no memo"; // This overrides the module directive
+  "use no memo"; // Điều này ghi đè directive ở cấp module
   return <div>Not compiled</div>;
 }
 ```
@@ -96,7 +96,7 @@ Directive hoạt động khác nhau tùy thuộc vào [`compilationMode`](/refer
 Directive là các lối thoát. Hãy ưu tiên cấu hình compiler ở cấp project:
 
 ```js
-// ✅ Good - project-wide configuration
+// ✅ Tốt - cấu hình trên toàn dự án
 {
   plugins: [
     ['babel-plugin-react-compiler', {
@@ -105,9 +105,9 @@ Directive là các lối thoát. Hãy ưu tiên cấu hình compiler ở cấp p
   ]
 }
 
-// ⚠️ Use directives only when needed
+// ⚠️ Chỉ sử dụng directive khi cần thiết
 function SpecialCase() {
-  "use no memo"; // Document why this is needed
+  "use no memo"; // Ghi chú lý do cần dùng directive này
   // ...
 }
 ```
@@ -117,13 +117,13 @@ function SpecialCase() {
 Luôn giải thích lý do sử dụng directive:
 
 ```js
-// ✅ Good - clear explanation
+// ✅ Tốt - giải thích rõ ràng
 function DataGrid() {
-  "use no memo"; // TODO: Remove after fixing issue with dynamic row heights (JIRA-123)
-  // Complex grid implementation
+  "use no memo"; // TODO: Xóa sau khi sửa lỗi về chiều cao hàng động (JIRA-123)
+  // Cách triển khai lưới phức tạp
 }
 
-// ❌ Bad - no explanation
+// ❌ Không tốt - không có giải thích
 function Mystery() {
   "use no memo";
   // ...
@@ -141,7 +141,7 @@ Các directive opt-out nên chỉ mang tính tạm thời:
 
 ```js
 function TemporaryWorkaround() {
-  "use no memo"; // TODO: Remove after upgrading ThirdPartyLib to v2.0
+  "use no memo"; // TODO: Xóa sau khi nâng cấp ThirdPartyLib lên v2.0
   return <ThirdPartyComponent />;
 }
 ```
@@ -155,20 +155,20 @@ function TemporaryWorkaround() {
 Khi áp dụng React Compiler vào một codebase lớn:
 
 ```js
-// Start with annotation mode
+// Bắt đầu với chế độ annotation
 {
   compilationMode: 'annotation'
 }
 
-// Opt in stable components
+// Đưa các component ổn định vào biên dịch
 function StableComponent() {
   "use memo";
-  // Well-tested component
+  // Component đã được kiểm thử kỹ
 }
 
-// Later, switch to infer mode and opt out problematic ones
+// Sau đó, chuyển sang chế độ infer và loại những component có vấn đề
 function ProblematicComponent() {
-  "use no memo"; // Fix issues before removing
+  "use no memo"; // Sửa lỗi trước khi xóa
   // ...
 }
 ```

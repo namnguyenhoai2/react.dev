@@ -32,7 +32,7 @@ module.exports = {
   plugins: [
     'babel-plugin-react-compiler',
   ],
-  // ... other config
+  // ... cấu hình khác
 };
 ```
 
@@ -65,7 +65,7 @@ npm install react-compiler-runtime@latest
 
 ```js
 {
-  target: '17', // Minimum supported React version
+  target: '17', // Phiên bản React thấp nhất được hỗ trợ
 }
 ```
 

@@ -10,7 +10,7 @@ Tùy chọn `compilationMode` kiểm soát cách React Compiler lựa chọn cá
 
 ```js
 {
-  compilationMode: 'infer' // or 'annotation', 'syntax', 'all'
+  compilationMode: 'infer' // hoặc 'annotation', 'syntax', 'all'
 }
 ```
 
@@ -70,24 +70,24 @@ Chế độ `'infer'` mặc định hoạt động tốt với hầu hết các 
 Với chế độ này, các hàm sau sẽ được biên dịch:
 
 ```js
-// ✅ Compiled: Named like a component + returns JSX
+// ✅ Được biên dịch: Có tên như component + trả về JSX
 function Button(props) {
   return <button>{props.label}</button>;
 }
 
-// ✅ Compiled: Named like a hook + calls hooks
+// ✅ Được biên dịch: Có tên như hook + gọi hook
 function useCounter() {
   const [count, setCount] = useState(0);
   return [count, setCount];
 }
 
-// ✅ Compiled: Explicit directive
+// ✅ Được biên dịch: Directive tường minh
 function expensiveCalculation(data) {
   "use memo";
   return data.reduce(/* ... */);
 }
 
-// ❌ Not compiled: Not a component/hook pattern
+// ❌ Không được biên dịch: Không theo mẫu component/hook
 function calculateTotal(items) {
   return items.reduce((a, b) => a + b, 0);
 }
@@ -106,7 +106,7 @@ function calculateTotal(items) {
 Sau đó, đánh dấu rõ ràng các hàm cần biên dịch:
 
 ```js
-// Only this function will be compiled
+// Chỉ hàm này sẽ được biên dịch
 function ExpensiveList(props) {
   "use memo";
   return (
@@ -118,7 +118,7 @@ function ExpensiveList(props) {
   );
 }
 
-// This won't be compiled without the directive
+// Hàm này sẽ không được biên dịch nếu thiếu directive
 function NormalComponent(props) {
   return <div>{props.content}</div>;
 }
@@ -137,18 +137,18 @@ Nếu codebase của bạn sử dụng Flow thay vì TypeScript:
 Sau đó, sử dụng cú pháp component của Flow:
 
 ```js
-// Compiled: Flow component syntax
+// Được biên dịch: Cú pháp component Flow
 component Button(label: string) {
   return <button>{label}</button>;
 }
 
-// Compiled: Flow hook syntax
+// Được biên dịch: Cú pháp hook Flow
 hook useCounter(initial: number) {
   const [count, setCount] = useState(initial);
   return [count, setCount];
 }
 
-// Not compiled: Regular function syntax
+// Không được biên dịch: Cú pháp hàm thông thường
 function helper(data) {
   return process(data);
 }
@@ -160,9 +160,9 @@ Bất kể chế độ biên dịch nào, hãy sử dụng `"use no memo"` để
 
 ```js
 function ComponentWithSideEffects() {
-  "use no memo"; // Prevent compilation
+  "use no memo"; // Ngăn biên dịch
 
-  // This component has side effects that shouldn't be memoized
+  // Component này có tác dụng phụ không nên được memoize
   logToAnalytics('component_rendered');
 
   return <div>Content</div>;
@@ -178,22 +178,22 @@ function ComponentWithSideEffects() {
 Trong chế độ `'infer'`, hãy đảm bảo component của bạn tuân theo các quy ước của React:
 
 ```js
-// ❌ Won't be compiled: lowercase name
+// ❌ Sẽ không được biên dịch: tên viết thường
 function button(props) {
   return <button>{props.label}</button>;
 }
 
-// ✅ Will be compiled: PascalCase name
+// ✅ Sẽ được biên dịch: tên PascalCase
 function Button(props) {
   return <button>{props.label}</button>;
 }
 
-// ❌ Won't be compiled: doesn't create JSX or call hooks
+// ❌ Sẽ không được biên dịch: không tạo JSX hoặc gọi hook
 function useData() {
   return window.localStorage.getItem('data');
 }
 
-// ✅ Will be compiled: calls a hook
+// ✅ Sẽ được biên dịch: gọi một hook
 function useData() {
   const [data] = useState(() => window.localStorage.getItem('data'));
   return data;

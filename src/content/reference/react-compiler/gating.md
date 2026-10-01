@@ -62,7 +62,7 @@ Cấu hình cơ chế gating của feature flag trong runtime cho các function 
 ```js
 // src/utils/feature-flags.js
 export function shouldUseCompiler() {
-  // your logic here
+  // logic của bạn ở đây
   return getFeatureFlag('react-compiler-enabled');
 }
 ```
@@ -81,17 +81,17 @@ export function shouldUseCompiler() {
 3. Compiler tạo ra code có gating:
 
 ```js
-// Input
+// Đầu vào
 function Button(props) {
   return <button>{props.label}</button>;
 }
 
-// Output (simplified)
+// Đầu ra (đã giản lược)
 import { shouldUseCompiler } from './src/utils/feature-flags';
 
 const Button = shouldUseCompiler()
-  ? function Button_optimized(props) { /* compiled version */ }
-  : function Button_original(props) { /* original version */ };
+  ? function Button_optimized(props) { /* phiên bản đã biên dịch */ }
+  : function Button_original(props) { /* phiên bản gốc */ };
 ```
 
 Lưu ý rằng function gating được đánh giá một lần tại thời điểm module được tải, vì vậy sau khi JS bundle được phân tích cú pháp và đánh giá, lựa chọn component sẽ giữ nguyên trong suốt phần còn lại của phiên trình duyệt.
@@ -105,12 +105,12 @@ Lưu ý rằng function gating được đánh giá một lần tại thời đi
 Xác minh rằng module flag của bạn export đúng function:
 
 ```js
-// ❌ Wrong: Default export
+// ❌ Sai: export mặc định
 export default function shouldUseCompiler() {
   return true;
 }
 
-// ✅ Correct: Named export matching importSpecifierName
+// ✅ Đúng: named export khớp với importSpecifierName
 export function shouldUseCompiler() {
   return true;
 }
@@ -121,19 +121,19 @@ export function shouldUseCompiler() {
 Đảm bảo source path là chính xác:
 
 ```js
-// ❌ Wrong: Relative to babel.config.js
+// ❌ Sai: đường dẫn tương đối với babel.config.js
 {
   source: './src/flags',
   importSpecifierName: 'flag'
 }
 
-// ✅ Correct: Module resolution path
+// ✅ Đúng: đường dẫn phân giải module
 {
   source: '@myapp/feature-flags',
   importSpecifierName: 'flag'
 }
 
-// ✅ Also correct: Absolute path from project root
+// ✅ Cũng đúng: đường dẫn tuyệt đối từ thư mục gốc của dự án
 {
   source: './src/utils/flags',
   importSpecifierName: 'flag'

@@ -62,13 +62,13 @@ Bạn nên cân nhắc sử dụng `"use memo"` khi:
 Trong `compilationMode: 'annotation'`, chỉ thị này là bắt buộc đối với mọi hàm bạn muốn tối ưu hóa:
 
 ```js
-// ✅ This component will be optimized
+// ✅ Component này sẽ được tối ưu hóa
 function OptimizedList() {
   "use memo";
   // ...
 }
 
-// ❌ This component won't be optimized
+// ❌ Component này sẽ không được tối ưu hóa
 function SimpleWrapper() {
   // ...
 }
@@ -78,13 +78,13 @@ function SimpleWrapper() {
 Bắt đầu với chế độ `annotation` và chọn lọc các component ổn định để tối ưu hóa:
 
 ```js
-// Start by optimizing leaf components
+// Bắt đầu bằng cách tối ưu hóa các component lá
 function Button({ onClick, children }) {
   "use memo";
   // ...
 }
 
-// Gradually move up the tree as you verify behavior
+// Dần tiến lên cây component khi bạn xác minh hành vi
 function ButtonGroup({ buttons }) {
   "use memo";
   // ...
@@ -104,7 +104,7 @@ Hành vi của `"use memo"` thay đổi tùy theo cấu hình compiler của b�
 module.exports = {
   plugins: [
     ['babel-plugin-react-compiler', {
-      compilationMode: 'annotation' // or 'infer' or 'all'
+      compilationMode: 'annotation' // hoặc 'infer' hoặc 'all'
     }]
   ]
 };
@@ -112,13 +112,13 @@ module.exports = {
 
 #### Chế độ annotation {/*annotation-mode-example*/}
 ```js
-// ✅ Optimized with "use memo"
+// ✅ Được tối ưu hóa bằng "use memo"
 function ProductCard({ product }) {
   "use memo";
   // ...
 }
 
-// ❌ Not optimized (no directive)
+// ❌ Không được tối ưu hóa (không có directive)
 function ProductList({ products }) {
   // ...
 }
@@ -126,12 +126,12 @@ function ProductList({ products }) {
 
 #### Chế độ Infer (mặc định) {/*infer-mode-example*/}
 ```js
-// Automatically memoized because this is named like a Component
+// Tự động memoize vì tên có dạng một Component
 function ComplexDashboard({ data }) {
   // ...
 }
 
-// Skipped: Is not named like a Component
+// Bị bỏ qua: Tên không có dạng một Component
 function simpleDisplay({ text }) {
   // ...
 }

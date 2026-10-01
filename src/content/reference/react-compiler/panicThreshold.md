@@ -10,7 +10,7 @@ Tùy chọn `panicThreshold` kiểm soát cách React Compiler xử lý lỗi tr
 
 ```js
 {
-  panicThreshold: 'none' // Recommended
+  panicThreshold: 'none' // Khuyến nghị
 }
 ```
 

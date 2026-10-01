@@ -20,7 +20,7 @@ module.exports = {
   plugins: [
     [
       'babel-plugin-react-compiler', {
-        // compiler options
+        // các tùy chọn compiler
       }
     ]
   ]
@@ -37,7 +37,7 @@ Các tùy chọn này kiểm soát *những gì* compiler tối ưu hóa và *c�
 
 ```js
 {
-  compilationMode: 'annotation' // Only compile "use memo" functions
+  compilationMode: 'annotation' // Chỉ biên dịch các hàm dùng "use memo"
 }
 ```
 
@@ -50,9 +50,9 @@ Cấu hình phiên bản React đảm bảo compiler tạo ra code tương thíc
 [`target`](/reference/react-compiler/target) chỉ định phiên bản React bạn đang sử dụng (17, 18 hoặc 19).
 
 ```js
-// For React 18 projects
+// Dành cho các dự án React 18
 {
-  target: '18' // Also requires react-compiler-runtime package
+  target: '18' // Cũng cần package react-compiler-runtime
 }
 ```
 
@@ -65,9 +65,9 @@ Các tùy chọn này kiểm soát cách compiler phản hồi với code không
 [`panicThreshold`](/reference/react-compiler/panicThreshold) xác định việc build sẽ thất bại hay bỏ qua các component có vấn đề.
 
 ```js
-// Recommended for production
+// Khuyến nghị cho môi trường production
 {
-  panicThreshold: 'none' // Skip components with errors instead of failing the build
+  panicThreshold: 'none' // Bỏ qua component có lỗi thay vì làm build thất bại
 }
 ```
 
@@ -135,7 +135,7 @@ npm install react-compiler-runtime@latest
 
 ```js
 {
-  target: '18' // or '17'
+  target: '18' // hoặc '17'
 }
 ```
 
@@ -145,6 +145,6 @@ Bắt đầu với các thư mục cụ thể rồi dần mở rộng:
 
 ```js
 {
-  compilationMode: 'annotation' // Only compile "use memo" functions
+  compilationMode: 'annotation' // Chỉ biên dịch các hàm dùng "use memo"
 }
 ```
