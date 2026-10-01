@@ -389,9 +389,9 @@ export function getFinalState(baseState, queue) {
 
   for (let update of queue) {
     if (typeof update === 'function') {
-      // TODO: apply the updater function
+      // TODO: áp dụng updater function
     } else {
-      // TODO: replace the state
+      // TODO: thay thế state
     }
   }
 
@@ -409,7 +409,7 @@ Hãy điền các dòng còn thiếu!
 export function getFinalState(baseState, queue) {
   let finalState = baseState;
 
-  // TODO: do something with the queue...
+  // TODO: xử lý queue...
 
   return finalState;
 }
@@ -506,10 +506,10 @@ export function getFinalState(baseState, queue) {
 
   for (let update of queue) {
     if (typeof update === 'function') {
-      // Apply the updater function.
+      // Áp dụng updater function.
       finalState = update(finalState);
     } else {
-      // Replace the next state.
+      // Thay thế state tiếp theo.
       finalState = update;
     }
   }

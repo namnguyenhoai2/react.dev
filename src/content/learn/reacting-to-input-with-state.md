@@ -81,7 +81,7 @@ function disable(el) {
 }
 
 function submitForm(answer) {
-  // Pretend it's hitting the network.
+  // Giả lập việc gửi yêu cầu qua mạng.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (answer.toLowerCase() === 'istanbul') {
@@ -198,7 +198,7 @@ Bạn có thể gọi prop đó bằng bất kỳ tên nào; tên gọi không q
 
 ```js
 export default function Form({
-  // Try 'submitting', 'error', 'success':
+  // Thử 'submitting', 'error', 'success':
   status = 'empty'
 }) {
   if (status === 'success') {
@@ -465,7 +465,7 @@ export default function Form() {
 }
 
 function submitForm(answer) {
-  // Pretend it's hitting the network.
+  // Giả lập việc gửi yêu cầu qua mạng.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let shouldError = answer.toLowerCase() !== 'lima'
@@ -1045,12 +1045,12 @@ function setIsEditing(value) {
 function updateDOM() {
   if (isEditing) {
     editButton.textContent = 'Save Profile';
-    // TODO: show inputs, hide content
+    // TODO: hiện input, ẩn nội dung
   } else {
     editButton.textContent = 'Edit Profile';
-    // TODO: hide inputs, show content
+    // TODO: ẩn input, hiện nội dung
   }
-  // TODO: update text labels
+  // TODO: cập nhật nhãn văn bản
 }
 
 function hide(el) {

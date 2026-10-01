@@ -71,10 +71,10 @@ Sau đó thêm các dòng code sau vào đầu file JavaScript chính (file này
 ```js src/index.js active
 import { createRoot } from 'react-dom/client';
 
-// Clear the existing HTML content
+// Xóa nội dung HTML hiện có
 document.body.innerHTML = '<div id="app"></div>';
 
-// Render your React component instead
+// Thay vào đó, render component React của bạn
 const root = createRoot(document.getElementById('app'));
 root.render(<h1>Hello, world</h1>);
 ```
@@ -96,10 +96,10 @@ Việc tích hợp môi trường JavaScript dạng module vào một dự án h
 ```js
 import { createRoot } from 'react-dom/client';
 
-// Clear the existing HTML content
+// Xóa nội dung HTML hiện có
 document.body.innerHTML = '<div id="app"></div>';
 
-// Render your React component instead
+// Thay vào đó, render component React của bạn
 const root = createRoot(document.getElementById('app'));
 root.render(<h1>Hello, world</h1>);
 ```
@@ -136,7 +136,7 @@ Thay vào đó, có lẽ bạn muốn render các React component tại những 
 import { createRoot } from 'react-dom/client';
 
 function NavigationBar() {
-  // TODO: Actually implement a navigation bar
+  // TODO: Thực sự triển khai thanh điều hướng
   return <h1>Hello from React!</h1>;
 }
 

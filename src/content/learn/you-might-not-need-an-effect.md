@@ -39,7 +39,7 @@ function Form() {
   const [firstName, setFirstName] = useState('Taylor');
   const [lastName, setLastName] = useState('Swift');
 
-  // 🔴 Avoid: redundant state and unnecessary Effect
+  // 🔴 Tránh: state dư thừa và Effect không cần thiết
   const [fullName, setFullName] = useState('');
   useEffect(() => {
     setFullName(firstName + ' ' + lastName);
@@ -54,7 +54,7 @@ Cách này phức tạp hơn mức cần thiết. Nó cũng không hiệu quả:
 function Form() {
   const [firstName, setFirstName] = useState('Taylor');
   const [lastName, setLastName] = useState('Swift');
-  // ✅ Good: calculated during rendering
+  // ✅ Tốt: tính toán trong khi render
   const fullName = firstName + ' ' + lastName;
   // ...
 }
@@ -70,7 +70,7 @@ Component này tính `visibleTodos` bằng cách lấy `todos` nhận được t
 function TodoList({ todos, filter }) {
   const [newTodo, setNewTodo] = useState('');
 
-  // 🔴 Avoid: redundant state and unnecessary Effect
+  // 🔴 Tránh: state dư thừa và Effect không cần thiết
   const [visibleTodos, setVisibleTodos] = useState([]);
   useEffect(() => {
     setVisibleTodos(getFilteredTodos(todos, filter));
@@ -85,7 +85,7 @@ Giống như ví dụ trước, cách này vừa không cần thiết vừa khô
 ```js {3-4}
 function TodoList({ todos, filter }) {
   const [newTodo, setNewTodo] = useState('');
-  // ✅ This is fine if getFilteredTodos() is not slow.
+  // ✅ Cách này ổn nếu getFilteredTodos() không chậm.
   const visibleTodos = getFilteredTodos(todos, filter);
   // ...
 }
@@ -107,7 +107,7 @@ import { useMemo, useState } from 'react';
 function TodoList({ todos, filter }) {
   const [newTodo, setNewTodo] = useState('');
   const visibleTodos = useMemo(() => {
-    // ✅ Does not re-run unless todos or filter change
+    // ✅ Không chạy lại trừ khi todos hoặc filter thay đổi
     return getFilteredTodos(todos, filter);
   }, [todos, filter]);
   // ...
@@ -121,7 +121,7 @@ import { useMemo, useState } from 'react';
 
 function TodoList({ todos, filter }) {
   const [newTodo, setNewTodo] = useState('');
-  // ✅ Does not re-run getFilteredTodos() unless todos or filter change
+  // ✅ Không chạy lại getFilteredTodos() trừ khi todos hoặc filter thay đổi
   const visibleTodos = useMemo(() => getFilteredTodos(todos, filter), [todos, filter]);
   // ...
 }
@@ -148,7 +148,7 @@ Hãy thực hiện thao tác mà bạn đang đo (ví dụ: nhập vào input). 
 ```js
 console.time('filter array');
 const visibleTodos = useMemo(() => {
-  return getFilteredTodos(todos, filter); // Skipped if todos and filter haven't changed
+  return getFilteredTodos(todos, filter); // Bỏ qua nếu todos và filter chưa thay đổi
 }, [todos, filter]);
 console.timeEnd('filter array');
 ```
@@ -169,7 +169,7 @@ Ngoài ra, hãy lưu ý rằng việc đo hiệu năng trong môi trường deve
 export default function ProfilePage({ userId }) {
   const [comment, setComment] = useState('');
 
-  // 🔴 Avoid: Resetting state on prop change in an Effect
+  // 🔴 Tránh: reset state khi prop thay đổi trong Effect
   useEffect(() => {
     setComment('');
   }, [userId]);
@@ -192,7 +192,7 @@ export default function ProfilePage({ userId }) {
 }
 
 function Profile({ userId }) {
-  // ✅ This and any other state below will reset on key change automatically
+  // ✅ State này và mọi state bên dưới sẽ tự reset khi key thay đổi
   const [comment, setComment] = useState('');
   // ...
 }
@@ -213,7 +213,7 @@ function List({ items }) {
   const [isReverse, setIsReverse] = useState(false);
   const [selection, setSelection] = useState(null);
 
-  // 🔴 Avoid: Adjusting state on prop change in an Effect
+  // 🔴 Tránh: điều chỉnh state khi prop thay đổi trong Effect
   useEffect(() => {
     setSelection(null);
   }, [items]);
@@ -230,7 +230,7 @@ function List({ items }) {
   const [isReverse, setIsReverse] = useState(false);
   const [selection, setSelection] = useState(null);
 
-  // Better: Adjust the state while rendering
+  // Tốt hơn: điều chỉnh state trong khi render
   const [prevItems, setPrevItems] = useState(items);
   if (items !== prevItems) {
     setPrevItems(items);
@@ -250,7 +250,7 @@ Khi bạn cập nhật một component trong quá trình rendering, React sẽ l
 function List({ items }) {
   const [isReverse, setIsReverse] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  // ✅ Best: Calculate everything during rendering
+  // ✅ Tốt nhất: tính mọi thứ trong khi render
   const selection = items.find(item => item.id === selectedId) ?? null;
   // ...
 }
@@ -264,7 +264,7 @@ Giả sử bạn có một trang sản phẩm với hai nút (Buy và Checkout),
 
 ```js {2-7}
 function ProductPage({ product, addToCart }) {
-  // 🔴 Avoid: Event-specific logic inside an Effect
+  // 🔴 Tránh: logic dành riêng cho event nằm trong Effect
   useEffect(() => {
     if (product.isInCart) {
       showNotification(`Added ${product.name} to the shopping cart!`);
@@ -289,7 +289,7 @@ Effect này không cần thiết. Nó cũng rất có thể gây ra lỗi. Ví d
 
 ```js {2-6,9,13}
 function ProductPage({ product, addToCart }) {
-  // ✅ Good: Event-specific logic is called from event handlers
+  // ✅ Tốt: logic dành riêng cho event được gọi từ event handler
   function buyProduct() {
     addToCart(product);
     showNotification(`Added ${product.name} to the shopping cart!`);
@@ -318,12 +318,12 @@ function Form() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // ✅ Good: This logic should run because the component was displayed
+  // ✅ Tốt: logic này nên chạy vì component đã được hiển thị
   useEffect(() => {
     post('/analytics/event', { eventName: 'visit_form' });
   }, []);
 
-  // 🔴 Avoid: Event-specific logic inside an Effect
+  // 🔴 Tránh: logic dành riêng cho event nằm trong Effect
   const [jsonToSubmit, setJsonToSubmit] = useState(null);
   useEffect(() => {
     if (jsonToSubmit !== null) {
@@ -350,14 +350,14 @@ function Form() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // ✅ Good: This logic runs because the component was displayed
+  // ✅ Tốt: logic này chạy vì component đã được hiển thị
   useEffect(() => {
     post('/analytics/event', { eventName: 'visit_form' });
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    // ✅ Good: Event-specific logic is in the event handler
+    // ✅ Tốt: logic dành riêng cho event nằm trong event handler
     post('/api/register', { firstName, lastName });
   }
   // ...
@@ -377,7 +377,7 @@ function Game() {
   const [round, setRound] = useState(1);
   const [isGameOver, setIsGameOver] = useState(false);
 
-  // 🔴 Avoid: Chains of Effects that adjust the state solely to trigger each other
+  // 🔴 Tránh: chuỗi Effect chỉ điều chỉnh state để kích hoạt lẫn nhau
   useEffect(() => {
     if (card !== null && card.gold) {
       setGoldCardCount(c => c + 1);
@@ -426,7 +426,7 @@ function Game() {
   const [goldCardCount, setGoldCardCount] = useState(0);
   const [round, setRound] = useState(1);
 
-  // ✅ Calculate what you can during rendering
+  // ✅ Tính những gì có thể trong khi render
   const isGameOver = round > 5;
 
   function handlePlaceCard(nextCard) {
@@ -434,7 +434,7 @@ function Game() {
       throw Error('Game already ended.');
     }
 
-    // ✅ Calculate all the next state in the event handler
+    // ✅ Tính toàn bộ state tiếp theo trong event handler
     setCard(nextCard);
     if (nextCard.gold) {
       if (goldCardCount < 3) {
@@ -466,7 +466,7 @@ Bạn có thể muốn đặt logic đó trong một Effect ở component cấp 
 
 ```js {2-6}
 function App() {
-  // 🔴 Avoid: Effects with logic that should only ever run once
+  // 🔴 Tránh: Effect có logic chỉ nên chạy đúng một lần
   useEffect(() => {
     loadDataFromLocalStorage();
     checkAuthToken();
@@ -486,7 +486,7 @@ function App() {
   useEffect(() => {
     if (!didInit) {
       didInit = true;
-      // ✅ Only runs once per app load
+      // ✅ Chỉ chạy một lần cho mỗi lần tải app
       loadDataFromLocalStorage();
       checkAuthToken();
     }
@@ -498,8 +498,8 @@ function App() {
 Bạn cũng có thể chạy logic này trong quá trình khởi tạo module và trước khi app render:
 
 ```js {1,5}
-if (typeof window !== 'undefined') { // Check if we're running in the browser.
-   // ✅ Only runs once per app load
+if (typeof window !== 'undefined') { // Kiểm tra xem có đang chạy trong trình duyệt không.
+   // ✅ Chỉ chạy một lần cho mỗi lần tải app
   checkAuthToken();
   loadDataFromLocalStorage();
 }
@@ -519,7 +519,7 @@ Giả sử bạn đang viết một component `Toggle` có state `isOn` nội b�
 function Toggle({ onChange }) {
   const [isOn, setIsOn] = useState(false);
 
-  // 🔴 Avoid: The onChange handler runs too late
+  // 🔴 Tránh: trình xử lý onChange chạy quá muộn
   useEffect(() => {
     onChange(isOn);
   }, [isOn, onChange])
@@ -549,7 +549,7 @@ function Toggle({ onChange }) {
   const [isOn, setIsOn] = useState(false);
 
   function updateToggle(nextIsOn) {
-    // ✅ Good: Perform all updates during the event that caused them
+    // ✅ Tốt: thực hiện mọi cập nhật trong event đã gây ra chúng
     setIsOn(nextIsOn);
     onChange(nextIsOn);
   }
@@ -575,7 +575,7 @@ Với cách tiếp cận này, cả component `Toggle` và component cha của n
 Bạn cũng có thể loại bỏ hoàn toàn state và thay vào đó nhận `isOn` từ component cha:
 
 ```js {1,2}
-// ✅ Also good: the component is fully controlled by its parent
+// ✅ Cũng tốt: component được component cha kiểm soát hoàn toàn
 function Toggle({ isOn, onChange }) {
   function handleClick() {
     onChange(!isOn);
@@ -608,7 +608,7 @@ function Parent() {
 
 function Child({ onFetched }) {
   const data = useSomeAPI();
-  // 🔴 Avoid: Passing data to the parent in an Effect
+  // 🔴 Tránh: truyền dữ liệu cho component cha trong Effect
   useEffect(() => {
     if (data) {
       onFetched(data);
@@ -624,7 +624,7 @@ Trong React, dữ liệu đi từ các component cha xuống các component con.
 function Parent() {
   const data = useSomeAPI();
   // ...
-  // ✅ Good: Passing data down to the child
+  // ✅ Tốt: truyền dữ liệu xuống component con
   return <Child data={data} />;
 }
 
@@ -641,7 +641,7 @@ Cách này đơn giản hơn và giữ cho luồng dữ liệu dễ dự đoán:
 
 ```js {2-17}
 function useOnlineStatus() {
-  // Not ideal: Manual store subscription in an Effect
+  // Chưa tối ưu: đăng ký store thủ công trong Effect
   const [isOnline, setIsOnline] = useState(true);
   useEffect(() => {
     function updateState() {
@@ -681,11 +681,11 @@ function subscribe(callback) {
 }
 
 function useOnlineStatus() {
-  // ✅ Good: Subscribing to an external store with a built-in Hook
+  // ✅ Tốt: đăng ký store bên ngoài bằng Hook có sẵn
   return useSyncExternalStore(
-    subscribe, // React won't resubscribe for as long as you pass the same function
-    () => navigator.onLine, // How to get the value on the client
-    () => true // How to get the value on the server
+    subscribe, // React sẽ không đăng ký lại nếu bạn vẫn truyền cùng một hàm
+    () => navigator.onLine, // Cách lấy giá trị ở client
+    () => true // Cách lấy giá trị ở server
   );
 }
 
@@ -707,7 +707,7 @@ function SearchResults({ query }) {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    // 🔴 Avoid: Fetching without cleanup logic
+    // 🔴 Tránh: fetch mà không có logic dọn dẹp
     fetchResults(query, page).then(json => {
       setResults(json);
     });

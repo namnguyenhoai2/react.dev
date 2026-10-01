@@ -540,37 +540,37 @@ Ví dụ này **không sử dụng React** nhưng giúp bạn hình dung cách `
 let componentHooks = [];
 let currentHookIndex = 0;
 
-// How useState works inside React (simplified).
+// Cách useState hoạt động bên trong React (đã đơn giản hóa).
 function useState(initialState) {
   let pair = componentHooks[currentHookIndex];
   if (pair) {
-    // This is not the first render,
-    // so the state pair already exists.
-    // Return it and prepare for next Hook call.
+    // Đây không phải lần render đầu tiên,
+    // nên cặp state đã tồn tại.
+    // Trả về nó và chuẩn bị cho lời gọi Hook tiếp theo.
     currentHookIndex++;
     return pair;
   }
 
-  // This is the first time we're rendering,
-  // so create a state pair and store it.
+  // Đây là lần đầu tiên chúng ta render,
+  // nên tạo và lưu một cặp state.
   pair = [initialState, setState];
 
   function setState(nextState) {
-    // When the user requests a state change,
-    // put the new value into the pair.
+    // Khi người dùng yêu cầu thay đổi state,
+    // đặt giá trị mới vào cặp này.
     pair[0] = nextState;
     updateDOM();
   }
 
-  // Store the pair for future renders
-  // and prepare for the next Hook call.
+  // Lưu cặp này cho các lần render sau
+  // và chuẩn bị cho lời gọi Hook tiếp theo.
   componentHooks[currentHookIndex] = pair;
   currentHookIndex++;
   return pair;
 }
 
 function Gallery() {
-  // Each useState() call will get the next pair.
+  // Mỗi lời gọi useState() sẽ nhận cặp tiếp theo.
   const [index, setIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
 
@@ -583,8 +583,8 @@ function Gallery() {
   }
 
   let sculpture = sculptureList[index];
-  // This example doesn't use React, so
-  // return an output object instead of JSX.
+  // Ví dụ này không dùng React, nên
+  // trả về object đầu ra thay vì JSX.
   return {
     onNextClick: handleNextClick,
     onMoreClick: handleMoreClick,
@@ -598,13 +598,13 @@ function Gallery() {
 }
 
 function updateDOM() {
-  // Reset the current Hook index
-  // before rendering the component.
+  // Đặt lại chỉ số Hook hiện tại
+  // trước khi render component.
   currentHookIndex = 0;
   let output = Gallery();
 
-  // Update the DOM to match the output.
-  // This is the part React does for you.
+  // Cập nhật DOM để khớp với đầu ra.
+  // Đây là phần React làm thay bạn.
   nextButton.onclick = output.onNextClick;
   header.textContent = output.header;
   moreButton.onclick = output.onMoreClick;
@@ -698,7 +698,7 @@ let sculptureList = [{
   alt: 'A group of bronze hippo sculptures emerging from the sett sidewalk as if they were swimming.'
 }];
 
-// Make UI match the initial state.
+// Làm cho UI khớp với state ban đầu.
 updateDOM();
 ```
 

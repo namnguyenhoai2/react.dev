@@ -58,8 +58,8 @@ Sử dụng `"use no memo"` để xác định xem sự cố có liên quan đ�
 
 ```js
 function ProblematicComponent() {
-  "use no memo"; // Skip compilation for this component
-  // ... rest of component
+  "use no memo"; // Bỏ qua việc biên dịch component này
+  // ... phần còn lại của component
 }
 ```
 

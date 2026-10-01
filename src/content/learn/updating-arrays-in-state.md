@@ -91,10 +91,10 @@ button { margin-left: 5px; }
 Thay vào đó, hãy tạo một array *mới* chứa các phần tử hiện có *và* một phần tử mới ở cuối. Có nhiều cách để làm việc này, nhưng cách dễ nhất là sử dụng cú pháp `...` [array spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_array_literals):
 
 ```js
-setArtists( // Replace the state
-  [ // with a new array
-    ...artists, // that contains all the old items
-    { id: nextId++, name: name } // and one new item at the end
+setArtists( // Thay thế state
+  [ // bằng một mảng mới
+    ...artists, // chứa mọi phần tử cũ
+    { id: nextId++, name: name } // và một phần tử mới ở cuối
   ]
 );
 ```
@@ -146,7 +146,7 @@ Cú pháp array spread cũng cho phép bạn thêm một phần tử vào đầu
 ```js
 setArtists([
   { id: nextId++, name: name },
-  ...artists // Put old items at the end
+  ...artists // Đặt các phần tử cũ ở cuối
 ]);
 ```
 
@@ -233,17 +233,17 @@ export default function ShapeEditor() {
   function handleClick() {
     const nextShapes = shapes.map(shape => {
       if (shape.type === 'square') {
-        // No change
+        // Không thay đổi
         return shape;
       } else {
-        // Return a new circle 50px below
+        // Trả về một hình tròn mới thấp hơn 50px
         return {
           ...shape,
           y: shape.y + 50,
         };
       }
     });
-    // Re-render with the new array
+    // Render lại với mảng mới
     setShapes(nextShapes);
   }
 
@@ -301,10 +301,10 @@ export default function CounterList() {
   function handleIncrementClick(index) {
     const nextCounters = counters.map((c, i) => {
       if (i === index) {
-        // Increment the clicked counter
+        // Tăng bộ đếm đã nhấp
         return c + 1;
       } else {
-        // The rest haven't changed
+        // Các phần còn lại không thay đổi
         return c;
       }
     });
@@ -357,13 +357,13 @@ export default function List() {
   );
 
   function handleClick() {
-    const insertAt = 1; // Could be any index
+    const insertAt = 1; // Có thể là bất kỳ index nào
     const nextArtists = [
-      // Items before the insertion point:
+      // Các phần tử trước vị trí chèn:
       ...artists.slice(0, insertAt),
-      // New item:
+      // Phần tử mới:
       { id: nextId++, name: name },
-      // Items after the insertion point:
+      // Các phần tử sau vị trí chèn:
       ...artists.slice(insertAt)
     ];
     setArtists(nextArtists);
@@ -447,7 +447,7 @@ Tuy nhiên, **ngay cả khi đã sao chép một array, bạn cũng không thể
 
 ```js
 const nextList = [...list];
-nextList[0].seen = true; // Problem: mutates list[0]
+nextList[0].seen = true; // Vấn đề: mutate list[0]
 setList(nextList);
 ```
 
@@ -544,7 +544,7 @@ Vấn đề nằm trong đoạn code như sau:
 ```js
 const myNextList = [...myList];
 const artwork = myNextList.find(a => a.id === artworkId);
-artwork.seen = nextSeen; // Problem: mutates an existing item
+artwork.seen = nextSeen; // Vấn đề: mutate một phần tử đã tồn tại
 setMyList(myNextList);
 ```
 
@@ -555,10 +555,10 @@ Mặc dù bản thân mảng `myNextList` là một mảng mới, *các item tro
 ```js
 setMyList(myList.map(artwork => {
   if (artwork.id === artworkId) {
-    // Create a *new* object with changes
+    // Tạo một object *mới* với các thay đổi
     return { ...artwork, seen: nextSeen };
   } else {
-    // No changes
+    // Không thay đổi
     return artwork;
   }
 }));
@@ -589,10 +589,10 @@ export default function BucketList() {
   function handleToggleMyList(artworkId, nextSeen) {
     setMyList(myList.map(artwork => {
       if (artwork.id === artworkId) {
-        // Create a *new* object with changes
+        // Tạo một object *mới* với các thay đổi
         return { ...artwork, seen: nextSeen };
       } else {
-        // No changes
+        // Không thay đổi
         return artwork;
       }
     }));
@@ -601,10 +601,10 @@ export default function BucketList() {
   function handleToggleYourList(artworkId, nextSeen) {
     setYourList(yourList.map(artwork => {
       if (artwork.id === artworkId) {
-        // Create a *new* object with changes
+        // Tạo một object *mới* với các thay đổi
         return { ...artwork, seen: nextSeen };
       } else {
-        // No changes
+        // Không thay đổi
         return artwork;
       }
     }));

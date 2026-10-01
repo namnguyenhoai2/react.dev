@@ -169,7 +169,7 @@ Nếu bạn render một phần tử HTML tích hợp sẵn của trình duyệt
 
 Các phần tử tùy chỉnh có hai cách để truyền dữ liệu vào:
 
-1) Attributes: Được hiển thị trong markup và chỉ có thể được thiết lập bằng các giá trị chuỗi  
+1) Attributes: Được hiển thị trong markup và chỉ có thể được thiết lập bằng các giá trị chuỗi
 2) Properties: Không được hiển thị trong markup và có thể được thiết lập bằng các giá trị JavaScript tùy ý
 
 Theo mặc định, React sẽ truyền các giá trị được liên kết trong JSX dưới dạng attributes:

@@ -241,12 +241,12 @@ Không. Những hàm không *gọi* Hook thì không cần *là* Hook.
 Nếu hàm của bạn không gọi Hook nào, hãy tránh tiền tố `use`. Thay vào đó, hãy viết nó như một hàm thông thường *không có* tiền tố `use`. Ví dụ, `useSorted` bên dưới không gọi Hook nào, vì vậy hãy gọi nó là `getSorted`:
 
 ```js
-// 🔴 Avoid: A Hook that doesn't use Hooks
+// 🔴 Tránh: Hook không dùng Hook nào
 function useSorted(items) {
   return items.slice().sort();
 }
 
-// ✅ Good: A regular function that doesn't use Hooks
+// ✅ Tốt: Hàm thông thường không dùng Hook nào
 function getSorted(items) {
   return items.slice().sort();
 }
@@ -258,7 +258,7 @@ function getSorted(items) {
 function List({ items, shouldSort }) {
   let displayedItems = items;
   if (shouldSort) {
-    // ✅ It's ok to call getSorted() conditionally because it's not a Hook
+    // ✅ Có thể gọi getSorted() có điều kiện vì nó không phải Hook
     displayedItems = getSorted(items);
   }
   // ...
@@ -268,7 +268,7 @@ function List({ items, shouldSort }) {
 Bạn nên thêm tiền tố `use` cho một hàm (và do đó biến nó thành một Hook) nếu bên trong nó sử dụng ít nhất một Hook:
 
 ```js
-// ✅ Good: A Hook that uses other Hooks
+// ✅ Tốt: Hook dùng các Hook khác
 function useAuth() {
   return useContext(Auth);
 }
@@ -277,9 +277,9 @@ function useAuth() {
 Về mặt kỹ thuật, React không bắt buộc điều này. Về nguyên tắc, bạn có thể tạo một Hook không gọi các Hook khác. Cách này thường gây khó hiểu và hạn chế, vì vậy tốt nhất nên tránh. Tuy nhiên, có thể có những trường hợp hiếm hoi mà nó hữu ích. Ví dụ, có thể hiện tại hàm của bạn chưa sử dụng Hook nào, nhưng bạn dự định thêm một số lệnh gọi Hook vào đó trong tương lai. Khi đó, việc đặt tên cho nó bằng tiền tố `use` là hợp lý:
 
 ```js {3-4}
-// ✅ Good: A Hook that will likely use some other Hooks later
+// ✅ Tốt: Hook có thể sẽ dùng một số Hook khác sau này
 function useAuth() {
-  // TODO: Replace with this line when authentication is implemented:
+  // TODO: Thay bằng dòng này khi đã triển khai xác thực:
   // return useContext(Auth);
   return TEST_USER;
 }
@@ -516,7 +516,7 @@ export default function ChatRoom({ roomId }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -724,7 +724,7 @@ export function useChatRoom({ serverUrl, roomId }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1002,7 +1002,7 @@ export function useChatRoom({ serverUrl, roomId, onReceiveMessage }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1098,7 +1098,7 @@ Ví dụ, hãy xem xét một component `ShippingForm` hiển thị hai dropdown
 ```js {3-16,20-35}
 function ShippingForm({ country }) {
   const [cities, setCities] = useState(null);
-  // This Effect fetches cities for a country
+  // Effect này lấy các thành phố của một quốc gia
   useEffect(() => {
     let ignore = false;
     fetch(`/api/cities?country=${country}`)
@@ -1115,7 +1115,7 @@ function ShippingForm({ country }) {
 
   const [city, setCity] = useState(null);
   const [areas, setAreas] = useState(null);
-  // This Effect fetches areas for the selected city
+  // Effect này lấy các khu vực của thành phố đã chọn
   useEffect(() => {
     if (city) {
       let ignore = false;
@@ -1201,7 +1201,7 @@ Ví dụ, Hook `useMount` này cố gắng đảm bảo rằng một đoạn cod
 function ChatRoom({ roomId }) {
   const [serverUrl, setServerUrl] = useState('https://localhost:1234');
 
-  // 🔴 Avoid: using custom "lifecycle" Hooks
+  // 🔴 Tránh: dùng các Hook "lifecycle" tùy chỉnh
   useMount(() => {
     const connection = createConnection({ roomId, serverUrl });
     connection.connect();
@@ -1211,7 +1211,7 @@ function ChatRoom({ roomId }) {
   // ...
 }
 
-// 🔴 Avoid: creating custom "lifecycle" Hooks
+// 🔴 Tránh: tạo các Hook "lifecycle" tùy chỉnh
 function useMount(fn) {
   useEffect(() => {
     fn();
@@ -1227,7 +1227,7 @@ Nếu bạn đang viết một Effect, hãy bắt đầu bằng cách sử dụn
 function ChatRoom({ roomId }) {
   const [serverUrl, setServerUrl] = useState('https://localhost:1234');
 
-  // ✅ Good: two raw Effects separated by purpose
+  // ✅ Tốt: hai Effect thô được tách theo mục đích
 
   useEffect(() => {
     const connection = createConnection({ serverUrl, roomId });
@@ -1249,7 +1249,7 @@ Sau đó, bạn có thể (nhưng không bắt buộc) tách các custom Hook ch
 function ChatRoom({ roomId }) {
   const [serverUrl, setServerUrl] = useState('https://localhost:1234');
 
-  // ✅ Great: custom Hooks named after their purpose
+  // ✅ Rất tốt: Hook tùy chỉnh được đặt tên theo mục đích
   useChatRoom({ serverUrl, roomId });
   useImpressionLog('visit_chat', { roomId });
   // ...
@@ -1378,8 +1378,8 @@ function subscribe(callback) {
 export function useOnlineStatus() {
   return useSyncExternalStore(
     subscribe,
-    () => navigator.onLine, // How to get the value on the client
-    () => true // How to get the value on the server
+    () => navigator.onLine, // Cách lấy giá trị ở client
+    () => true // Cách lấy giá trị ở server
   );
 }
 
@@ -1472,7 +1472,7 @@ function Welcome() {
       const progress = Math.min(timePassed / duration, 1);
       onProgress(progress);
       if (progress < 1) {
-        // We still have more frames to paint
+        // Vẫn còn các frame cần vẽ
         frameId = requestAnimationFrame(onFrame);
       }
     }
@@ -1582,7 +1582,7 @@ export function useFadeIn(ref, duration) {
       const progress = Math.min(timePassed / duration, 1);
       onProgress(progress);
       if (progress < 1) {
-        // We still have more frames to paint
+        // Vẫn còn các frame cần vẽ
         frameId = requestAnimationFrame(onFrame);
       }
     }
@@ -1779,7 +1779,7 @@ export class FadeInAnimation {
     if (progress === 1) {
       this.stop();
     } else {
-      // We still have more frames to paint
+      // Vẫn còn các frame cần vẽ
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
   }
@@ -1916,7 +1916,7 @@ export default function Counter() {
 ```
 
 ```js src/useCounter.js
-// Write your custom Hook in this file!
+// Hãy viết Hook tùy chỉnh của bạn trong tệp này!
 ```
 
 </Sandpack>
@@ -2102,7 +2102,7 @@ export function useCounter(delay) {
 ```
 
 ```js src/useInterval.js
-// Write your Hook here!
+// Hãy viết Hook của bạn ở đây!
 ```
 
 </Sandpack>
@@ -2309,7 +2309,7 @@ Effect này có cần cleanup không? Tại sao có hoặc tại sao không?
 import { usePointerPosition } from './usePointerPosition.js';
 
 function useDelayedValue(value, delay) {
-  // TODO: Implement this Hook
+  // TODO: Triển khai Hook này
   return value;
 }
 

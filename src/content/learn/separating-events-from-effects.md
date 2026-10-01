@@ -136,7 +136,7 @@ export function sendMessage(message) {
 }
 
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -335,7 +335,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -517,7 +517,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -685,7 +685,7 @@ Vì Effect Event của bạn “yêu cầu” `visitedUrl` một cách rõ ràng
   useEffect(() => {
     setTimeout(() => {
       onVisit(url);
-    }, 5000); // Delay logging visits
+    }, 5000); // Trì hoãn việc ghi log lượt truy cập
   }, [url]);
 ```
 
@@ -706,7 +706,7 @@ function Page({ url }) {
 
   useEffect(() => {
     logVisit(url, numberOfItems);
-    // 🔴 Avoid suppressing the linter like this:
+    // 🔴 Tránh vô hiệu hóa linter theo cách này:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
   // ...
@@ -864,7 +864,7 @@ function Timer() {
     setCount(count + 1);
   });
 
-  useTimer(onTick, 1000); // 🔴 Avoid: Passing Effect Events
+  useTimer(onTick, 1000); // 🔴 Tránh: truyền Effect Event
 
   return <h1>{count}</h1>
 }
@@ -877,7 +877,7 @@ function useTimer(callback, delay) {
     return () => {
       clearInterval(id);
     };
-  }, [delay, callback]); // Need to specify "callback" in dependencies
+  }, [delay, callback]); // Cần chỉ định "callback" trong dependencies
 }
 ```
 
@@ -899,12 +899,12 @@ function useTimer(callback, delay) {
 
   useEffect(() => {
     const id = setInterval(() => {
-      onTick(); // ✅ Good: Only called locally inside an Effect
+      onTick(); // ✅ Tốt: chỉ được gọi cục bộ trong Effect
     }, delay);
     return () => {
       clearInterval(id);
     };
-  }, [delay]); // No need to specify "onTick" (an Effect Event) as a dependency
+  }, [delay]); // Không cần chỉ định "onTick" (một Effect Event) làm dependency
 }
 ```
 
@@ -1403,7 +1403,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -1544,7 +1544,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -1687,7 +1687,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {

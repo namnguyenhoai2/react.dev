@@ -147,7 +147,7 @@ export default function FeedbackForm() {
   );
 }
 
-// Pretend to send a message.
+// Giả lập việc gửi một tin nhắn.
 function sendMessage(text) {
   return new Promise(resolve => {
     setTimeout(resolve, 2000);
@@ -204,7 +204,7 @@ export default function FeedbackForm() {
   );
 }
 
-// Pretend to send a message.
+// Giả lập việc gửi một tin nhắn.
 function sendMessage(text) {
   return new Promise(resolve => {
     setTimeout(resolve, 2000);
@@ -368,8 +368,8 @@ Việc “mirror” props vào state chỉ có ý nghĩa khi bạn *muốn bỏ 
 
 ```js
 function Message({ initialColor }) {
-  // The `color` state variable holds the *first* value of `initialColor`.
-  // Further changes to the `initialColor` prop are ignored.
+  // Biến state `color` giữ giá trị *đầu tiên* của `initialColor`.
+  // Các thay đổi tiếp theo của prop `initialColor` sẽ bị bỏ qua.
   const [color, setColor] = useState(initialColor);
 ```
 
@@ -1138,17 +1138,17 @@ export default function TravelPlan() {
 
   function handleComplete(parentId, childId) {
     const parent = plan[parentId];
-    // Create a new version of the parent place
-    // that doesn't include this child ID.
+    // Tạo một phiên bản mới của địa điểm cha
+    // không chứa ID của phần tử con này.
     const nextParent = {
       ...parent,
       childIds: parent.childIds
         .filter(id => id !== childId)
     };
-    // Update the root state object...
+    // Cập nhật object state gốc...
     setPlan({
       ...plan,
-      // ...so that it has the updated parent.
+      // ...để nó chứa địa điểm cha đã được cập nhật.
       [parentId]: nextParent
     });
   }
@@ -1477,12 +1477,12 @@ export default function TravelPlan() {
 
   function handleComplete(parentId, childId) {
     updatePlan(draft => {
-      // Remove from the parent place's child IDs.
+      // Xóa khỏi danh sách ID phần tử con của địa điểm cha.
       const parent = draft[parentId];
       parent.childIds = parent.childIds
         .filter(id => id !== childId);
 
-      // Forget this place and all its subtree.
+      // Xóa địa điểm này và toàn bộ cây con của nó.
       deleteAllChildren(childId);
       function deleteAllChildren(id) {
         const place = draft[id];
@@ -2624,14 +2624,14 @@ export default function MailClient() {
   const selectedCount = selectedIds.length;
 
   function handleToggle(toggledId) {
-    // Was it previously selected?
+    // Trước đó nó đã được chọn chưa?
     if (selectedIds.includes(toggledId)) {
-      // Then remove this ID from the array.
+      // Nếu có, xóa ID này khỏi mảng.
       setSelectedIds(selectedIds.filter(id =>
         id !== toggledId
       ));
     } else {
-      // Otherwise, add this ID to the array.
+      // Nếu không, thêm ID này vào mảng.
       setSelectedIds([
         ...selectedIds,
         toggledId
@@ -2734,7 +2734,7 @@ export default function MailClient() {
   const selectedCount = selectedIds.size;
 
   function handleToggle(toggledId) {
-    // Create a copy (to avoid mutation).
+    // Tạo bản sao (để tránh mutate).
     const nextIds = new Set(selectedIds);
     if (nextIds.has(toggledId)) {
       nextIds.delete(toggledId);

@@ -40,7 +40,7 @@ Cuối cùng, truyền ref của bạn dưới dạng thuộc tính `ref` vào t
 Hook `useRef` trả về một object có một thuộc tính duy nhất tên là `current`. Ban đầu, `myRef.current` sẽ là `null`. Khi React tạo một node DOM cho `<div>` này, React sẽ đặt tham chiếu đến node đó vào `myRef.current`. Sau đó, bạn có thể truy cập node DOM này từ các [event handler](/learn/responding-to-events) của mình và sử dụng các [browser API](https://developer.mozilla.org/docs/Web/API/Element) tích hợp sẵn được định nghĩa trên node đó.
 
 ```js
-// You can use any browser APIs, for example:
+// Bạn có thể dùng bất kỳ browser API nào, ví dụ:
 myRef.current.scrollIntoView();
 ```
 
@@ -200,7 +200,7 @@ Trong các ví dụ trên, số lượng ref được xác định trước. Tuy
 ```js
 <ul>
   {items.map((item) => {
-    // Doesn't work!
+    // Không hoạt động!
     const ref = useRef(null);
     return <li ref={ref} />;
   })}
@@ -236,7 +236,7 @@ export default function CatFriends() {
 
   function getMap() {
     if (!itemsRef.current) {
-      // Initialize the Map on first usage.
+      // Khởi tạo Map trong lần sử dụng đầu tiên.
       itemsRef.current = new Map();
     }
     return itemsRef.current;
@@ -329,11 +329,11 @@ Trong ví dụ này, `itemsRef` không chứa một node DOM duy nhất. Thay v�
   key={cat.id}
   ref={node => {
     const map = getMap();
-    // Add to the Map
+    // Thêm vào Map
     map.set(cat, node);
 
     return () => {
-      // Remove from the Map
+      // Xóa khỏi Map
       map.delete(cat);
     };
   }}
@@ -420,7 +420,7 @@ import { useRef, useImperativeHandle } from "react";
 function MyInput({ ref }) {
   const realInputRef = useRef(null);
   useImperativeHandle(ref, () => ({
-    // Only expose focus and nothing else
+    // Chỉ expose focus, không expose gì khác
     focus() {
       realInputRef.current.focus();
     },

@@ -281,7 +281,7 @@ Cách đáng tin cậy để có được hành vi bạn muốn là tạo một 
 
 ```js
 setPerson({
-  firstName: e.target.value, // New first name from the input
+  firstName: e.target.value, // Tên mới từ input
   lastName: person.lastName,
   email: person.email
 });
@@ -291,8 +291,8 @@ Bạn có thể sử dụng cú pháp `...` [object spread](https://developer.mo
 
 ```js
 setPerson({
-  ...person, // Copy the old fields
-  firstName: e.target.value // But override this one
+  ...person, // Sao chép các trường cũ
+  firstName: e.target.value // Nhưng ghi đè trường này
 });
 ```
 
@@ -480,10 +480,10 @@ Hoặc viết thành một function call duy nhất:
 
 ```js
 setPerson({
-  ...person, // Copy other fields
-  artwork: { // but replace the artwork
-    ...person.artwork, // with the same one
-    city: 'New Delhi' // but in New Delhi!
+  ...person, // Sao chép các trường khác
+  artwork: { // nhưng thay thế artwork
+    ...person.artwork, // bằng artwork tương tự
+    city: 'New Delhi' // nhưng ở New Delhi!
   }
 });
 ```

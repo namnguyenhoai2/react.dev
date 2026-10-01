@@ -182,7 +182,7 @@ Component có thể render các component khác, nhưng **bạn không bao giờ
 
 ```js {2-5}
 export default function Gallery() {
-  // 🔴 Never define a component inside another component!
+  // 🔴 Đừng bao giờ định nghĩa component bên trong component khác!
   function Profile() {
     // ...
   }
@@ -197,7 +197,7 @@ export default function Gallery() {
   // ...
 }
 
-// ✅ Declare components at the top level
+// ✅ Khai báo component ở cấp cao nhất
 function Profile() {
   // ...
 }
@@ -436,7 +436,7 @@ Hãy tự viết một component từ đầu. Bạn có thể đặt cho nó b�
 <Sandpack>
 
 ```js
-// Write your component below!
+// Hãy viết component của bạn ở bên dưới!
 
 ```
 

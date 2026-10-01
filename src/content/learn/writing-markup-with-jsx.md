@@ -100,7 +100,7 @@ Nếu bạn sao chép và dán nguyên trạng, đoạn mã sẽ không hoạt �
 ```js
 export default function TodoList() {
   return (
-    // This doesn't quite work!
+    // Cách này chưa hoạt động đúng!
     <h1>Hedy Lamarr's Todos</h1>
     <img
       src="https://react.dev/images/docs/scientists/yXOvdOSs.jpg"

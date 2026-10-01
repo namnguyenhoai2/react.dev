@@ -165,7 +165,7 @@ export default function ChatRoom() {
 
 ```js src/chat.js
 export function createConnection() {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting...');
@@ -206,7 +206,7 @@ function Form() {
   const [firstName, setFirstName] = useState('Taylor');
   const [lastName, setLastName] = useState('Swift');
 
-  // 🔴 Avoid: redundant state and unnecessary Effect
+  // 🔴 Tránh: state dư thừa và Effect không cần thiết
   const [fullName, setFullName] = useState('');
   useEffect(() => {
     setFullName(firstName + ' ' + lastName);
@@ -221,7 +221,7 @@ Thay vào đó, hãy tính toán nhiều nhất có thể trong quá trình rend
 function Form() {
   const [firstName, setFirstName] = useState('Taylor');
   const [lastName, setLastName] = useState('Swift');
-  // ✅ Good: calculated during rendering
+  // ✅ Tốt: tính toán trong khi render
   const fullName = firstName + ' ' + lastName;
   // ...
 }
@@ -283,7 +283,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -391,7 +391,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -524,7 +524,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   let connectedCallback;
   let timeout;
   return {
@@ -643,7 +643,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -717,7 +717,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');

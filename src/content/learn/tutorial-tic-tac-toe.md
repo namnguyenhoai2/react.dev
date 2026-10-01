@@ -1343,7 +1343,7 @@ Nhìn chung, có hai cách tiếp cận để thay đổi dữ liệu. Cách th�
 ```jsx
 const squares = [null, null, null, null, null, null, null, null, null];
 squares[0] = 'X';
-// Now `squares` is ["X", null, null, null, null, null, null, null, null];
+// Bây giờ `squares` là ["X", null, null, null, null, null, null, null, null];
 ```
 
 Còn đây là hình dạng khi bạn thay đổi dữ liệu mà không mutate mảng `squares`:
@@ -1351,7 +1351,7 @@ Còn đây là hình dạng khi bạn thay đổi dữ liệu mà không mutate 
 ```jsx
 const squares = [null, null, null, null, null, null, null, null, null];
 const nextSquares = ['X', null, null, null, null, null, null, null, null];
-// Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
+// Bây giờ `squares` không đổi, nhưng phần tử đầu tiên của `nextSquares` là 'X' thay vì `null`
 ```
 
 Kết quả là như nhau, nhưng bằng cách không trực tiếp mutate (thay đổi dữ liệu bên dưới), bạn nhận được một số lợi ích.
@@ -1736,11 +1736,11 @@ Bạn sẽ lưu các mảng `squares` trước đó trong một mảng khác có
 
 ```jsx
 [
-  // Before first move
+  // Trước nước đi đầu tiên
   [null, null, null, null, null, null, null, null, null],
-  // After first move
+  // Sau nước đi đầu tiên
   [null, null, null, null, 'X', null, null, null, null],
-  // After second move
+  // Sau nước đi thứ hai
   [null, null, null, null, 'X', null, null, null, 'O'],
   // ...
 ]

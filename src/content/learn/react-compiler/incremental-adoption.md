@@ -49,7 +49,7 @@ Bắt đầu bằng cách áp dụng compiler cho một thư mục cụ thể:
 // babel.config.js
 module.exports = {
   plugins: [
-    // Global plugins that apply to all files
+    // Các plugin dùng chung cho mọi tệp
   ],
   overrides: [
     {
@@ -70,7 +70,7 @@ Khi đã có thêm sự tin tưởng, hãy thêm nhiều thư mục hơn:
 // babel.config.js
 module.exports = {
   plugins: [
-    // Global plugins
+    // Các plugin dùng chung
   ],
   overrides: [
     {
@@ -82,7 +82,7 @@ module.exports = {
     {
       test: './src/legacy/**/*.{js,jsx,ts,tsx}',
       plugins: [
-        // Different plugins for legacy code
+        // Các plugin khác dành cho code cũ
       ]
     }
   ]
@@ -102,7 +102,7 @@ module.exports = {
       test: './src/experimental/**/*.{js,jsx,ts,tsx}',
       plugins: [
         ['babel-plugin-react-compiler', {
-          // options ...
+          // các tùy chọn ...
         }]
       ]
     },
@@ -110,7 +110,7 @@ module.exports = {
       test: './src/production/**/*.{js,jsx,ts,tsx}',
       plugins: [
         ['babel-plugin-react-compiler', {
-          // options ...
+          // các tùy chọn ...
         }]
       ]
     }
@@ -146,7 +146,7 @@ Thêm `"use memo"` ở đầu các function mà bạn muốn biên dịch:
 
 ```js
 function TodoList({ todos }) {
-  "use memo"; // Opt this component into compilation
+  "use memo"; // Chọn biên dịch component này
 
   const sortedTodos = todos.slice().sort();
 
@@ -160,7 +160,7 @@ function TodoList({ todos }) {
 }
 
 function useSortedData(data) {
-  "use memo"; // Opt this hook into compilation
+  "use memo"; // Chọn biên dịch Hook này
 
   return data.slice().sort();
 }
@@ -204,7 +204,7 @@ Tạo một module export hàm gating của bạn:
 ```js
 // ReactCompilerFeatureFlags.js
 export function isCompilerEnabled() {
-  // Use your feature flag system
+  // Dùng hệ thống feature flag của bạn
   return getFeatureFlag('react-compiler-enabled');
 }
 ```

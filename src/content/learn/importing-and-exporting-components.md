@@ -282,7 +282,7 @@ export default function App() {
 ```
 
 ```js src/Gallery.js active
-// Move me to Profile.js!
+// Hãy chuyển tôi sang Profile.js!
 export function Profile() {
   return (
     <img

@@ -261,8 +261,8 @@ Không giống các biến JavaScript thông thường, state của React hoạt
 
 ```js
 console.log(count);  // 0
-setCount(count + 1); // Request a re-render with 1
-console.log(count);  // Still 0!
+setCount(count + 1); // Yêu cầu render lại với 1
+console.log(count);  // Vẫn là 0!
 ```
 
 Hành vi này giúp bạn tránh các bug khó nhận ra. Đây là một ứng dụng chat nhỏ. Hãy thử đoán điều gì sẽ xảy ra nếu bạn nhấn "Send" trước rồi *sau đó* đổi người nhận thành Bob. Năm giây sau, tên của ai sẽ xuất hiện trong `alert`?

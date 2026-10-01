@@ -108,7 +108,7 @@ Khi viết code trực tiếp, bạn cũng có thể gặp vấn đề tương t
 Việc truyền code trực tiếp như thế này sẽ không chỉ chạy khi nhấp chuột—nó chạy mỗi khi component render:
 
 ```jsx
-// This alert fires when the component renders, not when clicked!
+// Alert này chạy khi component render, không phải khi được nhấp!
 <button onClick={alert('You clicked me!')}>
 ```
 

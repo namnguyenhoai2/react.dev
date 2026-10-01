@@ -97,7 +97,7 @@ Quá trình render của React phải luôn thuần khiết. Component chỉ nê
 let guest = 0;
 
 function Cup() {
-  // Bad: changing a preexisting variable!
+  // Không tốt: thay đổi một biến đã tồn tại!
   guest = guest + 1;
   return <h2>Tea cup for guest #{guest}</h2>;
 }
@@ -615,8 +615,8 @@ export default function App() {
   const [stories, setStories] = useState([...initialStories])
   const time = useTime();
 
-  // HACK: Prevent the memory from growing forever while you read docs.
-  // We're breaking our own rules here.
+  // HACK: Ngăn bộ nhớ tăng mãi khi bạn đọc tài liệu.
+  // Ở đây chúng ta đang phá vỡ chính quy tắc của mình.
   if (stories.length > 100) {
     stories.length = 100;
   }
@@ -711,8 +711,8 @@ export default function App() {
   const [stories, setStories] = useState([...initialStories])
   const time = useTime();
 
-  // HACK: Prevent the memory from growing forever while you read docs.
-  // We're breaking our own rules here.
+  // HACK: Ngăn bộ nhớ tăng mãi khi bạn đọc tài liệu.
+  // Ở đây chúng ta đang phá vỡ chính quy tắc của mình.
   if (stories.length > 100) {
     stories.length = 100;
   }
@@ -769,10 +769,10 @@ Ngoài ra, bạn có thể tạo một mảng _mới_ (bằng cách sao chép m�
 
 ```js src/StoryTray.js active
 export default function StoryTray({ stories }) {
-  // Copy the array!
+  // Sao chép mảng!
   const storiesToDisplay = stories.slice();
 
-  // Does not affect the original array:
+  // Không ảnh hưởng đến mảng gốc:
   storiesToDisplay.push({
     id: 'create',
     label: 'Create Story'
@@ -803,8 +803,8 @@ export default function App() {
   const [stories, setStories] = useState([...initialStories])
   const time = useTime();
 
-  // HACK: Prevent the memory from growing forever while you read docs.
-  // We're breaking our own rules here.
+  // HACK: Ngăn bộ nhớ tăng mãi khi bạn đọc tài liệu.
+  // Ở đây chúng ta đang phá vỡ chính quy tắc của mình.
   if (stories.length > 100) {
     stories.length = 100;
   }

@@ -63,7 +63,7 @@ Sau đó, gọi Hook này ở cấp cao nhất của component và đặt một 
 ```js {2-4}
 function MyComponent() {
   useEffect(() => {
-    // Code here will run after *every* render
+    // Code ở đây sẽ chạy sau *mỗi* lần render
   });
   return <div />;
 }
@@ -81,7 +81,7 @@ Component `VideoPlayer` tùy chỉnh của bạn render thẻ [`<video>`](https:
 
 ```js
 function VideoPlayer({ src, isPlaying }) {
-  // TODO: do something with isPlaying
+  // TODO: xử lý isPlaying
   return <video src={src} />;
 }
 ```
@@ -101,9 +101,9 @@ function VideoPlayer({ src, isPlaying }) {
   const ref = useRef(null);
 
   if (isPlaying) {
-    ref.current.play();  // Calling these while rendering isn't allowed.
+    ref.current.play();  // Không được gọi các hàm này trong khi render.
   } else {
-    ref.current.pause(); // Also, this crashes.
+    ref.current.pause(); // Hơn nữa, cách này sẽ lỗi.
   }
 
   return <video ref={ref} src={src} loop playsInline />;
@@ -306,7 +306,7 @@ function VideoPlayer({ src, isPlaying }) {
       console.log('Calling video.pause()');
       ref.current.pause();
     }
-  }, []); // This causes an error
+  }, []); // Điều này gây ra lỗi
 
   return <video ref={ref} src={src} loop playsInline />;
 }
@@ -340,7 +340,7 @@ Vấn đề là code bên trong Effect của bạn *phụ thuộc vào* prop `is
 
 ```js {2,7}
   useEffect(() => {
-    if (isPlaying) { // It's used here...
+    if (isPlaying) { // Nó được dùng ở đây...
       // ...
     } else {
       // ...
@@ -406,15 +406,15 @@ Hành vi khi không có mảng dependency và khi có một mảng dependency `[
 
 ```js {3,7,11}
 useEffect(() => {
-  // This runs after every render
+  // Đoạn này chạy sau mỗi lần render
 });
 
 useEffect(() => {
-  // This runs only on mount (when the component appears)
+  // Đoạn này chỉ chạy khi mount (khi component xuất hiện)
 }, []);
 
 useEffect(() => {
-  // This runs on mount *and also* if either a or b have changed since the last render
+  // Đoạn này chạy khi mount *và cả* khi a hoặc b thay đổi từ lần render trước
 }, [a, b]);
 ```
 
@@ -503,7 +503,7 @@ export default function ChatRoom() {
 
 ```js src/chat.js
 export function createConnection() {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting...');
@@ -561,7 +561,7 @@ export default function ChatRoom() {
 
 ```js src/chat.js
 export function createConnection() {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting...');
@@ -606,7 +606,7 @@ Một lỗi thường gặp khi ngăn Effect chạy hai lần trong môi trườ
 ```js {1,3-4}
   const connectionRef = useRef(null);
   useEffect(() => {
-    // 🚩 This wont fix the bug!!!
+    // 🚩 Cách này không sửa được bug đâu!!!
     if (!connectionRef.current) {
       connectionRef.current = createConnection();
       connectionRef.current.connect();
@@ -672,9 +672,9 @@ Nếu Effect tạo animation cho một thứ gì đó xuất hiện, hàm cleanu
 ```js {4-6}
 useEffect(() => {
   const node = ref.current;
-  node.style.opacity = 1; // Trigger the animation
+  node.style.opacity = 1; // Kích hoạt hiệu ứng động
   return () => {
-    node.style.opacity = 0; // Reset to the initial value
+    node.style.opacity = 0; // Reset về giá trị ban đầu
   };
 }, []);
 ```
@@ -744,7 +744,7 @@ Hãy xem đoạn code gửi một analytics event khi truy cập trang dưới �
 
 ```js
 useEffect(() => {
-  logVisit(url); // Sends a POST request
+  logVisit(url); // Gửi một POST request
 }, [url]);
 ```
 
@@ -759,7 +759,7 @@ Trong development, `logVisit` sẽ được gọi hai lần cho mỗi URL, vì v
 Một số logic chỉ nên chạy một lần khi ứng dụng khởi động. Bạn có thể đặt logic đó bên ngoài các component:
 
 ```js {2-3}
-if (typeof window !== 'undefined') { // Check if we're running in the browser.
+if (typeof window !== 'undefined') { // Kiểm tra xem có đang chạy trong trình duyệt không.
   checkAuthToken();
   loadDataFromLocalStorage();
 }
@@ -777,7 +777,7 @@ function App() {
 
 ```js {2-3}
 useEffect(() => {
-  // 🔴 Wrong: This Effect fires twice in development, exposing a problem in the code.
+  // 🔴 Sai: Effect này chạy hai lần trong môi trường phát triển, làm lộ vấn đề trong code.
   fetch('/api/buy', { method: 'POST' });
 }, []);
 ```
@@ -788,7 +788,7 @@ Việc mua hàng không do rendering gây ra; nó do một tương tác cụ th�
 
 ```js {2-3}
   function handleClick() {
-    // ✅ Buying is an event because it is caused by a particular interaction.
+    // ✅ Mua hàng là một event vì nó do một tương tác cụ thể gây ra.
     fetch('/api/buy', { method: 'POST' });
   }
 ```
@@ -888,20 +888,20 @@ Hãy cùng xem chính xác điều gì xảy ra khi người dùng điều hư�
 Người dùng truy cập `<ChatRoom roomId="general" />`. Hãy [mentally substitute](/learn/state-as-a-snapshot#rendering-takes-a-snapshot-in-time) `roomId` bằng `'general'`:
 
 ```js
-  // JSX for the first render (roomId = "general")
+  // JSX cho lần render đầu tiên (roomId = "general")
   return <h1>Welcome to general!</h1>;
 ```
 
 **Effect cũng là một phần của output khi render.** Effect của lần render đầu tiên trở thành:
 
 ```js
-  // Effect for the first render (roomId = "general")
+  // Effect cho lần render đầu tiên (roomId = "general")
   () => {
     const connection = createConnection('general');
     connection.connect();
     return () => connection.disconnect();
   },
-  // Dependencies for the first render (roomId = "general")
+  // Dependencies cho lần render đầu tiên (roomId = "general")
   ['general']
 ```
 
@@ -912,7 +912,7 @@ React chạy Effect này, kết nối tới phòng chat `'general'`.
 Giả sử `<ChatRoom roomId="general" />` render lại. Output JSX không thay đổi:
 
 ```js
-  // JSX for the second render (roomId = "general")
+  // JSX cho lần render thứ hai (roomId = "general")
   return <h1>Welcome to general!</h1>;
 ```
 
@@ -921,13 +921,13 @@ React nhận thấy output khi render không thay đổi, vì vậy không cập
 Effect từ lần render thứ hai trông như sau:
 
 ```js
-  // Effect for the second render (roomId = "general")
+  // Effect cho lần render thứ hai (roomId = "general")
   () => {
     const connection = createConnection('general');
     connection.connect();
     return () => connection.disconnect();
   },
-  // Dependencies for the second render (roomId = "general")
+  // Dependencies cho lần render thứ hai (roomId = "general")
   ['general']
 ```
 
@@ -938,7 +938,7 @@ React so sánh `['general']` từ lần render thứ hai với `['general']` t�
 Sau đó, người dùng truy cập `<ChatRoom roomId="travel" />`. Lần này, component trả về JSX khác:
 
 ```js
-  // JSX for the third render (roomId = "travel")
+  // JSX cho lần render thứ ba (roomId = "travel")
   return <h1>Welcome to travel!</h1>;
 ```
 
@@ -947,13 +947,13 @@ React cập nhật DOM để đổi `"Welcome to general"` thành `"Welcome to t
 Effect từ lần render thứ ba trông như sau:
 
 ```js
-  // Effect for the third render (roomId = "travel")
+  // Effect cho lần render thứ ba (roomId = "travel")
   () => {
     const connection = createConnection('travel');
     connection.connect();
     return () => connection.disconnect();
   },
-  // Dependencies for the third render (roomId = "travel")
+  // Dependencies cho lần render thứ ba (roomId = "travel")
   ['travel']
 ```
 
@@ -1003,7 +1003,7 @@ import { useEffect, useRef } from 'react';
 export default function MyInput({ value, onChange }) {
   const ref = useRef(null);
 
-  // TODO: This doesn't quite work. Fix it.
+  // TODO: Cách này chưa hoạt động đúng. Hãy sửa nó.
   // ref.current.focus()
 
   return (
@@ -1171,7 +1171,7 @@ import { useEffect, useRef } from 'react';
 export default function MyInput({ shouldFocus, value, onChange }) {
   const ref = useRef(null);
 
-  // TODO: call focus() only if shouldFocus is true.
+  // TODO: chỉ gọi focus() nếu shouldFocus là true.
   useEffect(() => {
     ref.current.focus();
   }, []);

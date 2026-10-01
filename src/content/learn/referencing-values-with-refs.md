@@ -35,7 +35,7 @@ const ref = useRef(0);
 
 ```js
 {
-  current: 0 // The value you passed to useRef
+  current: 0 // Giá trị bạn đã truyền vào useRef
 }
 ```
 
@@ -93,12 +93,12 @@ export default function Stopwatch() {
   const [now, setNow] = useState(null);
 
   function handleStart() {
-    // Start counting.
+    // Bắt đầu đếm.
     setStartTime(Date.now());
     setNow(Date.now());
 
     setInterval(() => {
-      // Update the current time every 10ms.
+      // Cập nhật thời gian hiện tại mỗi 10ms.
       setNow(Date.now());
     }, 10);
   }
@@ -218,7 +218,7 @@ export default function Counter() {
   let countRef = useRef(0);
 
   function handleClick() {
-    // This doesn't re-render the component!
+    // Điều này không re-render component!
     countRef.current = countRef.current + 1;
   }
 
@@ -241,7 +241,7 @@ export default function Counter() {
 Mặc dù cả `useState` và `useRef` đều được React cung cấp, về nguyên tắc `useRef` có thể được triển khai _dựa trên_ `useState`. Bạn có thể hình dung rằng bên trong React, `useRef` được triển khai như sau:
 
 ```js
-// Inside of React
+// Bên trong React
 function useRef(initialValue) {
   const [ref, unused] = useState({ current: initialValue });
   return ref;

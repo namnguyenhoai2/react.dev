@@ -55,10 +55,10 @@ Tạo hoặc cập nhật `babel.config.js` của bạn:
 ```js {3}
 module.exports = {
   plugins: [
-    'babel-plugin-react-compiler', // must run first!
-    // ... other plugins
+    'babel-plugin-react-compiler', // phải chạy trước!
+    // ... các plugin khác
   ],
-  // ... other config
+  // ... cấu hình khác
 };
 ```
 
@@ -149,7 +149,7 @@ export default defineConfig({
     babel({
       filter: /\.[jt]sx?$/,
       babelConfig: {
-        presets: ["@babel/preset-typescript"], // if you use TypeScript
+        presets: ["@babel/preset-typescript"], // nếu bạn dùng TypeScript
         plugins: [
           ["babel-plugin-react-compiler", ReactCompilerConfig],
         ],
@@ -244,7 +244,7 @@ Nếu một component gây ra sự cố sau khi compile, bạn có thể tạm t
 ```js
 function ProblematicComponent() {
   "use no memo";
-  // Component code here
+  // Code component ở đây
 }
 ```
 

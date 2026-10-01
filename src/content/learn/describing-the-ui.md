@@ -128,7 +128,7 @@ Nếu chúng ta dán markup HTML có sẵn vào một component React, đoạn m
 ```js
 export default function TodoList() {
   return (
-    // This doesn't quite work!
+    // Cách này chưa hoạt động đúng!
     <h1>Hedy Lamarr's Todos</h1>
     <img
       src="https://react.dev/images/docs/scientists/yXOvdOSs.jpg"
@@ -478,7 +478,7 @@ Bằng cách chỉ viết component của bạn dưới dạng các hàm pure m�
 let guest = 0;
 
 function Cup() {
-  // Bad: changing a preexisting variable!
+  // Không tốt: thay đổi một biến đã tồn tại!
   guest = guest + 1;
   return <h2>Tea cup for guest #{guest}</h2>;
 }

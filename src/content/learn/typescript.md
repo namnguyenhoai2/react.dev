@@ -90,9 +90,9 @@ Cú pháp inline này là cách đơn giản nhất để cung cấp type cho m�
 
 ```tsx src/App.tsx active
 interface MyButtonProps {
-  /** The text to display inside the button */
+  /** Văn bản hiển thị bên trong nút */
   title: string;
-  /** Whether the button can be interacted with */
+  /** Nút có thể tương tác hay không */
   disabled: boolean;
 }
 
@@ -133,14 +133,14 @@ Tuy nhiên, chúng ta có thể xem qua một vài ví dụ về cách cung cấ
 Hook [`useState` Hook](/reference/react/useState) sẽ sử dụng lại giá trị được truyền vào làm state ban đầu để xác định type của giá trị. Ví dụ:
 
 ```ts
-// Infer the type as "boolean"
+// Suy luận kiểu là "boolean"
 const [enabled, setEnabled] = useState(false);
 ```
 
 Điều này sẽ gán type của `boolean` cho `enabled`, và `setEnabled` sẽ là một function nhận một đối số `boolean`, hoặc một function trả về `boolean`. Nếu muốn cung cấp rõ ràng một type cho state, bạn có thể làm vậy bằng cách truyền một type argument vào lời gọi `useState`:
 
 ```ts
-// Explicitly set the type to "boolean"
+// Đặt rõ kiểu là "boolean"
 const [enabled, setEnabled] = useState<boolean>(false);
 ```
 
@@ -291,15 +291,15 @@ Kỹ thuật này hoạt động khi bạn có một giá trị mặc định h�
 ```js {5, 16-20}
 import { createContext, useContext, useState, useMemo } from 'react';
 
-// This is a simpler example, but you can imagine a more complex object here
+// Đây là ví dụ đơn giản hơn, nhưng bạn có thể hình dung một object phức tạp hơn ở đây
 type ComplexObject = {
   kind: string
 };
 
-// The context is created with `| null` in the type, to accurately reflect the default value.
+// Context được tạo với `| null` trong kiểu để phản ánh chính xác giá trị mặc định.
 const Context = createContext<ComplexObject | null>(null);
 
-// The `| null` will be removed via the check in the Hook.
+// `| null` sẽ được loại bỏ qua phép kiểm tra trong Hook.
 const useGetComplexObject = () => {
   const object = useContext(Context);
   if (!object) { throw new Error("useGetComplexObject must be used within a Provider") }
@@ -338,7 +338,7 @@ function MyComponent() {
 Các [`useMemo`](/reference/react/useMemo) Hooks sẽ tạo/truy cập lại một giá trị đã được memo hóa từ một lời gọi hàm, chỉ chạy lại hàm khi các dependency được truyền vào dưới dạng tham số thứ 2 thay đổi. Kết quả của việc gọi Hook được suy ra từ giá trị trả về của hàm trong tham số thứ nhất. Bạn có thể chỉ rõ hơn bằng cách cung cấp một type argument cho Hook.
 
 ```ts
-// The type of visibleTodos is inferred from the return value of filterTodos
+// Kiểu của visibleTodos được suy luận từ giá trị trả về của filterTodos
 const visibleTodos = useMemo(() => filterTodos(todos, tab), [todos, tab]);
 ```
 

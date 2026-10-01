@@ -96,7 +96,7 @@ Bạn có thể đọc các props này bằng cách liệt kê tên của chúng
 
 ```js
 function Avatar({ person, size }) {
-  // person and size are available here
+  // person và size có sẵn ở đây
 }
 ```
 

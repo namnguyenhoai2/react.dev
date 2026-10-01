@@ -127,12 +127,12 @@ React Compiler tự động áp dụng cơ chế tương đương với memo hó
 React Compiler cũng có thể tự động memo hóa các phép tính tốn kém được sử dụng trong quá trình render:
 
 ```js
-// **Not** memoized by React Compiler, since this is not a component or hook
+// **Không** được React Compiler memoize vì đây không phải component hoặc Hook
 function expensivelyProcessAReallyLargeArrayOfObjects() { /* ... */ }
 
-// Memoized by React Compiler since this is a component
+// Được React Compiler memoize vì đây là một component
 function TableContainer({ items }) {
-  // This function call would be memoized:
+  // Lời gọi hàm này sẽ được memoize:
   const data = expensivelyProcessAReallyLargeArrayOfObjects(items);
   // ...
 }

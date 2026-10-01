@@ -75,15 +75,15 @@ Bundler của App Router trong Next.js triển khai đầy đủ [đặc tả Re
 Ví dụ, bạn có thể viết một component React chỉ chạy trên server dưới dạng `async` function đọc dữ liệu từ database hoặc từ một file. Sau đó, bạn có thể truyền dữ liệu từ component này xuống các component tương tác:
 
 ```js
-// This component runs *only* on the server (or during the build).
+// Component này *chỉ* chạy trên server (hoặc trong lúc build).
 async function Talks({ confId }) {
-  // 1. You're on the server, so you can talk to your data layer. API endpoint not required.
+  // 1. Bạn đang ở server nên có thể giao tiếp với lớp dữ liệu. Không cần API endpoint.
   const talks = await db.Talks.findAll({ confId });
 
-  // 2. Add any amount of rendering logic. It won't make your JavaScript bundle larger.
+  // 2. Thêm bao nhiêu logic render cũng được. JavaScript bundle của bạn sẽ không lớn hơn.
   const videos = talks.map(talk => talk.video);
 
-  // 3. Pass the data down to the components that will run in the browser.
+  // 3. Truyền dữ liệu xuống các component sẽ chạy trong trình duyệt.
   return <SearchableVideoList videos={videos} />;
 }
 ```

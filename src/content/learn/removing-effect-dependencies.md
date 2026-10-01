@@ -77,7 +77,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -152,7 +152,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -178,9 +178,9 @@ Lưu ý rằng bạn không thể "chọn" các dependency của Effect. Mọi <
 ```js [[2, 3, "roomId"], [2, 5, "roomId"], [2, 8, "roomId"]]
 const serverUrl = 'https://localhost:1234';
 
-function ChatRoom({ roomId }) { // This is a reactive value
+function ChatRoom({ roomId }) { // Đây là một giá trị reactive
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // This Effect reads that reactive value
+    const connection = createConnection(serverUrl, roomId); // Effect này đọc giá trị reactive đó
     connection.connect();
     return () => connection.disconnect();
   }, [roomId]); // ✅ So you must specify that reactive value as a dependency of your Effect
@@ -209,7 +209,7 @@ Và trình linter hoàn toàn đúng! Vì `roomId` có thể thay đổi theo th
 
 ```js {2,9}
 const serverUrl = 'https://localhost:1234';
-const roomId = 'music'; // Not a reactive value anymore
+const roomId = 'music'; // Không còn là giá trị reactive nữa
 
 function ChatRoom() {
   useEffect(() => {
@@ -244,7 +244,7 @@ export default function ChatRoom() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -284,7 +284,7 @@ Nếu bạn có một codebase hiện có, có thể một số Effect đang t�
 ```js {3-4}
 useEffect(() => {
   // ...
-  // 🔴 Avoid suppressing the linter like this:
+  // 🔴 Tránh vô hiệu hóa linter theo cách này:
   // eslint-ignore-next-line react-hooks/exhaustive-deps
 }, []);
 ```
@@ -380,7 +380,7 @@ function Form() {
 
   useEffect(() => {
     if (submitted) {
-      // 🔴 Avoid: Event-specific logic inside an Effect
+      // 🔴 Tránh: logic dành riêng cho event nằm trong Effect
       post('/api/register');
       showNotification('Successfully registered!');
     }
@@ -403,7 +403,7 @@ function Form() {
 
   useEffect(() => {
     if (submitted) {
-      // 🔴 Avoid: Event-specific logic inside an Effect
+      // 🔴 Tránh: logic dành riêng cho event nằm trong Effect
       post('/api/register');
       showNotification('Successfully registered!', theme);
     }
@@ -426,7 +426,7 @@ function Form() {
   const theme = useContext(ThemeContext);
 
   function handleSubmit() {
-    // ✅ Good: Event-specific logic is called from event handlers
+    // ✅ Tốt: logic dành riêng cho event được gọi từ event handler
     post('/api/register');
     showNotification('Successfully registered!', theme);
   }
@@ -484,7 +484,7 @@ function ShippingForm({ country }) {
           setCities(json);
         }
       });
-    // 🔴 Avoid: A single Effect synchronizes two independent processes
+    // 🔴 Tránh: một Effect đồng bộ hai quy trình độc lập
     if (city) {
       fetch(`/api/areas?city=${city}`)
         .then(response => response.json())
@@ -797,7 +797,7 @@ const serverUrl = 'https://localhost:1234';
 function ChatRoom({ roomId }) {
   const [message, setMessage] = useState('');
 
-  // Temporarily disable the linter to demonstrate the problem
+  // Tạm thời vô hiệu hóa linter để minh họa vấn đề
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const options = {
     serverUrl: serverUrl,
@@ -842,7 +842,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -868,13 +868,13 @@ Một đối tượng `options` mới được tạo lại từ đầu sau mỗi
 **Vấn đề này chỉ ảnh hưởng đến các object và function. Trong JavaScript, mỗi object và function mới được tạo đều được xem là khác biệt với tất cả object và function khác. Việc nội dung bên trong chúng có thể giống nhau không quan trọng!**
 
 ```js {7-8}
-// During the first render
+// Trong lần render đầu tiên
 const options1 = { serverUrl: 'https://localhost:1234', roomId: 'music' };
 
-// During the next render
+// Trong lần render tiếp theo
 const options2 = { serverUrl: 'https://localhost:1234', roomId: 'music' };
 
-// These are two different objects!
+// Đây là hai object khác nhau!
 console.log(Object.is(options1, options2)); // false
 ```
 
@@ -954,13 +954,13 @@ function ChatRoom({ roomId }) {
 Giờ đây, vì `options` được khai báo bên trong Effect, nó không còn là dependency của Effect nữa. Thay vào đó, giá trị reactive duy nhất được Effect sử dụng là `roomId`. Vì `roomId` không phải là object hay function, bạn có thể chắc chắn rằng nó sẽ không khác đi một cách *ngoài ý muốn*. Trong JavaScript, number và string được so sánh dựa trên nội dung của chúng:
 
 ```js {7-8}
-// During the first render
+// Trong lần render đầu tiên
 const roomId1 = 'music';
 
-// During the next render
+// Trong lần render tiếp theo
 const roomId2 = 'music';
 
-// These two strings are the same!
+// Hai chuỗi này giống nhau!
 console.log(Object.is(roomId1, roomId2)); // true
 ```
 
@@ -1019,7 +1019,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1321,11 +1321,11 @@ export class FadeInAnimation {
   start(duration) {
     this.duration = duration;
     if (this.duration === 0) {
-      // Jump to end immediately
+      // Nhảy ngay đến cuối
       this.onProgress(1);
     } else {
       this.onProgress(0);
-      // Start animating
+      // Bắt đầu hiệu ứng động
       this.startTime = performance.now();
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
@@ -1335,7 +1335,7 @@ export class FadeInAnimation {
     const progress = Math.min(timePassed / this.duration, 1);
     this.onProgress(progress);
     if (progress < 1) {
-      // We still have more frames to paint
+      // Vẫn còn các frame cần vẽ
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
   }
@@ -1444,7 +1444,7 @@ export class FadeInAnimation {
     const progress = Math.min(timePassed / this.duration, 1);
     this.onProgress(progress);
     if (progress < 1) {
-      // We still have more frames to paint
+      // Vẫn còn các frame cần vẽ
       this.frameId = requestAnimationFrame(() => this.onFrame());
     }
   }
@@ -1546,7 +1546,7 @@ export default function ChatRoom({ options }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1644,7 +1644,7 @@ export default function ChatRoom({ options }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1735,7 +1735,7 @@ export default function ChatRoom({ roomId, serverUrl }) {
 
 ```js src/chat.js
 export function createConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1885,7 +1885,7 @@ export default function ChatRoom({ roomId, createConnection, onMessage }) {
 
 ```js src/chat.js
 export function createEncryptedConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -1926,7 +1926,7 @@ export function createEncryptedConnection({ serverUrl, roomId }) {
 }
 
 export function createUnencryptedConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -2052,16 +2052,16 @@ export default function ChatRoom({ roomId, isEncrypted, onMessage }) {
 Sau hai thay đổi này, Effect của bạn không còn phụ thuộc vào bất kỳ giá trị hàm nào nữa:
 
 ```js {1,8,10,21}
-export default function ChatRoom({ roomId, isEncrypted, onMessage }) { // Reactive values
-  const onReceiveMessage = useEffectEvent(onMessage); // Not reactive
+export default function ChatRoom({ roomId, isEncrypted, onMessage }) { // Các giá trị reactive
+  const onReceiveMessage = useEffectEvent(onMessage); // Không reactive
 
   useEffect(() => {
     function createConnection() {
       const options = {
         serverUrl: 'https://localhost:1234',
-        roomId: roomId // Reading a reactive value
+        roomId: roomId // Đọc một giá trị reactive
       };
-      if (isEncrypted) { // Reading a reactive value
+      if (isEncrypted) { // Đọc một giá trị reactive
         return createEncryptedConnection(options);
       } else {
         return createUnencryptedConnection(options);
@@ -2185,7 +2185,7 @@ export default function ChatRoom({ roomId, isEncrypted, onMessage }) {
 
 ```js src/chat.js
 export function createEncryptedConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }
@@ -2226,7 +2226,7 @@ export function createEncryptedConnection({ serverUrl, roomId }) {
 }
 
 export function createUnencryptedConnection({ serverUrl, roomId }) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   if (typeof serverUrl !== 'string') {
     throw Error('Expected serverUrl to be a string. Received: ' + serverUrl);
   }

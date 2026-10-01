@@ -257,7 +257,7 @@ Object bạn truyền vào `dispatch` được gọi là một "action":
 ```js {3-7}
 function handleDeleteTask(taskId) {
   dispatch(
-    // "action" object:
+    // Object "action":
     {
       type: 'deleted',
       id: taskId,
@@ -276,9 +276,9 @@ Theo quy ước, action thường có một chuỗi `type` mô tả điều đã
 
 ```js
 dispatch({
-  // specific to component
+  // dành riêng cho component
   type: 'what_happened',
-  // other fields go here
+  // các trường khác ở đây
 });
 ```
 
@@ -290,7 +290,7 @@ Reducer function là nơi bạn đặt logic state. Hàm này nhận hai đối 
 
 ```js
 function yourReducer(state, action) {
-  // return next state for React to set
+  // trả về state tiếp theo để React thiết lập
 }
 ```
 
@@ -1220,7 +1220,7 @@ export default function Chat({contact, message, dispatch}) {
         placeholder={'Chat to ' + contact.name}
         onChange={(e) => {
           // TODO: dispatch edited_message
-          // (Read the input value from e.target.value)
+          // (Đọc giá trị input từ e.target.value)
         }}
       />
       <br />
@@ -1259,13 +1259,13 @@ textarea {
 Từ code của reducer, bạn có thể suy ra rằng các action cần có dạng như sau:
 
 ```js
-// When the user presses "Alice"
+// Khi người dùng nhấn "Alice"
 dispatch({
   type: 'changed_selection',
   contactId: 1,
 });
 
-// When user types "Hello!"
+// Khi người dùng gõ "Hello!"
 dispatch({
   type: 'edited_message',
   message: 'Hello!',
@@ -1869,7 +1869,7 @@ case 'changed_selection': {
   return {
     ...state,
     selectedId: action.contactId,
-    message: '' // Clears the input
+    message: '' // Xóa input
   };
 ```
 
@@ -1885,8 +1885,8 @@ Bạn có thể cấu trúc state như sau:
 export const initialState = {
   selectedId: 0,
   messages: {
-    0: 'Hello, Taylor', // Draft for contactId = 0
-    1: 'Hello, Alice', // Draft for contactId = 1
+    0: 'Hello, Taylor', // Bản nháp cho contactId = 0
+    1: 'Hello, Alice', // Bản nháp cho contactId = 1
   },
 };
 ```
@@ -2056,15 +2056,15 @@ textarea {
 Bạn sẽ cần cập nhật reducer để lưu trữ và cập nhật một bản nháp tin nhắn riêng cho từng liên hệ:
 
 ```js
-// When the input is edited
+// Khi input được chỉnh sửa
 case 'edited_message': {
   return {
-    // Keep other state like selection
+    // Giữ các state khác như selection
     ...state,
     messages: {
-      // Keep messages for other contacts
+      // Giữ các tin nhắn của những liên hệ khác
       ...state.messages,
-      // But change the selected contact's message
+      // Nhưng thay đổi tin nhắn của liên hệ đã chọn
       [state.selectedId]: action.message
     }
   };

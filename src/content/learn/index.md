@@ -105,7 +105,7 @@ Trong React, bạn chỉ định một class CSS bằng `className`. Nó hoạt 
 Sau đó, bạn viết các quy tắc CSS cho class đó trong một file CSS riêng:
 
 ```css
-/* In your CSS */
+/* Trong CSS của bạn */
 .avatar {
   border-radius: 50%;
 }
@@ -449,7 +449,7 @@ export default function MyApp() {
 }
 
 function MyButton() {
-  // ... we're moving code from here ...
+  // ... chúng ta đang chuyển code từ đây ...
 }
 
 ```

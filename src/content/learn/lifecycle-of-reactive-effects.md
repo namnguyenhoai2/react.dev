@@ -100,10 +100,10 @@ Sau khi UI được hiển thị, React sẽ chạy Effect của bạn để **b
 ```js {3,4}
 function ChatRoom({ roomId /* "general" */ }) {
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // Connects to the "general" room
+    const connection = createConnection(serverUrl, roomId); // Kết nối với phòng "general"
     connection.connect();
     return () => {
-      connection.disconnect(); // Disconnects from the "general" room
+      connection.disconnect(); // Ngắt kết nối khỏi phòng "general"
     };
   }, [roomId]);
   // ...
@@ -138,10 +138,10 @@ Hãy nhớ rằng component `ChatRoom` của bạn đã nhận một giá trị 
 ```js {6}
 function ChatRoom({ roomId /* "general" */ }) {
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // Connects to the "general" room
+    const connection = createConnection(serverUrl, roomId); // Kết nối với phòng "general"
     connection.connect();
     return () => {
-      connection.disconnect(); // Disconnects from the "general" room
+      connection.disconnect(); // Ngắt kết nối khỏi phòng "general"
     };
     // ...
 ```
@@ -151,7 +151,7 @@ Sau đó React sẽ chạy Effect mà bạn đã cung cấp trong lần render n
 ```js {3,4}
 function ChatRoom({ roomId /* "travel" */ }) {
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // Connects to the "travel" room
+    const connection = createConnection(serverUrl, roomId); // Kết nối với phòng "travel"
     connection.connect();
     // ...
 ```
@@ -182,11 +182,11 @@ Bây giờ hãy nghĩ về những gì đã xảy ra từ góc nhìn của chín
 
 ```js
   useEffect(() => {
-    // Your Effect connected to the room specified with roomId...
+    // Effect của bạn đã kết nối với phòng được chỉ định bằng roomId...
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => {
-      // ...until it disconnected
+      // ...cho đến khi nó ngắt kết nối
       connection.disconnect();
     };
   }, [roomId]);
@@ -253,7 +253,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -291,14 +291,14 @@ Tuy nhiên, cũng có những trường hợp bất thường hơn mà việc t�
 Bạn có thể thắc mắc React đã biết bằng cách nào rằng Effect của bạn cần tái đồng bộ sau khi `roomId` thay đổi. Đó là vì *bạn đã cho React biết* rằng mã của nó phụ thuộc vào `roomId` bằng cách đưa nó vào [danh sách dependency:](/learn/synchronizing-with-effects#step-2-specify-the-effect-dependencies)
 
 ```js {1,3,8}
-function ChatRoom({ roomId }) { // The roomId prop may change over time
+function ChatRoom({ roomId }) { // Prop roomId có thể thay đổi theo thời gian
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // This Effect reads roomId
+    const connection = createConnection(serverUrl, roomId); // Effect này đọc roomId
     connection.connect();
     return () => {
       connection.disconnect();
     };
-  }, [roomId]); // So you tell React that this Effect "depends on" roomId
+  }, [roomId]); // Như vậy, bạn cho React biết Effect này "phụ thuộc vào" roomId
   // ...
 ```
 
@@ -378,16 +378,16 @@ Mặt khác, `roomId` có thể khác trong một lần re-render. **Props, stat
 Nếu `serverUrl` là một biến state, nó sẽ là reactive. Các giá trị reactive phải được đưa vào dependency:
 
 ```js {2,5,10}
-function ChatRoom({ roomId }) { // Props change over time
-  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // State may change over time
+function ChatRoom({ roomId }) { // Props thay đổi theo thời gian
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // State có thể thay đổi theo thời gian
 
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // Your Effect reads props and state
+    const connection = createConnection(serverUrl, roomId); // Effect của bạn đọc props và state
     connection.connect();
     return () => {
       connection.disconnect();
     };
-  }, [roomId, serverUrl]); // So you tell React that this Effect "depends on" on props and state
+  }, [roomId, serverUrl]); // Như vậy, bạn cho React biết Effect này "phụ thuộc vào" props và state
   // ...
 }
 ```
@@ -449,7 +449,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -528,7 +528,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -556,16 +556,16 @@ Props và state không phải là những giá trị reactive duy nhất. Các g
 Giả sử người dùng có thể chọn một chat server trong dropdown, nhưng cũng có thể cấu hình server mặc định trong settings. Giả sử bạn đã đặt state settings vào một [context](/learn/scaling-up-with-reducer-and-context) để đọc `settings` từ context đó. Bây giờ bạn tính toán `serverUrl` dựa trên server được chọn từ props và server mặc định:
 
 ```js {3,5,10}
-function ChatRoom({ roomId, selectedServerUrl }) { // roomId is reactive
-  const settings = useContext(SettingsContext); // settings is reactive
-  const serverUrl = selectedServerUrl ?? settings.defaultServerUrl; // serverUrl is reactive
+function ChatRoom({ roomId, selectedServerUrl }) { // roomId là reactive
+  const settings = useContext(SettingsContext); // settings là reactive
+  const serverUrl = selectedServerUrl ?? settings.defaultServerUrl; // serverUrl là reactive
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId); // Your Effect reads roomId and serverUrl
+    const connection = createConnection(serverUrl, roomId); // Effect của bạn đọc roomId và serverUrl
     connection.connect();
     return () => {
       connection.disconnect();
     };
-  }, [roomId, serverUrl]); // So it needs to re-synchronize when either of them changes!
+  }, [roomId, serverUrl]); // Vì vậy cần đồng bộ lại khi một trong hai thay đổi!
   // ...
 }
 ```
@@ -598,8 +598,8 @@ Như bạn sẽ học ở phần bên dưới của trang này, một linter s�
 import { useState, useEffect } from 'react';
 import { createConnection } from './chat.js';
 
-function ChatRoom({ roomId }) { // roomId is reactive
-  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // serverUrl is reactive
+function ChatRoom({ roomId }) { // roomId là reactive
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // serverUrl là reactive
 
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
@@ -645,7 +645,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -669,8 +669,8 @@ button { margin-left: 10px; }
 Để sửa bug, hãy làm theo đề xuất của linter và chỉ định `roomId` và `serverUrl` làm dependency của Effect:
 
 ```js {9}
-function ChatRoom({ roomId }) { // roomId is reactive
-  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // serverUrl is reactive
+function ChatRoom({ roomId }) { // roomId là reactive
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234'); // serverUrl là reactive
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
@@ -697,8 +697,8 @@ Trong ví dụ trước, bạn đã sửa lỗi lint bằng cách liệt kê `ro
 **Tuy nhiên, thay vào đó, bạn có thể "chứng minh" với linter rằng các giá trị này không phải là giá trị reactive,** tức là chúng *không thể* thay đổi do re-render. Ví dụ, nếu `serverUrl` và `roomId` không phụ thuộc vào quá trình render và luôn có cùng giá trị, bạn có thể di chuyển chúng ra ngoài component. Khi đó, chúng không cần phải là dependency:
 
 ```js {1,2,11}
-const serverUrl = 'https://localhost:1234'; // serverUrl is not reactive
-const roomId = 'general'; // roomId is not reactive
+const serverUrl = 'https://localhost:1234'; // serverUrl không reactive
+const roomId = 'general'; // roomId không reactive
 
 function ChatRoom() {
   useEffect(() => {
@@ -717,8 +717,8 @@ Bạn cũng có thể di chuyển chúng *vào bên trong Effect.* Chúng không
 ```js {3,4,10}
 function ChatRoom() {
   useEffect(() => {
-    const serverUrl = 'https://localhost:1234'; // serverUrl is not reactive
-    const roomId = 'general'; // roomId is not reactive
+    const serverUrl = 'https://localhost:1234'; // serverUrl không reactive
+    const roomId = 'general'; // roomId không reactive
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => {
@@ -748,7 +748,7 @@ Nếu bạn có một codebase hiện có, có thể bạn có một số Effect
 ```js {3-4}
 useEffect(() => {
   // ...
-  // 🔴 Avoid suppressing the linter like this:
+  // 🔴 Tránh vô hiệu hóa linter theo cách này:
   // eslint-ignore-next-line react-hooks/exhaustive-deps
 }, []);
 ```
@@ -836,7 +836,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -911,7 +911,7 @@ export default function App() {
 
 ```js src/chat.js
 export function createConnection(serverUrl, roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...');
@@ -1388,7 +1388,7 @@ export default function ChatRoom({ roomId, createConnection }) {
 
 ```js src/chat.js
 export function createEncryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ 🔐 Connecting to "' + roomId + '... (encrypted)');
@@ -1400,7 +1400,7 @@ export function createEncryptedConnection(roomId) {
 }
 
 export function createUnencryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '... (unencrypted)');
@@ -1485,7 +1485,7 @@ export default function ChatRoom({ roomId, createConnection }) {
 
 ```js src/chat.js
 export function createEncryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ 🔐 Connecting to "' + roomId + '... (encrypted)');
@@ -1497,7 +1497,7 @@ export function createEncryptedConnection(roomId) {
 }
 
 export function createUnencryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '... (unencrypted)');
@@ -1580,7 +1580,7 @@ export default function ChatRoom({ roomId, isEncrypted }) {
 
 ```js src/chat.js
 export function createEncryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ 🔐 Connecting to "' + roomId + '... (encrypted)');
@@ -1592,7 +1592,7 @@ export function createEncryptedConnection(roomId) {
 }
 
 export function createUnencryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
+  // Trong bản triển khai thực tế, đoạn này sẽ kết nối với server
   return {
     connect() {
       console.log('✅ Connecting to "' + roomId + '... (unencrypted)');
@@ -1647,7 +1647,7 @@ export default function Page() {
       if (!ignore) {
         console.log('Fetched a list of planets.');
         setPlanetList(result);
-        setPlanetId(result[0].id); // Select the first planet
+        setPlanetId(result[0].id); // Chọn hành tinh đầu tiên
       }
     });
     return () => {
@@ -1796,7 +1796,7 @@ export default function Page() {
       if (!ignore) {
         console.log('Fetched a list of planets.');
         setPlanetList(result);
-        setPlanetId(result[0].id); // Select the first planet
+        setPlanetId(result[0].id); // Chọn hành tinh đầu tiên
       }
     });
     return () => {
@@ -1806,7 +1806,7 @@ export default function Page() {
 
   useEffect(() => {
     if (planetId === '') {
-      // Nothing is selected in the first box yet
+      // Chưa có gì được chọn trong ô đầu tiên
       return;
     }
 
@@ -1815,7 +1815,7 @@ export default function Page() {
       if (!ignore) {
         console.log('Fetched a list of places on "' + planetId + '".');
         setPlaceList(result);
-        setPlaceId(result[0].id); // Select the first place
+        setPlaceId(result[0].id); // Chọn địa điểm đầu tiên
       }
     });
     return () => {
