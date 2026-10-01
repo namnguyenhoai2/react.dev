@@ -61,7 +61,7 @@ export default function Layout({content, toc, meta, languages}) {
 
 function useActiveSection() {
   const {asPath} = useRouter();
-  const cleanedPath = asPath.split(/[\?\#]/)[0];
+  const cleanedPath = normalizeRoutePath(asPath.split(/[\?\#]/)[0]);
   if (cleanedPath === '/') {
     return 'home';
   } else if (cleanedPath.startsWith('/reference')) {
@@ -75,6 +75,13 @@ function useActiveSection() {
   } else {
     return 'unknown';
   }
+}
+
+function normalizeRoutePath(path) {
+  if (path === '/index.html') {
+    return '/';
+  }
+  return path.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
 }
 
 // Deserialize a client React tree from JSON.
