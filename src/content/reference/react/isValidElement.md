@@ -29,7 +29,7 @@ import { isValidElement, createElement } from 'react';
 console.log(isValidElement(<p />)); // true
 console.log(isValidElement(createElement('p'))); // true
 
-// ❌ Not React elements
+// ❌ Không phải React element
 console.log(isValidElement(25)); // false
 console.log(isValidElement('Hello')); // false
 console.log(isValidElement({ age: 42 })); // false
@@ -67,11 +67,11 @@ React element là:
 ```js
 import { isValidElement, createElement } from 'react';
 
-// ✅ JSX tags are React elements
+// ✅ Các thẻ JSX là React element
 console.log(isValidElement(<p />)); // true
 console.log(isValidElement(<MyComponent />)); // true
 
-// ✅ Values returned by createElement are React elements
+// ✅ Giá trị do createElement trả về là React element
 console.log(isValidElement(createElement('p'))); // true
 console.log(isValidElement(createElement(MyComponent))); // true
 ```
@@ -81,7 +81,7 @@ Mọi giá trị khác, chẳng hạn như string, number hoặc object và arra
 Đối với các giá trị đó, `isValidElement` trả về `false`:
 
 ```js
-// ❌ These are *not* React elements
+// ❌ Đây *không phải* React element
 console.log(isValidElement(null)); // false
 console.log(isValidElement(25)); // false
 console.log(isValidElement('Hello')); // false
@@ -102,7 +102,7 @@ Khi viết một component, bạn có thể trả về bất kỳ loại *React 
 
 ```js
 function MyComponent() {
-  // ... you can return any React node ...
+  // ... bạn có thể trả về bất kỳ React node nào ...
 }
 ```
 

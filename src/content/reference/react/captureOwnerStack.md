@@ -287,7 +287,7 @@ pre.nowrap {
     Close
   </button>
 </div>
-<!-- This is the DOM node -->
+<!-- Đây là DOM node -->
 <div id="root"></div>
 </body>
 </html>

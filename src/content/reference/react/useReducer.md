@@ -225,7 +225,7 @@ State chỉ được đọc. Đừng sửa đổi bất kỳ object hoặc mản
 function reducer(state, action) {
   switch (action.type) {
     case 'incremented_age': {
-      // 🚩 Don't mutate an object in state like this:
+      // 🚩 Đừng thay đổi trực tiếp object trong state như thế này:
       state.age = state.age + 1;
       return state;
     }
@@ -237,7 +237,7 @@ Thay vào đó, hãy luôn trả về các object mới từ reducer:
 function reducer(state, action) {
   switch (action.type) {
     case 'incremented_age': {
-      // ✅ Instead, return a new object
+      // ✅ Thay vào đó, trả về một object mới
       return {
         ...state,
         age: state.age + 1
@@ -979,12 +979,12 @@ React sẽ **bỏ qua bản cập nhật của bạn nếu state tiếp theo b�
 function reducer(state, action) {
   switch (action.type) {
     case 'incremented_age': {
-      // 🚩 Wrong: mutating existing object
+      // 🚩 Không đúng: thay đổi trực tiếp object hiện có
       state.age++;
       return state;
     }
     case 'changed_name': {
-      // 🚩 Wrong: mutating existing object
+      // 🚩 Không đúng: thay đổi trực tiếp object hiện có
       state.name = action.nextName;
       return state;
     }
@@ -999,14 +999,14 @@ Bạn đã mutate một object `state` hiện có và trả về nó, nên React
 function reducer(state, action) {
   switch (action.type) {
     case 'incremented_age': {
-      // ✅ Correct: creating a new object
+      // ✅ Đúng: tạo một object mới
       return {
         ...state,
         age: state.age + 1
       };
     }
     case 'changed_name': {
-      // ✅ Correct: creating a new object
+      // ✅ Đúng: tạo một object mới
       return {
         ...state,
         name: action.nextName
@@ -1066,13 +1066,13 @@ Bạn cũng có thể sử dụng static type checker như TypeScript để phá
 Bạn có thể gặp lỗi với nội dung: `Too many re-renders. React limits the number of renders to prevent an infinite loop.` Thông thường, điều này có nghĩa là bạn đang vô điều kiện dispatch một action *trong lúc render*, khiến component của bạn rơi vào vòng lặp: render, dispatch (gây ra một lần render), render, dispatch (gây ra một lần render), và cứ tiếp tục như vậy. Rất thường xuyên, nguyên nhân là do chỉ định event handler không đúng:
 
 ```js {1-2}
-// 🚩 Wrong: calls the handler during render
+// 🚩 Không đúng: gọi handler trong khi render
 return <button onClick={handleClick()}>Click me</button>
 
-// ✅ Correct: passes down the event handler
+// ✅ Đúng: truyền event handler xuống
 return <button onClick={handleClick}>Click me</button>
 
-// ✅ Correct: passes down an inline function
+// ✅ Đúng: truyền một inline function xuống
 return <button onClick={(e) => handleClick(e)}>Click me</button>
 ```
 
@@ -1092,7 +1092,7 @@ Ví dụ, hàm reducer không pure này mutate một array trong state:
 function reducer(state, action) {
   switch (action.type) {
     case 'added_todo': {
-      // 🚩 Mistake: mutating state
+      // 🚩 Sai lầm: thay đổi trực tiếp state
       state.todos.push({ id: nextId++, text: action.text });
       return state;
     }
@@ -1107,7 +1107,7 @@ Vì React gọi hàm reducer của bạn hai lần, bạn sẽ thấy todo đư�
 function reducer(state, action) {
   switch (action.type) {
     case 'added_todo': {
-      // ✅ Correct: replacing with new state
+      // ✅ Đúng: thay thế bằng state mới
       return {
         ...state,
         todos: [

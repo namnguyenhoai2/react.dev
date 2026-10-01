@@ -115,7 +115,7 @@ import {cache} from 'react';
 import {calculateWeekReport} from './report';
 
 export function Temperature({cityData}) {
-  // 🚩 Wrong: Calling `cache` in component creates new `getWeekReport` for each render
+  // 🚩 Không đúng: Gọi `cache` trong component tạo `getWeekReport` mới cho mỗi lần render
   const getWeekReport = cache(calculateWeekReport);
   const report = getWeekReport(cityData);
   // ...
@@ -127,7 +127,7 @@ export function Temperature({cityData}) {
 import {cache} from 'react';
 import {calculateWeekReport} from './report';
 
-// 🚩 Wrong: `getWeekReport` is only accessible for `Precipitation` component.
+// 🚩 Không đúng: `getWeekReport` chỉ có thể được truy cập trong component `Precipitation`.
 const getWeekReport = cache(calculateWeekReport);
 
 export function Precipitation({cityData}) {
@@ -236,9 +236,9 @@ async function Profile({id}) {
 }
 
 function Page({id}) {
-  // ✅ Good: start fetching the user data
+  // ✅ Đúng: bắt đầu lấy dữ liệu người dùng
   getUser(id);
-  // ... some computational work
+  // ... một vài tác vụ tính toán
   return (
     <>
       <Profile id={id} />
@@ -268,7 +268,7 @@ const getData = cache(fetchData);
 
 async function MyComponent() {
   getData();
-  // ... some computational work
+  // ... một vài tác vụ tính toán
   await getData();
   // ...
 }
@@ -294,11 +294,11 @@ const getUser = cache(async (userId) => {
   return await db.user.query(userId);
 });
 
-// 🚩 Wrong: Calling memoized function outside of component will not memoize.
+// 🚩 Không đúng: Gọi hàm đã memoize bên ngoài component sẽ không được memoize.
 getUser('demo-id');
 
 async function DemoProfile() {
-  // ✅ Good: `getUser` will memoize.
+  // ✅ Đúng: `getUser` sẽ được memoize.
   const user = await getUser('demo-id');
   return <Profile user={user} />;
 }
@@ -423,7 +423,7 @@ const calculateNorm = cache((vector) => {
 });
 
 function MapMarker(props) {
-  // 🚩 Wrong: props is an object that changes every render.
+  // 🚩 Không đúng: props là object thay đổi ở mỗi lần render.
   const length = calculateNorm(props);
   // ...
 }
@@ -450,7 +450,7 @@ const calculateNorm = cache((x, y, z) => {
 });
 
 function MapMarker(props) {
-  // ✅ Good: Pass primitives to memoized function
+  // ✅ Đúng: Truyền các giá trị nguyên thủy vào hàm đã memoize
   const length = calculateNorm(props.x, props.y, props.z);
   // ...
 }
@@ -477,7 +477,7 @@ const calculateNorm = cache((vector) => {
 });
 
 function MapMarker(props) {
-  // ✅ Good: Pass the same `vector` object
+  // ✅ Đúng: Truyền cùng object `vector`
   const length = calculateNorm(props.vector);
   // ...
 }

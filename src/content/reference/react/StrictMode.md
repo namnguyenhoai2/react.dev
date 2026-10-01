@@ -318,7 +318,7 @@ Hãy chú ý rằng mỗi khi bạn di chuột qua component `StoryTray`, "Creat
 ```js {2}
 export default function StoryTray({ stories }) {
   const items = stories.slice(); // Sao chép mảng
-  // ✅ Good: Pushing into a new array
+  // ✅ Đúng: Thêm vào một array mới
   items.push({ id: 'create', label: 'Create Story' });
 ```
 
@@ -852,7 +852,7 @@ import './styles.css';
 import App from './App';
 
 const root = createRoot(document.getElementById("root"));
-// ❌ Not using StrictMode.
+// ❌ Không dùng StrictMode.
 root.render(<App />);
 ```
 
@@ -904,7 +904,7 @@ export default function CatFriends() {
                   console.log('❌ Too many cats in the list!');
                 }
                 return () => {
-                  // 🚩 No cleanup, this is a bug!
+                  // 🚩 Không cleanup, đây là lỗi!
                 }
               }}
             >
@@ -971,7 +971,7 @@ Vấn đề là callback ref không tự cleanup:
     const item = {animal, node};
     list.push(item);
     return () => {
-      // 🚩 No cleanup, this is a bug!
+      // 🚩 Không cleanup, đây là lỗi!
     }
   }}
 </li>
@@ -989,7 +989,7 @@ import './styles.css';
 import App from './App';
 
 const root = createRoot(document.getElementById("root"));
-// ✅ Using StrictMode.
+// ✅ Dùng StrictMode.
 root.render(
   <StrictMode>
     <App />
@@ -1045,7 +1045,7 @@ export default function CatFriends() {
                   console.log('❌ Too many cats in the list!');
                 }
                 return () => {
-                  // 🚩 No cleanup, this is a bug!
+                  // 🚩 Không cleanup, đây là lỗi!
                 }
               }}
             >
@@ -1114,7 +1114,7 @@ import './styles.css';
 import App from './App';
 
 const root = createRoot(document.getElementById("root"));
-// ✅ Using StrictMode.
+// ✅ Dùng StrictMode.
 root.render(
   <StrictMode>
     <App />

@@ -150,7 +150,7 @@ function ProductPage({ productId, referrer, theme }) {
       referrer,
       orderDetails,
     });
-  }, [productId, referrer]); // ...so as long as these dependencies don't change...
+  }, [productId, referrer]); // ...miễn là các dependency này không thay đổi...
 
   return (
     <div className={theme}>
@@ -728,7 +728,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [createOptions]); // 🔴 Problem: This dependency changes on every render
+  }, [createOptions]); // 🔴 Vấn đề: Dependency này thay đổi ở mỗi lần render
   // ...
 ```
 
@@ -743,14 +743,14 @@ function ChatRoom({ roomId }) {
       serverUrl: 'https://localhost:1234',
       roomId: roomId
     };
-  }, [roomId]); // ✅ Only changes when roomId changes
+  }, [roomId]); // ✅ Chỉ thay đổi khi roomId thay đổi
 
   useEffect(() => {
     const options = createOptions();
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [createOptions]); // ✅ Only changes when createOptions changes
+  }, [createOptions]); // ✅ Chỉ thay đổi khi createOptions thay đổi
   // ...
 ```
 
@@ -772,7 +772,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ Only changes when roomId changes
+  }, [roomId]); // ✅ Chỉ thay đổi khi roomId thay đổi
   // ...
 ```
 
@@ -822,7 +822,7 @@ function ProductPage({ productId, referrer }) {
       referrer,
       orderDetails,
     });
-  }); // 🔴 Returns a new function every time: no dependency array
+  }); // 🔴 Trả về function mới mỗi lần: không có dependency array
   // ...
 ```
 
@@ -854,7 +854,7 @@ Sau đó, bạn có thể nhấp chuột phải vào các array từ những l�
 ```js
 Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
 Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
-Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
+Object.is(temp1[2], temp2[2]); // ... và tiếp tục như vậy cho mỗi dependency ...
 ```
 
 Khi tìm ra dependency nào đang làm hỏng memoization, hãy tìm cách loại bỏ nó hoặc [memoize nó.](/reference/react/useMemo#memoizing-a-dependency-of-another-hook)
@@ -870,7 +870,7 @@ function ReportList({ items }) {
   return (
     <article>
       {items.map(item => {
-        // 🔴 You can't call useCallback in a loop like this:
+        // 🔴 Bạn không thể gọi useCallback trong loop như thế này:
         const handleClick = useCallback(() => {
           sendReport(item)
         }, [item]);
@@ -900,7 +900,7 @@ function ReportList({ items }) {
 }
 
 function Report({ item }) {
-  // ✅ Call useCallback at the top level:
+  // ✅ Gọi useCallback ở cấp cao nhất:
   const handleClick = useCallback(() => {
     sendReport(item)
   }, [item]);

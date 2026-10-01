@@ -1655,7 +1655,7 @@ Bạn không thể sử dụng Transition cho một state variable điều khi�
 const [text, setText] = useState('');
 // ...
 function handleChange(e) {
-  // ❌ Can't use Transitions for controlled input state
+  // ❌ Không thể dùng Transition cho state của input được kiểm soát
   startTransition(() => {
     setText(e.target.value);
   });
@@ -1677,7 +1677,7 @@ Khi bọc một state update trong một Transition, hãy đảm bảo rằng n�
 
 ```js
 startTransition(() => {
-  // ✅ Setting state *during* startTransition call
+  // ✅ Thiết lập state *trong khi* gọi startTransition
   setPage('/about');
 });
 ```
@@ -1686,7 +1686,7 @@ Function bạn truyền vào `startTransition` phải là synchronous. Bạn kh�
 
 ```js
 startTransition(() => {
-  // ❌ Setting state *after* startTransition call
+  // ❌ Thiết lập state *sau khi* gọi startTransition
   setTimeout(() => {
     setPage('/about');
   }, 1000);
@@ -1698,7 +1698,7 @@ Thay vào đó, bạn có thể làm như sau:
 ```js
 setTimeout(() => {
   startTransition(() => {
-    // ✅ Setting state *during* startTransition call
+    // ✅ Thiết lập state *trong khi* gọi startTransition
     setPage('/about');
   });
 }, 1000);
@@ -1713,7 +1713,7 @@ Khi bạn sử dụng `await` bên trong một function `startTransition`, các 
 ```js
 startTransition(async () => {
   await someAsyncFunction();
-  // ❌ Not using startTransition after await
+  // ❌ Không dùng startTransition sau await
   setPage('/about');
 });
 ```
@@ -1723,7 +1723,7 @@ Tuy nhiên, cách này sẽ hoạt động:
 ```js
 startTransition(async () => {
   await someAsyncFunction();
-  // ✅ Using startTransition *after* await
+  // ✅ Dùng startTransition *sau* await
   startTransition(() => {
     setPage('/about');
   });
@@ -1768,9 +1768,9 @@ function startTransition(scope) {
 
 function setState() {
   if (isInsideTransition) {
-    // ... schedule a Transition state update ...
+    // ... lên lịch cập nhật state Transition ...
   } else {
-    // ... schedule an urgent state update ...
+    // ... lên lịch cập nhật state khẩn cấp ...
   }
 }
 ```

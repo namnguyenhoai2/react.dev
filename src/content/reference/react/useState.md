@@ -423,14 +423,14 @@ h1 { display: block; margin: 10px; }
 Bạn có thể đưa object và array vào state. Trong React, state được xem là chỉ đọc, vì vậy **bạn nên *thay thế* object hiện có thay vì *mutate* nó**. Ví dụ, nếu bạn có một object `form` trong state, đừng mutate nó:
 
 ```js
-// 🚩 Don't mutate an object in state like this:
+// 🚩 Đừng thay đổi trực tiếp object trong state như thế này:
 form.firstName = 'Taylor';
 ```
 
 Thay vào đó, hãy thay thế toàn bộ object bằng cách tạo một object mới:
 
 ```js
-// ✅ Replace state with a new object
+// ✅ Thay thế state bằng object mới
 setForm({
   ...form,
   firstName: 'Taylor'
@@ -1184,14 +1184,14 @@ console.log(nextCount); // 1
 React sẽ **bỏ qua việc cập nhật của bạn nếu state tiếp theo bằng state trước đó,** theo xác định của phép so sánh [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is). Điều này thường xảy ra khi bạn trực tiếp thay đổi một object hoặc array trong state:
 
 ```js
-obj.x = 10;  // 🚩 Wrong: mutating existing object
-setObj(obj); // 🚩 Doesn't do anything
+obj.x = 10;  // 🚩 Không đúng: thay đổi trực tiếp object hiện có
+setObj(obj); // 🚩 Không làm gì cả
 ```
 
 Bạn đã mutate một object `obj` hiện có rồi truyền object đó trở lại cho `setObj`, nên React đã bỏ qua việc cập nhật. Để khắc phục, bạn cần đảm bảo luôn [_thay thế_ các object và array trong state thay vì _mutate_ chúng](#updating-objects-and-arrays-in-state):
 
 ```js
-// ✅ Correct: creating a new object
+// ✅ Đúng: tạo một object mới
 setObj({
   ...obj,
   x: 10
@@ -1205,13 +1205,13 @@ setObj({
 Bạn có thể gặp lỗi với thông báo: `Too many re-renders. React limits the number of renders to prevent an infinite loop.` Thông thường, điều này có nghĩa là bạn đang vô điều kiện set state *trong lúc render*, khiến component đi vào một vòng lặp: render, set state (khiến component render), render, set state (khiến component render), và cứ tiếp tục như vậy. Rất thường gặp, nguyên nhân là do chỉ định event handler sai:
 
 ```js {1-2}
-// 🚩 Wrong: calls the handler during render
+// 🚩 Không đúng: gọi handler trong khi render
 return <button onClick={handleClick()}>Click me</button>
 
-// ✅ Correct: passes down the event handler
+// ✅ Đúng: truyền event handler xuống
 return <button onClick={handleClick}>Click me</button>
 
-// ✅ Correct: passes down an inline function
+// ✅ Đúng: truyền một inline function xuống
 return <button onClick={(e) => handleClick(e)}>Click me</button>
 ```
 
@@ -1249,7 +1249,7 @@ Ví dụ, updater function không pure này mutate một array trong state:
 
 ```js {2,3}
 setTodos(prevTodos => {
-  // 🚩 Mistake: mutating state
+  // 🚩 Sai lầm: thay đổi trực tiếp state
   prevTodos.push(createTodo());
 });
 ```
@@ -1258,7 +1258,7 @@ Vì React gọi updater function của bạn hai lần, bạn sẽ thấy todo �
 
 ```js {2,3}
 setTodos(prevTodos => {
-  // ✅ Correct: replacing with new state
+  // ✅ Đúng: thay thế bằng state mới
   return [...prevTodos, createTodo()];
 });
 ```

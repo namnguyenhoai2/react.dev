@@ -141,7 +141,7 @@ function MyPage() {
 }
 
 function Form() {
-  // ... renders buttons inside ...
+  // ... render các button bên trong ...
 }
 ```
 
@@ -499,7 +499,7 @@ Các Promise được tạo trong quá trình render sẽ được tạo lại �
 
 ```js
 function Albums() {
-  // 🔴 `fetch` creates a new Promise on every render.
+  // 🔴 `fetch` tạo một Promise mới ở mỗi lần render.
   const albums = use(fetch('/albums'));
   // ...
 }
@@ -508,7 +508,7 @@ function Albums() {
 Thay vào đó, hãy truyền một Promise từ cache, một [Suspense-enabled framework](/reference/react/Suspense#suspense-enabled-frameworks), hoặc một Server Component:
 
 ```js
-// ✅ fetchData reads the Promise from a cache.
+// ✅ fetchData đọc Promise từ cache.
 const albums = use(fetchData('/albums'));
 ```
 
@@ -524,16 +524,16 @@ Các cách phổ biến khiến Promise vô tình bị tạo lại trong quá tr
 
 ```js
 function Albums() {
-  // 🔴 `fetch` creates a new Promise on every render.
+  // 🔴 `fetch` tạo một Promise mới ở mỗi lần render.
   const albums = use(fetch('/albums'));
 
-  // 🔴 Uncached `async` function calls create a new Promise on every render.
+  // 🔴 Lời gọi hàm `async` không được cache tạo một Promise mới ở mỗi lần render.
   const albums = use((async () => {
     const res = await fetch('/albums');
     return res.json();
   })());
 
-  // 🔴 Adding `.then` returns a new Promise on every render,
+  // 🔴 Thêm `.then` trả về một Promise mới ở mỗi lần render,
   // ngay cả khi `fetchData` đã được cache.
   const albums = use(fetchData('/albums').then(res => res.json()));
   // ...
@@ -543,7 +543,7 @@ function Albums() {
 Lý tưởng nhất là tạo Promise trước khi render, chẳng hạn trong event handler, route loader hoặc Server Component, rồi truyền nó vào component gọi `use`. Việc fetch một cách lazy trong quá trình render sẽ trì hoãn các request mạng và có thể tạo ra các waterfall.
 
 ```js
-// ✅ fetchData reads the Promise from a cache.
+// ✅ fetchData đọc Promise từ cache.
 const albums = use(fetchData('/albums'));
 ```
 
@@ -556,7 +556,7 @@ const albums = use(fetchData('/albums'));
 Các Promise truyền vào `use` trong Client Component phải được cache để cùng một instance Promise được sử dụng lại qua các lần re-render. Nếu một Promise mới được tạo trực tiếp trong quá trình render, React sẽ hiển thị fallback Suspense ở mỗi lần re-render.
 
 ```js
-// ✅ Cache the Promise so the same one is reused across renders
+// ✅ Cache Promise để cùng Promise được tái sử dụng qua các lần render
 let cache = new Map();
 
 export function fetchData(url) {
@@ -700,7 +700,7 @@ Mẫu cache này là nền tảng cho việc [re-fetching data](#re-fetching-dat
 Không giống các hook khác, `use` có thể được gọi bên trong các điều kiện và vòng lặp — nhưng luôn phải được gọi cho chính Promise đó. Không bao giờ đọc trực tiếp `promise.status` hoặc `promise.value` để bypass `use`; luôn truyền Promise vào `use` và để React xử lý.
 
 ```js
-// 🔴 Don't bypass `use` by reading promise status directly
+// 🔴 Đừng bỏ qua `use` bằng cách đọc trực tiếp trạng thái promise
 if (promise.status === 'fulfilled') {
   return promise.value;
 }
@@ -708,7 +708,7 @@ const value = use(promise);
 ```
 
 ```js
-// ✅ Pass the promise to `use` and let React track the promise
+// ✅ Truyền promise cho `use` và để React theo dõi promise đó
 const value = use(promise);
 ```
 
@@ -954,7 +954,7 @@ export function fetchData(url) {
     const promise = getData(url);
     // Thiết lập các trường trạng thái để React có thể đọc giá trị
     // đồng bộ nếu Promise được resolve trước
-    // `use` is called (e.g. when preloading on hover).
+    // `use` được gọi (ví dụ: khi tải trước lúc hover).
     promise.status = 'pending';
     promise.then(
       value => {
@@ -1126,7 +1126,7 @@ import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
-// TODO: update this example to use
+// TODO: cập nhật ví dụ này để dùng
 // môi trường demo Codesandbox Server Component
 // sau khi được tạo
 import App from './App';
@@ -1488,7 +1488,7 @@ Bạn đang gọi `use` bên trong một khối try-catch. `use` tự ném excep
 ```jsx
 function Albums({ albumsPromise }) {
   try {
-    // ❌ Don't wrap `use` in try-catch
+    // ❌ Đừng bọc `use` trong try-catch
     const albums = use(albumsPromise);
   } catch (e) {
     return <p>Error</p>;
@@ -1500,13 +1500,13 @@ Thay vào đó, hãy bọc component trong một Error Boundary:
 
 ```jsx
 function Albums({ albumsPromise }) {
-  // ✅ Call `use` without try-catch
+  // ✅ Gọi `use` mà không dùng try-catch
   const albums = use(albumsPromise);
   // ...
 ```
 
 ```jsx
-// ✅ Use an Error Boundary to handle errors
+// ✅ Dùng Error Boundary để xử lý lỗi
 <ErrorBoundary fallback={<p>Error</p>}>
   <Albums albumsPromise={albumsPromise} />
 </ErrorBoundary>
@@ -1522,7 +1522,7 @@ Promise được truyền vào `use` chưa được cache, nên React không th�
 
 ```js
 function Albums() {
-  // 🔴 This creates a new Promise on every render
+  // 🔴 Điều này tạo một Promise mới ở mỗi lần render
   const albums = use(fetch('/albums'));
   // ...
 }
@@ -1531,7 +1531,7 @@ function Albums() {
 Để khắc phục, hãy cache Promise để cùng một instance được tái sử dụng:
 
 ```js
-// ✅ fetchData returns the same Promise for the same URL
+// ✅ fetchData trả về cùng Promise cho cùng URL
 const albums = use(fetchData('/albums'));
 ```
 

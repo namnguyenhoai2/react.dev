@@ -969,7 +969,7 @@ export default function Home() {
 export default function Video() {
   return (
     <video
-      // 'Big Buck Bunny' licensed under CC 3.0 by the Blender foundation. Hosted by archive.org
+      // 'Big Buck Bunny' được cấp phép theo CC 3.0 bởi Blender Foundation. Được lưu trữ trên archive.org
       src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
       controls
       playsInline
@@ -1064,7 +1064,7 @@ export default function Video() {
     <video
       controls
       playsInline
-      // 'Big Buck Bunny' licensed under CC 3.0 by the Blender foundation. Hosted by archive.org
+      // 'Big Buck Bunny' được cấp phép theo CC 3.0 bởi Blender Foundation. Được lưu trữ trên archive.org
       src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
     />
 
@@ -1194,7 +1194,7 @@ export default function Video() {
       ref={ref}
       controls
       playsInline
-      // 'Big Buck Bunny' licensed under CC 3.0 by the Blender foundation. Hosted by archive.org
+      // 'Big Buck Bunny' được cấp phép theo CC 3.0 bởi Blender Foundation. Được lưu trữ trên archive.org
       src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
     />
 

@@ -1391,7 +1391,7 @@ function MyComponent() {
   const [state, dispatchAction, isPending] = useActionState(myAction, null);
 
   function handleClick() {
-    // ✅ Correct: wrap in startTransition
+    // ✅ Đúng: bọc trong startTransition
     startTransition(() => {
       dispatchAction();
     });
@@ -1437,7 +1437,7 @@ async function myReducerAction(prevState, data) {
     const result = await submitData(data);
     return { success: true, data: result };
   } catch (error) {
-    // ✅ Return error state instead of throwing
+    // ✅ Trả về state lỗi thay vì throw
     return { success: false, error: error.message };
   }
 }
@@ -1499,7 +1499,7 @@ function MyComponent() {
   const [state, dispatchAction, isPending] = useActionState(myAsyncAction, null);
 
   function handleClick() {
-    // ❌ Wrong: calling dispatchAction outside a Transition
+    // ❌ Không đúng: gọi dispatchAction bên ngoài Transition
     dispatchAction();
   }
 
@@ -1516,7 +1516,7 @@ function MyComponent() {
   const [state, dispatchAction, isPending] = useActionState(myAsyncAction, null);
 
   function handleClick() {
-    // ✅ Correct: wrap in startTransition
+    // ✅ Đúng: bọc trong startTransition
     startTransition(() => {
       dispatchAction();
     });
@@ -1532,7 +1532,7 @@ Hoặc truyền `dispatchAction` vào một prop Action; prop này gọi nó tro
 function MyComponent() {
   const [state, dispatchAction, isPending] = useActionState(myAsyncAction, null);
 
-  // ✅ Correct: action prop wraps in a Transition for you
+  // ✅ Đúng: prop action tự bọc trong Transition cho bạn
   return <Button action={dispatchAction}>...</Button>;
 }
 ```
@@ -1555,7 +1555,7 @@ Không thể cập nhật trạng thái action trong khi đang render.
 function MyComponent() {
   const [state, dispatchAction, isPending] = useActionState(myAction, null);
 
-  // ❌ Wrong: calling dispatchAction during render
+  // ❌ Không đúng: gọi dispatchAction trong khi render
   dispatchAction();
 
   // ...

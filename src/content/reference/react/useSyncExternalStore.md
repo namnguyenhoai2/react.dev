@@ -69,10 +69,10 @@ Snapshot hiện tại của store mà bạn có thể sử dụng trong logic re
   function ShoppingApp() {
     const selectedProductId = useSyncExternalStore(...);
 
-    // ❌ Calling `use` with a Promise dependent on `selectedProductId`
+    // ❌ Gọi `use` với Promise phụ thuộc vào `selectedProductId`
     const data = use(fetchItem(selectedProductId))
 
-    // ❌ Conditionally rendering a lazy component based on `selectedProductId`
+    // ❌ Render có điều kiện một lazy component dựa trên `selectedProductId`
     return selectedProductId != null ? <LazyProductDetailPage /> : <FeaturedProducts />;
   }
   ```
@@ -379,7 +379,7 @@ Lỗi này có nghĩa là hàm `getSnapshot` của bạn trả về một object
 
 ```js {2-5}
 function getSnapshot() {
-  // 🔴 Do not return always different objects from getSnapshot
+  // 🔴 Đừng luôn trả về các object khác nhau từ getSnapshot
   return {
     todos: myStore.todos
   };
@@ -392,7 +392,7 @@ Object `getSnapshot` của bạn chỉ nên trả về một object khác nếu 
 
 ```js {2-3}
 function getSnapshot() {
-  // ✅ You can return immutable data
+  // ✅ Bạn có thể trả về dữ liệu immutable
   return myStore.todos;
 }
 ```
@@ -407,7 +407,7 @@ Hàm `subscribe` này được định nghĩa *bên trong* một component, nên
 
 ```js {2-5}
 function ChatIndicator() {
-  // 🚩 Always a different function, so React will resubscribe on every re-render
+  // 🚩 Luôn là một function khác, nên React sẽ đăng ký lại ở mỗi lần re-render
   function subscribe() {
     // ...
   }
@@ -421,7 +421,7 @@ function ChatIndicator() {
 React sẽ đăng ký lại với store nếu bạn truyền một hàm `subscribe` khác giữa các lần render lại. Nếu điều này gây ra vấn đề về hiệu năng và bạn muốn tránh việc đăng ký lại, hãy di chuyển hàm `subscribe` ra bên ngoài:
 
 ```js {1-4}
-// ✅ Always the same function, so React won't need to resubscribe
+// ✅ Luôn là cùng một function, nên React không cần đăng ký lại
 function subscribe() {
   // ...
 }
@@ -436,7 +436,7 @@ Ngoài ra, hãy bọc `subscribe` trong [`useCallback`](/reference/react/useCall
 
 ```js {2-5}
 function ChatIndicator({ userId }) {
-  // ✅ Same function as long as userId doesn't change
+  // ✅ Cùng một function miễn là userId không thay đổi
   const subscribe = useCallback(() => {
     // ...
   }, [userId]);

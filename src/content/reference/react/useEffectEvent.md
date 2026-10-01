@@ -60,7 +60,7 @@ Bạn có thể gọi hàm này bên trong `useEffect`, `useLayoutEffect`, `useI
 Không giống các hàm `set` từ `useState` hoặc refs, các hàm Effect Event không có identity ổn định. Identity của chúng cố ý thay đổi ở mỗi lần render:
 
 ```js
-// 🔴 Wrong: including Effect Event in dependencies
+// 🔴 Không đúng: đưa Effect Event vào dependencies
 useEffect(() => {
   onSomething();
 }, [onSomething]); // ESLint sẽ cảnh báo về điều này
@@ -114,7 +114,7 @@ Vì `onConnected` là một <CodeStep step={1}>Effect Event</CodeStep>, `muted` 
 Bạn có thể muốn sử dụng `useEffectEvent` để tránh liệt kê các dependency mà bạn cho là "không cần thiết". Tuy nhiên, cách này che giấu bug và khiến code khó hiểu hơn:
 
 ```js
-// 🔴 Wrong: Using Effect Events to hide dependencies
+// 🔴 Không đúng: Dùng Effect Event để che giấu dependencies
 const logVisit = useEffectEvent(() => {
   log(pageUrl);
 });
@@ -488,10 +488,10 @@ function MyComponent({ data }) {
     console.log(data);
   });
 
-  // 🔴 Wrong: calling during render
+  // 🔴 Không đúng: gọi trong khi render
   onLog();
 
-  // ✅ Correct: call from an Effect
+  // ✅ Đúng: gọi từ một Effect
   useEffect(() => {
     onLog();
   }, []);
@@ -513,12 +513,12 @@ const onSomething = useEffectEvent(() => {
   // ...
 });
 
-// 🔴 Wrong: Effect Event in dependencies
+// 🔴 Không đúng: Effect Event nằm trong dependencies
 useEffect(() => {
   onSomething();
 }, [onSomething]);
 
-// ✅ Correct: no Effect Event in dependencies
+// ✅ Đúng: không có Effect Event trong dependencies
 useEffect(() => {
   onSomething();
 }, []);
@@ -537,15 +537,15 @@ const onSomething = useEffectEvent(() => {
   console.log(value);
 });
 
-// 🔴 Wrong: calling from event handler
+// 🔴 Không đúng: gọi từ event handler
 function handleClick() {
   onSomething();
 }
 
-// 🔴 Wrong: passing to child component
+// 🔴 Không đúng: truyền cho component con
 return <Child onSomething={onSomething} />;
 
-// ✅ Correct: calling from Effect
+// ✅ Đúng: gọi từ Effect
 useEffect(() => {
   onSomething();
 }, []);

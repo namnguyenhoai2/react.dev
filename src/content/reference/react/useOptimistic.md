@@ -952,13 +952,13 @@ Một optimistic state update đã xảy ra bên ngoài Transition hoặc Action
 Hàm optimistic setter phải được gọi bên trong `startTransition`:
 
 ```js
-// 🚩 Incorrect: outside a Transition
+// 🚩 Không đúng: nằm ngoài Transition
 function handleClick() {
   setOptimistic(newValue);  // Cảnh báo!
   // ...
 }
 
-// ✅ Correct: inside a Transition
+// ✅ Đúng: nằm trong Transition
 function handleClick() {
   startTransition(async () => {
     setOptimistic(newValue);
@@ -966,7 +966,7 @@ function handleClick() {
   });
 }
 
-// ✅ Also correct: inside an Action prop
+// ✅ Cũng đúng: nằm trong prop Action
 function submitAction(formData) {
   setOptimistic(newValue);
   // ...
@@ -992,7 +992,7 @@ Không thể cập nhật optimistic state trong khi rendering.
 Lỗi này xảy ra khi bạn gọi optimistic setter trong giai đoạn render của component. Bạn chỉ có thể gọi nó từ event handler, effect hoặc callback khác:
 
 ```js
-// 🚩 Incorrect: calling during render
+// 🚩 Không đúng: gọi trong khi render
 function MyComponent({ items }) {
   const [isPending, setPending] = useOptimistic(false);
 
@@ -1002,7 +1002,7 @@ function MyComponent({ items }) {
   // ...
 }
 
-// ✅ Correct: calling inside startTransition
+// ✅ Đúng: gọi bên trong startTransition
 function MyComponent({ items }) {
   const [isPending, setPending] = useOptimistic(false);
 
@@ -1016,7 +1016,7 @@ function MyComponent({ items }) {
   // ...
 }
 
-// ✅ Also correct: calling from an Action
+// ✅ Cũng đúng: gọi từ một Action
 function MyComponent({ items }) {
   const [isPending, setPending] = useOptimistic(false);
 

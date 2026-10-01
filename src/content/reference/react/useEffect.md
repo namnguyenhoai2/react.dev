@@ -1070,7 +1070,7 @@ function ChatRoom({ roomId }) { // Đây là một giá trị reactive
     const connection = createConnection(serverUrl, roomId); // Effect này đọc các giá trị reactive này
     connection.connect();
     return () => connection.disconnect();
-  }, [serverUrl, roomId]); // ✅ So you must specify them as dependencies of your Effect
+  }, [serverUrl, roomId]); // ✅ Vì vậy, bạn phải chỉ định chúng làm dependency của Effect
   // ...
 }
 ```
@@ -1087,7 +1087,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // 🔴 React Hook useEffect has missing dependencies: 'roomId' and 'serverUrl'
+  }, []); // 🔴 React Hook useEffect thiếu dependency: 'roomId' và 'serverUrl'
   // ...
 }
 ```
@@ -1102,7 +1102,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo đầy đủ dependencies
   // ...
 }
 ```
@@ -1118,7 +1118,7 @@ function ChatRoom() {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // ✅ All dependencies declared
+  }, []); // ✅ Đã khai báo đầy đủ dependencies
   // ...
 }
 ```
@@ -1132,7 +1132,7 @@ Nếu bạn có một codebase hiện có, có thể bạn có một số Effect
 ```js {3-4}
 useEffect(() => {
   // ...
-  // 🔴 Avoid suppressing the linter like this:
+  // 🔴 Tránh vô hiệu hóa linter theo cách này:
   // eslint-ignore-next-line react-hooks/exhaustive-deps
 }, []);
 ```
@@ -1431,7 +1431,7 @@ function Counter() {
       setCount(count + 1); // Bạn muốn tăng bộ đếm mỗi giây...
     }, 1000)
     return () => clearInterval(intervalId);
-  }, [count]); // 🚩 ... but specifying `count` as a dependency always resets the interval.
+  }, [count]); // 🚩 ... nhưng chỉ định `count` làm dependency luôn đặt lại interval.
   // ...
 }
 ```
@@ -1450,10 +1450,10 @@ export default function Counter() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCount(c => c + 1); // ✅ Pass a state updater
+      setCount(c => c + 1); // ✅ Truyền một state updater
     }, 1000);
     return () => clearInterval(intervalId);
-  }, []); // ✅ Now count is not a dependency
+  }, []); // ✅ Giờ count không còn là dependency
 
   return <h1>{count}</h1>;
 }
@@ -1487,7 +1487,7 @@ const serverUrl = 'https://localhost:1234';
 function ChatRoom({ roomId }) {
   const [message, setMessage] = useState('');
 
-  const options = { // 🚩 This object is created from scratch on every re-render
+  const options = { // 🚩 Object này được tạo mới hoàn toàn ở mỗi lần re-render
     serverUrl: serverUrl,
     roomId: roomId
   };
@@ -1496,7 +1496,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options); // Nó được dùng bên trong Effect
     connection.connect();
     return () => connection.disconnect();
-  }, [options]); // 🚩 As a result, these dependencies are always different on a commit
+  }, [options]); // 🚩 Do đó, các dependency này luôn khác nhau ở mỗi lần commit
   // ...
 ```
 
@@ -1588,7 +1588,7 @@ Nếu Effect của bạn phụ thuộc vào một object hoặc một function �
 function ChatRoom({ roomId }) {
   const [message, setMessage] = useState('');
 
-  function createOptions() { // 🚩 This function is created from scratch on every re-render
+  function createOptions() { // 🚩 Function này được tạo mới hoàn toàn ở mỗi lần re-render
     return {
       serverUrl: serverUrl,
       roomId: roomId
@@ -1600,7 +1600,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection();
     connection.connect();
     return () => connection.disconnect();
-  }, [createOptions]); // 🚩 As a result, these dependencies are always different on a commit
+  }, [createOptions]); // 🚩 Do đó, các dependency này luôn khác nhau ở mỗi lần commit
   // ...
 ```
 
@@ -1698,7 +1698,7 @@ Theo mặc định, khi bạn đọc một giá trị reactive từ Effect, bạ
 function Page({ url, shoppingCart }) {
   useEffect(() => {
     logVisit(url, shoppingCart.length);
-  }, [url, shoppingCart]); // ✅ All dependencies declared
+  }, [url, shoppingCart]); // ✅ Đã khai báo đầy đủ dependencies
   // ...
 }
 ```
@@ -1713,7 +1713,7 @@ function Page({ url, shoppingCart }) {
 
   useEffect(() => {
     onVisit(url);
-  }, [url]); // ✅ All dependencies declared
+  }, [url]); // ✅ Đã khai báo đầy đủ dependencies
   // ...
 }
 ```
@@ -1740,9 +1740,9 @@ function MyComponent() {
   }, []);
 
   if (didMount) {
-    // ... return client-only JSX ...
+    // ... trả về JSX chỉ dành cho client ...
   }  else {
-    // ... return initial JSX ...
+    // ... trả về JSX ban đầu ...
   }
 }
 ```
@@ -1772,7 +1772,7 @@ Trước tiên, hãy kiểm tra xem bạn có quên chỉ định dependency arr
 ```js {3}
 useEffect(() => {
   // ...
-}); // 🚩 No dependency array: re-runs after every commit!
+}); // 🚩 Không có dependency array: chạy lại sau mỗi lần commit!
 ```
 
 Nếu bạn đã chỉ định dependency array nhưng Effect vẫn chạy lại theo vòng lặp, đó là vì một trong các dependency của bạn khác nhau trong mỗi lần re-render.
@@ -1792,7 +1792,7 @@ Sau đó, bạn có thể nhấp chuột phải vào các array từ những l�
 ```js
 Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
 Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
-Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
+Object.is(temp1[2], temp2[2]); // ... và tiếp tục như vậy cho mỗi dependency ...
 ```
 
 Khi tìm thấy dependency khác nhau trong mỗi lần re-render, bạn thường có thể khắc phục theo một trong các cách sau:
@@ -1829,7 +1829,7 @@ Nếu bạn có code cleanup mà không có code setup tương ứng, đó thư�
 
 ```js {2-5}
 useEffect(() => {
-  // 🔴 Avoid: Cleanup logic without corresponding setup logic
+  // 🔴 Tránh: logic cleanup không có logic thiết lập tương ứng
   return () => {
     doSomething();
   };

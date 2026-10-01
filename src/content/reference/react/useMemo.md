@@ -603,7 +603,7 @@ export default function TodoList({ todos, tab, theme }) {
   // Yêu cầu React cache phép tính của bạn giữa các lần render lại...
   const visibleTodos = useMemo(
     () => filterTodos(todos, tab),
-    [todos, tab] // ...so as long as these dependencies don't change...
+    [todos, tab] // ...miễn là các dependency này không thay đổi...
   );
   return (
     <div className={theme}>
@@ -1088,7 +1088,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [options]); // 🔴 Problem: This dependency changes on every render
+  }, [options]); // 🔴 Vấn đề: Dependency này thay đổi ở mỗi lần render
   // ...
 ```
 
@@ -1103,13 +1103,13 @@ function ChatRoom({ roomId }) {
       serverUrl: 'https://localhost:1234',
       roomId: roomId
     };
-  }, [roomId]); // ✅ Only changes when roomId changes
+  }, [roomId]); // ✅ Chỉ thay đổi khi roomId thay đổi
 
   useEffect(() => {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [options]); // ✅ Only changes when options changes
+  }, [options]); // ✅ Chỉ thay đổi khi options thay đổi
   // ...
 ```
 
@@ -1122,7 +1122,7 @@ function ChatRoom({ roomId }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const options = { // ✅ No need for useMemo or object dependencies!
+    const options = { // ✅ Không cần useMemo hoặc object dependencies!
       serverUrl: 'https://localhost:1234',
       roomId: roomId
     }
@@ -1130,7 +1130,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ Only changes when roomId changes
+  }, [roomId]); // ✅ Chỉ thay đổi khi roomId thay đổi
   // ...
 ```
 
@@ -1146,7 +1146,7 @@ function Dropdown({ allItems, text }) {
 
   const visibleItems = useMemo(() => {
     return searchItems(allItems, searchOptions);
-  }, [allItems, searchOptions]); // 🚩 Caution: Dependency on an object created in the component body
+  }, [allItems, searchOptions]); // 🚩 Lưu ý: Dependency của object được tạo trong thân component
   // ...
 ```
 
@@ -1158,11 +1158,11 @@ Việc phụ thuộc vào một object như thế này làm mất đi mục đí
 function Dropdown({ allItems, text }) {
   const searchOptions = useMemo(() => {
     return { matchMode: 'whole-word', text };
-  }, [text]); // ✅ Only changes when text changes
+  }, [text]); // ✅ Chỉ thay đổi khi text thay đổi
 
   const visibleItems = useMemo(() => {
     return searchItems(allItems, searchOptions);
-  }, [allItems, searchOptions]); // ✅ Only changes when allItems or searchOptions changes
+  }, [allItems, searchOptions]); // ✅ Chỉ thay đổi khi allItems hoặc searchOptions thay đổi
   // ...
 ```
 
@@ -1173,7 +1173,7 @@ function Dropdown({ allItems, text }) {
   const visibleItems = useMemo(() => {
     const searchOptions = { matchMode: 'whole-word', text };
     return searchItems(allItems, searchOptions);
-  }, [allItems, text]); // ✅ Only changes when allItems or text changes
+  }, [allItems, text]); // ✅ Chỉ thay đổi khi allItems hoặc text thay đổi
   // ...
 ```
 
@@ -1262,7 +1262,7 @@ Ví dụ, function tính toán không pure này làm thay đổi một array mà
 
 ```js {2-3}
   const visibleTodos = useMemo(() => {
-    // 🚩 Mistake: mutating a prop
+    // 🚩 Sai lầm: thay đổi trực tiếp một prop
     todos.push({ id: 'last', text: 'Go for a walk!' });
     const filtered = filterTodos(todos, tab);
     return filtered;
@@ -1274,7 +1274,7 @@ React gọi function của bạn hai lần, vì vậy bạn sẽ nhận thấy t
 ```js {3,4}
   const visibleTodos = useMemo(() => {
     const filtered = filterTodos(todos, tab);
-    // ✅ Correct: mutating an object you created during the calculation
+    // ✅ Đúng: thay đổi object bạn đã tạo trong quá trình tính toán
     filtered.push({ id: 'last', text: 'Go for a walk!' });
     return filtered;
   }, [todos, tab]);
@@ -1291,7 +1291,7 @@ Ngoài ra, hãy xem các hướng dẫn về [cập nhật object](/learn/updati
 Đoạn code này không hoạt động:
 
 ```js {1-2,5}
-  // 🔴 You can't return an object from an arrow function with () => {
+  // 🔴 Bạn không thể trả về object từ arrow function với () => {
   const searchOptions = useMemo(() => {
     matchMode: 'whole-word',
     text: text
@@ -1313,7 +1313,7 @@ Tuy nhiên, cách này vẫn gây nhầm lẫn và quá dễ bị hỏng nếu a
 Để tránh sai sót này, hãy viết tường minh một câu lệnh `return`:
 
 ```js {1-3,6-7}
-  // ✅ This works and is explicit
+  // ✅ Cách này hoạt động và rõ ràng
   const searchOptions = useMemo(() => {
     return {
       matchMode: 'whole-word',
@@ -1332,7 +1332,7 @@ Nếu quên dependency array, `useMemo` sẽ chạy lại phép tính mỗi lầ
 
 ```js {2-3}
 function TodoList({ todos, tab }) {
-  // 🔴 Recalculates every time: no dependency array
+  // 🔴 Tính toán lại mỗi lần: không có dependency array
   const visibleTodos = useMemo(() => filterTodos(todos, tab));
   // ...
 ```
@@ -1341,7 +1341,7 @@ function TodoList({ todos, tab }) {
 
 ```js {2-3}
 function TodoList({ todos, tab }) {
-  // ✅ Does not recalculate unnecessarily
+  // ✅ Không tính toán lại không cần thiết
   const visibleTodos = useMemo(() => filterTodos(todos, tab), [todos, tab]);
   // ...
 ```
@@ -1358,7 +1358,7 @@ Sau đó, bạn có thể nhấp chuột phải vào các array từ những l�
 ```js
 Object.is(temp1[0], temp2[0]); // Dependency đầu tiên có giống nhau giữa các mảng không?
 Object.is(temp1[1], temp2[1]); // Dependency thứ hai có giống nhau giữa các mảng không?
-Object.is(temp1[2], temp2[2]); // ... and so on for every dependency ...
+Object.is(temp1[2], temp2[2]); // ... và tiếp tục như vậy cho mỗi dependency ...
 ```
 
 Khi tìm ra dependency nào làm hỏng memoization, hãy tìm cách loại bỏ dependency đó hoặc [memoize nó nữa.](#memoizing-a-dependency-of-another-hook)
@@ -1374,7 +1374,7 @@ function ReportList({ items }) {
   return (
     <article>
       {items.map(item => {
-        // 🔴 You can't call useMemo in a loop like this:
+        // 🔴 Bạn không thể gọi useMemo trong loop như thế này:
         const data = useMemo(() => calculateReport(item), [item]);
         return (
           <figure key={item.id}>
@@ -1401,7 +1401,7 @@ function ReportList({ items }) {
 }
 
 function Report({ item }) {
-  // ✅ Call useMemo at the top level:
+  // ✅ Gọi useMemo ở cấp cao nhất:
   const data = useMemo(() => calculateReport(item), [item]);
   return (
     <figure>

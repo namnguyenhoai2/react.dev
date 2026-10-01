@@ -508,7 +508,7 @@ class ScrollingList extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     // Nếu có giá trị snapshot, chúng ta vừa thêm phần tử mới.
     // Điều chỉnh cuộn để phần tử mới không đẩy phần tử cũ ra khỏi vùng nhìn thấy.
-    // (snapshot here is the value returned from getSnapshotBeforeUpdate)
+    // (snapshot ở đây là giá trị được trả về từ getSnapshotBeforeUpdate)
     if (snapshot !== null) {
       const list = this.listRef.current;
       list.scrollTop = list.scrollHeight - snapshot;
@@ -1380,7 +1380,7 @@ export default function App() {
 
 ```js
 function Greeting() {
-  // ... move the code from the render method here ...
+  // ... chuyển code từ phương thức render vào đây ...
 }
 ```
 
