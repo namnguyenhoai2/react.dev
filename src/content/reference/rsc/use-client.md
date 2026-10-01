@@ -176,7 +176,7 @@ Trước tiên, cần làm rõ rằng thuật ngữ "component" không thật s�
 1. "Component" có thể chỉ **định nghĩa component**. Trong hầu hết trường hợp, đây sẽ là một function.
 
 ```js
-// This is a definition of a component
+// Đây là phần định nghĩa của một component
 function MyComponent() {
   return <p>My Component</p>
 }
@@ -187,7 +187,7 @@ function MyComponent() {
 import MyComponent from './MyComponent';
 
 function App() {
-  // This is a usage of a component
+  // Đây là cách sử dụng một component
   return <MyComponent />;
 }
 ```

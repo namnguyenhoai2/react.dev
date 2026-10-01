@@ -33,7 +33,7 @@ import sanitizeHtml from 'sanitize-html'; // 206K (63.3K gzipped)
 
 function Page({page}) {
   const [content, setContent] = useState('');
-  // NOTE: loads *after* first page render.
+  // LƯU Ý: tải *sau* lần render trang đầu tiên.
   useEffect(() => {
     fetch(`/api/content/${page}`).then((data) => {
       setContent(data.content);
@@ -57,11 +57,11 @@ Mẫu này có nghĩa là người dùng phải tải xuống và parse thêm 75
 Với Server Components, bạn có thể render các component này một lần tại thời điểm build:
 
 ```js
-import marked from 'marked'; // Not included in bundle
-import sanitizeHtml from 'sanitize-html'; // Not included in bundle
+import marked from 'marked'; // Không được đưa vào bundle
+import sanitizeHtml from 'sanitize-html'; // Không được đưa vào bundle
 
 async function Page({page}) {
-  // NOTE: loads *during* render, when the app is built.
+  // LƯU Ý: tải *trong lúc* render, khi ứng dụng được build.
   const content = await file.readFile(`${page}.md`);
 
   return <div>{sanitizeHtml(marked(content))}</div>;
@@ -101,7 +101,7 @@ Khi không sử dụng Server Components, cách phổ biến là fetch dữ li�
 // bundle.js
 function Note({id}) {
   const [note, setNote] = useState('');
-  // NOTE: loads *after* first render.
+  // LƯU Ý: tải *sau* lần render đầu tiên.
   useEffect(() => {
     fetch(`/api/notes/${id}`).then(data => {
       setNote(data.note);
@@ -118,8 +118,8 @@ function Note({id}) {
 
 function Author({id}) {
   const [author, setAuthor] = useState('');
-  // NOTE: loads *after* Note renders.
-  // Causing an expensive client-server waterfall.
+  // LƯU Ý: tải *sau khi* Note render.
+  // Dẫn đến waterfall client-server tốn kém.
   useEffect(() => {
     fetch(`/api/authors/${id}`).then(data => {
       setAuthor(data.author);
@@ -150,7 +150,7 @@ Với Server Components, bạn có thể đọc dữ liệu và render nó trong
 import db from './database';
 
 async function Note({id}) {
-  // NOTE: loads *during* render.
+  // LƯU Ý: tải *trong lúc* render.
   const note = await db.notes.get(id);
   return (
     <div>
@@ -161,8 +161,8 @@ async function Note({id}) {
 }
 
 async function Author({id}) {
-  // NOTE: loads *after* Note,
-  // but is fast if data is co-located.
+  // LƯU Ý: tải *sau* Note,
+  // nhưng nhanh nếu dữ liệu được đặt cùng vị trí.
   const author = await db.authors.get(id);
   return <span>By: {author.name}</span>;
 }
@@ -268,7 +268,7 @@ export default function Expandable({children}) {
 
 ```js
 <head>
-  <!-- the bundle for Client Components -->
+  <!-- bundle dành cho các Client Component -->
   <script src="bundle.js" />
 </head>
 <body>
@@ -295,10 +295,10 @@ Bạn thậm chí có thể tạo một promise trên server và await nó trên
 import db from './database';
 
 async function Page({id}) {
-  // Will suspend the Server Component.
+  // Sẽ suspend Server Component.
   const note = await db.notes.get(id);
 
-  // NOTE: not awaited, will start here and await on the client.
+  // LƯU Ý: không await, sẽ bắt đầu tại đây và await ở client.
   const commentsPromise = db.comments.get(note.id);
   return (
     <div>
@@ -317,8 +317,8 @@ async function Page({id}) {
 import {use} from 'react';
 
 function Comments({commentsPromise}) {
-  // NOTE: this will resume the promise from the server.
-  // It will suspend until the data is available.
+  // LƯU Ý: thao tác này sẽ tiếp tục promise từ server.
+  // Nó sẽ suspend cho đến khi dữ liệu sẵn sàng.
   const comments = use(commentsPromise);
   return comments.map(comment => <p>{comment}</p>);
 }
