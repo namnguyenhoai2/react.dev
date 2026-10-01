@@ -287,7 +287,7 @@ Các event handler của bạn sẽ nhận được một *đối tượng event
 
 ```js
 <button onClick={e => {
-  console.log(e); // React event object
+  console.log(e); // Đối tượng event của React
 }} />
 ```
 
