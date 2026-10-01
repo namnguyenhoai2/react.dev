@@ -314,7 +314,7 @@ input { margin: 5px; }
 Nếu bạn [render nhiều ứng dụng React độc lập trên cùng một trang](#specifying-a-shared-prefix-for-all-generated-ids), và một số ứng dụng trong đó được server-render, hãy đảm bảo rằng `identifierPrefix` bạn truyền vào lần gọi [`hydrateRoot`](/reference/react-dom/client/hydrateRoot) ở phía client giống với `identifierPrefix` bạn truyền vào [các API server](/reference/react-dom/server) như [`renderToPipeableStream`.](/reference/react-dom/server/renderToPipeableStream)
 
 ```js
-// Server
+// Phía server
 import { renderToPipeableStream } from 'react-dom/server';
 
 const { pipe } = renderToPipeableStream(
@@ -324,7 +324,7 @@ const { pipe } = renderToPipeableStream(
 ```
 
 ```js
-// Client
+// Phía client
 import { hydrateRoot } from 'react-dom/client';
 
 const domNode = document.getElementById('root');

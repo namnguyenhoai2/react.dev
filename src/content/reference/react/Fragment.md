@@ -586,8 +586,8 @@ function FormFields({ children }) {
   );
 }
 
-// Even though the inputs are deeply nested,
-// focus() searches depth-first to find them.
+// Dù các input được lồng sâu,
+// focus() vẫn tìm chúng theo chiều sâu.
 export default function App() {
   return (
     <FormFields>
@@ -703,7 +703,7 @@ export default function App() {
 
 h3 {
   margin: 4px 0;
-  /* Padding to handle offset of global sticky nav when scrolling for example */
+  /* Padding để xử lý offset của thanh điều hướng sticky toàn cục, chẳng hạn khi cuộn */
   padding-top: 4em;
   color: #1a73e8;
 }
@@ -907,7 +907,7 @@ function getSharedObserver(
   onIntersection,
   options,
 ) {
-  // Register this callback for the
+  // Đăng ký callback này cho
   // fragment instance.
   const existing =
     callbackMap.get(fragmentInstance);
@@ -926,8 +926,8 @@ function getSharedObserver(
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        // Look up which FragmentInstances own
-        // this element.
+        // Tra cứu FragmentInstances nào sở hữu
+        // phần tử này.
         const fragmentInstances =
           entry.target.reactFragments;
         if (fragmentInstances) {

@@ -97,7 +97,7 @@ it('can render and update a counter', async () => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  // ✅ Render the component inside act().
+  // ✅ Render component bên trong act().
   await act(() => {
     ReactDOMClient.createRoot(container).render(<Counter />);
   });
@@ -130,7 +130,7 @@ it.only('can render and update a counter', async () => {
     ReactDOMClient.createRoot(container).render(<Counter />);
   });
 
-  // ✅ Dispatch the event inside act().
+  // ✅ Dispatch event bên trong act().
   await act(async () => {
     button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });

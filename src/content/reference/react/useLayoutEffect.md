@@ -90,14 +90,14 @@ Hầu hết component không cần biết vị trí và kích thước của ch�
 ```js {5-8}
 function Tooltip() {
   const ref = useRef(null);
-  const [tooltipHeight, setTooltipHeight] = useState(0); // You don't know real height yet
+  const [tooltipHeight, setTooltipHeight] = useState(0); // Bạn chưa biết chiều cao thực tế
 
   useLayoutEffect(() => {
     const { height } = ref.current.getBoundingClientRect();
-    setTooltipHeight(height); // Re-render now that you know the real height
+    setTooltipHeight(height); // Render lại khi đã biết chiều cao thực tế
   }, []);
 
-  // ...use tooltipHeight in the rendering logic below...
+  // ...sử dụng tooltipHeight trong logic render bên dưới...
 }
 ```
 
@@ -208,7 +208,7 @@ export default function Tooltip({ children, targetRect }) {
     tooltipX = targetRect.left;
     tooltipY = targetRect.top - tooltipHeight;
     if (tooltipY < 0) {
-      // It doesn't fit above, so place below.
+      // Không vừa ở phía trên, nên đặt ở phía dưới.
       tooltipY = targetRect.bottom;
     }
   }
@@ -357,7 +357,7 @@ export default function Tooltip({ children, targetRect }) {
     tooltipX = targetRect.left;
     tooltipY = targetRect.top - tooltipHeight;
     if (tooltipY < 0) {
-      // It doesn't fit above, so place below.
+      // Không vừa ở phía trên, nên đặt ở phía dưới.
       tooltipY = targetRect.bottom;
     }
   }
@@ -504,7 +504,7 @@ export default function Tooltip({ children, targetRect }) {
     tooltipX = targetRect.left;
     tooltipY = targetRect.top - tooltipHeight;
     if (tooltipY < 0) {
-      // It doesn't fit above, so place below.
+      // Không vừa ở phía trên, nên đặt ở phía dưới.
       tooltipY = targetRect.bottom;
     }
   }
@@ -636,10 +636,10 @@ export default function Tooltip({ children, targetRect }) {
   const ref = useRef(null);
   const [tooltipHeight, setTooltipHeight] = useState(0);
 
-  // This artificially slows down rendering
+  // Việc này cố ý làm chậm quá trình render
   let now = performance.now();
   while (performance.now() - now < 100) {
-    // Do nothing for a bit...
+    // Tạm thời không làm gì...
   }
 
   useEffect(() => {
@@ -653,7 +653,7 @@ export default function Tooltip({ children, targetRect }) {
     tooltipX = targetRect.left;
     tooltipY = targetRect.top - tooltipHeight;
     if (tooltipY < 0) {
-      // It doesn't fit above, so place below.
+      // Không vừa ở phía trên, nên đặt ở phía dưới.
       tooltipY = targetRect.bottom;
     }
   }

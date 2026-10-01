@@ -139,17 +139,17 @@ Ví dụ, bạn có thể định nghĩa một ViewTransition như sau:
 
 ```js
 <ViewTransition
-  /* turn off any animation not defined below */
+  /* tắt mọi animation không được định nghĩa bên dưới */
   default="none"
   enter={{
-    /* apply slide-in for Transition Type `forward` */
+    /* áp dụng slide-in cho Transition Type `forward` */
     "forward": 'slide-in',
-    /* otherwise use the browser default animation */
+    /* nếu không thì dùng animation mặc định của trình duyệt */
     "default": 'auto'
   }}
-  /* use the browser default for exit animations*/
+  /* dùng animation mặc định của trình duyệt cho animation exit */
   exit="auto"
-  /* apply a custom `cross-fade` class for updates */
+  /* áp dụng class `cross-fade` tùy chỉnh cho các update */
   update="cross-fade"
 >
 ```
@@ -445,7 +445,7 @@ Nếu có một `<div>` nằm phía trên `<ViewTransition>`, sẽ không có an
 ```js [3, 5]
 function Item() {
   return (
-    <div> {/* 🚩<div> above <ViewTransition> breaks exit/enter */}
+    <div> {/* 🚩<div> phía trên <ViewTransition> làm hỏng exit/enter */}
       <ViewTransition enter="auto" exit="auto" default="none">
         <Video video={videos[0]} />
       </ViewTransition>
@@ -1989,7 +1989,7 @@ Ví dụ, để tùy chỉnh animation cho tất cả thao tác điều hướng
   <div>...</div>
 </ViewTransition>;
 
-// in your router:
+// trong router của bạn:
 startTransition(() => {
   addTransitionType('navigation-' + navigationType);
 });
@@ -2368,10 +2368,10 @@ function Item() {
   return (
     <ViewTransition
       default="none"
-      /* CSS driven cross fade defaults */
+      /* mặc định cross fade được điều khiển bằng CSS */
       enter="auto"
       exit="auto"
-      /* JS driven slide animations */
+      /* animation slide được điều khiển bằng JS */
       onEnter={(instance) => {
         const anim = instance.new.animate(
           SLIDE_IN,
@@ -2816,7 +2816,7 @@ Lỗi này xảy ra khi hai component `<ViewTransition>` có cùng `name` đư�
 
 ```js [3]
 function Item() {
-  // 🚩 All items will get the same "name".
+  // 🚩 Tất cả item sẽ nhận cùng một "name".
   return <ViewTransition name="item">...</ViewTransition>;
 }
 
@@ -2855,7 +2855,7 @@ Có hai component `<ViewTransition name=%s>` có cùng name được mount cùng
 
 ```js [3]
 function Item({id}) {
-  // ✅ All items will get a unique name.
+  // ✅ Mỗi item sẽ nhận một name duy nhất.
   return <ViewTransition name={`item-${id}`}>...</ViewTransition>;
 }
 
