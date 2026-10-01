@@ -133,7 +133,7 @@ React sẽ đưa [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doc
 ```html [[2, 5, "/main.js"]]
 <!DOCTYPE html>
 <html>
-  <!-- ... HTML từ các component của bạn ... -->
+  <!-- ... HTML từ các thành phần của bạn ... -->
 </html>
 <script src="/main.js" async=""></script>
 ```
@@ -174,7 +174,7 @@ export default function App({ assetMap }) {
 Trên server, render `<App assetMap={assetMap} />` và truyền `assetMap` của bạn cùng với các URL asset:
 
 ```js {1-5,8,9}
-// Bạn cần lấy JSON này từ build tooling, chẳng hạn đọc từ build output.
+// Bạn cần lấy JSON này từ công cụ build, chẳng hạn bằng cách đọc đầu ra của build.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -193,7 +193,7 @@ async function handler(request) {
 Vì server hiện đang render `<App assetMap={assetMap} />`, bạn cũng cần render nó bằng `assetMap` trên client để tránh lỗi hydration. Bạn có thể serialize và truyền `assetMap` đến client như sau:
 
 ```js {9-10}
-// Bạn cần lấy JSON này từ build tooling.
+// Bạn cần lấy JSON này từ công cụ build.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -201,7 +201,7 @@ const assetMap = {
 
 async function handler(request) {
   const {prelude} = await prerender(<App assetMap={assetMap} />, {
-    // Lưu ý: Có thể stringify() dữ liệu này an toàn vì nó không do người dùng tạo.
+    // Lưu ý: Có thể gọi stringify() cho dữ liệu này một cách an toàn vì dữ liệu không do người dùng tạo.
     bootstrapScriptContent: `window.assetMap = ${JSON.stringify(assetMap)};`,
     bootstrapScripts: [assetMap['/main.js']],
   });
@@ -297,8 +297,8 @@ async function renderToString() {
   }, 10000);
 
   try {
-    // prelude sẽ chứa toàn bộ HTML đã được prerender
-    // trước khi controller hủy.
+    // prelude sẽ chứa toàn bộ HTML đã được kết xuất trước
+    // trước khi bộ điều khiển hủy.
     const {prelude} = await prerender(<App />, {
       signal: controller.signal,
     });

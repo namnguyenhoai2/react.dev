@@ -311,7 +311,7 @@ Một input như `<input />` là *uncontrolled*. Ngay cả khi bạn [truyền m
 
 ```js {2,6,7}
 function Form() {
-  const [firstName, setFirstName] = useState(''); // Declare a state variable...
+  const [firstName, setFirstName] = useState(''); // Khai báo một biến state...
   // ...
   return (
     <input
@@ -576,7 +576,7 @@ function handleChange(e) {
 
 ```js
 function handleChange(e) {
-  // ✅ Updating a controlled input to e.target.value synchronously
+  // ✅ Cập nhật đồng bộ input được kiểm soát thành e.target.value
   setFirstName(e.target.value);
 }
 ```

@@ -1011,7 +1011,7 @@ const post = {
 };
 
 export default function MarkdownPreview() {
-  // 🔴 SECURITY HOLE: passing untrusted input to dangerouslySetInnerHTML
+  // 🔴 LỖ HỔNG BẢO MẬT: truyền dữ liệu đầu vào không đáng tin cậy vào dangerouslySetInnerHTML
   const markup = { __html: post.content };
   return <div dangerouslySetInnerHTML={markup} />;
 }

@@ -95,7 +95,7 @@ React sẽ hiển thị `<App />` trong `root` và tiếp quản việc quản l
   ```js
   const root = createRoot(document.getElementById('root'));
   root.render(<App />);
-  // 🚩 The HTML will not include the rendered <App /> yet:
+  // 🚩 HTML chưa bao gồm <App /> đã được render:
   console.log(document.body.innerHTML);
   ```
 
@@ -385,7 +385,7 @@ Kết hợp với `onUncaughtError` và `onRecoverableError`, bạn có thể tr
 
 ```js src/reportError.js
 function reportError({ type, error, errorInfo }) {
-  // Implementation cụ thể tùy thuộc vào bạn.
+  // Việc triển khai cụ thể tùy thuộc vào bạn.
   // `console.error()` chỉ được dùng cho mục đích minh họa.
   console.error(type, error, "Component Stack: ");
   console.error("Component Stack: ", errorInfo.componentStack);
@@ -417,9 +417,9 @@ import {
 
 const container = document.getElementById("root");
 const root = createRoot(container, {
-  // Hãy nhớ xóa các option này trong môi trường development để tận dụng
-  // các handler mặc định của React hoặc tự triển khai overlay cho development.
-  // Các handler ở đây chỉ luôn được chỉ định để phục vụ mục đích minh họa.
+  // Hãy nhớ xóa các tùy chọn này trong môi trường phát triển để tận dụng
+  // các trình xử lý mặc định của React hoặc tự triển khai lớp phủ cho môi trường phát triển.
+  // Các trình xử lý ở đây chỉ luôn được chỉ định để phục vụ mục đích minh họa.
   onCaughtError: onCaughtErrorProd,
   onRecoverableError: onRecoverableErrorProd,
   onUncaughtError: onUncaughtErrorProd,
@@ -507,7 +507,7 @@ Cảnh báo: Bạn đã truyền đối số thứ hai cho root.render(...) như
 // 🚩 Sai: root.render chỉ nhận một đối số.
 root.render(App, {onUncaughtError});
 
-// ✅ Correct: pass options to createRoot.
+// ✅ Đúng: truyền các tùy chọn vào createRoot.
 const root = createRoot(container, {onUncaughtError});
 root.render(<App />);
 ```
