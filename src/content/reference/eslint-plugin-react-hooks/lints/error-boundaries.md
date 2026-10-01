@@ -17,10 +17,10 @@ Các khối try/catch không thể bắt những lỗi xảy ra trong quá trìn
 Ví dụ về code không đúng đối với quy tắc này:
 
 ```js {expectedErrors: {'react-compiler': [4]}}
-// ❌ Try/catch won't catch render errors
+// ❌ Try/catch không bắt được lỗi render
 function Parent() {
   try {
-    return <ChildComponent />; // If this throws, catch won't help
+    return <ChildComponent />; // Nếu dòng này throw, catch sẽ không giúp được
   } catch (error) {
     return <div>Error occurred</div>;
   }
@@ -32,7 +32,7 @@ function Parent() {
 Ví dụ về code đúng đối với quy tắc này:
 
 ```js
-// ✅ Using error boundary
+// ✅ Dùng error boundary
 function Parent() {
   return (
     <ErrorBoundary>
@@ -49,17 +49,17 @@ function Parent() {
 Hook `use` không throw lỗi theo nghĩa truyền thống; nó tạm dừng quá trình thực thi component. Khi `use` gặp một promise đang chờ, nó tạm dừng component và cho phép React hiển thị fallback. Chỉ Suspense và Error Boundaries mới có thể xử lý những trường hợp này. Linter cảnh báo việc sử dụng `try`/`catch` quanh `use` để tránh nhầm lẫn, vì khối `catch` sẽ không bao giờ chạy.
 
 ```js {expectedErrors: {'react-compiler': [5]}}
-// ❌ Try/catch around `use` hook
+// ❌ Try/catch bao quanh Hook `use`
 function Component({promise}) {
   try {
-    const data = use(promise); // Won't catch - `use` suspends, not throws
+    const data = use(promise); // Không bắt được — `use` suspend, không throw
     return <div>{data}</div>;
   } catch (error) {
-    return <div>Failed to load</div>; // Unreachable
+    return <div>Failed to load</div>; // Không thể tới được
   }
 }
 
-// ✅ Error boundary catches `use` errors
+// ✅ Error boundary bắt lỗi từ `use`
 function App() {
   return (
     <ErrorBoundary fallback={<div>Failed to load</div>}>

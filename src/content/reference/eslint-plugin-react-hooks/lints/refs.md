@@ -47,17 +47,17 @@ Sau khi một giá trị được đánh dấu là ref, quá trình suy luận �
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ Reading ref during render
+// ❌ Đọc ref trong quá trình render
 function Component() {
   const ref = useRef(0);
-  const value = ref.current; // Don't read during render
+  const value = ref.current; // Đừng đọc trong quá trình render
   return <div>{value}</div>;
 }
 
-// ❌ Modifying ref during render
+// ❌ Thay đổi ref trong quá trình render
 function Component({value}) {
   const ref = useRef(null);
-  ref.current = value; // Don't modify during render
+  ref.current = value; // Đừng thay đổi trong quá trình render
   return <div />;
 }
 ```
@@ -67,20 +67,20 @@ function Component({value}) {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ Read ref in effects/handlers
+// ✅ Đọc ref trong effect/handler
 function Component() {
   const ref = useRef(null);
 
   useEffect(() => {
     if (ref.current) {
-      console.log(ref.current.offsetWidth); // OK in effect
+      console.log(ref.current.offsetWidth); // Hợp lệ trong effect
     }
   });
 
   return <div ref={ref} />;
 }
 
-// ✅ Use state for UI values
+// ✅ Dùng state cho các giá trị giao diện
 function Component() {
   const [count, setCount] = useState(0);
 
@@ -91,17 +91,17 @@ function Component() {
   );
 }
 
-// ✅ Lazy initialization of ref value
+// ✅ Khởi tạo lười giá trị ref
 function Component() {
   const ref = useRef(null);
 
-  // Initialize only once on first use
+  // Chỉ khởi tạo một lần ở lần dùng đầu tiên
   if (ref.current === null) {
-    ref.current = expensiveComputation(); // OK - lazy initialization
+    ref.current = expensiveComputation(); // Hợp lệ — khởi tạo lười
   }
 
   const handleClick = () => {
-    console.log(ref.current); // Use the initialized value
+    console.log(ref.current); // Dùng giá trị đã khởi tạo
   };
 
   return <button onClick={handleClick}>Click</button>;

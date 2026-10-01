@@ -17,31 +17,31 @@ Các biến toàn cục tồn tại bên ngoài quyền kiểm soát của React
 Ví dụ về code không đúng đối với quy tắc này:
 
 ```js
-// ❌ Global counter
+// ❌ Bộ đếm toàn cục
 let renderCount = 0;
 function Component() {
-  renderCount++; // Mutating global
+  renderCount++; // Thay đổi biến toàn cục
   return <div>Count: {renderCount}</div>;
 }
 
-// ❌ Modifying window properties
+// ❌ Thay đổi thuộc tính của window
 function Component({userId}) {
-  window.currentUser = userId; // Global mutation
+  window.currentUser = userId; // Thay đổi biến toàn cục
   return <div>User: {userId}</div>;
 }
 
-// ❌ Global array push
+// ❌ Thêm phần tử vào mảng toàn cục
 const events = [];
 function Component({event}) {
-  events.push(event); // Mutating global array
+  events.push(event); // Thay đổi mảng toàn cục
   return <div>Events: {events.length}</div>;
 }
 
-// ❌ Cache manipulation
+// ❌ Thao tác với cache
 const cache = {};
 function Component({id}) {
   if (!cache[id]) {
-    cache[id] = fetchData(id); // Modifying cache during render
+    cache[id] = fetchData(id); // Thay đổi cache trong quá trình render
   }
   return <div>{cache[id]}</div>;
 }
@@ -52,7 +52,7 @@ function Component({id}) {
 Ví dụ về code đúng đối với quy tắc này:
 
 ```js
-// ✅ Use state for counters
+// ✅ Dùng state cho bộ đếm
 function Component() {
   const [clickCount, setClickCount] = useState(0);
 
@@ -67,16 +67,16 @@ function Component() {
   );
 }
 
-// ✅ Use context for global values
+// ✅ Dùng context cho các giá trị toàn cục
 function Component() {
   const user = useContext(UserContext);
   return <div>User: {user.id}</div>;
 }
 
-// ✅ Synchronize external state with React
+// ✅ Đồng bộ state bên ngoài với React
 function Component({title}) {
   useEffect(() => {
-    document.title = title; // OK in effect
+    document.title = title; // Hợp lệ trong effect
   }, [title]);
 
   return <div>Page: {title}</div>;

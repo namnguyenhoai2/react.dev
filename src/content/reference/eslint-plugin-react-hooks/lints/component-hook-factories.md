@@ -17,14 +17,14 @@ Việc định nghĩa component hoặc hook bên trong các function khác sẽ 
 Ví dụ về code không đúng đối với rule này:
 
 ```js {expectedErrors: {'react-compiler': [14]}}
-// ❌ Factory function creating components
+// ❌ Hàm factory tạo component
 function createComponent(defaultValue) {
   return function Component() {
     // ...
   };
 }
 
-// ❌ Component defined inside component
+// ❌ Component được định nghĩa bên trong component khác
 function Parent() {
   function Child() {
     // ...
@@ -33,7 +33,7 @@ function Parent() {
   return <Child />;
 }
 
-// ❌ Hook factory function
+// ❌ Hàm factory cho Hook
 function createCustomHook(endpoint) {
   return function useData() {
     // ...
@@ -46,12 +46,12 @@ function createCustomHook(endpoint) {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ Component defined at module level
+// ✅ Component được định nghĩa ở cấp độ module
 function Component({ defaultValue }) {
   // ...
 }
 
-// ✅ Custom hook at module level
+// ✅ Hook tùy chỉnh ở cấp độ module
 function useData(endpoint) {
   // ...
 }
@@ -64,7 +64,7 @@ function useData(endpoint) {
 Bạn có thể nghĩ rằng mình cần một factory để tạo các component được tùy chỉnh:
 
 ```js
-// ❌ Wrong: Factory pattern
+// ❌ Sai: Mẫu factory
 function makeButton(color) {
   return function Button({children}) {
     return (
@@ -82,7 +82,7 @@ const BlueButton = makeButton('blue');
 Thay vào đó, hãy truyền [JSX làm children](/learn/passing-props-to-a-component#passing-jsx-as-children):
 
 ```js
-// ✅ Better: Pass JSX as children
+// ✅ Tốt hơn: Truyền JSX dưới dạng children
 function Button({color, children}) {
   return (
     <button style={{backgroundColor: color}}>

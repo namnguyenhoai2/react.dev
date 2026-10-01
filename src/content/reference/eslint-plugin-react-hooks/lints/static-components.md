@@ -17,17 +17,17 @@ Các component được định nghĩa bên trong những component khác sẽ �
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ Component defined inside component
+// ❌ Component được định nghĩa bên trong component khác
 function Parent() {
-  const ChildComponent = () => { // New component every render!
+  const ChildComponent = () => { // Component mới ở mỗi lần render!
     const [count, setCount] = useState(0);
     return <button onClick={() => setCount(count + 1)}>{count}</button>;
   };
 
-  return <ChildComponent />; // State resets every render
+  return <ChildComponent />; // State bị đặt lại ở mỗi lần render
 }
 
-// ❌ Dynamic component creation
+// ❌ Tạo component động
 function Parent({type}) {
   const Component = type === 'button'
     ? () => <button>Click</button>
@@ -42,13 +42,13 @@ function Parent({type}) {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ Components at module level
+// ✅ Component ở cấp độ module
 const ButtonComponent = () => <button>Click</button>;
 const TextComponent = () => <div>Text</div>;
 
 function Parent({type}) {
   const Component = type === 'button'
-    ? ButtonComponent  // Reference existing component
+    ? ButtonComponent  // Tham chiếu component hiện có
     : TextComponent;
 
   return <Component />;
@@ -62,11 +62,11 @@ function Parent({type}) {
 Bạn có thể định nghĩa các component ở bên trong để truy cập state cục bộ:
 
 ```js {expectedErrors: {'react-compiler': [13]}}
-// ❌ Wrong: Inner component to access parent state
+// ❌ Sai: Component bên trong để truy cập state của component cha
 function Parent() {
   const [theme, setTheme] = useState('light');
 
-  function ThemedButton() { // Recreated every render!
+  function ThemedButton() { // Được tạo lại ở mỗi lần render!
     return (
       <button className={theme}>
         Click me
@@ -81,7 +81,7 @@ function Parent() {
 Thay vào đó, hãy truyền dữ liệu dưới dạng props:
 
 ```js
-// ✅ Better: Pass props to static component
+// ✅ Tốt hơn: Truyền props cho component tĩnh
 function ThemedButton({theme}) {
   return (
     <button className={theme}>

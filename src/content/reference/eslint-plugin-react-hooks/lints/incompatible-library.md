@@ -19,14 +19,14 @@ Các thư viện này được thiết kế trước khi các quy tắc memoizat
 Một số thư viện sử dụng các pattern không được React hỗ trợ. Khi linter phát hiện việc sử dụng các API này từ [danh sách đã biết](https://github.com/react/react/blob/main/compiler/packages/babel-plugin-react-compiler/src/HIR/DefaultModuleTypeProvider.ts), linter sẽ đánh dấu chúng theo rule này. Điều này có nghĩa là React Compiler có thể tự động bỏ qua các component sử dụng những API không tương thích này để tránh làm hỏng ứng dụng của bạn.
 
 ```js
-// Example of how memoization breaks with these libraries
+// Ví dụ về cách memoization bị hỏng với các thư viện này
 function Form() {
   const { watch } = useForm();
 
-  // ❌ This value will never update, even when 'name' field changes
+  // ❌ Giá trị này sẽ không bao giờ cập nhật, kể cả khi trường 'name' thay đổi
   const name = useMemo(() => watch('name'), [watch]);
 
-  return <div>Name: {name}</div>; // UI appears "frozen"
+  return <div>Name: {name}</div>; // Giao diện trông như bị "đóng băng"
 }
 ```
 
@@ -45,7 +45,7 @@ Theo nguyên tắc chung, khi thiết kế API cho React, hãy cân nhắc liệ
 ```js
 function Component() {
   const { someFunction } = useLibrary();
-  // it should always be safe to memoize functions like this
+  // việc memo hóa các hàm như thế này luôn phải an toàn
   const result = useMemo(() => someFunction(), [someFunction]);
 }
 ```
@@ -53,10 +53,10 @@ function Component() {
 Thay vào đó, hãy thiết kế các API trả về state bất biến và sử dụng các function cập nhật tường minh:
 
 ```js
-// ✅ Good: Return immutable state that changes reference when updated
+// ✅ Tốt: Trả về state bất biến, thay đổi tham chiếu khi cập nhật
 function Component() {
   const { field, updateField } = useLibrary();
-  // this is always safe to memo
+  // việc memo hóa điều này luôn an toàn
   const greeting = useMemo(() => `Hello, ${field.name}!`, [field.name]);
 
   return (
@@ -78,21 +78,21 @@ function Component() {
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ react-hook-form `watch`
+// ❌ `watch` của react-hook-form
 function Component() {
   const {watch} = useForm();
-  const value = watch('field'); // Interior mutability
+  const value = watch('field'); // Tính khả biến nội tại
   return <div>{value}</div>;
 }
 
-// ❌ TanStack Table `useReactTable`
+// ❌ `useReactTable` của TanStack Table
 function Component({data}) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-  // table instance uses interior mutability
+  // instance của table sử dụng tính khả biến nội tại
   return <Table table={table} />;
 }
 ```
@@ -104,7 +104,7 @@ function Component({data}) {
 Các pattern của MobX như `observer` cũng phá vỡ các giả định của memoization, nhưng linter hiện chưa phát hiện được chúng. Nếu bạn sử dụng MobX và nhận thấy ứng dụng của mình không hoạt động với React Compiler, bạn có thể cần sử dụng `"use no memo" directive`.
 
 ```js
-// ❌ MobX `observer`
+// ❌ `observer` của MobX
 const Component = observer(() => {
   const [timer] = useState(() => new Timer());
   return <span>Seconds passed: {timer.secondsPassed}</span>;
@@ -118,7 +118,7 @@ const Component = observer(() => {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ For react-hook-form, use `useWatch`:
+// ✅ Với react-hook-form, hãy dùng `useWatch`:
 function Component() {
   const {register, control} = useForm();
   const watchedValue = useWatch({

@@ -17,20 +17,20 @@ React Compiler cần phân tích tĩnh mã của bạn để áp dụng các t�
 Ví dụ về mã không đúng đối với quy tắc này:
 
 ```js
-// ❌ Using eval in component
+// ❌ Dùng eval trong component
 function Component({ code }) {
-  const result = eval(code); // Can't be analyzed
+  const result = eval(code); // Không thể phân tích
   return <div>{result}</div>;
 }
 
-// ❌ Using with statement
+// ❌ Dùng câu lệnh with
 function Component() {
-  with (Math) { // Changes scope dynamically
+  with (Math) { // Thay đổi scope động
     return <div>{sin(PI / 2)}</div>;
   }
 }
 
-// ❌ Dynamic property access with eval
+// ❌ Truy cập thuộc tính động bằng eval
 function Component({propName}) {
   const value = eval(`props.${propName}`);
   return <div>{value}</div>;
@@ -42,13 +42,13 @@ function Component({propName}) {
 Ví dụ về mã đúng đối với quy tắc này:
 
 ```js
-// ✅ Use normal property access
+// ✅ Dùng cách truy cập thuộc tính thông thường
 function Component({propName, props}) {
-  const value = props[propName]; // Analyzable
+  const value = props[propName]; // Có thể phân tích
   return <div>{value}</div>;
 }
 
-// ✅ Use standard Math methods
+// ✅ Dùng các phương thức Math chuẩn
 function Component() {
   return <div>{Math.sin(Math.PI / 2)}</div>;
 }
@@ -61,9 +61,9 @@ function Component() {
 Bạn có thể cần đánh giá mã do người dùng cung cấp:
 
 ```js {expectedErrors: {'react-compiler': [3]}}
-// ❌ Wrong: eval in component
+// ❌ Sai: eval trong component
 function Calculator({expression}) {
-  const result = eval(expression); // Unsafe and unoptimizable
+  const result = eval(expression); // Không an toàn và không thể tối ưu hóa
   return <div>Result: {result}</div>;
 }
 ```
@@ -71,15 +71,15 @@ function Calculator({expression}) {
 Thay vào đó, hãy sử dụng một expression parser an toàn:
 
 ```js
-// ✅ Better: Use a safe parser
-import {evaluate} from 'mathjs'; // or similar library
+// ✅ Tốt hơn: Dùng parser an toàn
+import {evaluate} from 'mathjs'; // hoặc thư viện tương tự
 
 function Calculator({expression}) {
   const [result, setResult] = useState(null);
 
   const calculate = () => {
     try {
-      // Safe mathematical expression evaluation
+      // Đánh giá biểu thức toán học an toàn
       setResult(evaluate(expression));
     } catch (error) {
       setResult('Invalid expression');

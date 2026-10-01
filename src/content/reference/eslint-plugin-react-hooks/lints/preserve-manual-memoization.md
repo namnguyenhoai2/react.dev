@@ -17,21 +17,21 @@ React Compiler bảo toàn các lời gọi `useMemo`, `useCallback` và `React.
 Ví dụ về mã không đúng đối với quy tắc này:
 
 ```js
-// ❌ Missing dependencies in useMemo
+// ❌ Thiếu dependency trong useMemo
 function Component({ data, filter }) {
   const filtered = useMemo(
     () => data.filter(filter),
-    [data] // Missing 'filter' dependency
+    [data] // Thiếu dependency 'filter'
   );
 
   return <List items={filtered} />;
 }
 
-// ❌ Missing dependencies in useCallback
+// ❌ Thiếu dependency trong useCallback
 function Component({ onUpdate, value }) {
   const handleClick = useCallback(() => {
     onUpdate(value);
-  }, [onUpdate]); // Missing 'value'
+  }, [onUpdate]); // Thiếu 'value'
 
   return <button onClick={handleClick}>Update</button>;
 }
@@ -42,19 +42,19 @@ function Component({ onUpdate, value }) {
 Ví dụ về mã đúng đối với quy tắc này:
 
 ```js
-// ✅ Complete dependencies
+// ✅ Dependency đầy đủ
 function Component({ data, filter }) {
   const filtered = useMemo(
     () => data.filter(filter),
-    [data, filter] // All dependencies included
+    [data, filter] // Đã bao gồm mọi dependency
   );
 
   return <List items={filtered} />;
 }
 
-// ✅ Or let the compiler handle it
+// ✅ Hoặc để compiler xử lý
 function Component({ data, filter }) {
-  // No manual memoization needed
+  // Không cần memoization thủ công
   const filtered = data.filter(filter);
   return <List items={filtered} />;
 }
@@ -67,7 +67,7 @@ function Component({ data, filter }) {
 Bạn có thể tự hỏi liệu React Compiler có khiến memoization thủ công trở nên không cần thiết hay không:
 
 ```js
-// Do I still need this?
+// Tôi vẫn cần điều này chứ?
 function Component({items, sortBy}) {
   const sorted = useMemo(() => {
     return [...items].sort((a, b) => {
@@ -82,7 +82,7 @@ function Component({items, sortBy}) {
 Bạn có thể an toàn loại bỏ nó khi sử dụng React Compiler:
 
 ```js
-// ✅ Better: Let the compiler optimize
+// ✅ Tốt hơn: Để compiler tối ưu hóa
 function Component({items, sortBy}) {
   const sorted = [...items].sort((a, b) => {
     return a[sortBy] - b[sortBy];

@@ -17,32 +17,32 @@ Props và state của một component là các snapshot bất biến. Không bao
 ### Không hợp lệ {/*invalid*/}
 
 ```js
-// ❌ Array push mutation
+// ❌ Thay đổi mảng bằng push
 function Component() {
   const [items, setItems] = useState([1, 2, 3]);
 
   const addItem = () => {
-    items.push(4); // Mutating!
-    setItems(items); // Same reference, no re-render
+    items.push(4); // Thay đổi trực tiếp!
+    setItems(items); // Cùng tham chiếu, không render lại
   };
 }
 
-// ❌ Object property assignment
+// ❌ Gán thuộc tính cho object
 function Component() {
   const [user, setUser] = useState({name: 'Alice'});
 
   const updateName = () => {
-    user.name = 'Bob'; // Mutating!
-    setUser(user); // Same reference
+    user.name = 'Bob'; // Thay đổi trực tiếp!
+    setUser(user); // Cùng tham chiếu
   };
 }
 
-// ❌ Sort without spreading
+// ❌ Sắp xếp mà không sao chép
 function Component() {
   const [items, setItems] = useState([3, 1, 2]);
 
   const sortItems = () => {
-    setItems(items.sort()); // sort mutates!
+    setItems(items.sort()); // sort thay đổi trực tiếp mảng!
   };
 }
 ```
@@ -50,21 +50,21 @@ function Component() {
 ### Hợp lệ {/*valid*/}
 
 ```js
-// ✅ Create new array
+// ✅ Tạo mảng mới
 function Component() {
   const [items, setItems] = useState([1, 2, 3]);
 
   const addItem = () => {
-    setItems([...items, 4]); // New array
+    setItems([...items, 4]); // Mảng mới
   };
 }
 
-// ✅ Create new object
+// ✅ Tạo object mới
 function Component() {
   const [user, setUser] = useState({name: 'Alice'});
 
   const updateName = () => {
-    setUser({...user, name: 'Bob'}); // New object
+    setUser({...user, name: 'Bob'}); // Object mới
   };
 }
 ```
@@ -76,13 +76,13 @@ function Component() {
 Việc thay đổi mảng bằng các method như `push()` sẽ không kích hoạt việc re-render:
 
 ```js
-// ❌ Wrong: Mutating the array
+// ❌ Sai: Thay đổi trực tiếp mảng
 function TodoList() {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (id, text) => {
     todos.push({id, text});
-    setTodos(todos); // Same array reference!
+    setTodos(todos); // Cùng tham chiếu mảng!
   };
 
   return (
@@ -96,13 +96,13 @@ function TodoList() {
 Thay vào đó, hãy tạo một mảng mới:
 
 ```js
-// ✅ Better: Create a new array
+// ✅ Tốt hơn: Tạo mảng mới
 function TodoList() {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (id, text) => {
     setTodos([...todos, {id, text}]);
-    // Or: setTodos(todos => [...todos, {id: Date.now(), text}])
+    // Hoặc: setTodos(todos => [...todos, {id: Date.now(), text}])
   };
 
   return (
@@ -118,7 +118,7 @@ function TodoList() {
 Việc thay đổi các thuộc tính lồng nhau sẽ không kích hoạt việc re-render:
 
 ```js
-// ❌ Wrong: Mutating nested object
+// ❌ Sai: Thay đổi trực tiếp object lồng nhau
 function UserProfile() {
   const [user, setUser] = useState({
     name: 'Alice',
@@ -129,8 +129,8 @@ function UserProfile() {
   });
 
   const toggleTheme = () => {
-    user.settings.theme = 'dark'; // Mutation!
-    setUser(user); // Same object reference
+    user.settings.theme = 'dark'; // Thay đổi trực tiếp!
+    setUser(user); // Cùng tham chiếu object
   };
 }
 ```
@@ -138,7 +138,7 @@ function UserProfile() {
 Sử dụng spread ở mỗi cấp cần cập nhật:
 
 ```js
-// ✅ Better: Create new objects at each level
+// ✅ Tốt hơn: Tạo object mới ở từng cấp
 function UserProfile() {
   const [user, setUser] = useState({
     name: 'Alice',

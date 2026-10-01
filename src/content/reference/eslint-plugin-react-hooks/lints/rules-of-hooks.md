@@ -31,12 +31,12 @@ Các pattern sau vi phạm Rules of Hooks:
 Hook `use` khác với các hook React khác. Bạn có thể gọi hook này một cách có điều kiện và trong các vòng lặp:
 
 ```js
-// ✅ `use` can be conditional
+// ✅ `use` có thể được gọi có điều kiện
 if (shouldFetch) {
   const data = use(fetchPromise);
 }
 
-// ✅ `use` can be in loops
+// ✅ `use` có thể ở trong vòng lặp
 for (const promise of promises) {
   results.push(use(promise));
 }
@@ -55,29 +55,29 @@ Tìm hiểu thêm: [`use` Tài liệu tham khảo API](/reference/react/use)
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ Hook in condition
+// ❌ Hook trong điều kiện
 if (isLoggedIn) {
   const [user, setUser] = useState(null);
 }
 
-// ❌ Hook after early return
+// ❌ Hook sau lệnh return sớm
 if (!data) return <Loading />;
 const [processed, setProcessed] = useState(data);
 
-// ❌ Hook in callback
+// ❌ Hook trong callback
 <button onClick={() => {
   const [clicked, setClicked] = useState(false);
 }}/>
 
-// ❌ `use` in try/catch
+// ❌ `use` trong try/catch
 try {
   const data = use(promise);
 } catch (e) {
-  // error handling
+  // Xử lý lỗi
 }
 
-// ❌ Hook at module level
-const globalState = useState(0); // Outside component
+// ❌ Hook ở cấp độ module
+const globalState = useState(0); // Bên ngoài component
 ```
 
 ### {/*valid*/} hợp lệ
@@ -86,7 +86,7 @@ Ví dụ về code đúng đối với rule này:
 
 ```js
 function Component({ isSpecial, shouldFetch, fetchPromise }) {
-  // ✅ Hooks at top level
+  // ✅ Hooks ở cấp độ cao nhất
   const [count, setCount] = useState(0);
   const [name, setName] = useState('');
 
@@ -95,7 +95,7 @@ function Component({ isSpecial, shouldFetch, fetchPromise }) {
   }
 
   if (shouldFetch) {
-    // ✅ `use` can be conditional
+    // ✅ `use` có thể được gọi có điều kiện
     const data = use(fetchPromise);
     return <div>{data}</div>;
   }
@@ -111,7 +111,7 @@ function Component({ isSpecial, shouldFetch, fetchPromise }) {
 Bạn đang cố gọi useEffect một cách có điều kiện:
 
 ```js
-// ❌ Conditional hook
+// ❌ Hook có điều kiện
 if (isLoggedIn) {
   useEffect(() => {
     fetchUserData();
@@ -122,7 +122,7 @@ if (isLoggedIn) {
 Hãy gọi hook vô điều kiện và kiểm tra điều kiện bên trong:
 
 ```js
-// ✅ Condition inside hook
+// ✅ Điều kiện bên trong Hook
 useEffect(() => {
   if (isLoggedIn) {
     fetchUserData();
@@ -143,7 +143,7 @@ Tìm hiểu thêm: [Fetching Data](/learn/synchronizing-with-effects#fetching-da
 Bạn đang cố khởi tạo state một cách có điều kiện:
 
 ```js
-// ❌ Conditional state
+// ❌ State có điều kiện
 if (userType === 'admin') {
   const [permissions, setPermissions] = useState(adminPerms);
 } else {
@@ -154,7 +154,7 @@ if (userType === 'admin') {
 Luôn gọi useState và đặt giá trị khởi tạo một cách có điều kiện:
 
 ```js
-// ✅ Conditional initial value
+// ✅ Giá trị khởi tạo có điều kiện
 const [permissions, setPermissions] = useState(
   userType === 'admin' ? adminPerms : userPerms
 );

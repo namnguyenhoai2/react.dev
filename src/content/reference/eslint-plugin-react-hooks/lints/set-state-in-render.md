@@ -17,10 +17,10 @@ Gọi `setState` trong quá trình render một cách vô điều kiện sẽ ng
 ### Không hợp lệ {/*invalid*/}
 
 ```js {expectedErrors: {'react-compiler': [4]}}
-// ❌ Unconditional setState directly in render
+// ❌ Gọi setState vô điều kiện ngay trong render
 function Component({value}) {
   const [count, setCount] = useState(0);
-  setCount(value); // Infinite loop!
+  setCount(value); // Vòng lặp vô hạn!
   return <div>{count}</div>;
 }
 ```
@@ -28,13 +28,13 @@ function Component({value}) {
 ### Hợp lệ {/*valid*/}
 
 ```js
-// ✅ Derive during render
+// ✅ Suy ra trong quá trình render
 function Component({items}) {
-  const sorted = [...items].sort(); // Just calculate it in render
+  const sorted = [...items].sort(); // Chỉ cần tính toán trong quá trình render
   return <ul>{sorted.map(/*...*/)}</ul>;
 }
 
-// ✅ Set state in event handler
+// ✅ Đặt state trong event handler
 function Component() {
   const [count, setCount] = useState(0);
   return (
@@ -44,20 +44,20 @@ function Component() {
   );
 }
 
-// ✅ Derive from props instead of setting state
+// ✅ Suy ra từ props thay vì đặt state
 function Component({user}) {
   const name = user?.name || '';
   const email = user?.email || '';
   return <div>{name}</div>;
 }
 
-// ✅ Conditionally derive state from props and state from previous renders
+// ✅ Suy ra state có điều kiện từ props và state của các lần render trước
 function Component({ items }) {
   const [isReverse, setIsReverse] = useState(false);
   const [selection, setSelection] = useState(null);
 
   const [prevItems, setPrevItems] = useState(items);
-  if (items !== prevItems) { // This condition makes it valid
+  if (items !== prevItems) { // Điều kiện này khiến mã hợp lệ
     setPrevItems(items);
     setSelection(null);
   }
@@ -72,7 +72,7 @@ function Component({ items }) {
 Một vấn đề phổ biến là cố gắng "sửa" state sau khi nó được render. Giả sử bạn muốn ngăn một bộ đếm vượt quá prop `max`:
 
 ```js
-// ❌ Wrong: clamps during render
+// ❌ Sai: giới hạn giá trị trong quá trình render
 function Counter({max}) {
   const [count, setCount] = useState(0);
 
@@ -93,7 +93,7 @@ Ngay khi `count` vượt quá `max`, một vòng lặp vô hạn sẽ được k
 Thay vào đó, thường tốt hơn là chuyển logic này vào event (nơi state được đặt lần đầu). Ví dụ: bạn có thể áp dụng giới hạn tối đa ngay tại thời điểm cập nhật state:
 
 ```js
-// ✅ Clamp when updating
+// ✅ Giới hạn giá trị khi cập nhật
 function Counter({max}) {
   const [count, setCount] = useState(0);
 

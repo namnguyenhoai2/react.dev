@@ -26,15 +26,15 @@ Nhìn chung, bất kỳ API nào trả về một giá trị khác nhau với c�
 Ví dụ về code không chính xác đối với quy tắc này:
 
 ```js
-// ❌ Math.random() in render
+// ❌ Math.random() trong quá trình render
 function Component() {
-  const id = Math.random(); // Different every render
+  const id = Math.random(); // Khác nhau ở mỗi lần render
   return <div key={id}>Content</div>;
 }
 
-// ❌ Date.now() for values
+// ❌ Date.now() cho các giá trị
 function Component() {
-  const timestamp = Date.now(); // Changes every render
+  const timestamp = Date.now(); // Thay đổi ở mỗi lần render
   return <div>Created at: {timestamp}</div>;
 }
 ```
@@ -44,7 +44,7 @@ function Component() {
 Ví dụ về code chính xác đối với quy tắc này:
 
 ```js
-// ✅ Stable IDs from initial state
+// ✅ ID ổn định từ initial state
 function Component() {
   const [id] = useState(() => crypto.randomUUID());
   return <div key={id}>Content</div>;
@@ -58,7 +58,7 @@ function Component() {
 Việc gọi `Date.now()` trong quá trình render khiến component của bạn không thuần khiết:
 
 ```js {expectedErrors: {'react-compiler': [3]}}
-// ❌ Wrong: Time changes every render
+// ❌ Sai: Thời gian thay đổi ở mỗi lần render
 function Clock() {
   return <div>Current time: {Date.now()}</div>;
 }

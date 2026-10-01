@@ -29,35 +29,35 @@ Rule này phát hiện một số mẫu sử dụng setState đồng bộ không
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ Synchronous setState in effect
+// ❌ setState đồng bộ trong effect
 function Component({data}) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(data); // Extra render, use initial state instead
+    setItems(data); // Render thêm, hãy dùng initial state thay thế
   }, [data]);
 }
 
-// ❌ Setting loading state synchronously
+// ❌ Đặt loading state một cách đồng bộ
 function Component() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true); // Synchronous, causes extra render
+    setLoading(true); // Đồng bộ, gây render thêm
     fetchData().then(() => setLoading(false));
   }, []);
 }
 
-// ❌ Transforming data in effect
+// ❌ Biến đổi dữ liệu trong effect
 function Component({rawData}) {
   const [processed, setProcessed] = useState([]);
 
   useEffect(() => {
-    setProcessed(rawData.map(transform)); // Should derive in render
+    setProcessed(rawData.map(transform)); // Nên suy ra trong quá trình render
   }, [rawData]);
 }
 
-// ❌ Deriving state from props
+// ❌ Suy ra state từ props
 function Component({selectedId, items}) {
   const [selected, setSelected] = useState(null);
 
@@ -72,7 +72,7 @@ function Component({selectedId, items}) {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ setState in an effect is fine if the value comes from a ref
+// ✅ setState trong effect hợp lệ nếu giá trị đến từ ref
 function Tooltip() {
   const ref = useRef(null);
   const [tooltipHeight, setTooltipHeight] = useState(0);
@@ -83,7 +83,7 @@ function Tooltip() {
   }, []);
 }
 
-// ✅ Calculate during render
+// ✅ Tính toán trong quá trình render
 function Component({selectedId, items}) {
   const selected = items.find(i => i.id === selectedId);
   return <div>{selected?.name}</div>;

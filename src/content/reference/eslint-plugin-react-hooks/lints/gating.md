@@ -17,23 +17,23 @@ Chế độ gating cho phép bạn từng bước áp dụng React Compiler bằ
 Ví dụ về mã không đúng đối với quy tắc này:
 
 ```js
-// ❌ Missing required fields
+// ❌ Thiếu trường bắt buộc
 module.exports = {
   plugins: [
     ['babel-plugin-react-compiler', {
       gating: {
         importSpecifierName: '__experimental_useCompiler'
-        // Missing 'source' field
+        // Thiếu trường 'source'
       }
     }]
   ]
 };
 
-// ❌ Invalid gating type
+// ❌ Kiểu gating không hợp lệ
 module.exports = {
   plugins: [
     ['babel-plugin-react-compiler', {
-      gating: '__experimental_useCompiler' // Should be object
+      gating: '__experimental_useCompiler' // Phải là object
     }]
   ]
 };
@@ -44,13 +44,13 @@ module.exports = {
 Ví dụ về mã đúng đối với quy tắc này:
 
 ```js
-// ✅ Complete gating configuration
+// ✅ Cấu hình gating đầy đủ
 module.exports = {
   plugins: [
     ['babel-plugin-react-compiler', {
       gating: {
-        importSpecifierName: 'isCompilerEnabled', // exported function name
-        source: 'featureFlags' // module name
+        importSpecifierName: 'isCompilerEnabled', // tên hàm được export
+        source: 'featureFlags' // tên module
       }
     }]
   ]
@@ -61,11 +61,11 @@ export function isCompilerEnabled() {
   // ...
 }
 
-// ✅ No gating (compile everything)
+// ✅ Không gating (biên dịch mọi thứ)
 module.exports = {
   plugins: [
     ['babel-plugin-react-compiler', {
-      // No gating field - compiles all components
+      // Không có trường gating — biên dịch tất cả component
     }]
   ]
 };

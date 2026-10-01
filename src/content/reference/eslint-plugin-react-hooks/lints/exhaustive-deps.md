@@ -23,20 +23,20 @@ Nếu bạn thấy mình liên tục phải “đấu” với linter, có thể
 Ví dụ về code không đúng đối với rule này:
 
 ```js
-// ❌ Missing dependency
+// ❌ Thiếu dependency
 useEffect(() => {
   console.log(count);
-}, []); // Missing 'count'
+}, []); // Thiếu 'count'
 
-// ❌ Missing prop
+// ❌ Thiếu prop
 useEffect(() => {
   fetchUser(userId);
-}, []); // Missing 'userId'
+}, []); // Thiếu 'userId'
 
-// ❌ Incomplete dependencies
+// ❌ Dependency chưa đầy đủ
 useMemo(() => {
   return items.sort(sortOrder);
-}, [items]); // Missing 'sortOrder'
+}, [items]); // Thiếu 'sortOrder'
 ```
 
 ### Hợp lệ {/*valid*/}
@@ -44,12 +44,12 @@ useMemo(() => {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ All dependencies included
+// ✅ Đã bao gồm mọi dependency
 useEffect(() => {
   console.log(count);
 }, [count]);
 
-// ✅ All dependencies included
+// ✅ Đã bao gồm mọi dependency
 useEffect(() => {
   fetchUser(userId);
 }, [userId]);
@@ -62,27 +62,27 @@ useEffect(() => {
 Bạn có một effect, nhưng lại tạo một function mới trong mỗi lần render:
 
 ```js
-// ❌ Causes infinite loop
+// ❌ Gây vòng lặp vô hạn
 const logItems = () => {
   console.log(items);
 };
 
 useEffect(() => {
   logItems();
-}, [logItems]); // Infinite loop!
+}, [logItems]); // Vòng lặp vô hạn!
 ```
 
 Trong hầu hết trường hợp, bạn không cần effect. Thay vào đó, hãy gọi function tại nơi hành động xảy ra:
 
 ```js
-// ✅ Call it from the event handler
+// ✅ Gọi hàm từ event handler
 const logItems = () => {
   console.log(items);
 };
 
 return <button onClick={logItems}>Log</button>;
 
-// ✅ Or derive during render if there's no side effect
+// ✅ Hoặc suy ra trong quá trình render nếu không có side effect
 items.forEach(item => {
   console.log(item);
 });
@@ -91,7 +91,7 @@ items.forEach(item => {
 Nếu thực sự cần effect (ví dụ: để đăng ký với một thứ gì đó bên ngoài), hãy làm cho dependency ổn định:
 
 ```js
-// ✅ useCallback keeps the function reference stable
+// ✅ useCallback giữ tham chiếu hàm ổn định
 const logItems = useCallback(() => {
   console.log(items);
 }, [items]);
@@ -100,7 +100,7 @@ useEffect(() => {
   logItems();
 }, [logItems]);
 
-// ✅ Or move the logic straight into the effect
+// ✅ Hoặc chuyển logic trực tiếp vào effect
 useEffect(() => {
   console.log(items);
 }, [items]);
@@ -111,21 +111,21 @@ useEffect(() => {
 Bạn muốn chạy effect một lần khi mount, nhưng linter phàn nàn về các dependency bị thiếu:
 
 ```js
-// ❌ Missing dependency
+// ❌ Thiếu dependency
 useEffect(() => {
   sendAnalytics(userId);
-}, []); // Missing 'userId'
+}, []); // Thiếu 'userId'
 ```
 
 Hãy thêm dependency (được khuyến nghị) hoặc sử dụng ref nếu bạn thực sự cần chạy một lần:
 
 ```js
-// ✅ Include dependency
+// ✅ Bao gồm dependency
 useEffect(() => {
   sendAnalytics(userId);
 }, [userId]);
 
-// ✅ Or use a ref guard inside an effect
+// ✅ Hoặc dùng ref guard bên trong effect
 const sent = useRef(false);
 
 useEffect(() => {

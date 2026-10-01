@@ -17,14 +17,14 @@ Xác thực rằng hook `useMemo` được sử dụng với một giá trị tr
 Ví dụ về code không đúng đối với rule này:
 
 ```js {expectedErrors: {'react-compiler': [3]}}
-// ❌ No return value
+// ❌ Không có giá trị trả về
 function Component({ data }) {
   const processed = useMemo(() => {
     data.forEach(item => console.log(item));
-    // Missing return!
+    // Thiếu return!
   }, [data]);
 
-  return <div>{processed}</div>; // Always undefined
+  return <div>{processed}</div>; // Luôn là undefined
 }
 ```
 
@@ -33,7 +33,7 @@ function Component({ data }) {
 Ví dụ về code đúng đối với rule này:
 
 ```js
-// ✅ Returns computed value
+// ✅ Trả về giá trị đã tính toán
 function Component({ data }) {
   const processed = useMemo(() => {
     return data.map(item => item * 2);
@@ -49,16 +49,16 @@ function Component({ data }) {
 
 Bạn có thể thử sử dụng `useMemo` cho các side effect:
 
-{/* TODO(@poteto) fix compiler validation to check for unassigned useMemos */}
+{/* TODO(@poteto) sửa validation của compiler để kiểm tra các useMemo chưa được gán */}
 ```js {expectedErrors: {'react-compiler': [4]}}
-// ❌ Wrong: Side effects in useMemo
+// ❌ Sai: Side effect trong useMemo
 function Component({user}) {
-  // No return value, just side effect
+  // Không có giá trị trả về, chỉ có side effect
   useMemo(() => {
     analytics.track('UserViewed', {userId: user.id});
   }, [user.id]);
 
-  // Not assigned to a variable
+  // Không được gán vào biến
   useMemo(() => {
     return analytics.track('UserViewed', {userId: user.id});
   }, [user.id]);
@@ -68,11 +68,11 @@ function Component({user}) {
 Nếu side effect cần xảy ra để phản hồi tương tác của người dùng, tốt nhất là đặt side effect cùng với event:
 
 ```js
-// ✅ Good: Side effects in event handlers
+// ✅ Tốt: Side effect trong event handler
 function Component({user}) {
   const handleClick = () => {
     analytics.track('ButtonClicked', {userId: user.id});
-    // Other click logic...
+    // Logic click khác...
   };
 
   return <button onClick={handleClick}>Click me</button>;
@@ -82,7 +82,7 @@ function Component({user}) {
 Nếu side effect đồng bộ hóa state của React với một state bên ngoài (hoặc ngược lại), hãy sử dụng `useEffect`:
 
 ```js
-// ✅ Good: Synchronization in useEffect
+// ✅ Tốt: Đồng bộ trong useEffect
 function Component({theme}) {
   useEffect(() => {
     localStorage.setItem('preferredTheme', theme);
