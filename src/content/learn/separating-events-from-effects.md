@@ -254,7 +254,7 @@ function ChatRoom({ roomId, theme }) {
     return () => {
       connection.disconnect()
     };
-  }, [roomId, theme]); // ✅ All dependencies declared
+  }, [roomId, theme]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -429,7 +429,7 @@ function ChatRoom({ roomId, theme }) {
     });
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -591,7 +591,7 @@ Sau đó, bạn thêm nhiều route vào site của mình. Lúc này, component 
 function Page({ url }) {
   useEffect(() => {
     logVisit(url);
-  }, []); // 🔴 React Hook useEffect has a missing dependency: 'url'
+  }, []); // 🔴 Hook useEffect của React thiếu dependency: 'url'
   // ...
 }
 ```
@@ -602,7 +602,7 @@ Hãy nghĩ về điều bạn muốn đoạn code thực hiện. Bạn *muốn* 
 function Page({ url }) {
   useEffect(() => {
     logVisit(url);
-  }, [url]); // ✅ All dependencies declared
+  }, [url]); // ✅ Đã khai báo tất cả dependency
   // ...
 }
 ```
@@ -616,7 +616,7 @@ function Page({ url }) {
 
   useEffect(() => {
     logVisit(url, numberOfItems);
-  }, [url]); // 🔴 React Hook useEffect has a missing dependency: 'numberOfItems'
+  }, [url]); // 🔴 Hook useEffect của React thiếu dependency: 'numberOfItems'
   // ...
 }
 ```
@@ -636,7 +636,7 @@ function Page({ url }) {
 
   useEffect(() => {
     onVisit(url);
-  }, [url]); // ✅ All dependencies declared
+  }, [url]); // ✅ Đã khai báo tất cả dependency
   // ...
 }
 ```

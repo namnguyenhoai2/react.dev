@@ -49,7 +49,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // <-- Fix the mistake here!
+  }, []); // <-- Hãy sửa lỗi ở đây!
   return <h1>Welcome to the {roomId} room!</h1>;
 }
 
@@ -104,7 +104,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 }
 ```
@@ -183,7 +183,7 @@ function ChatRoom({ roomId }) { // Đây là một giá trị reactive
     const connection = createConnection(serverUrl, roomId); // Effect này đọc giá trị reactive đó
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ So you must specify that reactive value as a dependency of your Effect
+  }, [roomId]); // ✅ Vì vậy, bạn phải chỉ định giá trị reactive đó là dependency của Effect
   // ...
 }
 ```
@@ -198,7 +198,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // 🔴 React Hook useEffect has a missing dependency: 'roomId'
+  }, []); // 🔴 Hook useEffect của React thiếu dependency: 'roomId'
   // ...
 }
 ```
@@ -216,7 +216,7 @@ function ChatRoom() {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // ✅ All dependencies declared
+  }, []); // ✅ Đã khai báo tất cả dependency
   // ...
 }
 ```
@@ -407,7 +407,7 @@ function Form() {
       post('/api/register');
       showNotification('Successfully registered!', theme);
     }
-  }, [submitted, theme]); // ✅ All dependencies declared
+  }, [submitted, theme]); // ✅ Đã khai báo tất cả dependency
 
   function handleSubmit() {
     setSubmitted(true);
@@ -460,7 +460,7 @@ function ShippingForm({ country }) {
     return () => {
       ignore = true;
     };
-  }, [country]); // ✅ All dependencies declared
+  }, [country]); // ✅ Đã khai báo tất cả dependency
 
   // ...
 ```
@@ -497,7 +497,7 @@ function ShippingForm({ country }) {
     return () => {
       ignore = true;
     };
-  }, [country, city]); // ✅ All dependencies declared
+  }, [country, city]); // ✅ Đã khai báo tất cả dependency
 
   // ...
 ```
@@ -526,7 +526,7 @@ function ShippingForm({ country }) {
     return () => {
       ignore = true;
     };
-  }, [country]); // ✅ All dependencies declared
+  }, [country]); // ✅ Đã khai báo tất cả dependency
 
   const [city, setCity] = useState(null);
   const [areas, setAreas] = useState(null);
@@ -544,7 +544,7 @@ function ShippingForm({ country }) {
         ignore = true;
       };
     }
-  }, [city]); // ✅ All dependencies declared
+  }, [city]); // ✅ Đã khai báo tất cả dependency
 
   // ...
 ```
@@ -581,7 +581,7 @@ function ChatRoom({ roomId }) {
       setMessages([...messages, receivedMessage]);
     });
     return () => connection.disconnect();
-  }, [roomId, messages]); // ✅ All dependencies declared
+  }, [roomId, messages]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -601,7 +601,7 @@ function ChatRoom({ roomId }) {
       setMessages(msgs => [...msgs, receivedMessage]);
     });
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -645,7 +645,7 @@ function ChatRoom({ roomId }) {
       }
     });
     return () => connection.disconnect();
-  }, [roomId, isMuted]); // ✅ All dependencies declared
+  }, [roomId, isMuted]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -674,7 +674,7 @@ function ChatRoom({ roomId }) {
       onMessage(receivedMessage);
     });
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -695,7 +695,7 @@ function ChatRoom({ roomId, onReceiveMessage }) {
       onReceiveMessage(receivedMessage);
     });
     return () => connection.disconnect();
-  }, [roomId, onReceiveMessage]); // ✅ All dependencies declared
+  }, [roomId, onReceiveMessage]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -727,7 +727,7 @@ function ChatRoom({ roomId, onReceiveMessage }) {
       onMessage(receivedMessage);
     });
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -747,7 +747,7 @@ function Chat({ roomId, notificationCount }) {
 
   useEffect(() => {
     onVisit(roomId);
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 }
 ```
@@ -780,7 +780,7 @@ Object này được khai báo trong phần thân component, nên nó là một 
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [options]); // ✅ All dependencies declared
+  }, [options]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -899,7 +899,7 @@ function ChatRoom() {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // ✅ All dependencies declared
+  }, []); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -923,7 +923,7 @@ function ChatRoom() {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, []); // ✅ All dependencies declared
+  }, []); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -947,7 +947,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -1060,7 +1060,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]); // ✅ All dependencies declared
+  }, [roomId]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -1078,7 +1078,7 @@ function ChatRoom({ options }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [options]); // ✅ All dependencies declared
+  }, [options]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -1108,7 +1108,7 @@ function ChatRoom({ options }) {
     });
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId, serverUrl]); // ✅ All dependencies declared
+  }, [roomId, serverUrl]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -1144,7 +1144,7 @@ function ChatRoom({ getOptions }) {
     });
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId, serverUrl]); // ✅ All dependencies declared
+  }, [roomId, serverUrl]); // ✅ Đã khai báo tất cả dependency
   // ...
 ```
 
@@ -2072,7 +2072,7 @@ export default function ChatRoom({ roomId, isEncrypted, onMessage }) { // Các g
     connection.on('message', (msg) => onReceiveMessage(msg));
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId, isEncrypted]); // ✅ All dependencies declared
+  }, [roomId, isEncrypted]); // ✅ Đã khai báo tất cả dependency
 ```
 
 Kết quả là chat chỉ kết nối lại khi một điều gì đó có ý nghĩa (`roomId` hoặc `isEncrypted`) thay đổi:
