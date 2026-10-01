@@ -59,10 +59,10 @@ Ví dụ này đọc các giá trị đã gửi bằng [`new FormData(e.target)`
 ```js src/App.js
 export default function Search() {
   function handleSubmit(e) {
-    // Prevent the browser from reloading the page
+    // Ngăn trình duyệt tải lại trang
     e.preventDefault();
 
-    // Read the form data
+    // Đọc dữ liệu form
     const form = e.target;
     const formData = new FormData(form);
     const query = formData.get("query");

@@ -125,7 +125,7 @@ React sẽ chèn [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doc
 ```html [[2, 5, "/main.js"]]
 <!DOCTYPE html>
 <html>
-  <!-- ... HTML from your components ... -->
+  <!-- ... HTML từ các component của bạn ... -->
 </html>
 <script src="/main.js" async=""></script>
 ```
@@ -166,7 +166,7 @@ export default function App({ assetMap }) {
 Trên server, render `<App assetMap={assetMap} />` và truyền `assetMap` của bạn cùng các URL asset:
 
 ```js {1-5,8,9}
-// You'd need to get this JSON from your build tooling, e.g. read it from the build output.
+// Bạn cần lấy JSON này từ build tooling, chẳng hạn đọc từ build output.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -185,7 +185,7 @@ async function handler(request) {
 Vì hiện tại server đang render `<App assetMap={assetMap} />`, bạn cũng cần render nó với `assetMap` trên client để tránh lỗi hydration. Bạn có thể serialize và truyền `assetMap` cho client như sau:
 
 ```js {9-10}
-// You'd need to get this JSON from your build tooling.
+// Bạn cần lấy JSON này từ build tooling.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -193,7 +193,7 @@ const assetMap = {
 
 async function handler(request) {
   const stream = await renderToReadableStream(<App assetMap={assetMap} />, {
-    // Careful: It's safe to stringify() this because this data isn't user-generated.
+    // Lưu ý: Có thể stringify() dữ liệu này an toàn vì nó không do người dùng tạo.
     bootstrapScriptContent: `window.assetMap = ${JSON.stringify(assetMap)};`,
     bootstrapScripts: [assetMap['/main.js']],
   });
@@ -571,7 +571,7 @@ async function handler(request) {
         logServerCrashReport(error);
       }
     });
-    let isCrawler = // ... depends on your bot detection strategy ...
+    let isCrawler = // ... phụ thuộc vào chiến lược phát hiện bot của bạn ...
     if (isCrawler) {
       await stream.allReady;
     }

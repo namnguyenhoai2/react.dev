@@ -79,7 +79,7 @@ export default function ContactUsPage() {
 Các phần tử con của component `<title>` phải là một chuỗi văn bản duy nhất. (Hoặc một số duy nhất hay một object duy nhất có phương thức `toString`.) Điều này có thể không rõ ràng, nhưng việc sử dụng dấu ngoặc nhọn JSX như sau:
 
 ```js
-<title>Results page {pageNumber}</title> // 🔴 Problem: This is not a single string
+<title>Results page {pageNumber}</title> // 🔴 Vấn đề: Đây không phải một chuỗi duy nhất
 ```
 
 ... thực ra khiến component `<title>` nhận một mảng gồm hai phần tử làm các phần tử con (chuỗi `"Results page"` và giá trị của `pageNumber`). Điều này sẽ gây ra lỗi. Thay vào đó, hãy sử dụng string interpolation để truyền cho `<title>` một chuỗi duy nhất:

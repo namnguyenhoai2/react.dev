@@ -230,7 +230,7 @@ Các event này được kích hoạt cho những resource như [`<audio>`](http
 * [`onVolumeChange`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/volumechange_event): Một hàm [`Event` handler](#event-handler). Được kích hoạt khi âm lượng thay đổi.
 * `onVolumeChangeCapture`: Một phiên bản của `onVolumeChange` được kích hoạt trong giai đoạn [capture.](/learn/responding-to-events#capture-phase-events)
 * [`onWaiting`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/waiting_event): Một hàm [`Event` handler](#event-handler). Được kích hoạt khi quá trình phát bị dừng do tạm thời không có dữ liệu.
-* `onWaitingCapture`: Một phiên bản của `onWaiting` được kích hoạt trong giai đoạn [capture.](/learn/responding-to-events#capture-phase-events)
+* `onWaitingCapture`: Một phiên bản của `onWaiting` được kích hoạt trong giai đoạn [capture.](/learn/responding-to-events#capture-phase-events)
 #### Các lưu ý {/*common-caveats*/}
 
 - Bạn không thể truyền đồng thời cả `children` và `dangerouslySetInnerHTML`.
@@ -762,7 +762,7 @@ Trong React, bạn chỉ định một CSS class bằng [`className`.](https://d
 Sau đó, bạn viết các CSS rule cho class đó trong một CSS file riêng:
 
 ```css
-/* In your CSS */
+/* Trong CSS của bạn */
 .avatar {
   border-radius: 50%;
 }
@@ -964,9 +964,9 @@ import { Remarkable } from 'remarkable';
 const md = new Remarkable();
 
 function renderMarkdownToHTML(markdown) {
-  // This is ONLY safe because the output HTML
-  // is shown to the same user, and because you
-  // trust this Markdown parser to not have bugs.
+  // Điều này CHỈ an toàn vì HTML output
+  // được hiển thị cho cùng một người dùng, và vì bạn
+  // tin rằng Markdown parser này không có bug.
   const renderedHTML = md.render(markdown);
   return {__html: renderedHTML};
 }
@@ -1006,7 +1006,7 @@ textarea { display: block; margin-top: 5px; margin-bottom: 10px; }
 
 ```js {1-4,7,8}
 const post = {
-  // Imagine this content is stored in the database.
+  // Hãy tưởng tượng nội dung này được lưu trong database.
   content: `<img src="" onerror='alert("you were hacked")'>`
 };
 
@@ -1134,7 +1134,7 @@ export default function FocusExample() {
           console.log('focused child', e.target.name);
         }
         if (!e.currentTarget.contains(e.relatedTarget)) {
-          // Not triggered when swapping focus between children
+    // Không kích hoạt khi chuyển focus giữa các child
           console.log('focus entered parent');
         }
       }}
@@ -1145,7 +1145,7 @@ export default function FocusExample() {
           console.log('unfocused child', e.target.name);
         }
         if (!e.currentTarget.contains(e.relatedTarget)) {
-          // Not triggered when swapping focus between children
+    // Không kích hoạt khi chuyển focus giữa các child
           console.log('focus left parent');
         }
       }}

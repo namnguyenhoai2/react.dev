@@ -206,8 +206,8 @@ export default function VanillaProfile() {
 ```
 
 ```js src/image.js hidden
-// Add a unique parameter so the image isn't cached,
-// and every run shows the loading state.
+  // Thêm một parameter duy nhất để image không bị cache,
+  // và mỗi lần chạy đều hiển thị trạng thái loading.
 export function freshImageUrl() {
   return 'https://react.dev/images/team/jack-pope.jpg?t=' + Date.now();
 }

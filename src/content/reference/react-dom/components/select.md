@@ -229,19 +229,19 @@ Thêm một [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 ```js
 export default function EditPost() {
   function handleSubmit(e) {
-    // Prevent the browser from reloading the page
+    // Ngăn trình duyệt tải lại trang
     e.preventDefault();
-    // Read the form data
+    // Đọc dữ liệu form
     const form = e.target;
     const formData = new FormData(form);
-    // You can pass formData as a fetch body directly:
+    // Bạn có thể truyền formData trực tiếp làm body cho fetch:
     fetch('/some-api', { method: form.method, body: formData });
-    // You can generate a URL out of it, as the browser does by default:
+    // Bạn có thể tạo URL từ nó, như cách trình duyệt làm theo mặc định:
     console.log(new URLSearchParams(formData).toString());
-    // You can work with it as a plain object.
+    // Bạn có thể dùng nó như một object thuần.
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson); // (!) This doesn't include multiple select values
-    // Or you can get an array of name-value pairs.
+    console.log(formJson); // (!) Điều này không bao gồm nhiều giá trị select
+    // Hoặc bạn có thể lấy một array các cặp tên-giá trị.
     console.log([...formData.entries()]);
   }
 
@@ -310,8 +310,8 @@ function FruitPicker() {
   // ...
   return (
     <select
-      value={selectedFruit} // ...force the select's value to match the state variable...
-      onChange={e => setSelectedFruit(e.target.value)} // ... and update the state variable on any change!
+      value={selectedFruit} // ...buộc giá trị của select khớp với biến state...
+      onChange={e => setSelectedFruit(e.target.value)} // ...và cập nhật biến state khi có bất kỳ thay đổi nào!
     >
       <option value="apple">Apple</option>
       <option value="banana">Banana</option>

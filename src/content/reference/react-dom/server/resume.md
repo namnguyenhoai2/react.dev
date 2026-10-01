@@ -130,8 +130,8 @@ function Main() {
 }
 
 function Shell({ children }) {
-  // In a real app, this is where you would put your html and body.
-  // We're just using tags here we can include in an existing body for demonstration purposes
+  // Trong app thực tế, đây là nơi bạn đặt html và body.
+  // Ở đây, chúng tôi chỉ dùng các thẻ có thể đưa vào body hiện có để minh họa.
   return (
     <html>
       <body>{children}</body>
@@ -153,7 +153,7 @@ function App() {
 }
 
 async function main(frame) {
-  // Layer 1
+  // Lớp 1
   const controller = new AbortController();
   const prerenderedApp = prerender(<App />, {
     signal: controller.signal,
@@ -164,8 +164,8 @@ async function main(frame) {
       }
     },
   });
-  // We're immediately aborting in a macrotask.
-  // Any data fetching that's not available synchronously, or in a microtask, will not have finished.
+  // Chúng tôi hủy ngay trong một macrotask.
+  // Mọi thao tác lấy dữ liệu không có sẵn đồng bộ hoặc trong microtask sẽ chưa hoàn tất.
   setTimeout(() => {
     controller.abort(new Postponed());
   });
@@ -173,22 +173,22 @@ async function main(frame) {
   const { prelude, postponed } = await prerenderedApp;
   await flushReadableStreamToFrame(prelude, frame);
 
-  // Layer 2
-  // Just waiting here for demonstration purposes.
-  // In a real app, the prelude and postponed state would've been serialized in Layer 1 and Layer would deserialize them.
-  // The prelude content could be flushed immediated as plain HTML while
-  // React is continuing to render from where the prerender left off.
+  // Lớp 2
+  // Chỉ chờ ở đây để minh họa.
+  // Trong app thực tế, prelude và postponed state đã được serialize ở Lớp 1, rồi Lớp 2 sẽ deserialize chúng.
+  // Nội dung prelude có thể được flush ngay dưới dạng HTML thuần trong khi
+  // React tiếp tục render từ nơi prerender đã dừng lại.
   await sleep(2000);
 
-  // You would get the cookies from the incoming HTTP request
+  // Bạn sẽ lấy cookie từ HTTP request đến
   resolveCookies({ sessionID: "abc" });
 
   const stream = await resume(<App />, postponed);
 
   await flushReadableStreamToFrame(stream, frame);
 
-  // Layer 3
-  // Just waiting here for demonstration purposes.
+  // Lớp 3
+  // Chỉ chờ ở đây để minh họa.
   await sleep(2000);
 
   hydrateRoot(frame.contentWindow.document, <App />);
@@ -216,12 +216,12 @@ export async function flushReadableStreamToFrame(readable, frame) {
   document.write(decoder.decode());
 }
 
-// This doesn't need to be an error.
-// You can use any other means to check if an error during prerender was
-// from an intentional abort or a real error.
+// Đây không nhất thiết là một lỗi.
+// Bạn có thể dùng bất kỳ cách nào khác để kiểm tra liệu lỗi trong khi prerender
+// đến từ việc hủy có chủ ý hay là lỗi thực sự.
 export class Postponed extends Error {}
 
-// We're just hardcoding a session here.
+// Ở đây, chúng tôi chỉ hardcode một session.
 export function getUser(sessionID) {
   return {
     name: "Alice",

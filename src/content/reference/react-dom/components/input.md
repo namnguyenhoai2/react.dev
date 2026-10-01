@@ -243,17 +243,17 @@ Hãy thêm một [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/El
 ```js
 export default function MyForm() {
   function handleSubmit(e) {
-    // Prevent the browser from reloading the page
+    // Ngăn trình duyệt tải lại trang
     e.preventDefault();
 
-    // Read the form data
+    // Đọc dữ liệu form
     const form = e.target;
     const formData = new FormData(form);
 
-    // You can pass formData as a fetch body directly:
+    // Bạn có thể truyền formData trực tiếp làm body cho fetch:
     fetch('/some-api', { method: form.method, body: formData });
 
-    // Or you can work with it as a plain object:
+    // Hoặc bạn có thể dùng nó như một object thuần:
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson);
   }
@@ -315,8 +315,8 @@ function Form() {
   // ...
   return (
     <input
-      value={firstName} // ...force the input's value to match the state variable...
-      onChange={e => setFirstName(e.target.value)} // ... and update the state variable on any edits!
+      value={firstName} // ...buộc giá trị của input khớp với biến state...
+      onChange={e => setFirstName(e.target.value)} // ...và cập nhật biến state khi có bất kỳ chỉnh sửa nào!
     />
   );
 }
@@ -471,7 +471,7 @@ Nếu không thể tránh việc render lại (chẳng hạn khi `PageContent` p
 Nếu render một input với `value` nhưng không có `onChange`, bạn sẽ thấy một lỗi trong console:
 
 ```js
-// 🔴 Bug: controlled text input with no onChange handler
+// 🔴 Lỗi: text input được kiểm soát nhưng không có handler onChange
 <input value={something} />
 ```
 
@@ -484,21 +484,21 @@ Bạn đã cung cấp prop `value` cho một form field nhưng không có handle
 Như thông báo lỗi gợi ý, nếu bạn chỉ muốn [chỉ định giá trị *ban đầu*,](#providing-an-initial-value-for-an-input) hãy truyền `defaultValue` thay vào đó:
 
 ```js
-// ✅ Good: uncontrolled input with an initial value
+// ✅ Tốt: input không kiểm soát có giá trị ban đầu
 <input defaultValue={something} />
 ```
 
 Nếu muốn [điều khiển input này bằng một biến state,](#controlling-an-input-with-a-state-variable) hãy chỉ định một handler `onChange`:
 
 ```js
-// ✅ Good: controlled input with onChange
+// ✅ Tốt: input được kiểm soát có onChange
 <input value={something} onChange={e => setSomething(e.target.value)} />
 ```
 
 Nếu giá trị này chủ ý là chỉ-đọc, hãy thêm prop `readOnly` để ẩn lỗi:
 
 ```js
-// ✅ Good: readonly controlled input without on change
+// ✅ Tốt: input được kiểm soát chỉ đọc, không có onChange
 <input value={something} readOnly={true} />
 ```
 
@@ -509,7 +509,7 @@ Nếu giá trị này chủ ý là chỉ-đọc, hãy thêm prop `readOnly` đ�
 Nếu render một checkbox với `checked` nhưng không có `onChange`, bạn sẽ thấy một lỗi trong console:
 
 ```js
-// 🔴 Bug: controlled checkbox with no onChange handler
+// 🔴 Lỗi: checkbox được kiểm soát nhưng không có handler onChange
 <input type="checkbox" checked={something} />
 ```
 
@@ -522,14 +522,14 @@ Bạn đã cung cấp prop `checked` cho một form field nhưng không có hand
 Như thông báo lỗi gợi ý, nếu bạn chỉ muốn [chỉ định giá trị *ban đầu*,](#providing-an-initial-value-for-an-input) hãy truyền `defaultChecked` thay vào đó:
 
 ```js
-// ✅ Good: uncontrolled checkbox with an initial value
+// ✅ Tốt: checkbox không kiểm soát có giá trị ban đầu
 <input type="checkbox" defaultChecked={something} />
 ```
 
 Nếu muốn [điều khiển checkbox này bằng một biến state,](#controlling-an-input-with-a-state-variable) hãy chỉ định một handler `onChange`:
 
 ```js
-// ✅ Good: controlled checkbox with onChange
+// ✅ Tốt: checkbox được kiểm soát có onChange
 <input type="checkbox" checked={something} onChange={e => setSomething(e.target.checked)} />
 ```
 
@@ -542,7 +542,7 @@ Nếu muốn [điều khiển checkbox này bằng một biến state,](#control
 Nếu checkbox chủ ý là chỉ-đọc, hãy thêm prop `readOnly` để ẩn lỗi:
 
 ```js
-// ✅ Good: readonly controlled input without on change
+// ✅ Tốt: input được kiểm soát chỉ đọc, không có onChange
 <input type="checkbox" checked={something} readOnly={true} />
 ```
 
@@ -556,7 +556,7 @@ Bạn không thể cập nhật nó thành giá trị khác với `e.target.valu
 
 ```js
 function handleChange(e) {
-  // 🔴 Bug: updating an input to something other than e.target.value
+  // 🔴 Lỗi: cập nhật input thành giá trị khác e.target.value
   setFirstName(e.target.value.toUpperCase());
 }
 ```
@@ -565,7 +565,7 @@ Bạn cũng không thể cập nhật nó một cách bất đồng bộ:
 
 ```js
 function handleChange(e) {
-  // 🔴 Bug: updating an input asynchronously
+  // 🔴 Lỗi: cập nhật input bất đồng bộ
   setTimeout(() => {
     setFirstName(e.target.value);
   }, 100);

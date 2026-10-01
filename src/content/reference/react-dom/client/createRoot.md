@@ -158,7 +158,7 @@ Thông thường, bạn chỉ cần chạy code này một lần khi khởi đ�
 <html>
   <head><title>My app</title></head>
   <body>
-    <!-- This is the DOM node -->
+    <!-- Đây là DOM node -->
     <div id="root"></div>
   </body>
 </html>
@@ -305,7 +305,7 @@ Bạn cũng có thể tạo một DOM node mới bằng [`document.createElement
 const domNode = document.createElement('div');
 const root = createRoot(domNode);
 root.render(<Comment />);
-document.body.appendChild(domNode); // You can add it anywhere in the document
+document.body.appendChild(domNode); // Bạn có thể thêm node này ở bất kỳ đâu trong document
 ```
 
 Để xóa React tree khỏi DOM node và giải phóng tất cả tài nguyên mà nó sử dụng, hãy gọi [`root.unmount`.](#root-unmount)
@@ -385,8 +385,8 @@ Kết hợp với `onUncaughtError` và `onRecoverableError`, bạn có thể tr
 
 ```js src/reportError.js
 function reportError({ type, error, errorInfo }) {
-  // The specific implementation is up to you.
-  // `console.error()` is only used for demonstration purposes.
+  // Implementation cụ thể tùy thuộc vào bạn.
+  // `console.error()` chỉ được dùng cho mục đích minh họa.
   console.error(type, error, "Component Stack: ");
   console.error("Component Stack: ", errorInfo.componentStack);
 }
@@ -417,9 +417,9 @@ import {
 
 const container = document.getElementById("root");
 const root = createRoot(container, {
-  // Keep in mind to remove these options in development to leverage
-  // React's default handlers or implement your own overlay for development.
-  // The handlers are only specfied unconditionally here for demonstration purposes.
+  // Hãy nhớ xóa các option này trong môi trường development để tận dụng
+  // các handler mặc định của React hoặc tự triển khai overlay cho development.
+  // Các handler ở đây chỉ luôn được chỉ định để phục vụ mục đích minh họa.
   onCaughtError: onCaughtErrorProd,
   onRecoverableError: onRecoverableErrorProd,
   onUncaughtError: onUncaughtErrorProd,
@@ -504,7 +504,7 @@ Cảnh báo: Bạn đã truyền đối số thứ hai cho root.render(...) như
 
 Để sửa lỗi, hãy truyền root options vào `createRoot(...)`, không phải `root.render(...)`:
 ```js {2,5}
-// 🚩 Wrong: root.render only takes one argument.
+// 🚩 Sai: root.render chỉ nhận một đối số.
 root.render(App, {onUncaughtError});
 
 // ✅ Correct: pass options to createRoot.
@@ -543,20 +543,20 @@ Lỗi này có nghĩa là giá trị bạn truyền vào `root.render` không ph
 Điều này có thể xảy ra nếu bạn gọi `root.render` với `Component` thay vì `<Component />`:
 
 ```js {2,5}
-// 🚩 Wrong: App is a function, not a Component.
+// 🚩 Sai: App là một function, không phải Component.
 root.render(App);
 
-// ✅ Correct: <App /> is a component.
+// ✅ Đúng: <App /> là một component.
 root.render(<App />);
 ```
 
 Hoặc nếu bạn truyền một function vào `root.render`, thay vì kết quả của việc gọi function đó:
 
 ```js {2,5}
-// 🚩 Wrong: createApp is a function, not a component.
+// 🚩 Sai: createApp là một function, không phải component.
 root.render(createApp);
 
-// ✅ Correct: call createApp to return a component.
+// ✅ Đúng: gọi createApp để trả về một component.
 root.render(createApp());
 ```
 

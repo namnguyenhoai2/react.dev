@@ -66,7 +66,7 @@ Gọi `renderToString` để render ứng dụng của bạn thành một chuỗ
 ```js {5-6}
 import { renderToString } from 'react-dom/server';
 
-// The route handler syntax depends on your backend framework
+// Cú pháp route handler phụ thuộc vào backend framework của bạn
 app.use('/', (request, response) => {
   const html = renderToString(<App />);
   response.send(html);
@@ -117,11 +117,11 @@ Bạn vẫn có thể tiếp tục sử dụng `renderToString` nếu môi trư�
 Đôi khi, `renderToString` được sử dụng trên client để chuyển đổi một component thành HTML.
 
 ```js {1-2}
-// 🚩 Unnecessary: using renderToString on the client
+// 🚩 Không cần thiết: dùng renderToString ở client
 import { renderToString } from 'react-dom/server';
 
 const html = renderToString(<MyIcon />);
-console.log(html); // For example, "<svg>...</svg>"
+console.log(html); // Ví dụ: "<svg>...</svg>"
 ```
 
 Việc import `react-dom/server` **trên client** làm tăng kích thước bundle một cách không cần thiết và nên tránh. Nếu bạn cần render một component thành HTML trong trình duyệt, hãy sử dụng [`createRoot`](/reference/react-dom/client/createRoot) rồi đọc HTML từ DOM:
@@ -135,7 +135,7 @@ const root = createRoot(div);
 flushSync(() => {
   root.render(<MyIcon />);
 });
-console.log(div.innerHTML); // For example, "<svg>...</svg>"
+console.log(div.innerHTML); // Ví dụ: "<svg>...</svg>"
 ```
 
 Lệnh gọi [`flushSync`](/reference/react-dom/flushSync) là cần thiết để DOM được cập nhật trước khi đọc thuộc tính [`innerHTML`](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML) của nó.

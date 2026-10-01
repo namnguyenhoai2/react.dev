@@ -85,7 +85,7 @@ Gọi `renderToPipeableStream` để render cây React của bạn thành HTML v
 ```js [[1, 5, "<App />"], [2, 6, "['/main.js']"]]
 import { renderToPipeableStream } from 'react-dom/server';
 
-// The route handler syntax depends on your backend framework
+// Cú pháp route handler phụ thuộc vào backend framework của bạn
 app.use('/', (request, response) => {
   const { pipe } = renderToPipeableStream(<App />, {
     bootstrapScripts: ['/main.js'],
@@ -124,7 +124,7 @@ React sẽ chèn [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doc
 ```html [[2, 5, "/main.js"]]
 <!DOCTYPE html>
 <html>
-  <!-- ... HTML from your components ... -->
+  <!-- ... HTML từ các component của bạn ... -->
 </html>
 <script src="/main.js" async=""></script>
 ```
@@ -166,7 +166,7 @@ export default function App({ assetMap }) {
 Trên server, render `<App assetMap={assetMap} />` và truyền `assetMap` của bạn cùng các URL asset:
 
 ```js {1-5,8,9}
-// You'd need to get this JSON from your build tooling, e.g. read it from the build output.
+// Bạn cần lấy JSON này từ build tooling, chẳng hạn đọc từ build output.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -186,7 +186,7 @@ app.use('/', (request, response) => {
 Vì hiện tại server của bạn đang render `<App assetMap={assetMap} />`, bạn cũng cần render nó bằng `assetMap` trên client để tránh các lỗi hydration. Bạn có thể serialize và truyền `assetMap` đến client như sau:
 
 ```js {9-10}
-// You'd need to get this JSON from your build tooling.
+// Bạn cần lấy JSON này từ build tooling.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -194,7 +194,7 @@ const assetMap = {
 
 app.use('/', (request, response) => {
   const { pipe } = renderToPipeableStream(<App assetMap={assetMap} />, {
-    // Careful: It's safe to stringify() this because this data isn't user-generated.
+    // Lưu ý: Có thể stringify() dữ liệu này an toàn vì nó không do người dùng tạo.
     bootstrapScriptContent: `window.assetMap = ${JSON.stringify(assetMap)};`,
     bootstrapScripts: [assetMap['main.js']],
     onShellReady() {
@@ -551,7 +551,7 @@ Bạn có thể chờ toàn bộ nội dung tải xong bằng callback `onAllRea
 
 ```js {2,7,11,18-24}
 let didError = false;
-let isCrawler = // ... depends on your bot detection strategy ...
+let isCrawler = // ... phụ thuộc vào chiến lược phát hiện bot của bạn ...
 
 const { pipe } = renderToPipeableStream(<App />, {
   bootstrapScripts: ['/main.js'],

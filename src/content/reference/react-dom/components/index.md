@@ -181,7 +181,7 @@ Theo mặc định, React sẽ truyền các giá trị được liên kết tro
 Theo mặc định, các giá trị JavaScript không phải chuỗi được truyền cho các phần tử tùy chỉnh sẽ được tuần tự hóa:
 
 ```jsx
-// Will be passed as `"1,2,3"` as the output of `[1,2,3].toString()`
+// Sẽ được truyền là `"1,2,3"`, output của `[1,2,3].toString()`
 <my-element value={[1,2,3]}></my-element>
 ```
 
@@ -204,8 +204,8 @@ root.render(<App />);
 export class MyElement extends HTMLElement {
   constructor() {
     super();
-    // The value here will be overwritten by React
-    // when initialized as an element
+  // Giá trị ở đây sẽ bị React ghi đè
+  // khi được khởi tạo dưới dạng element
     this.value = undefined;
   }
 
@@ -287,9 +287,9 @@ export function App() {
 Tên sự kiện phân biệt chữ hoa chữ thường và hỗ trợ dấu gạch ngang (`-`). Hãy giữ nguyên cách viết hoa, viết thường của sự kiện và bao gồm tất cả dấu gạch ngang khi lắng nghe các sự kiện của phần tử tùy chỉnh:
 
 ```jsx
-// Listens for `say-hi` events
+  // Lắng nghe các event `say-hi`
 <my-element onsay-hi={console.log}></my-element>
-// Listens for `sayHi` events
+  // Lắng nghe các event `sayHi`
 <my-element onsayHi={console.log}></my-element>
 ```
 

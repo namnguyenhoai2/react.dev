@@ -120,8 +120,8 @@ Hook `useFormStatus` chỉ trả về thông tin trạng thái cho một `<form>
 
 ```js
 function Form() {
-  // 🚩 `pending` will never be true
-  // useFormStatus does not track the form rendered in this component
+  // 🚩 `pending` sẽ không bao giờ là true
+  // useFormStatus không theo dõi form được render trong component này
   const { pending } = useFormStatus();
   return <form action={submit}></form>;
 }
@@ -131,13 +131,13 @@ Thay vào đó, hãy gọi `useFormStatus` từ bên trong một component nằm
 
 ```js
 function Submit() {
-  // ✅ `pending` will be derived from the form that wraps the Submit component
+  // ✅ `pending` sẽ được lấy từ form bọc component Submit
   const { pending } = useFormStatus();
   return <button disabled={pending}>...</button>;
 }
 
 function Form() {
-  // This is the <form> `useFormStatus` tracks
+      // Đây là <form> mà `useFormStatus` theo dõi
   return (
     <form action={submit}>
       <Submit />

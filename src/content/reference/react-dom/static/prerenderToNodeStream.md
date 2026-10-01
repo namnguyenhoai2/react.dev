@@ -31,7 +31,7 @@ Gọi `prerenderToNodeStream` để render ứng dụng của bạn thành HTML 
 ```js
 import { prerenderToNodeStream } from 'react-dom/static';
 
-// The route handler syntax depends on your backend framework
+// Cú pháp route handler phụ thuộc vào backend framework của bạn
 app.use('/', async (request, response) => {
   const { prelude } = await prerenderToNodeStream(<App />, {
     bootstrapScripts: ['/main.js'],
@@ -97,7 +97,7 @@ Gọi `prerenderToNodeStream` để render cây React của bạn thành HTML t�
 ```js [[1, 5, "<App />"], [2, 6, "['/main.js']"]]
 import { prerenderToNodeStream } from 'react-dom/static';
 
-// The route handler syntax depends on your backend framework
+// Cú pháp route handler phụ thuộc vào backend framework của bạn
 app.use('/', async (request, response) => {
   const { prelude } = await prerenderToNodeStream(<App />, {
     bootstrapScripts: ['/main.js'],
@@ -135,7 +135,7 @@ React sẽ chèn [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doc
 ```html [[2, 5, "/main.js"]]
 <!DOCTYPE html>
 <html>
-  <!-- ... HTML from your components ... -->
+  <!-- ... HTML từ các component của bạn ... -->
 </html>
 <script src="/main.js" async=""></script>
 ```
@@ -176,7 +176,7 @@ export default function App({ assetMap }) {
 Trên server, render `<App assetMap={assetMap} />` và truyền `assetMap` cùng các URL asset:
 
 ```js {1-5,8,9}
-// You'd need to get this JSON from your build tooling, e.g. read it from the build output.
+// Bạn cần lấy JSON này từ build tooling, chẳng hạn đọc từ build output.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -195,7 +195,7 @@ app.use('/', async (request, response) => {
 Vì server hiện đang render `<App assetMap={assetMap} />`, bạn cũng cần render nó bằng `assetMap` trên client để tránh lỗi hydration. Bạn có thể serialize và truyền `assetMap` đến client như sau:
 
 ```js {9-10}
-// You'd need to get this JSON from your build tooling.
+// Bạn cần lấy JSON này từ build tooling.
 const assetMap = {
   'styles.css': '/styles.123456.css',
   'main.js': '/main.123456.js'
@@ -203,7 +203,7 @@ const assetMap = {
 
 app.use('/', async (request, response) => {
   const { prelude } = await prerenderToNodeStream(<App />, {
-    // Careful: It's safe to stringify() this because this data isn't user-generated.
+    // Lưu ý: Có thể stringify() dữ liệu này an toàn vì nó không do người dùng tạo.
     bootstrapScriptContent: `window.assetMap = ${JSON.stringify(assetMap)};`,
     bootstrapScripts: [assetMap['/main.js']],
   });
@@ -298,8 +298,8 @@ async function renderToString() {
   }, 10000);
 
   try {
-    // the prelude will contain all the HTML that was prerendered
-    // before the controller aborted.
+    // prelude sẽ chứa toàn bộ HTML đã được prerender
+    // trước khi controller hủy.
     const {prelude} = await prerenderToNodeStream(<App />, {
       signal: controller.signal,
     });

@@ -191,17 +191,17 @@ Thêm một [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 ```js
 export default function EditPost() {
   function handleSubmit(e) {
-    // Prevent the browser from reloading the page
+    // Ngăn trình duyệt tải lại trang
     e.preventDefault();
 
-    // Read the form data
+    // Đọc dữ liệu form
     const form = e.target;
     const formData = new FormData(form);
 
-    // You can pass formData as a fetch body directly:
+    // Bạn có thể truyền formData trực tiếp làm body cho fetch:
     fetch('/some-api', { method: form.method, body: formData });
 
-    // Or you can work with it as a plain object:
+    // Hoặc bạn có thể dùng nó như một object thuần:
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson);
   }
@@ -261,8 +261,8 @@ function NewPost() {
   // ...
   return (
     <textarea
-      value={postContent} // ...force the input's value to match the state variable...
-      onChange={e => setPostContent(e.target.value)} // ... and update the state variable on any edits!
+      value={postContent} // ...buộc giá trị của input khớp với biến state...
+      onChange={e => setPostContent(e.target.value)} // ...và cập nhật biến state khi có bất kỳ chỉnh sửa nào!
     />
   );
 }
@@ -343,7 +343,7 @@ textarea { display: block; margin-top: 5px; margin-bottom: 10px; }
 Nếu bạn render một vùng văn bản với `value` nhưng không có `onChange`, bạn sẽ thấy lỗi sau trong console:
 
 ```js
-// 🔴 Bug: controlled text area with no onChange handler
+// 🔴 Lỗi: text area được kiểm soát nhưng không có handler onChange
 <textarea value={something} />
 ```
 
@@ -356,21 +356,21 @@ Bạn đã cung cấp prop `value` cho một trường biểu mẫu nhưng khôn
 Như thông báo lỗi gợi ý, nếu bạn chỉ muốn [chỉ định giá trị *ban đầu*,](#providing-an-initial-value-for-a-text-area) hãy truyền `defaultValue` thay thế:
 
 ```js
-// ✅ Good: uncontrolled text area with an initial value
+// ✅ Tốt: text area không kiểm soát có giá trị ban đầu
 <textarea defaultValue={something} />
 ```
 
 Nếu bạn muốn [điều khiển vùng văn bản này bằng một biến state,](#controlling-a-text-area-with-a-state-variable) hãy chỉ định một handler `onChange`:
 
 ```js
-// ✅ Good: controlled text area with onChange
+// ✅ Tốt: text area được kiểm soát có onChange
 <textarea value={something} onChange={e => setSomething(e.target.value)} />
 ```
 
 Nếu giá trị này cố ý chỉ đọc, hãy thêm prop `readOnly` để ẩn lỗi:
 
 ```js
-// ✅ Good: readonly controlled text area without on change
+// ✅ Tốt: text area được kiểm soát chỉ đọc, không có onChange
 <textarea value={something} readOnly={true} />
 ```
 
@@ -384,7 +384,7 @@ Bạn không thể cập nhật nó thành một giá trị khác với `e.targe
 
 ```js
 function handleChange(e) {
-  // 🔴 Bug: updating an input to something other than e.target.value
+  // 🔴 Lỗi: cập nhật input thành giá trị khác e.target.value
   setFirstName(e.target.value.toUpperCase());
 }
 ```
@@ -393,7 +393,7 @@ Bạn cũng không thể cập nhật nó một cách bất đồng bộ:
 
 ```js
 function handleChange(e) {
-  // 🔴 Bug: updating an input asynchronously
+  // 🔴 Lỗi: cập nhật input bất đồng bộ
   setTimeout(() => {
     setFirstName(e.target.value);
   }, 100);

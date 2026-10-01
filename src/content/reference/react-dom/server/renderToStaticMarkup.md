@@ -61,7 +61,7 @@ Gọi `renderToStaticMarkup` để render ứng dụng của bạn thành một 
 ```js {5-6}
 import { renderToStaticMarkup } from 'react-dom/server';
 
-// The route handler syntax depends on your backend framework
+// Cú pháp route handler phụ thuộc vào backend framework của bạn
 app.use('/', (request, response) => {
   const html = renderToStaticMarkup(<Page />);
   response.send(html);

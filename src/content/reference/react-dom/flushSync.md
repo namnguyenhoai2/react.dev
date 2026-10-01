@@ -67,7 +67,7 @@ Khi tích hợp với mã bên thứ ba như browser API hoặc thư viện UI, 
 flushSync(() => {
   setSomething(123);
 });
-// By this line, the DOM is updated.
+  // Đến dòng này, DOM đã được cập nhật.
 ```
 
 Điều này đảm bảo rằng khi dòng mã tiếp theo chạy, React đã cập nhật DOM.
@@ -159,7 +159,7 @@ import { flushSync } from 'react-dom';
 
 function MyComponent() {
   useEffect(() => {
-    // 🚩 Wrong: calling flushSync inside an effect
+  // 🚩 Sai: gọi flushSync bên trong effect
     flushSync(() => {
       setSomething(newValue);
     });
@@ -173,7 +173,7 @@ function MyComponent() {
 
 ```js
 function handleClick() {
-  // ✅ Correct: flushSync in event handlers is safe
+  // ✅ Đúng: dùng flushSync trong event handler là an toàn
   flushSync(() => {
     setSomething(newValue);
   });

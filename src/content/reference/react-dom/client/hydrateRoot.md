@@ -415,8 +415,8 @@ Kết hợp với `onUncaughtError` và `onRecoverableError`, bạn có thể tr
 
 ```js src/reportError.js
 function reportError({ type, error, errorInfo }) {
-  // The specific implementation is up to you.
-  // `console.error()` is only used for demonstration purposes.
+  // Implementation cụ thể tùy thuộc vào bạn.
+  // `console.error()` chỉ được dùng cho mục đích minh họa.
   console.error(type, error, "Component Stack: ");
   console.error("Component Stack: ", errorInfo.componentStack);
 }
@@ -447,9 +447,9 @@ import {
 
 const container = document.getElementById("root");
 hydrateRoot(container, <App />, {
-  // Keep in mind to remove these options in development to leverage
-  // React's default handlers or implement your own overlay for development.
-  // The handlers are only specfied unconditionally here for demonstration purposes.
+  // Hãy nhớ xóa các option này trong môi trường development để tận dụng
+  // các handler mặc định của React hoặc tự triển khai overlay cho development.
+  // Các handler ở đây chỉ luôn được chỉ định để phục vụ mục đích minh họa.
   onCaughtError: onCaughtErrorProd,
   onRecoverableError: onRecoverableErrorProd,
   onUncaughtError: onUncaughtErrorProd,
@@ -532,7 +532,7 @@ Warning: You passed a second argument to root.render(...) but it only accepts on
 
 Để khắc phục, hãy truyền root options vào `hydrateRoot(...)`, không phải `root.render(...)`:
 ```js {2,5}
-// 🚩 Wrong: root.render only takes one argument.
+// 🚩 Sai: root.render chỉ nhận một đối số.
 root.render(App, {onUncaughtError});
 
 // ✅ Correct: pass options to createRoot.
